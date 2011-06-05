@@ -1,0 +1,22 @@
+Initialisierung
+	12.5.2011				Kickoff-Meeting, Vorstellung Projektidee
+Analyse
+	12.5.  -  22.5.			Erstellung Pflichtenheft
+	18.5.					Meeting technische Umsetzung
+Entwurf
+	23.5.  -  29.5. 		GUI-Design, Software-Architektur
+Realisierung
+	30.5.  -    5.6.		[1] Veranstaltungen
+	  6.6.  -  12.6.		[2] Nachrichten, [3] Mensa Speiseplan
+	13.6.  -  19.6.			[4] Vorlesungstermine
+	20.6.  -  26.6.			[6] Wichtige Links, [9] App-Info
+	27.6.  -    3.7.		[7] Weitere News per RSS
+	  4.7.  -  10.7.		[5] MVV, [8] Offline Modus
+	11.7.  -  17.7.			[10] Benutzerhandbuch
+Testen
+	18.7.  -  24.7.			QA: Testing, Testdaten, Dokumentation
+	25.7.  -  29.7. 		Puffer
+Einsatz und Wartung
+	ab 30.7.2011
+
+Meilensteine: 13.6.2011, 27.6.2011, 11.7.2011, 25.7.2011
