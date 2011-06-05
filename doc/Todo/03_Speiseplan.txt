@@ -1,1 +1,13 @@
 [3] Mensa Speiseplan: Innerhalb der Android-Anwendung sollen die aktuellen Speisepläne der jeweiligen Mensen über einen Menüpunkt im Hauptmenü angezeigt werden. Die jeweiligen Daten werden über eine bereitgestellte Schnittstelle gelesen und lokal auf dem Android-Gerät abgespeichert. Es wird zu einem bestimmten Datum jeweils pro Gericht der Name und der Typ angezeigt. In den Einstellungen kann ein bestimmtes Gelände (z.B. Garching) festgelegt werden (= Gruppe von Mensen). Heruntergeladen und angezeigt werden jeweils die Daten von 1 Woche. Beispiel: Speiseplan Mensa Leopoldstraße 09.05.2011
+
+User Story:
+Als ein Informatik-Student der TUM möchte ich mobil die aktuellen Speisepläne anschauen, um mich zwischen Mensa und Cafeteria zu entscheiden.
+
+Umsetzung:
+[3] Mensa Speiseplan herunterladen: (Mensa-Schnittstelle)
+Mensa-Liste abrufen:
+http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php
+=> {"mensa_mensen":[{"id":"411","name":"Mensa Leopoldstra\u00dfe"...
+Speisepläne abrufen (Mensa ID 411):
+http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php?mensa_id=411
+=> {..."mensa_menu":[{"id":"21502",..."date":"2011-05-20","type_short":"ae",...

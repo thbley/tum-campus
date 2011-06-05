@@ -1,1 +1,8 @@
 [2] Nachrichten: Innerhalb der Android-Anwendung sollen Nachrichten über einen Menüpunkt im Hauptmenü einsehbar sein. Diese Nachrichten werden über eine Internetverbindung von einer Facebook-Seite heruntergeladen und lokal auf dem Android-Gerät abgespeichert. Es wird pro Nachricht der Nachrichtentext und – falls vorhanden – ein Link und ein Foto angezeigt. Heruntergeladen und angezeigt werden die letzten 25 Nachrichten. Beispiele: aktuelle Hinweise zum Skriptenverkauf, Studienberatung, etc.
+
+Umsetzung:
+[2] Nachrichten bei Facebook herunterladen: (Facebook Graph API)
+Access-Token bei Facebook abholen (App Login): siehe [1]
+Nachrichten abrufen:
+https://graph.facebook.com/162327853831856/feed/?access_token=...
+=> {"data":[{"id": "...",..."message": "Some news demo",...
