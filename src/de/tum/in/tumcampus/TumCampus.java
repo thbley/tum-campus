@@ -24,7 +24,6 @@ public class TumCampus extends Activity implements OnItemClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -35,8 +34,8 @@ public class TumCampus extends Activity implements OnItemClickListener {
 		addItem(list, R.drawable.icon, "Speisepläne", new Intent(this,
 				Cafeterias.class));
 
-		addItem(list, R.drawable.icon, "MVV", new Intent(this,
-				Transports.class));
+		addItem(list, R.drawable.icon, "MVV",
+				new Intent(this, Transports.class));
 
 		addItem(list, R.drawable.icon, "Nachrichten", new Intent(this,
 				News.class));
@@ -44,8 +43,7 @@ public class TumCampus extends Activity implements OnItemClickListener {
 		addItem(list, R.drawable.icon, "Veranstaltungen", new Intent(this,
 				Events.class));
 
-		addItem(list, R.drawable.icon, "Links", new Intent(this,
-				Links.class));
+		addItem(list, R.drawable.icon, "Links", new Intent(this, Links.class));
 
 		SimpleAdapter notes = new SimpleAdapter(this, list,
 				R.layout.main_listview, new String[] { "icon", "name",
@@ -64,6 +62,7 @@ public class TumCampus extends Activity implements OnItemClickListener {
 		ListView lv = (ListView) findViewById(R.id.listView1);
 		ListAdapter adapter = lv.getAdapter();
 
+		@SuppressWarnings("unchecked")
 		Map<String, Object> map = (Map<String, Object>) adapter
 				.getItem(position);
 
