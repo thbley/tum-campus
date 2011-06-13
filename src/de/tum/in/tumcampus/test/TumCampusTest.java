@@ -4,6 +4,7 @@ import com.jayway.android.robotium.solo.Solo;
 import de.tum.in.tumcampus.TumCampus; //Klasse in der der Test stattfindet
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
@@ -17,7 +18,17 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
-	public void testCafeterias() {
+	private void waitGui(int seconds) {
+		synchronized (this) {
+			try {
+				wait(1000 * seconds);
+			} catch (Exception e) {
+				Log.e("TumCampus Test", e.getMessage());
+			}
+		}
+	}
+
+	public void testCafeterias() throws Exception {
 
 		final String item = "Speisepläne";
 		final String activityText = "Hallo Speisepläne";
@@ -55,9 +66,10 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue("[20] SlidingDrawer not correctly displayed",
 				solo.searchText("Button123"));
 
-		assertFalse("[21] Lectures found", solo.searchText("Vorlesungen"));
-
 		solo.clickOnText("Options");
-		assertTrue("[22] Lectures not found", solo.searchText("Vorlesungen"));
+	}
+
+	public void testZFailure() {
+		assertTrue("[31] Some test failure", solo.searchText("ButtonBla"));
 	}
 }
