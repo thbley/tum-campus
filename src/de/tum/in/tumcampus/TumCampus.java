@@ -80,6 +80,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		IntentFilter intentFilter = new IntentFilter(
 				"de.tum.in.tumcampus.intent.action.BROADCAST_DOWNLOAD");
 		getApplicationContext().registerReceiver(receiver, intentFilter);
+		
+		
+		// TODO initial sync
+		// TODO test internet connection
+		
+		// TODO display german date format
 	}
 
 	public void DebugSQL(String query) {
