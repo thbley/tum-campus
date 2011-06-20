@@ -13,6 +13,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/*
+ * INCOMPLETE !!!!!!!!
+ * 
+ * TODO implement
+ */
+
 public class NewsManager extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
