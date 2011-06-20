@@ -95,6 +95,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 					mensaId, date });
 
 			// TODO group by typeLong ??
+			// TODO Öffnungszeiten
 			ListAdapter adapter = new SimpleCursorAdapter(this,
 					android.R.layout.two_line_list_item, c,
 					c.getColumnNames(), new int[] { android.R.id.text1,
