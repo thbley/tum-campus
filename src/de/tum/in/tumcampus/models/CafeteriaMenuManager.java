@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -30,10 +31,9 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 	public void downloadFromExternal(List<Integer> ids) throws Exception {
 
-		db.beginTransaction();
 		cleanupDb();
-
 		for (int i = 0; i < ids.size(); i++) {
+			db.beginTransaction();
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
 					+ "WHERE mensaId = ? AND "
 					+ "date > date('now', '+7 day') LIMIT 1",
@@ -57,9 +57,31 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			for (int j = 0; j < beilagen.length(); j++) {
 				replaceIntoDb(getFromJsonAddendum(beilagen.getJSONObject(j)));
 			}
+
+			// TODO crawl prices
+			// http://www.studentenwerk-muenchen.de/mensa/unsere-preise/
+
+			db.setTransactionSuccessful();
+			db.endTransaction();
 		}
-		db.setTransactionSuccessful();
-		db.endTransaction();
+	}
+
+	public List<HashMap<String, String>> getFromDb(String mensaId, String date) {
+		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+
+		Cursor c = db.rawQuery("SELECT typeLong, group_concat(name, '\n') "
+				+ "FROM cafeterias_menus WHERE mensaId = ? AND "
+				+ "date = ? GROUP BY typeLong ORDER BY typeNr, typeLong, name",
+				new String[] { mensaId, date });
+
+		while (c.moveToNext()) {
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("typeLong", c.getString(0));
+			map.put("names", c.getString(1));
+			list.add(map);
+		}
+		c.close();
+		return list;
 	}
 
 	// TODO add mensa_id as param?
