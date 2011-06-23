@@ -43,16 +43,16 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-		addItem(list, R.drawable.icon, "Vorlesungen", new Intent(this,
+		addItem(list, R.drawable.vorlesung, "Vorlesungen", new Intent(this,
 				Lectures.class));
 
-		addItem(list, R.drawable.icon, "Speisepläne", new Intent(this,
+		addItem(list, R.drawable.essen, "Speisepläne", new Intent(this,
 				Cafeterias.class));
 
-		addItem(list, R.drawable.icon, "MVV",
+		addItem(list, R.drawable.zug, "MVV",
 				new Intent(this, Transports.class));
 
-		addItem(list, R.drawable.icon, "Nachrichten", new Intent(this,
+		addItem(list, R.drawable.globus, "Nachrichten", new Intent(this,
 				News.class));
 
 		addItem(list, R.drawable.icon, "Veranstaltungen", new Intent(this,
