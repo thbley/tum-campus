@@ -11,7 +11,8 @@
 			android:layout_marginBottom="50px">
 
 			<TextView android:layout_width="fill_parent" android:id="@+id/cafeteriaText"
-				android:layout_height="wrap_content" android:text="Bitte wählen Sie ein Datum und eine Mensa aus." />
+				android:layout_height="wrap_content"
+				android:text="Bitte wählen Sie ein Datum und eine Mensa aus." />
 
 			<ListView android:layout_height="fill_parent"
 				android:layout_width="fill_parent" android:id="@+id/listView3"
@@ -20,8 +21,7 @@
 
 			<ListView android:layout_width="fill_parent"
 				android:layout_height="fill_parent" android:id="@+id/listView2"
-				android:layout_weight="47" android:scrollbars="vertical"
-				 />
+				android:layout_weight="47" android:scrollbars="vertical" />
 
 		</LinearLayout>
 
