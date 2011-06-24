@@ -3,6 +3,30 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="Hallo Nachtichten!" />
+	<FrameLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<ListView android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:id="@+id/listView2"
+			android:scrollbars="vertical" android:layout_marginBottom="50px" />
+
+		<SlidingDrawer android:layout_width="fill_parent"
+			android:id="@+id/slidingDrawer1" android:layout_height="fill_parent"
+			android:handle="@+id/handle" android:content="@+id/options">
+
+			<Button android:layout_height="wrap_content"
+				android:layout_width="fill_parent" android:text="Feed auswählen"
+				android:background="#FFDBE2E9" android:id="@+id/handle"
+				android:height="50px" android:textColor="#FF2546A4" />
+
+			<LinearLayout android:id="@+id/options"
+				android:background="#DD000000" android:layout_width="fill_parent"
+				android:orientation="vertical" android:layout_height="fill_parent">
+
+				<ListView android:layout_height="fill_parent" android:id="@+id/listView"
+					android:layout_width="fill_parent" android:scrollbars="vertical" />
+
+			</LinearLayout>
+		</SlidingDrawer>
+	</FrameLayout>
 </LinearLayout>
