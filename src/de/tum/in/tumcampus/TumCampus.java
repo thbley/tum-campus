@@ -81,11 +81,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			long id) {
 
 		ListView lv = (ListView) findViewById(R.id.listViewMain);
-		ListAdapter adapter = lv.getAdapter();
-
 		@SuppressWarnings("unchecked")
-		Map<String, Object> map = (Map<String, Object>) adapter
-				.getItem(position);
+		Map<String, Object> map = (Map<String, Object>) lv.getAdapter().getItem(position);
 
 		Intent itemIntent = (Intent) map.get("intent");
 		startActivity(itemIntent);
