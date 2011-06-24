@@ -20,32 +20,38 @@ public final class R {
     }
     public static final class id {
         public static final int cafeteriaText=0x7f050000;
-        public static final int debug=0x7f05000d;
-        public static final int debugCafeterias=0x7f05000b;
-        public static final int debugCafeteriasMenus=0x7f05000c;
+        public static final int content=0x7f050010;
+        public static final int debug=0x7f05000b;
+        public static final int debugCafeterias=0x7f050007;
+        public static final int debugCafeteriasMenus=0x7f050008;
+        public static final int debugNews=0x7f050009;
+        public static final int debugNewsItems=0x7f05000a;
         public static final int handle=0x7f050004;
-        public static final int hello=0x7f050009;
-        public static final int icon=0x7f05000e;
-        public static final int imageView1=0x7f050007;
+        public static final int hello=0x7f05000e;
+        public static final int icon=0x7f050011;
+        public static final int imageView1=0x7f05000c;
         public static final int listView=0x7f050006;
         public static final int listView2=0x7f050002;
         public static final int listView3=0x7f050001;
-        public static final int listViewMain=0x7f05000a;
-        public static final int name=0x7f05000f;
+        public static final int listViewMain=0x7f05000f;
+        public static final int name=0x7f050012;
         public static final int options=0x7f050005;
-        public static final int refresh=0x7f050008;
+        public static final int refresh=0x7f05000d;
         public static final int slidingDrawer1=0x7f050003;
     }
     public static final class layout {
         public static final int cafeterias=0x7f030000;
         public static final int cafeterias_horizontal=0x7f030001;
-        public static final int events=0x7f030002;
-        public static final int lectures=0x7f030003;
-        public static final int links=0x7f030004;
-        public static final int main=0x7f030005;
-        public static final int main_listview=0x7f030006;
-        public static final int news=0x7f030007;
-        public static final int transports=0x7f030008;
+        public static final int debug=0x7f030002;
+        public static final int events=0x7f030003;
+        public static final int lectures=0x7f030004;
+        public static final int links=0x7f030005;
+        public static final int main=0x7f030006;
+        public static final int main_listview=0x7f030007;
+        public static final int news=0x7f030008;
+        public static final int news_listview=0x7f030009;
+        public static final int news_listview_text=0x7f03000a;
+        public static final int transports=0x7f03000b;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
