@@ -75,7 +75,6 @@ public class NewsManager extends SQLiteOpenHelper {
 	}
 
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("DROP TABLE news");
 		db.execSQL("CREATE TABLE IF NOT EXISTS news ("
 				+ "id INTEGER PRIMARY KEY, name VARCHAR, feedUrl VARCHAR)");
 	}
