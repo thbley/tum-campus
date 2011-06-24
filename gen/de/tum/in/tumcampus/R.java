@@ -24,9 +24,9 @@ public final class R {
         public static final int debug=0x7f05000c;
         public static final int debugCafeterias=0x7f050007;
         public static final int debugCafeteriasMenus=0x7f050008;
+        public static final int debugFeeds=0x7f050009;
+        public static final int debugFeedsItems=0x7f05000a;
         public static final int debugLinks=0x7f05000b;
-        public static final int debugNews=0x7f050009;
-        public static final int debugNewsItems=0x7f05000a;
         public static final int description=0x7f05000f;
         public static final int handle=0x7f050004;
         public static final int hello=0x7f050012;
