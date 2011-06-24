@@ -1,5 +1,6 @@
 package de.tum.in.tumcampus.models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,19 @@ public class FeedManager extends SQLiteOpenHelper {
 	}
 
 	public void downloadFromExternal() throws Exception {
-		// TODO implement
+		deleteAllFromDb();
+		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
+
+		for (int i = 0; i < files.length; i++) {
+			System.out.println(files[i]);
+
+			if (files[i].getName().endsWith(".URL")) {
+				String name = files[i].getName().replace(".URL", "");
+				String url = Utils.getLinkFromUrlFile(files[i]);
+
+				insertIntoDb(new Feed(0, name, url));
+			}
+		}
 	}
 
 	public List<Feed> getAllFromDb() {
@@ -51,12 +64,9 @@ public class FeedManager extends SQLiteOpenHelper {
 		return list;
 	}
 
-	public void replaceIntoDb(Feed n) throws Exception {
+	public void insertIntoDb(Feed n) throws Exception {
 		Log.d("TumCampus feeds replaceIntoDb", n.toString());
 
-		if (n.id <= 0) {
-			throw new Exception("Invalid id.");
-		}
 		if (n.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
@@ -64,9 +74,8 @@ public class FeedManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid feedUrl.");
 		}
 
-		db.execSQL(
-				"REPLACE INTO feeds (id, name, feedUrl) VALUES (?, ?, ?)",
-				new String[] { String.valueOf(n.id), n.name, n.feedUrl });
+		db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)",
+				new String[] { n.name, n.feedUrl });
 	}
 
 	public void deleteAllFromDb() {
@@ -76,7 +85,7 @@ public class FeedManager extends SQLiteOpenHelper {
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS feeds ("
-				+ "id INTEGER PRIMARY KEY, name VARCHAR, feedUrl VARCHAR)");
+				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, feedUrl VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
