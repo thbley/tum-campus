@@ -103,9 +103,11 @@ public class Feeds extends Activity implements OnItemClickListener {
 		c2.close();
 
 		boolean showImages = true;
-		if (list.size() > 0) {
+		if (list.size() > 1) {
 			showImages = !list.get(0).get("image")
-					.equals(String.valueOf(R.drawable.icon));
+					.equals(String.valueOf(R.drawable.icon))
+					|| !list.get(1).get("image")
+							.equals(String.valueOf(R.drawable.icon));
 		}
 
 		SimpleAdapter adapter;
