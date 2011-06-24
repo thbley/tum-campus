@@ -1,30 +1,18 @@
 package de.tum.in.tumcampus.models;
 
-import java.util.Date;
-
 public class News {
-
+	int id;
+	String name;
 	String feedUrl;
-	String title;
-	String link;
-	String description;
-	Date date;
-	String image;
 
-	public News(String feedUrl, String title, String link, String description,
-			Date date, String image) {
-
+	public News(int id, String name, String feedUrl) {
+		this.id = id;
+		this.name = name;
 		this.feedUrl = feedUrl;
-		this.title = title;
-		this.link = link;
-		this.description = description;
-		this.date = date;
-		this.image = image;
 	}
 
 	public String toString() {
-		return "feedUrl=" + feedUrl + " title=" + title + " link=" + link
-				+ " description=" + description + " date="
-				+ Utils.getDateString(date) + " image=" + image;
+		return "id=" + this.id + " name=" + this.name + " feedUrl="
+				+ this.feedUrl;
 	}
 }
