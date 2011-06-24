@@ -3,25 +3,15 @@ package de.tum.in.tumcampus.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-/*
- * INCOMPLETE !!!!!!!!
- * 
- * TODO implement
- */
-
 public class NewsManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	public SQLiteDatabase db;
 
@@ -32,28 +22,18 @@ public class NewsManager extends SQLiteOpenHelper {
 	}
 
 	public void downloadFromExternal() throws Exception {
-		JSONArray jsonArray = Utils.downloadJson(
-				"http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php")
-				.getJSONArray("mensa_mensen");
-
-		db.beginTransaction();
-		deleteAllFromDb();
-		for (int i = 0; i < jsonArray.length(); i++) {
-			replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
-		}
-		db.setTransactionSuccessful();
-		db.endTransaction();
+		// TODO implement
 	}
 
-	public List<Cafeteria> getAllFromDb() {
-		List<Cafeteria> list = new ArrayList<Cafeteria>();
+	public List<News> getAllFromDb() {
+		List<News> list = new ArrayList<News>();
 
-		Cursor c = db.rawQuery("SELECT * FROM cafeterias ORDER BY name", null);
+		Cursor c = db.rawQuery("SELECT * FROM news ORDER BY name", null);
 
 		while (c.moveToNext()) {
-			list.add(new Cafeteria(c.getInt(c.getColumnIndex("id")), c
-					.getString(c.getColumnIndex("name")), c.getString(c
-					.getColumnIndex("address"))));
+			list.add(new News(c.getInt(c.getColumnIndex("id")), c.getString(c
+					.getColumnIndex("name")), c.getString(c
+					.getColumnIndex("feedUrl"))));
 		}
 		c.close();
 		return list;
@@ -62,7 +42,7 @@ public class NewsManager extends SQLiteOpenHelper {
 	public List<Integer> getAllIdsFromDb() {
 		List<Integer> list = new ArrayList<Integer>();
 
-		Cursor c = db.rawQuery("SELECT id FROM cafeterias ORDER BY id", null);
+		Cursor c = db.rawQuery("SELECT id FROM news ORDER BY id", null);
 
 		while (c.moveToNext()) {
 			list.add(c.getInt(0));
@@ -71,46 +51,33 @@ public class NewsManager extends SQLiteOpenHelper {
 		return list;
 	}
 
-	/**
-	 * 
-	 * 
-	 * Example JSON: e.g.
-	 * {"id":"411","name":"Mensa Leopoldstra\u00dfe","anschrift"
-	 * :"Leopoldstra\u00dfe 13a, M\u00fcnchen"}
-	 * 
-	 * @param json
-	 * @return Cafeteria
-	 * @throws JSONException
-	 */
-	public static Cafeteria getFromJson(JSONObject json) throws JSONException {
+	public void replaceIntoDb(News n) throws Exception {
+		Log.d("TumCampus news replaceIntoDb", n.toString());
 
-		return new Cafeteria(json.getInt("id"), json.getString("name"),
-				json.getString("anschrift"));
-	}
-
-	public void replaceIntoDb(Cafeteria c) throws Exception {
-		Log.d("TumCampus cafeterias replaceIntoDb", c.toString());
-
-		if (c.id <= 0) {
+		if (n.id <= 0) {
 			throw new Exception("Invalid id.");
 		}
-		if (c.name.length() == 0) {
+		if (n.name.length() == 0) {
 			throw new Exception("Invalid name.");
+		}
+		if (n.feedUrl.length() == 0) {
+			throw new Exception("Invalid feedUrl.");
 		}
 
 		db.execSQL(
-				"REPLACE INTO cafeterias (id, name, address) VALUES (?, ?, ?)",
-				new String[] { String.valueOf(c.id), c.name, c.address });
+				"REPLACE INTO news (id, name, feedUrl) VALUES (?, ?, ?)",
+				new String[] { String.valueOf(n.id), n.name, n.feedUrl });
 	}
 
 	public void deleteAllFromDb() {
-		Log.d("TumCampus cafeterias deleteAllFromDb", "");
-		db.execSQL("DELETE FROM cafeterias");
+		Log.d("TumCampus news deleteAllFromDb", "");
+		db.execSQL("DELETE FROM news");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias ("
-				+ "id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
+		db.execSQL("DROP TABLE news");
+		db.execSQL("CREATE TABLE IF NOT EXISTS news ("
+				+ "id INTEGER PRIMARY KEY, name VARCHAR, feedUrl VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
