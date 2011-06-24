@@ -50,8 +50,7 @@ public class NewsItemManager extends SQLiteOpenHelper {
 					.getJSONArray("item");
 
 			for (int j = 0; j < jsonArray.length(); j++) {
-				insertIntoDb(getFromJson(ids.get(i),
-						jsonArray.getJSONObject(j)));
+				insertIntoDb(getFromJson(ids.get(i), jsonArray.getJSONObject(j)));
 			}
 		}
 		db.setTransactionSuccessful();
@@ -111,7 +110,7 @@ public class NewsItemManager extends SQLiteOpenHelper {
 		}
 		String description = "";
 		if (json.has("description")) {
-			description = json.getString("description");
+			description = json.getString("description").replaceAll("\\<.*?\\>", "");
 		}
 
 		return new NewsItem(feedId, json.getString("title"),
