@@ -37,7 +37,13 @@
 		<activity android:name=".News" android:label="Nachrichten">
 		</activity>
 
+		<activity android:name=".Feeds" android:label="RSS-Feeds">
+		</activity>
+
 		<activity android:name=".Transports" android:label="MVV">
+		</activity>
+
+		<activity android:name=".AppInfo" android:label="App-Info">
 		</activity>
 
 		<activity android:name=".Debug" android:label="Debug">
