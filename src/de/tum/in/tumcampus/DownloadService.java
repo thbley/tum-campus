@@ -95,13 +95,14 @@ public class DownloadService extends IntentService {
 				nm.close();
 			}
 
-			// TODO remove
+			// TODO remove, download icons for local usage
+			String icon = String.valueOf(R.drawable.icon);
 			LinksManager lm = new LinksManager(this, "database.db");
-			lm.replaceIntoDb(new Links(1, "Spiegel", "http://www.spiegel.de/"));
-			lm.replaceIntoDb(new Links(2, "N-tv", "http://www.n-tv.de/"));
-			lm.replaceIntoDb(new Links(3, "Zeit", "http://www.zeit.de/"));
-			lm.replaceIntoDb(new Links(4, "Golem", "http://www.golem.de/"));
-			lm.replaceIntoDb(new Links(5, "Heise", "http://www.heise.de/"));
+			lm.replaceIntoDb(new Links(1, "Spiegel", "http://www.spiegel.de/", icon));
+			lm.replaceIntoDb(new Links(2, "N-tv", "http://www.n-tv.de/", icon));
+			lm.replaceIntoDb(new Links(3, "Zeit", "http://www.zeit.de/", icon));
+			lm.replaceIntoDb(new Links(4, "Golem", "http://www.golem.de/", icon));
+			lm.replaceIntoDb(new Links(5, "Heise", "http://www.heise.de/", icon));
 			lm.close();
 
 		} catch (Exception e) {
