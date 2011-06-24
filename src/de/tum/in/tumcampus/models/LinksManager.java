@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class LinksManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 1;
 
 	public SQLiteDatabase db;
 
@@ -33,7 +33,8 @@ public class LinksManager extends SQLiteOpenHelper {
 		while (c.moveToNext()) {
 			list.add(new Links(c.getInt(c.getColumnIndex("id")), c.getString(c
 					.getColumnIndex("name")), c.getString(c
-					.getColumnIndex("url"))));
+					.getColumnIndex("url")), c.getString(c
+							.getColumnIndex("icon"))));
 		}
 		c.close();
 		return list;
@@ -52,8 +53,8 @@ public class LinksManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid url.");
 		}
 
-		db.execSQL("REPLACE INTO links (id, name, url) VALUES (?, ?, ?)",
-				new String[] { String.valueOf(l.id), l.name, l.url });
+		db.execSQL("REPLACE INTO links (id, name, url, icon) VALUES (?, ?, ?, ?)",
+				new String[] { String.valueOf(l.id), l.name, l.url, l.icon });
 	}
 
 	public void deleteAllFromDb() {
@@ -63,7 +64,7 @@ public class LinksManager extends SQLiteOpenHelper {
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS links ("
-				+ "id INTEGER PRIMARY KEY, name VARCHAR, url VARCHAR)");
+				+ "id INTEGER PRIMARY KEY, name VARCHAR, url VARCHAR, icon VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
