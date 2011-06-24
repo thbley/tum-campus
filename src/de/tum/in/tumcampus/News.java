@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -50,6 +52,19 @@ public class News extends Activity implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
 
+		if (av.getId() == R.id.listView2) {
+			ListView lv = (ListView) findViewById(R.id.listView2);
+			@SuppressWarnings("unchecked")
+			Map<String, Object> map = (Map<String, Object>) lv.getAdapter()
+					.getItem(position);
+			String link = (String) map.get("link");
+
+			Intent intent = new Intent("android.intent.action.VIEW",
+					Uri.parse(link));
+			startActivity(intent);
+			return;
+		}
+
 		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
 		if (sd.isOpened()) {
 			sd.animateClose();
@@ -60,13 +75,13 @@ public class News extends Activity implements OnItemClickListener {
 		String feedId = c.getString(c.getColumnIndex("_id"));
 		String name = c.getString(c.getColumnIndex("name"));
 
-		setTitle("Nachrichten: "+ name);
+		setTitle("Nachrichten: " + name);
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 		// TODO move to manager
 
-		Cursor c2 = db.rawQuery("SELECT image, title, id as _id "
+		Cursor c2 = db.rawQuery("SELECT image, title, description, link "
 				+ "FROM news_items " + "WHERE feedId = ? "
 				+ "ORDER BY date DESC", new String[] { feedId });
 
@@ -82,7 +97,8 @@ public class News extends Activity implements OnItemClickListener {
 			// TODO check file exists, is readable?
 			map.put("image", image);
 			map.put("title", c2.getString(1));
-			map.put("id", c2.getString(2));
+			map.put("description", c2.getString(2));
+			map.put("link", c2.getString(3));
 			list.add(map);
 		}
 		c2.close();
@@ -96,19 +112,18 @@ public class News extends Activity implements OnItemClickListener {
 		SimpleAdapter adapter;
 		if (showImages) {
 			adapter = new SimpleAdapter(this, list, R.layout.news_listview,
-					new String[] { "image", "title", "id" }, new int[] {
-							R.id.icon, R.id.name });
+					new String[] { "image", "title", "description" },
+					new int[] { R.id.icon, R.id.title, R.id.description });
 		} else {
 			adapter = new SimpleAdapter(this, list,
-					R.layout.news_listview_text,
-					new String[] { "title", "id" }, new int[] { R.id.name });
+					R.layout.news_listview_text, new String[] { "title",
+							"description" }, new int[] { R.id.title,
+							R.id.description });
 		}
 
 		ListView lv2 = (ListView) findViewById(R.id.listView2);
 		lv2.setAdapter(adapter);
-
-		// TODO implement
-		// lv2.setOnItemClickListener(this);
+		lv2.setOnItemClickListener(this);
 	}
 
 }
