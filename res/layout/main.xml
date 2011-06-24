@@ -34,7 +34,7 @@
 			android:handle="@+id/handle" android:content="@+id/options">
 
 			<Button android:layout_height="wrap_content"
-				android:layout_width="fill_parent" android:text="Debug"
+				android:layout_width="fill_parent" android:text="Options"
 				android:background="#FFDBE2E9" android:id="@+id/handle"
 				android:height="50px" android:textColor="#FF2546A4" />
 
@@ -42,15 +42,9 @@
 				android:background="#DD000000" android:layout_width="fill_parent"
 				android:orientation="vertical" android:layout_height="fill_parent">
 
-				<Button android:text="sqlite: cafeterias" android:id="@+id/debugCafeterias"
-					android:layout_width="wrap_content" android:layout_height="wrap_content" />
-
-				<Button android:text="sqlite: cafeterias_menus" android:id="@+id/debugCafeteriasMenus"
-					android:layout_width="wrap_content" android:layout_height="wrap_content" />
-
 				<TextView android:layout_width="fill_parent"
 					android:scrollbars="vertical" android:layout_height="wrap_content"
-					android:id="@+id/debug" />
+					android:id="@+id/content" />
 
 			</LinearLayout>
 		</SlidingDrawer>
