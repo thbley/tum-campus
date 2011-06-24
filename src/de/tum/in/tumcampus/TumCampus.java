@@ -50,15 +50,15 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.globus, "Nachrichten", new Intent(this,
 				News.class));
 
-		addItem(list, R.drawable.icon, "RSS-Feeds", new Intent(this,
+		addItem(list, R.drawable.rss, "RSS-Feeds", new Intent(this,
 				Feeds.class));
 
-		addItem(list, R.drawable.icon, "Veranstaltungen", new Intent(this,
+		addItem(list, R.drawable.party, "Veranstaltungen", new Intent(this,
 				Events.class));
 
-		addItem(list, R.drawable.icon, "Links", new Intent(this, Links.class));
+		addItem(list, R.drawable.www, "Links", new Intent(this, Links.class));
 
-		addItem(list, R.drawable.icon, "App-Info", new Intent(this,
+		addItem(list, R.drawable.info, "App-Info", new Intent(this,
 				AppInfo.class));
 
 		addItem(list, R.drawable.icon, "Debug", new Intent(this, Debug.class));
