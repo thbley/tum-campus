@@ -22,6 +22,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
+import de.tum.in.tumcampus.models.FeedItemManager;
+import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.models.LinkManager;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
@@ -33,7 +36,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main);
-		
+
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 		addItem(list, R.drawable.vorlesung, "Vorlesungen", new Intent(this,
@@ -47,10 +50,16 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.globus, "Nachrichten", new Intent(this,
 				News.class));
 
+		addItem(list, R.drawable.icon, "RSS-Feeds", new Intent(this,
+				Feeds.class));
+
 		addItem(list, R.drawable.icon, "Veranstaltungen", new Intent(this,
 				Events.class));
 
 		addItem(list, R.drawable.icon, "Links", new Intent(this, Links.class));
+
+		addItem(list, R.drawable.icon, "App-Info", new Intent(this,
+				AppInfo.class));
 
 		addItem(list, R.drawable.icon, "Debug", new Intent(this, Debug.class));
 
@@ -80,7 +89,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			long id) {
 		ListView lv = (ListView) findViewById(R.id.listViewMain);
 		@SuppressWarnings("unchecked")
-		Map<String, Object> map = (Map<String, Object>) lv.getAdapter().getItem(position);
+		Map<String, Object> map = (Map<String, Object>) lv.getAdapter()
+				.getItem(position);
 
 		Intent itemIntent = (Intent) map.get("intent");
 		startActivity(itemIntent);
@@ -113,6 +123,18 @@ public class TumCampus extends Activity implements OnItemClickListener,
 					"database.db");
 			cmm.deleteAllFromDb();
 			cmm.close();
+
+			FeedManager fm = new FeedManager(this, "database.db");
+			fm.deleteAllFromDb();
+			fm.close();
+
+			FeedItemManager fim = new FeedItemManager(this, "database.db");
+			fim.deleteAllFromDb();
+			fim.close();
+
+			LinkManager lm = new LinkManager(this, "database.db");
+			lm.deleteAllFromDb();
+			lm.close();
 
 			return true;
 		}
