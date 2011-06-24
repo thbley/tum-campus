@@ -1,7 +1,5 @@
 package de.tum.in.tumcampus;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,10 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +20,6 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
@@ -40,7 +34,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main);
-
+		
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 		addItem(list, R.drawable.vorlesung, "Vorlesungen", new Intent(this,
@@ -49,8 +43,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.essen, "Speisepläne", new Intent(this,
 				Cafeterias.class));
 
-		addItem(list, R.drawable.zug, "MVV",
-				new Intent(this, Transports.class));
+		addItem(list, R.drawable.zug, "MVV", new Intent(this, Transports.class));
 
 		addItem(list, R.drawable.globus, "Nachrichten", new Intent(this,
 				News.class));
@@ -60,73 +53,27 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		addItem(list, R.drawable.icon, "Links", new Intent(this, Links.class));
 
-		SimpleAdapter notes = new SimpleAdapter(this, list,
+		addItem(list, R.drawable.icon, "Debug", new Intent(this, Debug.class));
+
+		SimpleAdapter adapter = new SimpleAdapter(this, list,
 				R.layout.main_listview, new String[] { "icon", "name",
 						"content" }, new int[] { R.id.icon, R.id.name });
 
 		ListView lv = (ListView) findViewById(R.id.listViewMain);
-		lv.setAdapter(notes);
+		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 
 		Button b = (Button) findViewById(R.id.refresh);
 		b.setOnClickListener(this);
 
-		b = (Button) findViewById(R.id.debugCafeterias);
-		b.setOnClickListener(this);
-
-		b = (Button) findViewById(R.id.debugCafeteriasMenus);
-		b.setOnClickListener(this);
-
 		IntentFilter intentFilter = new IntentFilter(
 				"de.tum.in.tumcampus.intent.action.BROADCAST_DOWNLOAD");
 		getApplicationContext().registerReceiver(receiver, intentFilter);
-		
-		
+
 		// TODO initial sync
 		// TODO test internet connection
-		
+
 		// TODO display german date format
-	}
-
-	public void DebugSQL(String query) {
-		DebugReset();
-		SQLiteDatabase db = SQLiteDatabase.openDatabase(
-				this.getDatabasePath("database.db").toString(), null,
-				SQLiteDatabase.OPEN_READONLY);
-
-		Cursor c = db.rawQuery(query, null);
-		while (c.moveToNext()) {
-			for (int i = 0; i < c.getColumnCount(); i++) {
-				Debug(c.getColumnName(i) + ": " + c.getString(i));
-			}
-			Debug("");
-		}
-		c.close();
-		db.close();
-	}
-
-	public void Debug(Exception e) {
-		Debug(e.getMessage());
-
-		StringWriter sw = new StringWriter();
-		e.printStackTrace(new PrintWriter(sw));
-		Debug(sw.toString());
-	}
-
-	public void DebugReset() {
-		TextView tv = (TextView) findViewById(R.id.debug);
-		tv.setText("");
-	}
-
-	public void Debug(String s) {
-		TextView tv = (TextView) findViewById(R.id.debug);
-		tv.setMovementMethod(new ScrollingMovementMethod());
-		tv.append(s + "\n");
-
-		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
-		if (!sd.isOpened()) {
-			sd.animateOpen();
-		}
 	}
 
 	@Override
@@ -191,14 +138,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				startService(service);
 				b.setText("Abbrechen");
 			}
-		}
-
-		if (v.getId() == R.id.debugCafeterias) {
-			DebugSQL("SELECT * FROM cafeterias ORDER BY id");
-		}
-
-		if (v.getId() == R.id.debugCafeteriasMenus) {
-			DebugSQL("SELECT * FROM cafeterias_menus ORDER BY id");
 		}
 	}
 
