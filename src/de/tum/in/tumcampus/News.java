@@ -59,8 +59,7 @@ public class News extends Activity implements OnItemClickListener {
 					.getItem(position);
 			String link = (String) map.get("link");
 
-			Intent intent = new Intent("android.intent.action.VIEW",
-					Uri.parse(link));
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
 			startActivity(intent);
 			return;
 		}
@@ -125,5 +124,4 @@ public class News extends Activity implements OnItemClickListener {
 		lv2.setAdapter(adapter);
 		lv2.setOnItemClickListener(this);
 	}
-
 }
