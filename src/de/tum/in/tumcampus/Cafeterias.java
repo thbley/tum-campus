@@ -23,6 +23,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	SQLiteDatabase db;
 
 	String date;
+	String dateStr;
 	String mensaId;
 	String mensaName;
 
@@ -42,9 +43,10 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		db = SQLiteDatabase.openDatabase(this.getDatabasePath("database.db")
 				.toString(), null, SQLiteDatabase.OPEN_READONLY);
 
-		Cursor c = db.rawQuery("SELECT DISTINCT date, date as _id "
-				+ "FROM cafeterias_menus WHERE "
-				+ "date >= date('now') ORDER BY date", null);
+		Cursor c = db.rawQuery(
+				"SELECT DISTINCT strftime('%d.%m.%Y', date) as date, date as _id "
+						+ "FROM cafeterias_menus WHERE "
+						+ "date >= date('now') ORDER BY date", null);
 
 		ListAdapter adapter = new SimpleCursorAdapter(this,
 				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
@@ -81,6 +83,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			ListView lv = (ListView) findViewById(R.id.listView);
 			Cursor c = (Cursor) lv.getAdapter().getItem(position);
 			date = c.getString(c.getColumnIndex("_id"));
+			dateStr = c.getString(c.getColumnIndex("date"));
 		}
 
 		if (av.getId() == R.id.listView2) {
@@ -92,11 +95,12 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 
 		if (mensaId != null && date != null) {
 			TextView tv = (TextView) findViewById(R.id.cafeteriaText);
-			tv.setText(mensaName + ": " + date);
+			tv.setText(mensaName + ": " + dateStr);
 
 			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this,
 					"database.db");
-			List<HashMap<String, String>> list = cmm.getFromDb(mensaId, date);
+			List<HashMap<String, String>> list = cmm.getTypeNameFromDb(mensaId,
+					date);
 			cmm.close();
 
 			String[] from = new String[] {};
