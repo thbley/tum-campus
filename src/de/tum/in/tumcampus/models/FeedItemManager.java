@@ -100,7 +100,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			enclosure = json.getJSONObject("enclosure").getString("url");
 
 			// TODO add download queue + extra thread?
-			String target = Utils.getCacheDir("rss") + Utils.md5(enclosure)
+			String target = Utils.getCacheDir("rss/cache") + Utils.md5(enclosure)
 					+ ".jpg";
 			enclosure = Utils.downloadFile(enclosure, target);
 		}
