@@ -1,7 +1,10 @@
 package de.tum.in.tumcampus.models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.tum.in.tumcampus.R;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -22,7 +25,22 @@ public class LinkManager extends SQLiteOpenHelper {
 	}
 
 	public void downloadFromExternal() throws Exception {
+		
+		deleteAllFromDb();
+		File[] files = new File(Utils.getCacheDir("")).listFiles();
+		
 		// TODO implement
+		String icon = String.valueOf(R.drawable.icon);
+		
+		for (int i=0; i<files.length; i++) {
+			
+			if (files[i].getName().endsWith(".URL")) {
+				String name = files[i].getName().replace(".URL", "");
+				String url = Utils.getLinkFromUrlFile(files[i]);
+				
+				insertIntoDb(new Link(0, name, url, icon));
+			}
+		}
 	}
 
 	public List<Link> getAllFromDb() {
@@ -40,12 +58,9 @@ public class LinkManager extends SQLiteOpenHelper {
 		return list;
 	}
 
-	public void replaceIntoDb(Link l) throws Exception {
+	public void insertIntoDb(Link l) throws Exception {
 		Log.d("TumCampus links replaceIntoDb", l.toString());
 
-		if (l.id <= 0) {
-			throw new Exception("Invalid id.");
-		}
 		if (l.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
@@ -53,8 +68,8 @@ public class LinkManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid url.");
 		}
 
-		db.execSQL("REPLACE INTO links (id, name, url, icon) VALUES (?, ?, ?, ?)",
-				new String[] { String.valueOf(l.id), l.name, l.url, l.icon });
+		db.execSQL("INSERT INTO links (name, url, icon) VALUES (?, ?, ?)",
+				new String[] { l.name, l.url, l.icon });
 	}
 
 	public void deleteAllFromDb() {
@@ -64,7 +79,7 @@ public class LinkManager extends SQLiteOpenHelper {
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS links ("
-				+ "id INTEGER PRIMARY KEY, name VARCHAR, url VARCHAR, icon VARCHAR)");
+				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, url VARCHAR, icon VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
