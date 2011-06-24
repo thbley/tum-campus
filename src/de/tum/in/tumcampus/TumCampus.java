@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -79,7 +78,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-
 		ListView lv = (ListView) findViewById(R.id.listViewMain);
 		@SuppressWarnings("unchecked")
 		Map<String, Object> map = (Map<String, Object>) lv.getAdapter().getItem(position);
