@@ -12,9 +12,11 @@ import android.content.Intent;
 import android.util.Log;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
+import de.tum.in.tumcampus.models.Links;
+import de.tum.in.tumcampus.models.LinksManager;
+import de.tum.in.tumcampus.models.News;
 import de.tum.in.tumcampus.models.NewsItemManager;
 import de.tum.in.tumcampus.models.NewsManager;
-import de.tum.in.tumcampus.models.News;
 
 public class DownloadService extends IntentService {
 
@@ -50,8 +52,7 @@ public class DownloadService extends IntentService {
 			mNotificationManager.notify(1, notification);
 			message("Aktualisiere: Mensen", "");
 
-			CafeteriaManager cm = new CafeteriaManager(
-					this.getApplicationContext(), "database.db");
+			CafeteriaManager cm = new CafeteriaManager(this, "database.db");
 			cm.downloadFromExternal();
 
 			if (!destroyed) {
@@ -68,30 +69,40 @@ public class DownloadService extends IntentService {
 			cm.close();
 
 			if (!destroyed) {
-				NewsManager nm = new NewsManager(this.getApplicationContext(),
-						"database.db");
+				NewsManager nm = new NewsManager(this, "database.db");
 
 				// TODO remove
 				nm.replaceIntoDb(new News(1, "Spiegel",
 						"http://www.spiegel.de/schlagzeilen/index.rss"));
 				nm.replaceIntoDb(new News(2, "N-tv", "http://www.n-tv.de/rss"));
-				nm.replaceIntoDb(new News(3, "Zeit", "http://newsfeed.zeit.de/index"));
-				nm.replaceIntoDb(new News(4, "Golem", "http://rss.golem.de/rss.php?feed=RSS1.0"));
-				nm.replaceIntoDb(new News(5, "Heise", "http://www.heise.de/newsticker/heise.rdf"));
+				nm.replaceIntoDb(new News(3, "Zeit",
+						"http://newsfeed.zeit.de/index"));
+				nm.replaceIntoDb(new News(4, "Golem",
+						"http://rss.golem.de/rss.php?feed=RSS1.0"));
+				nm.replaceIntoDb(new News(5, "Heise",
+						"http://www.heise.de/newsticker/heise.rdf"));
 
 				notification.setLatestEventInfo(this, "TumCampus download ...",
 						"3/3", contentIntent);
 				mNotificationManager.notify(1, notification);
 				message(", RSS", "");
 
-				NewsItemManager nim = new NewsItemManager(
-						this.getApplicationContext(), "database.db");
+				NewsItemManager nim = new NewsItemManager(this, "database.db");
 
 				nim.downloadFromExternal(nm.getAllIdsFromDb());
 				nim.close();
 
 				nm.close();
 			}
+
+			// TODO remove
+			LinksManager lm = new LinksManager(this, "database.db");
+			lm.replaceIntoDb(new Links(1, "Spiegel", "http://www.spiegel.de/"));
+			lm.replaceIntoDb(new Links(2, "N-tv", "http://www.n-tv.de/"));
+			lm.replaceIntoDb(new Links(3, "Zeit", "http://www.zeit.de/"));
+			lm.replaceIntoDb(new Links(4, "Golem", "http://www.golem.de/"));
+			lm.replaceIntoDb(new Links(5, "Heise", "http://www.heise.de/"));
+			lm.close();
 
 		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
