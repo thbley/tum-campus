@@ -27,7 +27,7 @@ public final class R {
         public static final int debugLinks=0x7f05000b;
         public static final int debugNews=0x7f050009;
         public static final int debugNewsItems=0x7f05000a;
-        public static final int description=0x7f050014;
+        public static final int description=0x7f050015;
         public static final int handle=0x7f050004;
         public static final int hello=0x7f05000f;
         public static final int icon=0x7f050012;
@@ -40,6 +40,7 @@ public final class R {
         public static final int options=0x7f050005;
         public static final int refresh=0x7f05000e;
         public static final int slidingDrawer1=0x7f050003;
+        public static final int title=0x7f050014;
     }
     public static final class layout {
         public static final int cafeterias=0x7f030000;
