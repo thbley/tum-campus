@@ -2,6 +2,7 @@ package de.tum.in.tumcampus.models;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +11,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -106,17 +109,36 @@ public class Utils {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String getCacheDir(String dir) throws Exception {
-		File f = new File(Environment.getExternalStorageDirectory()
-				.getPath() + "/tumcampus/"+dir);
+		File f = new File(Environment.getExternalStorageDirectory().getPath()
+				+ "/tumcampus/" + dir);
 		if (!f.exists()) {
 			f.mkdirs();
 		}
-		if (!f.canWrite()) {
-			throw new Exception("Cannot write to "+f.getPath());
+		if (!f.canRead()) {
+			throw new Exception("Cannot read from sd-card: " + f.getPath());
 		}
-		return f.getPath()+"/";
+		if (!f.canWrite()) {
+			throw new Exception("Cannot write to sd-card: " + f.getPath());
+		}
+		return f.getPath() + "/";
+	}
+
+	public static String getLinkFromUrlFile(File file) {
+		try {
+			byte[] buffer = new byte[(int) file.length()];
+			FileInputStream in = new FileInputStream(file.getAbsolutePath());
+			in.read(buffer);
+			in.close();
+			Pattern pattern = Pattern.compile("URL=(.*?)$");
+			Matcher matcher = pattern.matcher(new String(buffer));
+			matcher.find();
+			return matcher.group(1);
+		} catch (Exception e) {
+			// TODO implement
+		}
+		return "";
 	}
 
 	public static String md5(String s) {
