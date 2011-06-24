@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:autoLink="web" android:text="
+Android-Praktikum\n
+Sommersemester 2011\n
+Christoph Richter, Thomas Bley\n
+\n
+Inoffizielle App\n
+\n
+TUM, Fakultät für Informatik\n
+Lehrstuhl 13, Prof. Dr. Uwe Baumgarten\n
+Boltzmannstr. 3\n
+85748 Garching bei München\n
+\n
+Code License: GNU GPL v3\n
+http://www.gnu.org/licenses/gpl.html\n 
+\n
+Source-Code:\n
+http://code.google.com/p/tum-campus
+" />
+</LinearLayout>
