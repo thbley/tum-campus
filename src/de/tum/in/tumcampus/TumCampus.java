@@ -131,6 +131,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			FeedItemManager fim = new FeedItemManager(this, "database.db");
 			fim.deleteAllFromDb();
 			fim.close();
+			
+			// TODO clear cache directory
 
 			LinkManager lm = new LinkManager(this, "database.db");
 			lm.deleteAllFromDb();
