@@ -12,11 +12,11 @@ import android.content.Intent;
 import android.util.Log;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
-import de.tum.in.tumcampus.models.Link;
-import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.models.Link;
+import de.tum.in.tumcampus.models.LinkManager;
 
 public class DownloadService extends IntentService {
 
@@ -70,16 +70,17 @@ public class DownloadService extends IntentService {
 
 			if (!destroyed) {
 				FeedManager nm = new FeedManager(this, "database.db");
-
+				nm.downloadFromExternal();
+				
 				// TODO remove
-				nm.replaceIntoDb(new Feed(1, "Spiegel",
+				nm.insertIntoDb(new Feed(0, "Spiegel",
 						"http://www.spiegel.de/schlagzeilen/index.rss"));
-				nm.replaceIntoDb(new Feed(2, "N-tv", "http://www.n-tv.de/rss"));
-				nm.replaceIntoDb(new Feed(3, "Zeit",
+				nm.insertIntoDb(new Feed(0, "N-tv", "http://www.n-tv.de/rss"));
+				nm.insertIntoDb(new Feed(0, "Zeit",
 						"http://newsfeed.zeit.de/index"));
-				nm.replaceIntoDb(new Feed(4, "Golem",
+				nm.insertIntoDb(new Feed(0, "Golem",
 						"http://rss.golem.de/rss.php?feed=RSS1.0"));
-				nm.replaceIntoDb(new Feed(5, "Heise",
+				nm.insertIntoDb(new Feed(0, "Heise",
 						"http://www.heise.de/newsticker/heise.rdf"));
 
 				notification.setLatestEventInfo(this, "TumCampus download ...",
@@ -95,14 +96,16 @@ public class DownloadService extends IntentService {
 				nm.close();
 			}
 
+			LinkManager lm = new LinkManager(this, "database.db");
+			lm.downloadFromExternal();
+			
 			// TODO remove, download icons for local usage
 			String icon = String.valueOf(R.drawable.icon);
-			LinkManager lm = new LinkManager(this, "database.db");
-			lm.replaceIntoDb(new Link(1, "Spiegel", "http://www.spiegel.de/", icon));
-			lm.replaceIntoDb(new Link(2, "N-tv", "http://www.n-tv.de/", icon));
-			lm.replaceIntoDb(new Link(3, "Zeit", "http://www.zeit.de/", icon));
-			lm.replaceIntoDb(new Link(4, "Golem", "http://www.golem.de/", icon));
-			lm.replaceIntoDb(new Link(5, "Heise", "http://www.heise.de/", icon));
+			lm.insertIntoDb(new Link(0, "Spiegel", "http://www.spiegel.de/", icon));
+			lm.insertIntoDb(new Link(0, "N-tv", "http://www.n-tv.de/", icon));
+			lm.insertIntoDb(new Link(0, "Zeit", "http://www.zeit.de/", icon));
+			lm.insertIntoDb(new Link(0, "Golem", "http://www.golem.de/", icon));
+			lm.insertIntoDb(new Link(0, "Heise", "http://www.heise.de/", icon));
 			lm.close();
 
 		} catch (Exception e) {
