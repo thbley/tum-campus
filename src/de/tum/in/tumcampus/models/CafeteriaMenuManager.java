@@ -1,7 +1,7 @@
 package de.tum.in.tumcampus.models;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import static de.tum.in.tumcampus.models.Utils.getDate;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,7 +15,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
@@ -34,6 +33,8 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		cleanupDb();
 		for (int i = 0; i < ids.size(); i++) {
 			db.beginTransaction();
+			deleteFromDb(ids.get(i));
+
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
 					+ "WHERE mensaId = ? AND "
 					+ "date > date('now', '+7 day') LIMIT 1",
@@ -43,6 +44,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 				c.close();
 				continue;
 			}
+			c.close();
 
 			JSONObject json = Utils
 					.downloadJson("http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php?mensa_id="
@@ -60,13 +62,14 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 			// TODO crawl prices
 			// http://www.studentenwerk-muenchen.de/mensa/unsere-preise/
-
+			
 			db.setTransactionSuccessful();
 			db.endTransaction();
 		}
 	}
 
-	public List<HashMap<String, String>> getFromDb(String mensaId, String date) {
+	public List<HashMap<String, String>> getTypeNameFromDb(String mensaId,
+			String date) {
 		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
 		Cursor c = db.rawQuery("SELECT typeLong, group_concat(name, '\n') "
@@ -84,19 +87,19 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		return list;
 	}
 
-	// TODO add mensa_id as param?
-	public List<CafeteriaMenu> getFromDb(Date begin, Date end) throws Exception {
+	public List<CafeteriaMenu> getFromDb(Date begin, Date end) {
 		List<CafeteriaMenu> list = new ArrayList<CafeteriaMenu>();
 
 		Cursor c = db
 				.rawQuery(
 						"SELECT * FROM cafeterias_menus WHERE date BETWEEN ? AND ? ORDER BY date, mensaId, typeNr",
-						new String[] { getDateString(begin), getDateString(end) });
+						new String[] { Utils.getDateString(begin),
+								Utils.getDateString(end) });
 
 		while (c.moveToNext()) {
 			list.add(new CafeteriaMenu(c.getInt(c.getColumnIndex("id")), c
-					.getInt(c.getColumnIndex("mensaId")), getDate(c.getString(c
-					.getColumnIndex("date"))), c.getString(c
+					.getInt(c.getColumnIndex("mensaId")), Utils.getDate(c
+					.getString(c.getColumnIndex("date"))), c.getString(c
 					.getColumnIndex("typeShort")), c.getString(c
 					.getColumnIndex("typeLong")), c.getInt(c
 					.getColumnIndex("typeNr")), c.getString(c
@@ -121,21 +124,21 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	public static CafeteriaMenu getFromJson(JSONObject json) throws Exception {
 
 		return new CafeteriaMenu(json.getInt("id"), json.getInt("mensa_id"),
-				getDate(json.getString("date")), json.getString("type_short"),
-				json.getString("type_long"), json.getInt("type_nr"),
-				json.getString("name"));
+				Utils.getDate(json.getString("date")),
+				json.getString("type_short"), json.getString("type_long"),
+				json.getInt("type_nr"), json.getString("name"));
 	}
 
 	public static CafeteriaMenu getFromJsonAddendum(JSONObject json)
 			throws Exception {
 
-		return new CafeteriaMenu(0, json.getInt("mensa_id"),
-				getDate(json.getString("date")), json.getString("type_short"),
+		return new CafeteriaMenu(0, json.getInt("mensa_id"), Utils.getDate(json
+				.getString("date")), json.getString("type_short"),
 				json.getString("type_long"), 10, json.getString("name"));
 	}
 
 	public void replaceIntoDb(CafeteriaMenu c) throws Exception {
-		Log.d("TumCampus cafeterias_menus replaceIntoDb", c.toString());
+		// Log.d("TumCampus cafeterias_menus replaceIntoDb", c.toString());
 
 		if (c.mensaId <= 0) {
 			throw new Exception("Invalid mensaId.");
@@ -156,12 +159,17 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		db.execSQL(
 				"REPLACE INTO cafeterias_menus (id, mensaId, date, typeShort, typeLong, typeNr, name) VALUES (?, ?, ?, ?, ?, ?, ?)",
 				new String[] { String.valueOf(c.id), String.valueOf(c.mensaId),
-						getDateString(c.date), c.typeShort, c.typeLong,
+						Utils.getDateString(c.date), c.typeShort, c.typeLong,
 						String.valueOf(c.typeNr), c.name });
 	}
 
 	public void deleteAllFromDb() {
 		db.execSQL("DELETE FROM cafeterias_menus");
+	}
+
+	public void deleteFromDb(int mensaId) {
+		db.execSQL("DELETE FROM cafeterias_menus WHERE mensaId = ?",
+				new String[] { String.valueOf(mensaId) });
 	}
 
 	public void cleanupDb() {
@@ -175,15 +183,5 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
-	}
-
-	private static Date getDate(String s) throws ParseException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		return dateFormat.parse(s);
-	}
-
-	public static String getDateString(Date d) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		return dateFormat.format(d);
 	}
 }
