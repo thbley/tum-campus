@@ -14,10 +14,10 @@
 
 	<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
-		<Button android:text="sqlite: news" android:id="@+id/debugNews"
+		<Button android:text="sqlite: feeds" android:id="@+id/debugFeeds"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-		<Button android:text="sqlite: news_items" android:id="@+id/debugNewsItems"
+		<Button android:text="sqlite: feeds_items" android:id="@+id/debugFeedsItems"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
 		<Button android:text="sqlite: links" android:id="@+id/debugLinks"
