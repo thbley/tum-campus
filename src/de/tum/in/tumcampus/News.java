@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SlidingDrawer;
-import android.widget.TextView;
 
 public class News extends Activity implements OnItemClickListener {
 
