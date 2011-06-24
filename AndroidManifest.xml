@@ -43,7 +43,7 @@
 		<activity android:name=".Transports" android:label="MVV">
 		</activity>
 
-		<activity android:name=".AppInfo" android:label="App-Info">
+		<activity android:name=".AppInfo" android:label="TUM Campus App for Android">
 		</activity>
 
 		<activity android:name=".Debug" android:label="Debug">
