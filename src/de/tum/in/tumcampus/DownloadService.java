@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.util.Log;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
+import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
@@ -48,7 +49,7 @@ public class DownloadService extends IntentService {
 
 		try {
 			notification.setLatestEventInfo(this, "TumCampus download ...",
-					"1/3", contentIntent);
+					"1/4", contentIntent);
 			mNotificationManager.notify(1, notification);
 			message("Aktualisiere: Mensen", "");
 
@@ -57,7 +58,7 @@ public class DownloadService extends IntentService {
 
 			if (!destroyed) {
 				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"2/3", contentIntent);
+						"2/4", contentIntent);
 				mNotificationManager.notify(1, notification);
 				message(", Menus", "");
 
@@ -68,6 +69,17 @@ public class DownloadService extends IntentService {
 			}
 			cm.close();
 
+			if (!destroyed) {
+				notification.setLatestEventInfo(this, "TumCampus download ...",
+						"3/4", contentIntent);
+				mNotificationManager.notify(1, notification);
+				message(", Veranstaltungen", "");
+
+				EventManager em = new EventManager(this, "database.db");
+				em.downloadFromExternal();
+				em.close();
+			}
+			
 			if (!destroyed) {
 				FeedManager nm = new FeedManager(this, "database.db");
 				nm.downloadFromExternal();
@@ -84,7 +96,7 @@ public class DownloadService extends IntentService {
 						"http://www.heise.de/newsticker/heise.rdf"));
 
 				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"3/3", contentIntent);
+						"4/4", contentIntent);
 				mNotificationManager.notify(1, notification);
 				message(", RSS", "");
 
