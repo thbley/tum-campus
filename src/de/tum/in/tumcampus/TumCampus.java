@@ -22,6 +22,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
+import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.models.LinkManager;
@@ -50,8 +51,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.globus, "Nachrichten", new Intent(this,
 				News.class));
 
-		addItem(list, R.drawable.rss, "RSS-Feeds", new Intent(this,
-				Feeds.class));
+		addItem(list, R.drawable.rss, "RSS-Feeds",
+				new Intent(this, Feeds.class));
 
 		addItem(list, R.drawable.party, "Veranstaltungen", new Intent(this,
 				Events.class));
@@ -131,12 +132,16 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			FeedItemManager fim = new FeedItemManager(this, "database.db");
 			fim.deleteAllFromDb();
 			fim.close();
-			
-			// TODO clear cache directory
 
+			// TODO clear cache directory
 			LinkManager lm = new LinkManager(this, "database.db");
 			lm.deleteAllFromDb();
 			lm.close();
+
+			// TODO clear cache directory
+			EventManager em = new EventManager(this, "database.db");
+			em.deleteAllFromDb();
+			em.close();
 
 			return true;
 		}
