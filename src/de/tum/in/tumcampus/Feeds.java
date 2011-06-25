@@ -93,7 +93,6 @@ public class Feeds extends Activity implements OnItemClickListener {
 				image = String.valueOf(R.drawable.icon);
 			}
 
-			// TODO check file exists, is readable?
 			map.put("image", image);
 			map.put("title", c2.getString(1));
 			map.put("description", c2.getString(2));
