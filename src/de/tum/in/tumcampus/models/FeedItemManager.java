@@ -104,7 +104,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			target = Utils.getCacheDir("rss/cache") + Utils.md5(enclosure)
 					+ ".jpg";
 
-			if (new File(target).exists()) {
+			if (!new File(target).exists()) {
 				Utils.downloadFile(enclosure, target);
 			}
 		}
