@@ -14,6 +14,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.Html;
 import android.util.Log;
 
 public class FeedItemManager extends SQLiteOpenHelper {
@@ -114,8 +115,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		}
 		String description = "";
 		if (json.has("description")) {
-			description = json.getString("description").replaceAll("\\<.*?\\>",
-					"");
+			// decode HTML entites, remove links, images, etc.
+			description = Html.fromHtml(json.getString("description")).toString();
 		}
 
 		return new FeedItem(feedId, json.getString("title"),
