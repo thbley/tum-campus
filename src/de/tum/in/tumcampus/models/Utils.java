@@ -1,6 +1,7 @@
 package de.tum.in.tumcampus.models;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -55,8 +56,7 @@ public class Utils {
 		return new JSONObject(data);
 	}
 
-	public static void downloadFile(String url, String target)
-			throws Exception {
+	public static void downloadFile(String url, String target) throws Exception {
 
 		Log.d("TumCampus Download", "TumCampus Download " + url);
 
@@ -164,7 +164,8 @@ public class Utils {
 
 	public static Date getDateTime(String s) {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			SimpleDateFormat dateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd'T'HH:mm:ss");
 			return dateFormat.parse(s);
 		} catch (Exception e) {
 			// TODO implement
@@ -176,9 +177,10 @@ public class Utils {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		return dateFormat.format(d);
 	}
-	
+
 	public static String getDateTimeString(Date d) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(d);
 	}
 }
