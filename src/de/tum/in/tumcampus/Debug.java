@@ -79,7 +79,7 @@ public class Debug extends Activity implements View.OnClickListener {
 		}
 		
 		if (v.getId() == R.id.debugFeedsItems) {
-			DebugSQL("SELECT * FROM feeds ORDER BY feedId");
+			DebugSQL("SELECT * FROM feeds_items ORDER BY feedId");
 		}
 		
 		if (v.getId() == R.id.debugLinks) {
