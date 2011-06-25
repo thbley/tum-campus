@@ -1,5 +1,6 @@
 package de.tum.in.tumcampus.models;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,14 +96,17 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	public static FeedItem getFromJson(int feedId, JSONObject json)
 			throws Exception {
 
-		String enclosure = "";
+		String target = "";
 		if (json.has("enclosure")) {
-			enclosure = json.getJSONObject("enclosure").getString("url");
+			String enclosure = json.getJSONObject("enclosure").getString("url");
 
 			// TODO add download queue + extra thread?
-			String target = Utils.getCacheDir("rss/cache")
-					+ Utils.md5(enclosure) + ".jpg";
-			enclosure = Utils.downloadFile(enclosure, target);
+			target = Utils.getCacheDir("rss/cache") + Utils.md5(enclosure)
+					+ ".jpg";
+
+			if (new File(target).exists()) {
+				Utils.downloadFile(enclosure, target);
+			}
 		}
 		Date pubDate = new Date();
 		if (json.has("pubDate")) {
@@ -115,13 +119,13 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		}
 
 		return new FeedItem(feedId, json.getString("title"),
-				json.getString("link"), description, pubDate, enclosure);
+				json.getString("link"), description, pubDate, target);
 	}
 
 	public void insertIntoDb(FeedItem n) throws Exception {
 		Log.d("TumCampus feeds replaceIntoDb", n.toString());
 
-		if (n.feedId == 0) {
+		if (n.feedId <= 0) {
 			throw new Exception("Invalid feedId.");
 		}
 		if (n.link.length() == 0) {
