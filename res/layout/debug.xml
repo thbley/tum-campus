@@ -26,7 +26,7 @@
 		<Button android:text="sqlite: links" android:id="@+id/debugLinks"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-		<Button android:text="sqlite: event" android:id="@+id/debugEvents"
+		<Button android:text="sqlite: events" android:id="@+id/debugEvents"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 	</LinearLayout>
 
