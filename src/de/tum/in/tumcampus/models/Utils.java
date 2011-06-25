@@ -55,7 +55,7 @@ public class Utils {
 		return new JSONObject(data);
 	}
 
-	public static String downloadFile(String url, String target)
+	public static void downloadFile(String url, String target)
 			throws Exception {
 
 		Log.d("TumCampus Download", "TumCampus Download " + url);
@@ -85,8 +85,6 @@ public class Utils {
 		out.flush();
 		out.close();
 		in.close();
-
-		return file.toString();
 	}
 
 	private static String convertStreamToString(InputStream is) {
@@ -164,8 +162,23 @@ public class Utils {
 		return new Date();
 	}
 
+	public static Date getDateTime(String s) {
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			return dateFormat.parse(s);
+		} catch (Exception e) {
+			// TODO implement
+		}
+		return new Date();
+	}
+
 	public static String getDateString(Date d) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		return dateFormat.format(d);
+	}
+	
+	public static String getDateTimeString(Date d) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(d);
 	}
 }
