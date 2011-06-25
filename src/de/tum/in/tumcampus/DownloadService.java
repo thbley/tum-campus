@@ -79,11 +79,11 @@ public class DownloadService extends IntentService {
 				em.downloadFromExternal();
 				em.close();
 			}
-			
+
 			if (!destroyed) {
 				FeedManager nm = new FeedManager(this, "database.db");
 				nm.downloadFromExternal();
-				
+
 				// TODO remove
 				nm.insertIntoDb(new Feed(0, "Spiegel",
 						"http://www.spiegel.de/schlagzeilen/index.rss"));
@@ -110,10 +110,11 @@ public class DownloadService extends IntentService {
 
 			LinkManager lm = new LinkManager(this, "database.db");
 			lm.downloadFromExternal();
-			
+
 			// TODO remove, download icons for local usage
 			String icon = String.valueOf(R.drawable.icon);
-			lm.insertIntoDb(new Link(0, "Spiegel", "http://www.spiegel.de/", icon));
+			lm.insertIntoDb(new Link(0, "Spiegel", "http://www.spiegel.de/",
+					icon));
 			lm.insertIntoDb(new Link(0, "N-tv", "http://www.n-tv.de/", icon));
 			lm.insertIntoDb(new Link(0, "Zeit", "http://www.zeit.de/", icon));
 			lm.insertIntoDb(new Link(0, "Golem", "http://www.golem.de/", icon));
