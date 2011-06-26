@@ -13,7 +13,7 @@
 		<Button android:text="Aktualisieren" android:id="@+id/refresh"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_gravity="right" android:width="175px"
-			android:layout_marginTop="40px" android:textColor="#FF2546A4" />
+			android:layout_marginTop="36px" android:textColor="#FF2546A4" />
 	</FrameLayout>
 
 	<FrameLayout android:layout_width="fill_parent"
