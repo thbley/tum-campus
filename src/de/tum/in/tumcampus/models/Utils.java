@@ -57,6 +57,7 @@ public class Utils {
 	}
 
 	public static void downloadFile(String url, String target) throws Exception {
+		// TODO add download queue + extra thread?
 
 		Log.d("TumCampus Download", "TumCampus Download " + url);
 
