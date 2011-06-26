@@ -10,6 +10,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +33,44 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
 
 	private final int CLEAR_CACHE = Menu.FIRST;
+
+	private String checkConnection() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			String connection = "";
+			if (netInfo.getSubtypeName().length() > 0) {
+				connection += netInfo.getSubtypeName();
+			} else {
+				connection += netInfo.getTypeName();
+			}
+			if (netInfo.isRoaming()) {
+				connection += " roaming";
+			}
+			return connection;
+		}
+		return "";
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		String conn = checkConnection();
+
+		Button b = (Button) findViewById(R.id.refresh);
+
+		if (conn.length()>0) {
+			b.setVisibility(android.view.View.VISIBLE);
+			b.setText("Aktualisieren (" + conn + ")");
+		} else {
+			b.setVisibility(android.view.View.GONE);
+
+			TextView tv = (TextView) findViewById(R.id.hello);
+			tv.setText(getString(R.string.hello) + " Offline.");
+		}
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -190,5 +230,4 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			}
 		}
 	};
-
 }
