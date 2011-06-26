@@ -25,19 +25,19 @@ public class LinkManager extends SQLiteOpenHelper {
 	}
 
 	public void downloadFromExternal() throws Exception {
-		
+
 		deleteAllFromDb();
 		File[] files = new File(Utils.getCacheDir("")).listFiles();
-		
+
 		// TODO implement
 		String icon = String.valueOf(R.drawable.icon);
-		
-		for (int i=0; i<files.length; i++) {
-			
+
+		for (int i = 0; i < files.length; i++) {
+
 			if (files[i].getName().endsWith(".URL")) {
 				String name = files[i].getName().replace(".URL", "");
 				String url = Utils.getLinkFromUrlFile(files[i]);
-				
+
 				insertIntoDb(new Link(0, name, url, icon));
 			}
 		}
@@ -52,7 +52,7 @@ public class LinkManager extends SQLiteOpenHelper {
 			list.add(new Link(c.getInt(c.getColumnIndex("id")), c.getString(c
 					.getColumnIndex("name")), c.getString(c
 					.getColumnIndex("url")), c.getString(c
-							.getColumnIndex("icon"))));
+					.getColumnIndex("icon"))));
 		}
 		c.close();
 		return list;
@@ -79,7 +79,8 @@ public class LinkManager extends SQLiteOpenHelper {
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS links ("
-				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, url VARCHAR, icon VARCHAR)");
+				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, "
+				+ "url VARCHAR, icon VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
