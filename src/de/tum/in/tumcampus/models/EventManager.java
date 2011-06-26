@@ -79,7 +79,7 @@ public class EventManager extends SQLiteOpenHelper {
 	 * "TUM Campus App for Android", "category": "Software", "id":
 	 * "162327853831856" }, "name":
 	 * "R\u00fcckmeldung f\u00fcr Wintersemester 2011/12", "description":
-	 * "Studierende, die ihr Studium an der TUM fortsetzen wollen, m\u00fcssen sich vor Beginn eines jeden Semesters zum Weiterstudium r\u00fcckmelden.\nSie sind r\u00fcckgemeldet, sobald Sie Ihre Studienbeitr\u00e4ge innerhalb der R\u00fcckmeldefrist vollst\u00e4ndig bei uns eingezahlt haben."
+	 * "..."
 	 * , "start_time": "2011-08-15T00:00:00", "end_time": "2011-08-15T03:00:00",
 	 * "location": "TU M\u00fcnchen", "privacy": "OPEN", "updated_time":
 	 * "2011-06-25T06:26:14+0000" }
@@ -95,9 +95,8 @@ public class EventManager extends SQLiteOpenHelper {
 		String picture = "http://graph.facebook.com/" + eventId
 				+ "/Picture?type=large";
 
-		// TODO add download queue + extra thread?
 		String target = Utils.getCacheDir("events/cache") + eventId + ".jpg";
-		
+
 		if (!new File(target).exists()) {
 			Utils.downloadFile(picture, target);
 		}
