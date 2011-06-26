@@ -1,0 +1,2 @@
+Anzeige der Preise zum jeweiligen Gericht
+http://www.studentenwerk-muenchen.de/mensa/unsere-preise/
