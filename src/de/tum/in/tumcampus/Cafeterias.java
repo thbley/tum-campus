@@ -122,8 +122,6 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 				}
 			};
 			lv3.setAdapter(adapter);
-
-			// TODO Öffnungszeiten
 		}
 	}
 }
