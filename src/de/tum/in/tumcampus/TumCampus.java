@@ -34,7 +34,9 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 	private final int CLEAR_CACHE = Menu.FIRST;
 
-	private String checkConnection() {
+	private boolean debug = true;
+
+	public String getConnection() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
@@ -57,7 +59,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	protected void onResume() {
 		super.onResume();
 
-		String conn = checkConnection();
+		String conn = getConnection();
 
 		Button b = (Button) findViewById(R.id.refresh);
 		TextView tv = (TextView) findViewById(R.id.hello);
@@ -103,7 +105,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.info, "App-Info", new Intent(this,
 				AppInfo.class));
 
-		addItem(list, R.drawable.icon, "Debug", new Intent(this, Debug.class));
+		if (debug) {
+			addItem(list, R.drawable.icon, "Debug", new Intent(this,
+					Debug.class));
+		}
 
 		SimpleAdapter adapter = new SimpleAdapter(this, list,
 				R.layout.main_listview, new String[] { "icon", "name",
@@ -198,7 +203,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 			if (b.getText().equals("Abbrechen")) {
 				stopService(service);
-				b.setText("Aktualisieren");
+				b.setText("Aktualisieren (" + getConnection() + ")");
 			} else {
 				startService(service);
 				b.setText("Abbrechen");
@@ -222,7 +227,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 				if (action.equals("completed")) {
 					Button b = (Button) findViewById(R.id.refresh);
-					b.setText("Aktualisieren");
+					b.setText("Aktualisieren (" + getConnection() + ")");
 				}
 				if (message.length() > 0) {
 					TextView tv = (TextView) findViewById(R.id.hello);
