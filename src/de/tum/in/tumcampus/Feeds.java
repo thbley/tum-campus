@@ -101,6 +101,7 @@ public class Feeds extends Activity implements OnItemClickListener {
 		}
 		c2.close();
 
+		// TODO optimize
 		boolean showImages = true;
 		if (list.size() > 1) {
 			showImages = !list.get(0).get("image")
