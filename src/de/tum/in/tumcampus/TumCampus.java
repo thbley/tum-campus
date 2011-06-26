@@ -60,14 +60,15 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		String conn = checkConnection();
 
 		Button b = (Button) findViewById(R.id.refresh);
+		TextView tv = (TextView) findViewById(R.id.hello);
 
-		if (conn.length()>0) {
+		if (conn.length() > 0) {
 			b.setVisibility(android.view.View.VISIBLE);
 			b.setText("Aktualisieren (" + conn + ")");
+			tv.setText(getString(R.string.hello));
+
 		} else {
 			b.setVisibility(android.view.View.GONE);
-
-			TextView tv = (TextView) findViewById(R.id.hello);
 			tv.setText(getString(R.string.hello) + " Offline.");
 		}
 	}
