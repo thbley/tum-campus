@@ -48,7 +48,6 @@ public class Events extends Activity implements OnItemClickListener {
 		while (c.moveToNext()) {
 			Map<String, Object> map = new HashMap<String, Object>();
 
-			// TODO check file exists, is readable?
 			map.put("image", c.getString(0));
 			map.put("name", c.getString(1));
 			map.put("infos", weekDays[c.getInt(2)] + ", " + c.getString(3)
