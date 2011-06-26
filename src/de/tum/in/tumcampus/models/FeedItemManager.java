@@ -114,7 +114,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		String description = "";
 		if (json.has("description")) {
 			// decode HTML entites, remove links, images, etc.
-			description = Html.fromHtml(json.getString("description"))
+			description = Html.fromHtml(
+					json.getString("description").replaceAll("\\<.*?\\>", ""))
 					.toString();
 		}
 
