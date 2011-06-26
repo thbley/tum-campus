@@ -44,8 +44,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 			String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 			String query = URLEncoder
-					.encode("select title, link, description, pubDate, enclosure.url from rss where url=\""
-							+ feedUrl + "\" limit 25");
+					.encode("SELECT title, link, description, pubDate, enclosure.url "
+							+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
 
 			JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
 					.getJSONObject("query").getJSONObject("results")
@@ -83,9 +83,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 * 
 	 * Example JSON: e.g. { "title":
 	 * "US-Truppenabzug aus Afghanistan: \"Verlogen und verkorkst\"",
-	 * "description":
-	 * "Die USA werden konkret. Präsident Obama verkündet den Abzug der ersten Soldaten. Die deutsche Presse attestiert ihm, vor allem seine Wiederwahl im Blick zu haben. Dass Afghanistan bald wieder im Bürgerkrieg versinken könnte, scheint da nebensächlich."
-	 * , "link":
+	 * "description": "..." , "link":
 	 * "http://www.n-tv.de/politik/pressestimmen/Verlogen-und-verkorkst-article3650731.html"
 	 * , "pubDate": "Thu, 23 Jun 2011 20:06:53 GMT", "enclosure": { "url":
 	 * "http://www.n-tv.de/img/30/304801/Img_4_3_220_Pressestimmen.jpg" }
@@ -101,7 +99,6 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		if (json.has("enclosure")) {
 			String enclosure = json.getJSONObject("enclosure").getString("url");
 
-			// TODO add download queue + extra thread?
 			target = Utils.getCacheDir("rss/cache") + Utils.md5(enclosure)
 					+ ".jpg";
 
@@ -116,7 +113,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		String description = "";
 		if (json.has("description")) {
 			// decode HTML entites, remove links, images, etc.
-			description = Html.fromHtml(json.getString("description")).toString();
+			description = Html.fromHtml(json.getString("description"))
+					.toString();
 		}
 
 		return new FeedItem(feedId, json.getString("title"),
@@ -136,8 +134,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid title.");
 		}
 		db.execSQL(
-				"INSERT INTO feeds_items (feedId, title, link, description, date, image) "
-						+ "VALUES (?, ?, ?, ?, ?, ?)",
+				"INSERT INTO feeds_items (feedId, title, link, description, "
+						+ "date, image) VALUES (?, ?, ?, ?, ?, ?)",
 				new String[] { String.valueOf(n.feedId), n.title, n.link,
 						n.description, Utils.getDateString(n.date), n.image });
 	}
@@ -158,8 +156,9 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS feeds_items ("
-				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, feedId INTEGER, title VARCHAR, "
-				+ "link VARCHAR, description VARCHAR, date VARCHAR, image VARCHAR)");
+				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, feedId INTEGER, "
+				+ "title VARCHAR, link VARCHAR, description VARCHAR, "
+				+ "date VARCHAR, image VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
