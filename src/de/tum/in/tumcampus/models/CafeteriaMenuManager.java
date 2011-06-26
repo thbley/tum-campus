@@ -59,10 +59,6 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			for (int j = 0; j < beilagen.length(); j++) {
 				replaceIntoDb(getFromJsonAddendum(beilagen.getJSONObject(j)));
 			}
-
-			// TODO crawl prices
-			// http://www.studentenwerk-muenchen.de/mensa/unsere-preise/
-			
 			db.setTransactionSuccessful();
 			db.endTransaction();
 		}
@@ -90,11 +86,10 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	public List<CafeteriaMenu> getFromDb(Date begin, Date end) {
 		List<CafeteriaMenu> list = new ArrayList<CafeteriaMenu>();
 
-		Cursor c = db
-				.rawQuery(
-						"SELECT * FROM cafeterias_menus WHERE date BETWEEN ? AND ? ORDER BY date, mensaId, typeNr",
-						new String[] { Utils.getDateString(begin),
-								Utils.getDateString(end) });
+		Cursor c = db.rawQuery(
+				"SELECT * FROM cafeterias_menus WHERE date BETWEEN ? AND ? "
+						+ "ORDER BY date, mensaId, typeNr", new String[] {
+						Utils.getDateString(begin), Utils.getDateString(end) });
 
 		while (c.moveToNext()) {
 			list.add(new CafeteriaMenu(c.getInt(c.getColumnIndex("id")), c
@@ -157,7 +152,8 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		}
 
 		db.execSQL(
-				"REPLACE INTO cafeterias_menus (id, mensaId, date, typeShort, typeLong, typeNr, name) VALUES (?, ?, ?, ?, ?, ?, ?)",
+				"REPLACE INTO cafeterias_menus (id, mensaId, date, typeShort, "
+						+ "typeLong, typeNr, name) VALUES (?, ?, ?, ?, ?, ?, ?)",
 				new String[] { String.valueOf(c.id), String.valueOf(c.mensaId),
 						Utils.getDateString(c.date), c.typeShort, c.typeLong,
 						String.valueOf(c.typeNr), c.name });
@@ -178,7 +174,8 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
-				+ "id INTEGER, mensaId INTEGER, date VARCHAR, typeShort VARCHAR, typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
+				+ "id INTEGER, mensaId INTEGER, date VARCHAR, typeShort VARCHAR, "
+				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
