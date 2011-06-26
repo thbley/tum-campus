@@ -14,7 +14,7 @@ public class Link {
 	}
 
 	public String toString() {
-		return "id=" + this.id + " name=" + this.name + " url="
-				+ this.url + " icon="+icon;
+		return "id=" + this.id + " name=" + this.name + " url=" + this.url
+				+ " icon=" + icon;
 	}
 }
