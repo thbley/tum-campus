@@ -25,6 +25,7 @@ public class EventManager extends SQLiteOpenHelper {
 		super(context, database, null, DATABASE_VERSION);
 
 		db = this.getWritableDatabase();
+		onCreate(db);
 	}
 
 	public void downloadFromExternal() throws Exception {
