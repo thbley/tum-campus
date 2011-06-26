@@ -29,8 +29,9 @@ public class CafeteriaMenu {
 
 	public String toString() {
 		return "id=" + this.id + " mensaId=" + this.mensaId + " date="
-				+ Utils.getDateString(this.date) + " typeShort=" + this.typeShort + " typeLong="
-				+ this.typeLong + " typeNr=" + this.typeNr + " name="
-				+ this.name + " addendum=" + this.addendum;
+				+ Utils.getDateString(this.date) + " typeShort="
+				+ this.typeShort + " typeLong=" + this.typeLong + " typeNr="
+				+ this.typeNr + " name=" + this.name + " addendum="
+				+ this.addendum;
 	}
 }
