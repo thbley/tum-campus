@@ -36,6 +36,10 @@ public class DownloadService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 
+		// TODO show progress bar in GUI
+		// TODO avoid database locking / deadlocking exceptions
+		// TODO move constants to class header
+
 		Log.d("TumCampus DownloadService", "TumCampus service start");
 
 		String ns = Context.NOTIFICATION_SERVICE;
