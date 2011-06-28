@@ -42,7 +42,7 @@ public class Events extends Activity implements OnItemClickListener {
 						"SELECT image, name, strftime('%w', start_time), strftime('%d.%m.%Y %H:%M', start_time), "
 								+ "strftime('%H:%M', end_time), "
 								+ "location, description, id as _id "
-								+ "FROM events WHERE start_time > date('now') "
+								+ "FROM events WHERE end_time > datetime() "
 								+ "ORDER BY start_time ASC LIMIT 25", null);
 
 		while (c.moveToNext()) {
