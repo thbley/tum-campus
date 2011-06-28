@@ -1,10 +1,10 @@
 package de.tum.in.tumcampus.test;
 
-import com.jayway.android.robotium.solo.Solo;
-import de.tum.in.tumcampus.TumCampus; //Klasse in der der Test stattfindet
-
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
+
+import com.jayway.android.robotium.solo.Solo;
+
+import de.tum.in.tumcampus.TumCampus;
 
 public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
@@ -14,7 +14,7 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		super("de.tum.in.tumcampus", TumCampus.class);
 	}
 
-	public void setUp() throws Exception {
+	public void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
@@ -23,53 +23,98 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 			try {
 				wait(1000 * seconds);
 			} catch (Exception e) {
-				Log.e("TumCampus Test", e.getMessage());
+				System.out.println(e.getMessage());
 			}
 		}
 	}
 
-	public void testCafeterias() throws Exception {
-
-		final String item = "Speisepläne";
-		final String activityText = "Hallo Speisepläne";
-
-		assertTrue("[0] Cafeterias not found", solo.searchText(item));
-
-		solo.clickOnText(item);
-		assertTrue("[1] Cafeterias Activity not correctly displayed",
-				solo.searchText(activityText));
-
-		solo.goBack();
-		assertTrue("[2] Cafeterias not found after go back",
-				solo.searchText(item));
+	public void testMenu() {
+		assertTrue(solo.searchText("Hello World"));
+		assertTrue(solo.searchText("Aktualisieren"));
+		assertTrue(solo.searchText("Vorlesungen"));
+		assertTrue(solo.searchText("Speisepläne"));
+		assertTrue(solo.searchText("MVV"));
+		assertTrue(solo.searchText("Nachrichten"));
+		assertTrue(solo.searchText("RSS-Feeds"));
+		assertTrue(solo.searchText("Veranstaltungen"));
+		assertTrue(solo.searchText("Links"));
+		assertTrue(solo.searchText("App-Info"));
+		assertTrue(solo.searchText("Debug"));
+	}
+	
+	public void testRefresh() {
+		assertTrue(solo.searchText("Aktualisieren"));
+		solo.clickOnText("Aktualisieren");
+		
+		int duration = 0;
+		while (!solo.searchText("Fertig.") && duration<=30) {
+			waitGui(1);
+			duration++;
+		}
+		assertTrue(solo.searchText("Aktualisiere: Mensen, Menus, Veranstaltungen, RSS, Fertig."));
+	}
+	
+	public void testClearCache() {
+		solo.sendKey(Solo.MENU);
+		
+		assertTrue(solo.searchText("Cache leeren"));
+		solo.clickOnText("Cache leeren");
 	}
 
 	public void testLectures() {
+		assertTrue(solo.searchText("Vorlesungen"));
 
-		final String item = "Vorlesungen";
-		final String activityText = "Hallo Vorlesungen";
-
-		assertTrue("[10] Lectures not found", solo.searchText(item));
-
-		solo.clickOnText(item);
-		assertTrue("[11] Lectures Activity not correctly displayed",
-				solo.searchText(activityText));
-
+		solo.clickOnText("Vorlesungen");
+		assertTrue(solo.searchText("Hallo Vorlesungen"));
+		
 		solo.goBack();
-		assertTrue("[12] Lectures not found after go back",
-				solo.searchText(item));
+		assertTrue(solo.searchText("Hello World"));
+	}
+
+	public void testTransport() {
+		assertTrue(solo.searchText("MVV"));
+
+		solo.clickOnText("MVV");
+		assertTrue(solo.searchText("Hallo MVV"));
+		
+		solo.goBack();
+		assertTrue(solo.searchText("Hello World"));
+	}
+
+	public void testNews() {
+		assertTrue(solo.searchText("Nachrichten"));
+
+		solo.clickOnText("Nachrichten");
+		assertTrue(solo.searchText("Hallo Nachrichten"));
+		
+		solo.goBack();
+		assertTrue(solo.searchText("Hello World"));
+	}
+
+	public void testLinks() {
+		assertTrue(solo.searchText("Links"));
+
+		solo.clickOnText("Links");
+		assertTrue(solo.searchText("Hallo Links"));
+		
+		solo.goBack();
+		assertTrue(solo.searchText("Hello World"));
+	}
+
+	public void testAppinfo() {
+		assertTrue(solo.searchText("App-Info"));
+
+		solo.clickOnText("App-Info");
+		assertTrue(solo.searchText("TUM Campus App for Android"));
+		
+		assertTrue(solo.searchText("GNU GPL v3"));
+		assertTrue(solo.searchText("Source-Code"));
+		
+		solo.goBack();
+		assertTrue(solo.searchText("Hello World"));
 	}
 
 	public void testOptions() {
-
 		solo.clickOnText("Options");
-		assertTrue("[20] SlidingDrawer not correctly displayed",
-				solo.searchText("Button123"));
-
-		solo.clickOnText("Options");
-	}
-
-	public void testZFailure() {
-		assertTrue("[31] Some test failure", solo.searchText("ButtonBla"));
 	}
 }
