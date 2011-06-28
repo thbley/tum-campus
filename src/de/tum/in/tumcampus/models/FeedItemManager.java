@@ -2,7 +2,6 @@ package de.tum.in.tumcampus.models;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -60,23 +59,10 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		db.endTransaction();
 	}
 
-	public List<FeedItem> getAllFromDb(int feedId) {
-		List<FeedItem> list = new ArrayList<FeedItem>();
-
-		Cursor c = db.rawQuery(
-				"SELECT * FROM feeds_items WHERE feedId = ? ORDER BY date desc "
-						+ "LIMIT 25", new String[] { String.valueOf(feedId) });
-
-		while (c.moveToNext()) {
-			list.add(new FeedItem(c.getInt(c.getColumnIndex("feedId")), c
-					.getString(c.getColumnIndex("title")), c.getString(c
-					.getColumnIndex("link")), c.getString(c
-					.getColumnIndex("description")), Utils.getDate(c
-					.getString(c.getColumnIndex("date"))), c.getString(c
-					.getColumnIndex("image"))));
-		}
-		c.close();
-		return list;
+	public Cursor getAllFromDb(String feedId) {
+		return db.rawQuery("SELECT image, title, description, link, id as _id "
+				+ "FROM feeds_items " + "WHERE feedId = ? "
+				+ "ORDER BY date DESC", new String[] { feedId });
 	}
 
 	/**
@@ -144,7 +130,9 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 	public void deleteAllFromDb() {
 		Log.d("TumCampus feeds deleteAllFromDb", "");
+		
 		db.execSQL("DELETE FROM feeds_items");
+		Utils.emptyCacheDir("rss/cache");
 	}
 
 	public void deleteFromDb(int feedId) {
@@ -153,7 +141,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	}
 
 	public void cleanupDb() {
-		db.execSQL("DELETE FROM feeds_items WHERE date < date('now','-1 week')");
+		db.execSQL("DELETE FROM feeds_items WHERE date < date('now','-7 day')");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
