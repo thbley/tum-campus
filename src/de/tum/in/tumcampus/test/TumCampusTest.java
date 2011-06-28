@@ -47,7 +47,8 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnText("Aktualisieren");
 		
 		int duration = 0;
-		while (!solo.searchText("Fertig.") && duration<=30) {
+		while (!solo.searchText("Fertig.") && duration<=60) {
+			assertFalse(solo.searchText("Exception"));
 			waitGui(1);
 			duration++;
 		}
