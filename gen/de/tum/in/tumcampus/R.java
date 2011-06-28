@@ -58,13 +58,12 @@ public final class R {
         public static final int events_listview=0x7f030005;
         public static final int feeds=0x7f030006;
         public static final int feeds_listview=0x7f030007;
-        public static final int feeds_listview_text=0x7f030008;
-        public static final int lectures=0x7f030009;
-        public static final int links=0x7f03000a;
-        public static final int main=0x7f03000b;
-        public static final int main_listview=0x7f03000c;
-        public static final int news=0x7f03000d;
-        public static final int transports=0x7f03000e;
+        public static final int lectures=0x7f030008;
+        public static final int links=0x7f030009;
+        public static final int main=0x7f03000a;
+        public static final int main_listview=0x7f03000b;
+        public static final int news=0x7f03000c;
+        public static final int transports=0x7f03000d;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
