@@ -2,9 +2,6 @@ package de.tum.in.tumcampus.models;
 
 import static de.tum.in.tumcampus.models.Utils.getDate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -65,44 +62,20 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		}
 	}
 
-	public List<HashMap<String, String>> getTypeNameFromDb(String mensaId,
-			String date) {
-		List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-
-		Cursor c = db.rawQuery("SELECT typeLong, group_concat(name, '\n') "
-				+ "FROM cafeterias_menus WHERE mensaId = ? AND "
-				+ "date = ? GROUP BY typeLong ORDER BY typeNr, typeLong, name",
-				new String[] { mensaId, date });
-
-		while (c.moveToNext()) {
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("typeLong", c.getString(0));
-			map.put("names", c.getString(1));
-			list.add(map);
-		}
-		c.close();
-		return list;
+	public Cursor getDatesFromDb() {
+		return db.rawQuery(
+				"SELECT DISTINCT strftime('%d.%m.%Y', date) as date_de, date as _id "
+						+ "FROM cafeterias_menus WHERE "
+						+ "date >= date() ORDER BY date", null);
 	}
 
-	public List<CafeteriaMenu> getFromDb(Date begin, Date end) {
-		List<CafeteriaMenu> list = new ArrayList<CafeteriaMenu>();
-
-		Cursor c = db.rawQuery(
-				"SELECT * FROM cafeterias_menus WHERE date BETWEEN ? AND ? "
-						+ "ORDER BY date, mensaId, typeNr", new String[] {
-						Utils.getDateString(begin), Utils.getDateString(end) });
-
-		while (c.moveToNext()) {
-			list.add(new CafeteriaMenu(c.getInt(c.getColumnIndex("id")), c
-					.getInt(c.getColumnIndex("mensaId")), Utils.getDate(c
-					.getString(c.getColumnIndex("date"))), c.getString(c
-					.getColumnIndex("typeShort")), c.getString(c
-					.getColumnIndex("typeLong")), c.getInt(c
-					.getColumnIndex("typeNr")), c.getString(c
-					.getColumnIndex("name"))));
-		}
-		c.close();
-		return list;
+	public Cursor getTypeNameFromDb(String mensaId, String date) {
+		return db
+				.rawQuery(
+						"SELECT typeLong, group_concat(name, '\n') as names, id as _id "
+								+ "FROM cafeterias_menus WHERE mensaId = ? AND "
+								+ "date = ? GROUP BY typeLong ORDER BY typeNr, typeLong, name",
+						new String[] { mensaId, date });
 	}
 
 	/**
@@ -170,7 +143,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	}
 
 	public void cleanupDb() {
-		db.execSQL("DELETE FROM cafeterias_menus WHERE date < date('now','-1 week')");
+		db.execSQL("DELETE FROM cafeterias_menus WHERE date < date('now','-7 day')");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
