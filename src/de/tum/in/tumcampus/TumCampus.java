@@ -10,6 +10,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -78,7 +80,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.main);
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -126,9 +127,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		getApplicationContext().registerReceiver(receiver, intentFilter);
 
 		// TODO initial sync
-		// TODO test internet connection
-
-		// TODO display german date format
+		// TODO partial sync
 	}
 
 	@Override
@@ -139,8 +138,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		Map<String, Object> map = (Map<String, Object>) lv.getAdapter()
 				.getItem(position);
 
-		Intent itemIntent = (Intent) map.get("intent");
-		startActivity(itemIntent);
+		Intent intent = (Intent) map.get("intent");
+		startActivity(intent);
 	}
 
 	private void addItem(List<Map<String, Object>> data, int icon, String name,
@@ -162,6 +161,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		switch (item.getItemId()) {
 		case CLEAR_CACHE:
 
+			SharedPreferences settings = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+			Editor e = settings.edit();
+			e.clear();
+			e.commit();
+			
+			// check sd card
+			// Utils.getCacheDir("");
+
 			CafeteriaManager cm = new CafeteriaManager(this, "database.db");
 			cm.deleteAllFromDb();
 			cm.close();
@@ -179,12 +186,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			fim.deleteAllFromDb();
 			fim.close();
 
-			// TODO clear cache directory
 			LinkManager lm = new LinkManager(this, "database.db");
 			lm.deleteAllFromDb();
 			lm.close();
 
-			// TODO clear cache directory
 			EventManager em = new EventManager(this, "database.db");
 			em.deleteAllFromDb();
 			em.close();
