@@ -44,9 +44,9 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 				.toString(), null, SQLiteDatabase.OPEN_READONLY);
 
 		Cursor c = db.rawQuery(
-				"SELECT DISTINCT strftime('%d.%m.%Y', date) as date, date as _id "
+				"SELECT DISTINCT strftime('%d.%m.%Y', date) as date_de, date as _id "
 						+ "FROM cafeterias_menus WHERE "
-						+ "date >= date('now') ORDER BY date", null);
+						+ "date >= date() ORDER BY date", null);
 
 		ListAdapter adapter = new SimpleCursorAdapter(this,
 				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
