@@ -55,7 +55,7 @@ public class EventManager extends SQLiteOpenHelper {
 		List<Event> list = new ArrayList<Event>();
 
 		Cursor c = db.rawQuery(
-				"SELECT * FROM events WHERE start_time > date('now') ORDER BY start_time asc "
+				"SELECT * FROM events WHERE end_time > datetime() ORDER BY start_time asc "
 						+ "LIMIT 25", null);
 
 		while (c.moveToNext()) {
