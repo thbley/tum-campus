@@ -1,7 +1,6 @@
 package de.tum.in.tumcampus.models;
 
 import java.io.BufferedReader;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,6 +21,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
 
@@ -124,6 +125,20 @@ public class Utils {
 		return f.getPath() + "/";
 	}
 
+	public static void emptyCacheDir(String directory) {
+		try {
+			File dir = new File(getCacheDir(directory));
+			if (dir.isDirectory() && dir.canWrite()) {
+				String[] children = dir.list();
+				for (int i = 0; i < children.length; i++) {
+					new File(dir, children[i]).delete();
+				}
+			}
+		} catch (Exception e) {
+			// TODO implement
+		}
+	}
+
 	public static String getLinkFromUrlFile(File file) {
 		try {
 			byte[] buffer = new byte[(int) file.length()];
@@ -179,9 +194,28 @@ public class Utils {
 		return dateFormat.format(d);
 	}
 
+	public static String getDateStringDe(Date d) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+		return dateFormat.format(d);
+	}
+
 	public static String getDateTimeString(Date d) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(d);
+	}
+
+	public static String loadSetting(Context c, String name) {
+		SharedPreferences prefs = c.getSharedPreferences("prefs",
+				Context.MODE_PRIVATE);
+		return prefs.getString(name, null);
+	}
+
+	public static void saveSetting(Context c, String name, String value) {
+		SharedPreferences prefs = c.getSharedPreferences("prefs",
+				Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(name, value);
+		editor.commit();
 	}
 }
