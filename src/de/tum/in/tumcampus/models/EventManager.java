@@ -2,8 +2,6 @@ package de.tum.in.tumcampus.models;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,26 +49,24 @@ public class EventManager extends SQLiteOpenHelper {
 		db.endTransaction();
 	}
 
-	public List<Event> getAllFromDb() {
-		List<Event> list = new ArrayList<Event>();
+	public Cursor getAllFromDb() {
+		return db
+				.rawQuery(
+						"SELECT image, name, strftime('%w', start_time) as weekday, strftime('%d.%m.%Y %H:%M', start_time) as start, "
+								+ "strftime('%H:%M', end_time) as end, "
+								+ "location, description, id as _id "
+								+ "FROM events WHERE end_time > datetime() "
+								+ "ORDER BY start_time ASC LIMIT 25", null);
+	}
 
-		Cursor c = db.rawQuery(
-				"SELECT * FROM events WHERE end_time > datetime() ORDER BY start_time asc "
-						+ "LIMIT 25", null);
-
-		while (c.moveToNext()) {
-			// TODO implement
-			/*
-			 * list.add(new Event(c.getInt(c.getColumnIndex("feedId")), c
-			 * .getString(c.getColumnIndex("title")), c.getString(c
-			 * .getColumnIndex("link")), c.getString(c
-			 * .getColumnIndex("description")), Utils.getDate(c
-			 * .getString(c.getColumnIndex("date"))), c.getString(c
-			 * .getColumnIndex("image"))));
-			 */
-		}
-		c.close();
-		return list;
+	public Cursor getDetailsFromDb(String id) {
+		return db
+				.rawQuery(
+						"SELECT image, name, strftime('%w', start_time), strftime('%d.%m.%Y %H:%M', start_time), "
+								+ "strftime('%H:%M', end_time), "
+								+ "location, description, id as _id "
+								+ "FROM events WHERE id = ? ",
+						new String[] { id });
 	}
 
 	/**
@@ -79,8 +75,7 @@ public class EventManager extends SQLiteOpenHelper {
 	 * Example JSON: e.g. { "id": "166478443419659", "owner": { "name":
 	 * "TUM Campus App for Android", "category": "Software", "id":
 	 * "162327853831856" }, "name":
-	 * "R\u00fcckmeldung f\u00fcr Wintersemester 2011/12", "description":
-	 * "..."
+	 * "R\u00fcckmeldung f\u00fcr Wintersemester 2011/12", "description": "..."
 	 * , "start_time": "2011-08-15T00:00:00", "end_time": "2011-08-15T03:00:00",
 	 * "location": "TU M\u00fcnchen", "privacy": "OPEN", "updated_time":
 	 * "2011-06-25T06:26:14+0000" }
@@ -140,11 +135,13 @@ public class EventManager extends SQLiteOpenHelper {
 
 	public void deleteAllFromDb() {
 		Log.d("TumCampus events deleteAllFromDb", "");
+		
 		db.execSQL("DELETE FROM events");
+		Utils.emptyCacheDir("events/cache");
 	}
 
 	public void cleanupDb() {
-		db.execSQL("DELETE FROM events WHERE start_time < date('now','-2 week')");
+		db.execSQL("DELETE FROM events WHERE start_time < date('now','-14 day')");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
