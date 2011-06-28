@@ -25,6 +25,7 @@ public class FeedManager extends SQLiteOpenHelper {
 
 	public void downloadFromExternal() throws Exception {
 		deleteAllFromDb();
+		// TODO transaction
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
 
 		for (int i = 0; i < files.length; i++) {
@@ -39,18 +40,9 @@ public class FeedManager extends SQLiteOpenHelper {
 		}
 	}
 
-	public List<Feed> getAllFromDb() {
-		List<Feed> list = new ArrayList<Feed>();
-
-		Cursor c = db.rawQuery("SELECT * FROM feeds ORDER BY name", null);
-
-		while (c.moveToNext()) {
-			list.add(new Feed(c.getInt(c.getColumnIndex("id")), c.getString(c
-					.getColumnIndex("name")), c.getString(c
-					.getColumnIndex("feedUrl"))));
-		}
-		c.close();
-		return list;
+	public Cursor getAllFromDb() {
+		return db.rawQuery("SELECT DISTINCT name, feedUrl, id as _id "
+				+ "FROM feeds ORDER BY name", null);
 	}
 
 	public List<Integer> getAllIdsFromDb() {
