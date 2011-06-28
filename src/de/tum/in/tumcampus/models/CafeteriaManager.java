@@ -40,20 +40,6 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		db.endTransaction();
 	}
 
-	public List<Cafeteria> getAllFromDb() {
-		List<Cafeteria> list = new ArrayList<Cafeteria>();
-
-		Cursor c = db.rawQuery("SELECT * FROM cafeterias ORDER BY name", null);
-
-		while (c.moveToNext()) {
-			list.add(new Cafeteria(c.getInt(c.getColumnIndex("id")), c
-					.getString(c.getColumnIndex("name")), c.getString(c
-					.getColumnIndex("address"))));
-		}
-		c.close();
-		return list;
-	}
-
 	public List<Integer> getAllIdsFromDb() {
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -64,6 +50,12 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		}
 		c.close();
 		return list;
+	}
+
+	public Cursor getAllFromDb() {
+		return db.rawQuery("SELECT name, address, id as _id "
+				+ "FROM cafeterias "
+				+ "ORDER BY address like '%Garching%' desc, name", null);
 	}
 
 	/**
