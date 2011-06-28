@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="#0065BD"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
@@ -22,7 +23,7 @@
 			<ScrollView android:id="@+id/options"
 				android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-				<LinearLayout android:background="#DD000000"
+				<LinearLayout android:background="#F1FFFFFF"
 					android:layout_width="fill_parent" android:orientation="vertical"
 					android:layout_height="fill_parent">
 
@@ -32,6 +33,7 @@
 						android:padding="10px" />
 
 					<TextView android:layout_width="fill_parent"
+						android:textColor="#0065BD"
 						android:text="Bitte wählen Sie eine Veranstaltung aus."
 						android:layout_height="wrap_content" android:id="@+id/description"
 						android:autoLink="web" />
