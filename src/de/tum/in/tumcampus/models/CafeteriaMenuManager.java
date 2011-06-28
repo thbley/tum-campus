@@ -31,7 +31,6 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		cleanupDb();
 		for (int i = 0; i < ids.size(); i++) {
 			db.beginTransaction();
-			deleteFromDb(ids.get(i));
 
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
 					+ "WHERE mensaId = ? AND "
@@ -135,11 +134,6 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 	public void deleteAllFromDb() {
 		db.execSQL("DELETE FROM cafeterias_menus");
-	}
-
-	public void deleteFromDb(int mensaId) {
-		db.execSQL("DELETE FROM cafeterias_menus WHERE mensaId = ?",
-				new String[] { String.valueOf(mensaId) });
 	}
 
 	public void cleanupDb() {
