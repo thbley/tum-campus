@@ -2,8 +2,10 @@ package de.tum.in.tumcampus;
 
 import de.tum.in.tumcampus.models.LinkManager;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,8 +45,16 @@ public class Links extends Activity implements OnItemClickListener, ViewBinder {
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
 		// TODO Auto-generated method stub
+		
+		ListView lv = (ListView) findViewById(R.id.listView);
+		Cursor c = (Cursor) lv.getAdapter().getItem(position);
+		String url = c.getString(c.getColumnIndex("url"));
+		
+		// Connection to browser
+		Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse(url));
+		startActivity(viewIntent);
 		
 	}
 }
