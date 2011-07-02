@@ -43,11 +43,10 @@ public class LinkManager extends SQLiteOpenHelper {
 	}
 
 	public Cursor getAllFromDb() {
-		return db.rawQuery("SELECT DISTINCT name, Url, icon, id as _id "
+		return db.rawQuery("SELECT icon, name, url, id as _id "
 				+ "FROM links ORDER BY name", null);
 	}
-	
-	
+
 	public void insertIntoDb(Link l) throws Exception {
 		Log.d("TumCampus links replaceIntoDb", l.toString());
 
@@ -65,7 +64,7 @@ public class LinkManager extends SQLiteOpenHelper {
 	public void deleteAllFromDb() {
 		Log.d("TumCampus links deleteAllFromDb", "");
 		db.execSQL("DELETE FROM links");
-		
+
 		// TODO clear cache directory
 	}
 
