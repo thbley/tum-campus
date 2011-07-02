@@ -42,7 +42,7 @@
 		<activity android:name=".Feeds" android:label="RSS-Feeds">
 		</activity>
 
-		<activity android:name=".Transports" android:label="MVV">
+		<activity android:name=".Transports" android:label="MVV Live">
 		</activity>
 
 		<activity android:name=".AppInfo" android:label="TUM Campus App for Android">
