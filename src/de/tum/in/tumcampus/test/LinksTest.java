@@ -1,6 +1,5 @@
 package de.tum.in.tumcampus.test;
 
-import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
