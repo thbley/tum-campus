@@ -132,7 +132,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 						String.valueOf(c.typeNr), c.name });
 	}
 
-	public void deleteAllFromDb() {
+	public void removeCache() {
 		db.execSQL("DELETE FROM cafeterias_menus");
 	}
 
