@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import de.tum.in.tumcampus.R;
 
 public class LinkManager extends SQLiteOpenHelper {
 
@@ -28,16 +27,16 @@ public class LinkManager extends SQLiteOpenHelper {
 		// TODO transaction
 		File[] files = new File(Utils.getCacheDir("")).listFiles();
 
-		// TODO implement
-		String icon = String.valueOf(R.drawable.icon);
-
 		for (int i = 0; i < files.length; i++) {
 
 			if (files[i].getName().endsWith(".URL")) {
 				String name = files[i].getName().replace(".URL", "");
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
-				insertIntoDb(new Link(0, name, url, icon));
+				String target = Utils.getCacheDir("links/cache") + Utils.md5(url) + ".ico";
+				Utils.downloadIconFile(url, target);
+
+				insertIntoDb(new Link(0, name, url, target));
 			}
 		}
 	}
@@ -65,7 +64,7 @@ public class LinkManager extends SQLiteOpenHelper {
 		Log.d("TumCampus links deleteAllFromDb", "");
 		db.execSQL("DELETE FROM links");
 
-		// TODO clear cache directory
+		Utils.emptyCacheDir("links/cache");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
