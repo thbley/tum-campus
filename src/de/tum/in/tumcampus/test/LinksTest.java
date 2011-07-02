@@ -1,5 +1,6 @@
 package de.tum.in.tumcampus.test;
 
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
@@ -25,10 +26,8 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		assertTrue(solo.searchText("Spiegel"));
 		assertTrue(solo.searchText("Golem"));
-		solo.clickOnText("Spiegel");
-
-		solo.goBack();
-		assertTrue(solo.searchText("Links"));
+		
+		solo.clickOnText("Heise");
 
 		// TODO inject test data
 	}
