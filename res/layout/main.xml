@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="#0065BD"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:background="#0065BD" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
 
 	<FrameLayout android:layout_width="wrap_content"
 		android:layout_height="wrap_content">
@@ -24,7 +23,8 @@
 			android:layout_width="fill_parent" android:layout_height="fill_parent">
 
 			<TextView android:layout_width="fill_parent" android:id="@+id/hello"
-				android:layout_height="wrap_content" android:text="@string/hello" />
+				android:layout_height="wrap_content" android:text="@string/hello"
+				android:textColor="#FFFFFF" />
 
 			<ListView android:layout_height="wrap_content" android:id="@+id/listViewMain"
 				android:layout_width="fill_parent" android:paddingBottom="50px" />
@@ -35,11 +35,9 @@
 			android:handle="@+id/handle" android:content="@+id/options">
 
 			<Button android:layout_height="wrap_content"
-				android:background="#0065BD"
-				android:textColor="#FFFFFF"
+				android:background="#0065BD" android:textColor="#FFFFFF"
 				android:layout_width="fill_parent" android:text="Options"
-				android:id="@+id/handle"
-				android:height="50px" />
+				android:id="@+id/handle" android:height="50px" />
 
 			<LinearLayout android:id="@+id/options"
 				android:background="#DD000000" android:layout_width="fill_parent"
