@@ -68,12 +68,6 @@ public class TransportManager extends SQLiteOpenHelper {
 				new String[] { name });
 	}
 
-	public void deleteAllFromDb() {
-		Log.d("TumCampus transports deleteAllFromDb", "");
-
-		db.execSQL("DELETE FROM transports");
-	}
-
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS transports ("
 				+ "name VARCHAR PRIMARY KEY)");
