@@ -43,7 +43,7 @@ public class FeedManager extends SQLiteOpenHelper {
 	}
 
 	public Cursor getAllFromDb() {
-		return db.rawQuery("SELECT DISTINCT name, feedUrl, id as _id "
+		return db.rawQuery("SELECT name, feedUrl, id as _id "
 				+ "FROM feeds ORDER BY name", null);
 	}
 
