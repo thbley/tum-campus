@@ -28,8 +28,6 @@ import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
-import de.tum.in.tumcampus.models.FeedManager;
-import de.tum.in.tumcampus.models.LinkManager;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
@@ -166,7 +164,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			e.clear();
 			e.commit();
 			
-			// check sd card
+			// TODO check sd card readable
 			// Utils.getCacheDir("");
 
 			CafeteriaManager cm = new CafeteriaManager(this, "database.db");
@@ -178,17 +176,9 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			cmm.deleteAllFromDb();
 			cmm.close();
 
-			FeedManager fm = new FeedManager(this, "database.db");
-			fm.deleteAllFromDb();
-			fm.close();
-
 			FeedItemManager fim = new FeedItemManager(this, "database.db");
 			fim.deleteAllFromDb();
 			fim.close();
-
-			LinkManager lm = new LinkManager(this, "database.db");
-			lm.deleteAllFromDb();
-			lm.close();
 
 			EventManager em = new EventManager(this, "database.db");
 			em.deleteAllFromDb();
