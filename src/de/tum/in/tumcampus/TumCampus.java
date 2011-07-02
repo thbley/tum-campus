@@ -160,11 +160,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		switch (item.getItemId()) {
 		case CLEAR_CACHE:
 
-			SharedPreferences settings = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+			SharedPreferences settings = getSharedPreferences("prefs",
+					Context.MODE_PRIVATE);
 			Editor e = settings.edit();
 			e.clear();
 			e.commit();
-			
+
 			// TODO check sd card readable
 			// Utils.getCacheDir("");
 
