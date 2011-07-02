@@ -24,6 +24,8 @@ public class FeedManager extends SQLiteOpenHelper {
 	}
 
 	public void downloadFromExternal() throws Exception {
+		
+		// TODO change
 		deleteAllFromDb();
 		// TODO transaction
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
