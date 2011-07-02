@@ -24,7 +24,7 @@ public class Links extends Activity implements OnItemClickListener {
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 				R.layout.links_listview, c, c.getColumnNames(), new int[] {
-						R.drawable.icon, R.id.name });
+						R.id.icon, R.id.name });
 
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setAdapter(adapter);
