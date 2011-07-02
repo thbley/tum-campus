@@ -41,23 +41,26 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("App-Info"));
 		assertTrue(solo.searchText("Debug"));
 	}
-	
+
 	public void testRefresh() {
 		assertTrue(solo.searchText("Aktualisieren"));
 		solo.clickOnText("Aktualisieren");
-		
+
 		int duration = 0;
-		while (!solo.searchText("Fertig.") && duration<=60) {
+		while (!solo.searchText("Fertig.") && duration <= 60) {
 			assertFalse(solo.searchText("Exception"));
 			waitGui(1);
 			duration++;
 		}
-		assertTrue(solo.searchText("Aktualisiere: Mensen, Menus, Veranstaltungen, RSS, Fertig."));
+		assertTrue(solo
+				.searchText("Aktualisiere: Mensen, Menus, Veranstaltungen, RSS, Fertig."));
+
+		// TODO check filled sections?
 	}
-	
+
 	public void testClearCache() {
 		solo.sendKey(Solo.MENU);
-		
+
 		assertTrue(solo.searchText("Cache leeren"));
 		solo.clickOnText("Cache leeren");
 	}
@@ -67,7 +70,7 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.clickOnText("Vorlesungen");
 		assertTrue(solo.searchText("Hallo Vorlesungen"));
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
@@ -77,7 +80,7 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.clickOnText("MVV");
 		assertTrue(solo.searchText("Hallo MVV"));
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
@@ -87,7 +90,7 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.clickOnText("Nachrichten");
 		assertTrue(solo.searchText("Hallo Nachrichten"));
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
@@ -97,7 +100,7 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.clickOnText("Links");
 		assertTrue(solo.searchText("Hallo Links"));
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
@@ -107,10 +110,10 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.clickOnText("App-Info");
 		assertTrue(solo.searchText("TUM Campus App for Android"));
-		
+
 		assertTrue(solo.searchText("GNU GPL v3"));
 		assertTrue(solo.searchText("Source-Code"));
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
