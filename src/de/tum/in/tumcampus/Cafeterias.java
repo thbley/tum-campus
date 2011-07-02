@@ -1,6 +1,6 @@
 package de.tum.in.tumcampus;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -28,9 +28,16 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// TODO check again, next working day?
-		date = Utils.getDateString(new Date());
-		dateStr = Utils.getDateStringDe(new Date());
+		Calendar calendar = Calendar.getInstance();  
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        if (dayOfWeek == Calendar.SATURDAY) {
+        	calendar.add(Calendar.DATE, 2);
+        }
+        if (dayOfWeek == Calendar.SUNDAY) {
+        	calendar.add(Calendar.DATE, 1);
+        }
+		date = Utils.getDateString(calendar.getTime());
+		dateStr = Utils.getDateStringDe(calendar.getTime());
 
 		if (getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
 			setContentView(R.layout.cafeterias_horizontal);
