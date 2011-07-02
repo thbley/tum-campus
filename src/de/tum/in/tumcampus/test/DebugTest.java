@@ -30,7 +30,7 @@ public class DebugTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnText("feeds_items");
 		solo.clickOnText("links");
 		solo.clickOnText("events");
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
