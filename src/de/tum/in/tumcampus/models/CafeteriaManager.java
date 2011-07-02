@@ -32,7 +32,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 				.getJSONArray("mensa_mensen");
 
 		db.beginTransaction();
-		deleteAllFromDb();
+		removeCache();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
 		}
@@ -90,7 +90,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 				new String[] { String.valueOf(c.id), c.name, c.address });
 	}
 
-	public void deleteAllFromDb() {
+	public void removeCache() {
 		Log.d("TumCampus cafeterias deleteAllFromDb", "");
 		db.execSQL("DELETE FROM cafeterias");
 	}
