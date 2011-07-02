@@ -18,6 +18,8 @@ import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.models.Link;
 import de.tum.in.tumcampus.models.LinkManager;
+import de.tum.in.tumcampus.models.TransportManager;
+import de.tum.in.tumcampus.models.Utils;
 
 public class DownloadService extends IntentService {
 
@@ -52,6 +54,9 @@ public class DownloadService extends IntentService {
 				new Intent(this, TumCampus.class), 0);
 
 		try {
+			// check if sd card available
+			Utils.getCacheDir("");
+			
 			notification.setLatestEventInfo(this, "TumCampus download ...",
 					"1/4", contentIntent);
 			mNotificationManager.notify(1, notification);
@@ -112,17 +117,37 @@ public class DownloadService extends IntentService {
 				nm.close();
 			}
 
+			TransportManager tm = new TransportManager(this, "database.db");
+			tm.replaceIntoDb("Garching-Forschungszentrum");
+			tm.replaceIntoDb("Marienplatz");
+			tm.replaceIntoDb("Ottobrunn");
+			tm.close();
+
 			LinkManager lm = new LinkManager(this, "database.db");
 			lm.downloadFromExternal();
 
-			// TODO remove, download icons for local usage
-			String icon = String.valueOf(R.drawable.icon);
-			lm.insertIntoDb(new Link(0, "Spiegel", "http://www.spiegel.de/",
-					icon));
-			lm.insertIntoDb(new Link(0, "N-tv", "http://www.n-tv.de/", icon));
-			lm.insertIntoDb(new Link(0, "Zeit", "http://www.zeit.de/", icon));
-			lm.insertIntoDb(new Link(0, "Golem", "http://www.golem.de/", icon));
-			lm.insertIntoDb(new Link(0, "Heise", "http://www.heise.de/", icon));
+			// TODO remove
+			String target = Utils.getCacheDir("links/cache") + "1.ico";
+			Utils.downloadIconFile("http://m.spiegel.de/", target);
+			lm.insertIntoDb(new Link(0, "Spiegel", "http://m.spiegel.de/",
+					target));
+
+			target = Utils.getCacheDir("links/cache") + "2.ico";
+			Utils.downloadIconFile("http://www.n-tv.de/", target);
+			lm.insertIntoDb(new Link(0, "N-tv", "http://www.n-tv.de/", target));
+
+			target = Utils.getCacheDir("links/cache") + "3.ico";
+			Utils.downloadIconFile("http://www.zeit.de/", target);
+			lm.insertIntoDb(new Link(0, "Zeit", "http://www.zeit.de/", target));
+
+			target = Utils.getCacheDir("links/cache") + "4.ico";
+			Utils.downloadIconFile("http://golem.mobi/", target);
+			lm.insertIntoDb(new Link(0, "Golem", "http://golem.mobi/", target));
+
+			target = Utils.getCacheDir("links/cache") + "5.ico";
+			Utils.downloadIconFile("http://www.heise.de/", target);
+			lm.insertIntoDb(new Link(0, "Heise", "http://www.heise.de/", target));
+
 			lm.close();
 
 		} catch (Exception e) {
