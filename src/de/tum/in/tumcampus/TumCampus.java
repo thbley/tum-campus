@@ -28,6 +28,7 @@ import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
+import de.tum.in.tumcampus.models.LinkManager;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
@@ -168,21 +169,25 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			// Utils.getCacheDir("");
 
 			CafeteriaManager cm = new CafeteriaManager(this, "database.db");
-			cm.deleteAllFromDb();
+			cm.removeCache();
 			cm.close();
 
 			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this,
 					"database.db");
-			cmm.deleteAllFromDb();
+			cmm.removeCache();
 			cmm.close();
 
 			FeedItemManager fim = new FeedItemManager(this, "database.db");
-			fim.deleteAllFromDb();
+			fim.removeCache();
 			fim.close();
 
 			EventManager em = new EventManager(this, "database.db");
-			em.deleteAllFromDb();
+			em.removeCache();
 			em.close();
+
+			LinkManager lm = new LinkManager(this, "database.db");
+			lm.removeCache();
+			lm.close();
 
 			return true;
 		}
