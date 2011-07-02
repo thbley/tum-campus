@@ -133,7 +133,7 @@ public class EventManager extends SQLiteOpenHelper {
 						e.description, e.link, e.image });
 	}
 
-	public void deleteAllFromDb() {
+	public void removeCache() {
 		Log.d("TumCampus events deleteAllFromDb", "");
 		
 		db.execSQL("DELETE FROM events");
