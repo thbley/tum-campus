@@ -24,7 +24,8 @@
 
 			<TextView android:layout_width="fill_parent" android:id="@+id/hello"
 				android:layout_height="wrap_content" android:text="@string/hello"
-				android:textColor="#FFFFFF" />
+				android:textColor="#FFFFFF" android:paddingLeft="6px"
+				android:paddingRight="6px" />
 
 			<ListView android:layout_height="wrap_content" android:id="@+id/listViewMain"
 				android:layout_width="fill_parent" android:paddingBottom="50px" />
