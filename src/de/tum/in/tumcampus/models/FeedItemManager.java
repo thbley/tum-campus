@@ -128,7 +128,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 						n.description, Utils.getDateString(n.date), n.image });
 	}
 
-	public void deleteAllFromDb() {
+	public void removeCache() {
 		Log.d("TumCampus feeds deleteAllFromDb", "");
 		
 		db.execSQL("DELETE FROM feeds_items");
