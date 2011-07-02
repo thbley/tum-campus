@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -75,7 +76,6 @@ public class Utils {
 
 		File file = new File(target);
 
-		// JSON Response Read
 		InputStream in = entity.getContent();
 
 		FileOutputStream out = new FileOutputStream(file);
@@ -87,6 +87,58 @@ public class Utils {
 		out.flush();
 		out.close();
 		in.close();
+	}
+
+	public static void downloadIconFile(String url, String target)
+			throws Exception {
+		Log.d("TumCampus Download Icon", "TumCampus Download Icon " + url);
+
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpGet httpget = new HttpGet(url);
+		httpget.addHeader("User-Agent",
+				"Mozilla/5.0 (iPhone; de-de) AppleWebKit/528.18 Safari/528.16");
+
+		HttpResponse response = httpclient.execute(httpget);
+		HttpEntity entity = response.getEntity();
+
+		if (entity == null) {
+			// TODO implement
+			throw new Exception("error");
+		}
+
+		InputStream in = entity.getContent();
+		String data = convertStreamToString(in);
+
+		String icon = "";
+		Pattern link = Pattern.compile("<link[^>]+>");
+		Pattern href = Pattern.compile("href2=[\"'](.+?)[\"']");
+
+		Matcher matcher = link.matcher(data);
+		while (matcher.find()) {
+			String match = matcher.group(0);
+
+			Matcher href_match = href.matcher(match);
+			if (href_match.find()) {
+				if (match.indexOf("shortcut icon") != -1 && icon.length() == 0) {
+					icon = href_match.group(1);
+				}
+				if (match.indexOf("apple-touch-icon") != -1) {
+					icon = href_match.group(1);
+				}
+			}
+		}
+
+		Uri uri = Uri.parse(url);
+		// icon not found
+		if (icon.length() == 0) {
+			icon = "http://" + uri.getHost() + "/favicon.ico";
+		}
+		// relative url
+		if (icon.indexOf("://") == -1) {
+			icon = "http://" + uri.getHost() + icon;
+		}
+		// download icon
+		downloadFile(icon, target);
 	}
 
 	private static String convertStreamToString(InputStream is) {
