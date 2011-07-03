@@ -112,7 +112,7 @@ public class Utils {
 
 		String icon = "";
 		Pattern link = Pattern.compile("<link[^>]+>");
-		Pattern href = Pattern.compile("href2=[\"'](.+?)[\"']");
+		Pattern href = Pattern.compile("href=[\"'](.+?)[\"']");
 
 		Matcher matcher = link.matcher(data);
 		while (matcher.find()) {
@@ -136,7 +136,7 @@ public class Utils {
 		}
 		// relative url
 		if (icon.indexOf("://") == -1) {
-			icon = "http://" + uri.getHost() + icon;
+			icon = "http://" + uri.getHost() + "/" + icon;
 		}
 		// download icon
 		downloadFile(icon, target);
