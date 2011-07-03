@@ -55,6 +55,10 @@
 			android:name=".DownloadService">
 		</service>
 
+		<service android:enabled="true" android:exported="false"
+			android:name=".ImportService">
+		</service>
+
 		<!-- <uses-permission android:name="android.permission.GET_TASKS"/> -->
 
 	</application>
