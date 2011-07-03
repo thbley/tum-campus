@@ -21,24 +21,54 @@ public class LinkManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public void downloadFromExternal() throws Exception {
+	public void importFromInternal() throws Exception {
 
-		// deleteAllFromDb();
-		// TODO transaction
-		File[] files = new File(Utils.getCacheDir("")).listFiles();
+		File[] files = new File(Utils.getCacheDir("links")).listFiles();
 
+		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
-
 			if (files[i].getName().endsWith(".URL")) {
 				String name = files[i].getName().replace(".URL", "");
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
-				String target = Utils.getCacheDir("links/cache") + Utils.md5(url) + ".ico";
-				Utils.downloadIconFile(url, target);
-
-				insertIntoDb(new Link(0, name, url, target));
+				insertUpdateIntoDb(new Link(name, url));
 			}
 		}
+		db.setTransactionSuccessful();
+		db.endTransaction();
+	}
+
+	public void checkExistingIcons() {
+		Cursor c = db.rawQuery(
+				"SELECT DISTINCT icon FROM links WHERE icon!=''", null);
+
+		while (c.moveToNext()) {
+			String icon = c.getString(0);
+
+			File f = new File(icon);
+			if (!f.exists()) {
+				db.execSQL("UPDATE links SET icon='' WHERE icon=?",
+						new String[] { icon });
+			}
+		}
+		c.close();
+	}
+
+	public void downloadMissingIcons() throws Exception {
+		Cursor c = db.rawQuery("SELECT DISTINCT url FROM links WHERE icon=''",
+				null);
+
+		while (c.moveToNext()) {
+			String url = c.getString(0);
+
+			String target = Utils.getCacheDir("links/cache") + Utils.md5(url)
+					+ ".ico";
+			Utils.downloadIconFile(url, target);
+
+			db.execSQL("UPDATE links SET icon=? WHERE url=?", new String[] {
+					target, url });
+		}
+		c.close();
 	}
 
 	public Cursor getAllFromDb() {
@@ -46,7 +76,17 @@ public class LinkManager extends SQLiteOpenHelper {
 				+ "FROM links ORDER BY name", null);
 	}
 
-	public void insertIntoDb(Link l) throws Exception {
+	public boolean empty() {
+		boolean result = true;
+		Cursor c = db.rawQuery("SELECT id FROM links LIMIT 1", null);
+		if (c.moveToNext()) {
+			result = false;
+		}
+		c.close();
+		return result;
+	}
+
+	public void insertUpdateIntoDb(Link l) throws Exception {
 		Log.d("TumCampus links replaceIntoDb", l.toString());
 
 		if (l.name.length() == 0) {
@@ -56,12 +96,26 @@ public class LinkManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid url.");
 		}
 
-		db.execSQL("INSERT INTO links (name, url, icon) VALUES (?, ?, ?)",
-				new String[] { l.name, l.url, l.icon });
+		Cursor c = db.rawQuery("SELECT id FROM links WHERE name = ?",
+				new String[] { l.name });
+
+		if (c.moveToNext()) {
+			db.execSQL("UPDATE links SET url=?, icon='' WHERE id=?",
+					new String[] { l.url, c.getString(0) });
+
+		} else {
+			db.execSQL("INSERT INTO links (name, url, icon) VALUES (?, ?, '')",
+					new String[] { l.name, l.url });
+		}
 	}
 
 	public void removeCache() {
+		db.execSQL("UPDATE links SET icon = ''");
 		Utils.emptyCacheDir("links/cache");
+	}
+
+	public void deleteFromDb(String id) {
+		db.execSQL("DELETE FROM links WHERE id = ?", new String[] { id });
 	}
 
 	public void onCreate(SQLiteDatabase db) {
