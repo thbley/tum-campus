@@ -66,9 +66,15 @@ public class TransportManager extends SQLiteOpenHelper {
 
 		Log.d("TumCampus transports station", baseUrl + query);
 
-		JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
-				.getJSONObject("query").getJSONObject("results")
-				.getJSONArray("a");
+		Object obj = Utils.downloadJson(baseUrl + query)
+				.getJSONObject("query").getJSONObject("results").get("a");
+		
+		JSONArray jsonArray = new JSONArray();
+		if (obj instanceof JSONArray) {
+			jsonArray = (JSONArray) obj;
+		} else {
+			jsonArray.put(obj);
+		}
 
 		MatrixCursor mc = new MatrixCursor(new String[] { "name", "_id" });
 
