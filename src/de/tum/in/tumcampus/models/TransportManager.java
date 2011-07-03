@@ -57,6 +57,9 @@ public class TransportManager extends SQLiteOpenHelper {
 	}
 
 	public Cursor getStationsFromExternal(String location) throws Exception {
+		
+		// TODO limit lookup to 3 characters
+		
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAuswahl.svc?haltestelle="
 				+ location;
