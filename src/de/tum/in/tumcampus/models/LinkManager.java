@@ -23,7 +23,7 @@ public class LinkManager extends SQLiteOpenHelper {
 
 	public void downloadFromExternal() throws Exception {
 
-		deleteAllFromDb();
+		// deleteAllFromDb();
 		// TODO transaction
 		File[] files = new File(Utils.getCacheDir("")).listFiles();
 
@@ -60,10 +60,7 @@ public class LinkManager extends SQLiteOpenHelper {
 				new String[] { l.name, l.url, l.icon });
 	}
 
-	public void deleteAllFromDb() {
-		Log.d("TumCampus links deleteAllFromDb", "");
-		db.execSQL("DELETE FROM links");
-
+	public void removeCache() {
 		Utils.emptyCacheDir("links/cache");
 	}
 
