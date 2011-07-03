@@ -46,9 +46,11 @@ public final class R {
         public static final int name=0x7f060013;
         public static final int options=0x7f060005;
         public static final int refresh=0x7f060015;
+        public static final int search=0x7f06001b;
         public static final int slidingDrawer1=0x7f060003;
         public static final int title=0x7f060011;
         public static final int transportText=0x7f060019;
+        public static final int transportText2=0x7f06001a;
     }
     public static final class layout {
         public static final int appinfo=0x7f030000;
