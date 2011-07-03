@@ -24,6 +24,8 @@ public class ImportService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 
+		// TODO add locking
+		
 		Log.d("TumCampus ImportService", "TumCampus service start");
 
 		try {
