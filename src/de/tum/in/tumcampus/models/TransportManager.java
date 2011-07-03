@@ -3,6 +3,8 @@ package de.tum.in.tumcampus.models;
 import java.net.URLEncoder;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -27,7 +29,7 @@ public class TransportManager extends SQLiteOpenHelper {
 	public Cursor getDeparturesFromExternal(String location) throws Exception {
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAnzeige.svc?haltestelle="
-				+ location;
+				+ URLEncoder.encode(location, "ISO-8859-1"); // ISO needed for mvv
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
@@ -69,14 +71,19 @@ public class TransportManager extends SQLiteOpenHelper {
 
 		Log.d("TumCampus transports station", baseUrl + query);
 
-		Object obj = Utils.downloadJson(baseUrl + query).getJSONObject("query")
-				.getJSONObject("results").get("a");
+		JSONObject jsonObj = Utils.downloadJson(baseUrl + query).getJSONObject(
+				"query");
 
 		JSONArray jsonArray = new JSONArray();
-		if (obj instanceof JSONArray) {
-			jsonArray = (JSONArray) obj;
-		} else {
-			jsonArray.put(obj);
+		try {
+			Object obj = jsonObj.getJSONObject("results").get("a");
+			if (obj instanceof JSONArray) {
+				jsonArray = (JSONArray) obj;
+			} else {
+				jsonArray.put(obj);
+			}
+		} catch (JSONException e) {
+			throw new Exception("<Keine Station gefunden>");
 		}
 
 		MatrixCursor mc = new MatrixCursor(new String[] { "name", "_id" });
