@@ -25,42 +25,42 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 	public void testCafeteriasPortrait() {
 		assertTrue(solo.searchText("Speisepläne"));
 		solo.clickOnText("Speisepläne");
-		
-		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);		
+
+		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		_testCafeterias();
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 
 		// TODO inject test data
 	}
-	
+
 	public void testCafeteriasLandscape() {
 		assertTrue(solo.searchText("Speisepläne"));
 		solo.clickOnText("Speisepläne");
-		
+
 		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		_testCafeterias();
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 
 		// TODO inject test data
 	}
-	
+
 	private void _testCafeterias() {
 		assertTrue(solo.searchText("Mensa Garching"));
 		solo.clickOnText("Mensa Garching");
 
-		Calendar calendar = Calendar.getInstance();  
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == Calendar.SATURDAY) {
-        	calendar.add(Calendar.DATE, 2);
-        }
-        if (dayOfWeek == Calendar.SUNDAY) {
-        	calendar.add(Calendar.DATE, 1);
-        }
-		
+		Calendar calendar = Calendar.getInstance();
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+		if (dayOfWeek == Calendar.SATURDAY) {
+			calendar.add(Calendar.DATE, 2);
+		}
+		if (dayOfWeek == Calendar.SUNDAY) {
+			calendar.add(Calendar.DATE, 1);
+		}
+
 		SimpleDateFormat de = new SimpleDateFormat("dd.MM.yyyy");
 		String today = de.format(calendar.getTime());
 
