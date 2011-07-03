@@ -1,20 +1,15 @@
 package de.tum.in.tumcampus.models;
 
 public class Link {
-	int id;
 	String name;
 	String url;
-	String icon;
 
-	public Link(int id, String name, String url, String icon) {
-		this.id = id;
+	public Link(String name, String url) {
 		this.name = name;
 		this.url = url;
-		this.icon = icon;
 	}
 
 	public String toString() {
-		return "id=" + this.id + " name=" + this.name + " url=" + this.url
-				+ " icon=" + icon;
+		return "name=" + this.name + " url=" + this.url;
 	}
 }
