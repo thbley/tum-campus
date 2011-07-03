@@ -23,11 +23,9 @@ public class FeedManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public void downloadFromExternal() throws Exception {
-		
-		// TODO change
-		// deleteAllFromDb();
-		// TODO transaction
+	public void importFromInternal() throws Exception {
+
+		db.beginTransaction();
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
 
 		for (int i = 0; i < files.length; i++) {
@@ -37,14 +35,26 @@ public class FeedManager extends SQLiteOpenHelper {
 				String name = files[i].getName().replace(".URL", "");
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
-				insertIntoDb(new Feed(0, name, url));
+				insertUpdateIntoDb(new Feed(name, url));
 			}
 		}
+		db.setTransactionSuccessful();
+		db.endTransaction();
 	}
 
 	public Cursor getAllFromDb() {
 		return db.rawQuery("SELECT name, feedUrl, id as _id "
 				+ "FROM feeds ORDER BY name", null);
+	}
+
+	public boolean empty() {
+		boolean result = true;
+		Cursor c = db.rawQuery("SELECT id FROM feeds LIMIT 1", null);
+		if (c.moveToNext()) {
+			result = false;
+		}
+		c.close();
+		return result;
 	}
 
 	public List<Integer> getAllIdsFromDb() {
@@ -59,7 +69,7 @@ public class FeedManager extends SQLiteOpenHelper {
 		return list;
 	}
 
-	public void insertIntoDb(Feed n) throws Exception {
+	public void insertUpdateIntoDb(Feed n) throws Exception {
 		Log.d("TumCampus feeds replaceIntoDb", n.toString());
 
 		if (n.name.length() == 0) {
@@ -69,8 +79,21 @@ public class FeedManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid feedUrl.");
 		}
 
-		db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)",
-				new String[] { n.name, n.feedUrl });
+		Cursor c = db.rawQuery("SELECT id FROM feeds WHERE name = ?",
+				new String[] { n.name });
+
+		if (c.moveToNext()) {
+			db.execSQL("UPDATE feeds SET name=?, feedUrl=? WHERE id=?",
+					new String[] { n.name, n.feedUrl, c.getString(0) });
+
+		} else {
+			db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)",
+					new String[] { n.name, n.feedUrl });
+		}
+	}
+	
+	public void deleteFromDb(String id) {
+		db.execSQL("DELETE FROM feeds WHERE id = ?", new String[] { id });
 	}
 
 	public void onCreate(SQLiteDatabase db) {
