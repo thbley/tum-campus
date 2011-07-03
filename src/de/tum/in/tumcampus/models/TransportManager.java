@@ -1,15 +1,12 @@
 package de.tum.in.tumcampus.models;
 
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -27,8 +24,7 @@ public class TransportManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public List<Map<String, String>> getFromExternal(String location)
-			throws Exception {
+	public Cursor getDeparturesFromExternal(String location) throws Exception {
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAnzeige.svc?haltestelle="
 				+ location;
@@ -36,25 +32,56 @@ public class TransportManager extends SQLiteOpenHelper {
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
 
+		Log.d("TumCampus transports departure", baseUrl + query);
+		
 		JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
 				.getJSONObject("query").getJSONObject("results")
 				.getJSONArray("p");
 
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		if (jsonArray.length() < 3) {
+			throw new Exception("<Keine Abfahrten gefunden>");
+		}
+
+		MatrixCursor mc = new MatrixCursor(
+				new String[] { "name", "desc", "_id" });
 
 		for (int j = 2; j < jsonArray.length(); j = j + 3) {
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("name",
-					jsonArray.getString(j) + " "
-							+ jsonArray.getString(j + 1).trim());
-			map.put("desc", jsonArray.getString(j + 2) + " min");
-			list.add(map);
+			String name = jsonArray.getString(j) + " "
+					+ jsonArray.getString(j + 1).trim();
+
+			String desc = jsonArray.getString(j + 2) + " min";
+
+			mc.addRow(new String[] { name, desc, String.valueOf(j) });
 		}
-		return list;
+		return mc;
+	}
+
+	public Cursor getStationsFromExternal(String location) throws Exception {
+		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
+		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAuswahl.svc?haltestelle="
+				+ location;
+		String query = URLEncoder
+				.encode("select content from html where url=\"" + lookupUrl
+						+ "\" and xpath=\"//a[contains(@href,'haltestelle')]\"");
+
+		Log.d("TumCampus transports station", baseUrl + query);
+
+		JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
+				.getJSONObject("query").getJSONObject("results")
+				.getJSONArray("a");
+
+		MatrixCursor mc = new MatrixCursor(new String[] { "name", "_id" });
+
+		for (int j = 0; j < jsonArray.length(); j++) {
+			String station = jsonArray.getString(j).replaceAll("\\s+", " ");
+
+			mc.addRow(new String[] { station, String.valueOf(j) });
+		}
+		return mc;
 	}
 
 	public Cursor getAllFromDb() {
-		return db.rawQuery("SELECT name, name as _id " + "FROM transports "
+		return db.rawQuery("SELECT name, name as _id FROM transports "
 				+ "ORDER BY name", null);
 	}
 
@@ -65,6 +92,11 @@ public class TransportManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid name.");
 		}
 		db.execSQL("REPLACE INTO transports (name) VALUES (?)",
+				new String[] { name });
+	}
+
+	public void deleteFromDb(String name) {
+		db.execSQL("DELETE FROM transports WHERE name = ?",
 				new String[] { name });
 	}
 
