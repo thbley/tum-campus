@@ -33,7 +33,7 @@ public class TransportManager extends SQLiteOpenHelper {
 						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
 
 		Log.d("TumCampus transports departure", baseUrl + query);
-		
+
 		JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
 				.getJSONObject("query").getJSONObject("results")
 				.getJSONArray("p");
@@ -66,9 +66,9 @@ public class TransportManager extends SQLiteOpenHelper {
 
 		Log.d("TumCampus transports station", baseUrl + query);
 
-		Object obj = Utils.downloadJson(baseUrl + query)
-				.getJSONObject("query").getJSONObject("results").get("a");
-		
+		Object obj = Utils.downloadJson(baseUrl + query).getJSONObject("query")
+				.getJSONObject("results").get("a");
+
 		JSONArray jsonArray = new JSONArray();
 		if (obj instanceof JSONArray) {
 			jsonArray = (JSONArray) obj;
