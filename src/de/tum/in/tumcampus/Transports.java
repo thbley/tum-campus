@@ -137,7 +137,7 @@ public class Transports extends Activity implements OnItemClickListener,
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Wirklch löschen?");
-		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
 				TransportManager tm = new TransportManager(lv.getContext(),
@@ -152,7 +152,7 @@ public class Transports extends Activity implements OnItemClickListener,
 				dialog.dismiss();
 			}
 		});
-		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}
