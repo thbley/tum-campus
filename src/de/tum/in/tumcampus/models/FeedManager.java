@@ -26,7 +26,7 @@ public class FeedManager extends SQLiteOpenHelper {
 	public void downloadFromExternal() throws Exception {
 		
 		// TODO change
-		deleteAllFromDb();
+		// deleteAllFromDb();
 		// TODO transaction
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
 
@@ -71,11 +71,6 @@ public class FeedManager extends SQLiteOpenHelper {
 
 		db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)",
 				new String[] { n.name, n.feedUrl });
-	}
-
-	public void deleteAllFromDb() {
-		Log.d("TumCampus feeds deleteAllFromDb", "");
-		db.execSQL("DELETE FROM feeds");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
