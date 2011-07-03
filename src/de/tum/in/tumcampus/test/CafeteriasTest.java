@@ -22,12 +22,33 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
-	public void testCafeterias() {
+	public void testCafeteriasPortrait() {
 		assertTrue(solo.searchText("Speisepläne"));
 		solo.clickOnText("Speisepläne");
 		
 		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);		
+		_testCafeterias();
+		
+		solo.goBack();
+		assertTrue(solo.searchText("Hello World"));
 
+		// TODO inject test data
+	}
+	
+	public void testCafeteriasLandscape() {
+		assertTrue(solo.searchText("Speisepläne"));
+		solo.clickOnText("Speisepläne");
+		
+		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		_testCafeterias();
+		
+		solo.goBack();
+		assertTrue(solo.searchText("Hello World"));
+
+		// TODO inject test data
+	}
+	
+	private void _testCafeterias() {
 		assertTrue(solo.searchText("Mensa Garching"));
 		solo.clickOnText("Mensa Garching");
 
@@ -56,30 +77,5 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		solo.clickOnText(tomorrow);
 
 		assertTrue(solo.searchText("Mensa Garching: " + tomorrow));
-
-		
-		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-		assertTrue(solo.searchText("Mensa Garching"));
-		solo.clickOnText("Mensa Garching");
-
-		assertTrue(solo.searchText("Mensa Garching: " + today));
-		assertTrue(solo.searchText("Tagesgericht 1"));
-
-		assertTrue(solo.searchText("Datum auswählen"));
-		solo.clickOnText("Datum auswählen");
-
-		calendar.add(Calendar.DATE, 1);
-		tomorrow = de.format(calendar.getTime());
-
-		assertTrue(solo.searchText(tomorrow));
-		solo.clickOnText(tomorrow);
-
-		assertTrue(solo.searchText("Mensa Garching: " + tomorrow));
-		
-		solo.goBack();
-		assertTrue(solo.searchText("Hello World"));
-
-		// TODO inject test data
 	}
 }
