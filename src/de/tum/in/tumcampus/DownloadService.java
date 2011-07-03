@@ -13,12 +13,9 @@ import android.util.Log;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
-import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
-import de.tum.in.tumcampus.models.Link;
 import de.tum.in.tumcampus.models.LinkManager;
-import de.tum.in.tumcampus.models.TransportManager;
 import de.tum.in.tumcampus.models.Utils;
 
 public class DownloadService extends IntentService {
@@ -32,6 +29,8 @@ public class DownloadService extends IntentService {
 	public DownloadService() {
 		super("DownloadService");
 	}
+	
+	final static String db = "database.db";
 
 	String message = "";
 
@@ -41,6 +40,7 @@ public class DownloadService extends IntentService {
 		// TODO show progress bar in GUI
 		// TODO avoid database locking / deadlocking exceptions
 		// TODO move constants to class header
+		// TODO add locking		
 
 		Log.d("TumCampus DownloadService", "TumCampus service start");
 
@@ -56,13 +56,13 @@ public class DownloadService extends IntentService {
 		try {
 			// check if sd card available
 			Utils.getCacheDir("");
-			
+
 			notification.setLatestEventInfo(this, "TumCampus download ...",
 					"1/4", contentIntent);
 			mNotificationManager.notify(1, notification);
 			message("Aktualisiere: Mensen", "");
 
-			CafeteriaManager cm = new CafeteriaManager(this, "database.db");
+			CafeteriaManager cm = new CafeteriaManager(this, db);
 			cm.downloadFromExternal();
 
 			if (!destroyed) {
@@ -72,7 +72,7 @@ public class DownloadService extends IntentService {
 				message(", Menus", "");
 
 				CafeteriaMenuManager cmm = new CafeteriaMenuManager(this,
-						"database.db");
+						db);
 				cmm.downloadFromExternal(cm.getAllIdsFromDb());
 				cmm.close();
 			}
@@ -84,32 +84,20 @@ public class DownloadService extends IntentService {
 				mNotificationManager.notify(1, notification);
 				message(", Veranstaltungen", "");
 
-				EventManager em = new EventManager(this, "database.db");
+				EventManager em = new EventManager(this, db);
 				em.downloadFromExternal();
 				em.close();
 			}
 
 			if (!destroyed) {
-				FeedManager nm = new FeedManager(this, "database.db");
-				nm.downloadFromExternal();
-
-				// TODO remove
-				nm.insertIntoDb(new Feed(0, "Spiegel",
-						"http://www.spiegel.de/schlagzeilen/index.rss"));
-				nm.insertIntoDb(new Feed(0, "N-tv", "http://www.n-tv.de/rss"));
-				nm.insertIntoDb(new Feed(0, "Zeit",
-						"http://newsfeed.zeit.de/index"));
-				nm.insertIntoDb(new Feed(0, "Golem",
-						"http://rss.golem.de/rss.php?feed=RSS1.0"));
-				nm.insertIntoDb(new Feed(0, "Heise",
-						"http://www.heise.de/newsticker/heise.rdf"));
+				FeedManager nm = new FeedManager(this, db);
 
 				notification.setLatestEventInfo(this, "TumCampus download ...",
 						"4/4", contentIntent);
 				mNotificationManager.notify(1, notification);
 				message(", RSS", "");
 
-				FeedItemManager nim = new FeedItemManager(this, "database.db");
+				FeedItemManager nim = new FeedItemManager(this, db);
 
 				nim.downloadFromExternal(nm.getAllIdsFromDb());
 				nim.close();
@@ -117,69 +105,12 @@ public class DownloadService extends IntentService {
 				nm.close();
 			}
 
-			TransportManager tm = new TransportManager(this, "database.db");
-			// TODO fix blank + umlaut + fix ggg + fix stachus
-			tm.replaceIntoDb("Garching-Forschungszentrum");
-			tm.replaceIntoDb("Marienplatz");
-			tm.replaceIntoDb("Ottobrunn");
-			tm.replaceIntoDb("Putzbrunn, Waldkolonie");
-			tm.replaceIntoDb("Garching-Hochbrück");
-			tm.close();
-
-			LinkManager lm = new LinkManager(this, "database.db");
-			lm.downloadFromExternal();
-
-			// TODO remove
-			String target = Utils.getCacheDir("links/cache") + "1.ico";
-			Utils.downloadIconFile("http://m.spiegel.de/", target);
-			lm.insertIntoDb(new Link(0, "Spiegel", "http://m.spiegel.de/",
-					target));
-
-			target = Utils.getCacheDir("links/cache") + "2.ico";
-			Utils.downloadIconFile("http://www.n-tv.de/", target);
-			lm.insertIntoDb(new Link(0, "N-tv", "http://www.n-tv.de/", target));
-
-			target = Utils.getCacheDir("links/cache") + "3.ico";
-			Utils.downloadIconFile("http://www.zeit.de/", target);
-			lm.insertIntoDb(new Link(0, "Zeit", "http://www.zeit.de/", target));
-
-			target = Utils.getCacheDir("links/cache") + "4.ico";
-			Utils.downloadIconFile("http://golem.mobi/", target);
-			lm.insertIntoDb(new Link(0, "Golem", "http://golem.mobi/", target));
-
-			target = Utils.getCacheDir("links/cache") + "5.ico";
-			Utils.downloadIconFile("http://www.heise.de/", target);
-			lm.insertIntoDb(new Link(0, "Heise", "http://www.heise.de/", target));
-			
-			target = Utils.getCacheDir("links/cache") + "6.ico";
-			Utils.downloadIconFile("http://www.in.tum.de/fuer-studierende-der-tum/service-fuer-studierende/infopoint.html", target);
-			lm.insertIntoDb(new Link(0, "Infopoint Informatik", "http://www.in.tum.de/fuer-studierende-der-tum/service-fuer-studierende/infopoint.html", target));
-
-			target = Utils.getCacheDir("links/cache") + "7.ico";
-			Utils.downloadIconFile("http://www.in.tum.de/fuer-studierende-der-tum/beratung.html", target);
-			lm.insertIntoDb(new Link(0, "Studienberatung Informatik", "http://www.in.tum.de/fuer-studierende-der-tum/beratung.html", target));
-
-			target = Utils.getCacheDir("links/cache") + "8.ico";
-			Utils.downloadIconFile("http://portal.mytum.de/jobs/index_html", target);
-			lm.insertIntoDb(new Link(0, "Stellenangebote", "http://portal.mytum.de/jobs/index_html", target));
-			
-			target = Utils.getCacheDir("links/cache") + "9.ico";
-			Utils.downloadIconFile("http://mpi.fs.tum.de/", target);
-			lm.insertIntoDb(new Link(0, "Fachschaft MPI", "http://mpi.fs.tum.de/", target));
-			
-			target = Utils.getCacheDir("links/cache") + "10.ico";
-			Utils.downloadIconFile("http://opac.ub.tum.de/InfoGuideClient.tumsis/start.do?Login=wotum01", target);
-			lm.insertIntoDb(new Link(0, "OPAC TU München", "http://opac.ub.tum.de/InfoGuideClient.tumsis/start.do?Login=wotum01", target));
-			
-			target = Utils.getCacheDir("links/cache") + "11.ico";
-			Utils.downloadIconFile("https://opacplus.ub.uni-muenchen.de/InfoGuideClient.ubmsis/start.do?Login=igubm", target);
-			lm.insertIntoDb(new Link(0, "OPAC LMU", "https://opacplus.ub.uni-muenchen.de/InfoGuideClient.ubmsis/start.do?Login=igubm", target));
-			
-			target = Utils.getCacheDir("links/cache") + "12.ico";
-			Utils.downloadIconFile("http://www.in.tum.de/", target);
-			lm.insertIntoDb(new Link(0, "Fakultät für Informatik", "http://www.in.tum.de/", target));
-			
-			lm.close();
+			if (!destroyed) {
+				LinkManager lm = new LinkManager(this, db);
+				lm.checkExistingIcons();
+				lm.downloadMissingIcons();
+				lm.close();
+			}
 
 		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
