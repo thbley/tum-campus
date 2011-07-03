@@ -80,6 +80,11 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		// TODO optimize
+		Intent service = new Intent(this, ImportService.class);
+		startService(service);
+		
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
