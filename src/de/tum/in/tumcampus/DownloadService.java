@@ -150,7 +150,35 @@ public class DownloadService extends IntentService {
 			target = Utils.getCacheDir("links/cache") + "5.ico";
 			Utils.downloadIconFile("http://www.heise.de/", target);
 			lm.insertIntoDb(new Link(0, "Heise", "http://www.heise.de/", target));
+			
+			target = Utils.getCacheDir("links/cache") + "6.ico";
+			Utils.downloadIconFile("http://www.in.tum.de/fuer-studierende-der-tum/service-fuer-studierende/infopoint.html", target);
+			lm.insertIntoDb(new Link(0, "Infopoint Informatik", "http://www.in.tum.de/fuer-studierende-der-tum/service-fuer-studierende/infopoint.html", target));
 
+			target = Utils.getCacheDir("links/cache") + "7.ico";
+			Utils.downloadIconFile("http://www.in.tum.de/fuer-studierende-der-tum/beratung.html", target);
+			lm.insertIntoDb(new Link(0, "Studienberatung Informatik", "http://www.in.tum.de/fuer-studierende-der-tum/beratung.html", target));
+
+			target = Utils.getCacheDir("links/cache") + "8.ico";
+			Utils.downloadIconFile("http://portal.mytum.de/jobs/index_html", target);
+			lm.insertIntoDb(new Link(0, "Stellenangebote", "http://portal.mytum.de/jobs/index_html", target));
+			
+			target = Utils.getCacheDir("links/cache") + "9.ico";
+			Utils.downloadIconFile("http://mpi.fs.tum.de/", target);
+			lm.insertIntoDb(new Link(0, "Fachschaft MPI", "http://mpi.fs.tum.de/", target));
+			
+			target = Utils.getCacheDir("links/cache") + "10.ico";
+			Utils.downloadIconFile("http://opac.ub.tum.de/InfoGuideClient.tumsis/start.do?Login=wotum01", target);
+			lm.insertIntoDb(new Link(0, "OPAC TU München", "http://opac.ub.tum.de/InfoGuideClient.tumsis/start.do?Login=wotum01", target));
+			
+			target = Utils.getCacheDir("links/cache") + "11.ico";
+			Utils.downloadIconFile("https://opacplus.ub.uni-muenchen.de/InfoGuideClient.ubmsis/start.do?Login=igubm", target);
+			lm.insertIntoDb(new Link(0, "OPAC LMU", "https://opacplus.ub.uni-muenchen.de/InfoGuideClient.ubmsis/start.do?Login=igubm", target));
+			
+			target = Utils.getCacheDir("links/cache") + "12.ico";
+			Utils.downloadIconFile("http://www.in.tum.de/", target);
+			lm.insertIntoDb(new Link(0, "Fakultät für Informatik", "http://www.in.tum.de/", target));
+			
 			lm.close();
 
 		} catch (Exception e) {
