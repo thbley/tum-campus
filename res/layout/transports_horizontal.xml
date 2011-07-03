@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
+	android:orientation="horizontal" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:background="#0065BD">
 
-	<TextView android:layout_width="wrap_content" android:id="@+id/transportText"
-		android:textColor="#FFFFFF" android:layout_height="wrap_content"
-		android:text="Bitte wählen Sie eine Station aus."
-		android:layout_gravity="center" />
+	<LinearLayout android:orientation="vertical"
+		android:layout_weight="50" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:layout_marginRight="5px">
 
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<TextView android:layout_width="wrap_content" android:id="@+id/transportText2"
+			android:textColor="#FFFFFF" android:layout_height="wrap_content"
+			android:text="Gespeicherte Stationen:" android:layout_gravity="center" />
 
-		<ListView android:layout_width="fill_parent"
-			android:background="#FFFFFF" android:layout_height="fill_parent"
-			android:id="@+id/listView" android:layout_weight="50"
-			android:scrollbars="vertical" android:padding="6px"
-			android:layout_marginRight="5px" />
+		<FrameLayout android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+
+			<ListView android:layout_width="fill_parent"
+				android:background="#FFFFFF" android:layout_height="fill_parent"
+				android:id="@+id/listView" android:scrollbars="vertical"
+				android:padding="6px" android:layout_marginBottom="76px" />
+
+			<EditText android:id="@+id/search" android:layout_height="wrap_content"
+				android:hint="Station suchen" android:singleLine="true"
+				android:layout_gravity="bottom" android:layout_width="fill_parent"
+				android:imeOptions="actionSearch" />
+
+		</FrameLayout>
+
+	</LinearLayout>
+
+	<LinearLayout android:orientation="vertical"
+		android:layout_weight="50" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<TextView android:layout_width="wrap_content" android:id="@+id/transportText"
+			android:textColor="#FFFFFF" android:layout_height="wrap_content"
+			android:text="Bitte wählen Sie eine Station aus."
+			android:layout_gravity="center" />
 
 		<ListView android:layout_height="fill_parent"
 			android:background="#FFFFFF" android:layout_width="fill_parent"
-			android:id="@+id/listView2" android:layout_weight="50"
-			android:scrollbars="vertical" android:padding="10px" />
-
+			android:id="@+id/listView2" android:scrollbars="vertical"
+			android:padding="10px" />
 	</LinearLayout>
+
 </LinearLayout>
