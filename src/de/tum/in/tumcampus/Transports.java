@@ -1,8 +1,5 @@
 package de.tum.in.tumcampus;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -25,6 +22,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 import de.tum.in.tumcampus.models.TransportManager;
 
 public class Transports extends Activity implements OnItemClickListener,
@@ -35,7 +33,7 @@ public class Transports extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 
 		if (getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
-			setContentView(R.layout.transports_horizontal); 
+			setContentView(R.layout.transports_horizontal);
 		} else {
 			setContentView(R.layout.transports);
 		}
@@ -100,15 +98,11 @@ public class Transports extends Activity implements OnItemClickListener,
 				throw new Exception("<Keine Internetverbindung>");
 			}
 			c2 = tm.getDeparturesFromExternal(location);
+
 		} catch (Exception e) {
-			c2 = new MatrixCursor(new String[] { "name", "desc", "_id" });
-
-			// TODO implement
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("desc", e.getMessage());
-			// list.add(map);
-
-			System.out.println(e);
+			MatrixCursor c3 = new MatrixCursor(new String[]{"name", "_id"});
+			c3.addRow(new String[] { e.getMessage(), "" });
+			c2 = c3;
 		}
 
 		ListAdapter adapter2 = new SimpleCursorAdapter(this,
@@ -152,11 +146,12 @@ public class Transports extends Activity implements OnItemClickListener,
 				dialog.dismiss();
 			}
 		});
-		builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
-			}
-		});
+		builder.setNegativeButton("Nein",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
 		builder.show();
 
 		return false;
@@ -166,19 +161,18 @@ public class Transports extends Activity implements OnItemClickListener,
 	public boolean onEditorAction(TextView input, int code, KeyEvent key) {
 
 		ListView lv = (ListView) findViewById(R.id.listView);
-
-		TextView tv = (TextView) findViewById(R.id.transportText2);
-		tv.setText("Suchergebnis:");
-
 		TransportManager tm = new TransportManager(lv.getContext(),
 				"database.db");
+
 		Cursor c = null;
 		try {
 			c = tm.getStationsFromExternal(input.getText().toString());
 		} catch (Exception e) {
-			// TODO implement
-			System.out.println(e.getMessage());
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+			return false;
 		}
+		TextView tv = (TextView) findViewById(R.id.transportText2);
+		tv.setText("Suchergebnis:");
 
 		SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv.getAdapter();
 		adapter.changeCursor(c);
