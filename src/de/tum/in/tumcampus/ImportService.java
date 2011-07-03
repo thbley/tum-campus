@@ -25,7 +25,7 @@ public class ImportService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 
 		// TODO add locking
-		
+
 		Log.d("TumCampus ImportService", "TumCampus service start");
 
 		try {
@@ -48,7 +48,6 @@ public class ImportService extends IntentService {
 
 	public void importTransports() throws Exception {
 		TransportManager tm = new TransportManager(this, db);
-		// TODO fix blank + umlaut + fix ggg + fix stachus
 
 		if (tm.empty()) {
 			tm.replaceIntoDb("Garching-Forschungszentrum");
