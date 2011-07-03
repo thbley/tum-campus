@@ -32,10 +32,10 @@ public class TransportsTest extends ActivityInstrumentationTestCase2<TumCampus> 
 	public void testTransportsPortrait() {
 		assertTrue(solo.searchText("MVV"));
 		solo.clickOnText("MVV");
-		
-		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);		
+
+		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		_testTransports();
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
@@ -43,14 +43,14 @@ public class TransportsTest extends ActivityInstrumentationTestCase2<TumCampus> 
 	public void testTransportsLandscape() {
 		assertTrue(solo.searchText("MVV"));
 		solo.clickOnText("MVV");
-		
+
 		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		_testTransports();
-		
+
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
-	
+
 	private void _testTransports() {
 		// departures
 		assertTrue(solo.searchText("Marienplatz"));
@@ -62,13 +62,14 @@ public class TransportsTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		assertTrue(solo.searchText("Garching-Forschungszentrum"));
 		solo.clickOnText("Garching-Forschungszentrum");
 		waitGui(3);
+
 		assertTrue(solo.searchText("Abfahrt: Garching-Forschungszentrum"));
 		assertTrue(solo.searchText("U6 Klinikum"));
 
 		// search station
 		solo.enterText(0, "kie");
 		waitGui(3);
-		
+
 		assertTrue(solo.searchText("Kieferngarten"));
 		solo.clickOnText("Kieferngarten");
 		assertTrue(solo.searchText("Abfahrt: Kieferngarten"));
