@@ -9,7 +9,7 @@
 		android:layout_height="40px" android:layout_gravity="center_vertical"
 		android:src="@drawable/icon" android:layout_margin="6dip" />
 
-	<TextView android:id="@+id/name" android:textSize="40px"
+	<TextView android:id="@+id/name" android:textSize="30px"
 		android:textColor="#0065BD" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:gravity="center_vertical"
 		android:paddingLeft="6dip" />
