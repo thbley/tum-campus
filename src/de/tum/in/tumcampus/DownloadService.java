@@ -118,9 +118,12 @@ public class DownloadService extends IntentService {
 			}
 
 			TransportManager tm = new TransportManager(this, "database.db");
+			// TODO fix blank + umlaut + fix ggg + fix stachus
 			tm.replaceIntoDb("Garching-Forschungszentrum");
 			tm.replaceIntoDb("Marienplatz");
 			tm.replaceIntoDb("Ottobrunn");
+			tm.replaceIntoDb("Putzbrunn, Waldkolonie");
+			tm.replaceIntoDb("Garching-Hochbrück");
 			tm.close();
 
 			LinkManager lm = new LinkManager(this, "database.db");
