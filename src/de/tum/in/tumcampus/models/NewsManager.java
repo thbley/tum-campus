@@ -1,6 +1,5 @@
 package de.tum.in.tumcampus.models;
 
-import java.io.File;
 import java.net.URLEncoder;
 import java.util.Date;
 
@@ -18,10 +17,13 @@ public class NewsManager extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 
-	public SQLiteDatabase db;
+	private SQLiteDatabase db;
+
+	private Context context;
 
 	public NewsManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
+		this.context = context;
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -77,17 +79,14 @@ public class NewsManager extends SQLiteOpenHelper {
 	 * @return News
 	 * @throws JSONException
 	 */
-	public static News getFromJson(JSONObject json) throws Exception {
+	public News getFromJson(JSONObject json) throws Exception {
 
 		String target = "";
 		if (json.has("picture")) {
 			String picture = json.getString("picture");
 			target = Utils.getCacheDir("news/cache") + Utils.md5(picture)
 					+ ".jpg";
-
-			if (!new File(target).exists()) {
-				Utils.downloadFile(picture, target);
-			}
+			Utils.downloadFileQueue(context, db, picture, target);
 		}
 		String link = "";
 		if (json.has("link")) {
