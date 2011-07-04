@@ -53,7 +53,7 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 			duration++;
 		}
 		assertTrue(solo
-				.searchText("Aktualisiere: Mensen, Menus, Veranstaltungen, RSS, Fertig."));
+				.searchText("Aktualisiere: RSS, News, Veranstaltungen, Mensen, Menus, Fertig."));
 
 		// TODO check filled sections?
 	}
