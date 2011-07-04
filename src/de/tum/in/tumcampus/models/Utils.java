@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -88,6 +89,13 @@ public class Utils {
 		out.flush();
 		out.close();
 		in.close();
+	}
+
+	public static void downloadFileQueue(Context c, SQLiteDatabase db,
+			String url, String target) {
+		DownloadManager dm = new DownloadManager(c, db);
+		dm.insertIntoDb(url, target);
+		dm.close();
 	}
 
 	public static void downloadIconFile(String url, String target)
