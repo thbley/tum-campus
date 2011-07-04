@@ -29,6 +29,7 @@ import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.LinkManager;
+import de.tum.in.tumcampus.models.NewsManager;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
@@ -194,6 +195,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			LinkManager lm = new LinkManager(this, "database.db");
 			lm.removeCache();
 			lm.close();
+
+			NewsManager nm = new NewsManager(this, "database.db");
+			nm.removeCache();
+			nm.close();
 
 			return true;
 		}
