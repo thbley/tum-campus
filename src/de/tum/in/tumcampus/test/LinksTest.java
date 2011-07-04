@@ -22,8 +22,8 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Links"));
 		solo.clickOnText("Links");
 
-		assertTrue(solo.searchText("Spiegel"));
 		assertTrue(solo.searchText("Golem"));
+		assertTrue(solo.searchText("N-tv"));
 		
 		solo.clickOnText("Heise");
 
