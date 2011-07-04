@@ -48,15 +48,15 @@
 		<activity android:name=".AppInfo" android:label="TUM Campus App for Android">
 		</activity>
 
-		<activity android:name=".Debug" android:label="Debug">
+		<activity android:name=".Debug" android:label="Debug SQLite">
 		</activity>
 
 		<service android:enabled="true" android:exported="false"
-			android:name=".DownloadService">
+			android:name="services.DownloadService">
 		</service>
 
 		<service android:enabled="true" android:exported="false"
-			android:name=".ImportService">
+			android:name="services.ImportService">
 		</service>
 
 		<!-- <uses-permission android:name="android.permission.GET_TASKS"/> -->
