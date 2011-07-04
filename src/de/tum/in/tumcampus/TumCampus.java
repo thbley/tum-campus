@@ -30,6 +30,8 @@ import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
+import de.tum.in.tumcampus.services.DownloadService;
+import de.tum.in.tumcampus.services.ImportService;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
@@ -81,7 +83,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		// TODO optimize
 		Intent service = new Intent(this, ImportService.class);
 		startService(service);
