@@ -29,8 +29,6 @@ public class FeedManager extends SQLiteOpenHelper {
 
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
-			System.out.println(files[i]);
-
 			if (files[i].getName().endsWith(".URL")) {
 				String name = files[i].getName().replace(".URL", "");
 				String url = Utils.getLinkFromUrlFile(files[i]);
