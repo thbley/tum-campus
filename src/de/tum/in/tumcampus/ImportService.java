@@ -90,13 +90,13 @@ public class ImportService extends IntentService {
 
 			lm.insertUpdateIntoDb(new Link("Golem", "http://golem.mobi/"));
 
-			lm.insertUpdateIntoDb(new Link("Heise", "http://www.heise.de/"));
+			lm.insertUpdateIntoDb(new Link("Heise", "http://heise-online.mobi/"));
 
 			lm.insertUpdateIntoDb(new Link(
-					"Infopoint Informatik",
+					"Informatik Infopoint",
 					"http://www.in.tum.de/fuer-studierende-der-tum/service-fuer-studierende/infopoint.html"));
 
-			lm.insertUpdateIntoDb(new Link("Studienberatung Informatik",
+			lm.insertUpdateIntoDb(new Link("Informatik Studienberatung",
 					"http://www.in.tum.de/fuer-studierende-der-tum/beratung.html"));
 
 			lm.insertUpdateIntoDb(new Link("Stellenangebote",
@@ -112,7 +112,7 @@ public class ImportService extends IntentService {
 					"OPAC LMU",
 					"https://opacplus.ub.uni-muenchen.de/InfoGuideClient.ubmsis/start.do?Login=igubm"));
 
-			lm.insertUpdateIntoDb(new Link("Fakultät für Informatik",
+			lm.insertUpdateIntoDb(new Link("Informatik Fakultät",
 					"http://www.in.tum.de/"));
 		}
 		lm.close();
