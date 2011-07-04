@@ -28,6 +28,16 @@ import de.tum.in.tumcampus.models.TransportManager;
 public class Transports extends Activity implements OnItemClickListener,
 		OnItemLongClickListener, OnEditorActionListener {
 
+	private boolean connected() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,16 +101,13 @@ public class Transports extends Activity implements OnItemClickListener,
 		try {
 			tm.replaceIntoDb(location);
 
-			ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo netInfo = cm.getActiveNetworkInfo();
-
-			if (netInfo == null || !netInfo.isConnectedOrConnecting()) {
+			if (!connected()) {
 				throw new Exception("<Keine Internetverbindung>");
 			}
 			c2 = tm.getDeparturesFromExternal(location);
 
 		} catch (Exception e) {
-			MatrixCursor c3 = new MatrixCursor(new String[]{"name", "_id"});
+			MatrixCursor c3 = new MatrixCursor(new String[] { "name", "_id" });
 			c3.addRow(new String[] { e.getMessage(), "" });
 			c2 = c3;
 		}
@@ -166,6 +173,9 @@ public class Transports extends Activity implements OnItemClickListener,
 
 		Cursor c = null;
 		try {
+			if (!connected()) {
+				throw new Exception("<Keine Internetverbindung>");
+			}
 			c = tm.getStationsFromExternal(input.getText().toString());
 		} catch (Exception e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
