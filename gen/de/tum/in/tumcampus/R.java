@@ -20,11 +20,10 @@ public final class R {
         public static final int info=0x7f020003;
         public static final int party=0x7f020004;
         public static final int rss=0x7f020005;
-        public static final int selector=0x7f020006;
-        public static final int tum_logo=0x7f020007;
-        public static final int vorlesung=0x7f020008;
-        public static final int www=0x7f020009;
-        public static final int zug=0x7f02000a;
+        public static final int tum_logo=0x7f020006;
+        public static final int vorlesung=0x7f020007;
+        public static final int www=0x7f020008;
+        public static final int zug=0x7f020009;
     }
     public static final class id {
         public static final int cafeteriaText=0x7f060000;
