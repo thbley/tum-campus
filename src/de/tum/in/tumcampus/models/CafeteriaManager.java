@@ -17,7 +17,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 
-	public SQLiteDatabase db;
+	private SQLiteDatabase db;
 
 	public CafeteriaManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
