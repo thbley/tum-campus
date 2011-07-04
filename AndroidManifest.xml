@@ -52,11 +52,11 @@
 		</activity>
 
 		<service android:enabled="true" android:exported="false"
-			android:name="services.DownloadService">
+			android:name=".services.DownloadService">
 		</service>
 
 		<service android:enabled="true" android:exported="false"
-			android:name="services.ImportService">
+			android:name=".services.ImportService">
 		</service>
 
 		<!-- <uses-permission android:name="android.permission.GET_TASKS"/> -->
