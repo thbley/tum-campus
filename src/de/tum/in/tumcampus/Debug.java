@@ -36,6 +36,9 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		b = (Button) findViewById(R.id.debugNews);
 		b.setOnClickListener(this);
+
+		b = (Button) findViewById(R.id.debugDownloads);
+		b.setOnClickListener(this);
 	}
 
 	public void DebugReset() {
@@ -95,6 +98,10 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		if (v.getId() == R.id.debugNews) {
 			DebugSQL("SELECT * FROM news ORDER BY date DESC");
+		}
+
+		if (v.getId() == R.id.debugDownloads) {
+			DebugSQL("SELECT * FROM downloads");
 		}
 	}
 }
