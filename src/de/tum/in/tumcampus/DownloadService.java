@@ -16,6 +16,7 @@ import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.models.LinkManager;
+import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.models.Utils;
 
 public class DownloadService extends IntentService {
@@ -29,7 +30,7 @@ public class DownloadService extends IntentService {
 	public DownloadService() {
 		super("DownloadService");
 	}
-	
+
 	final static String db = "database.db";
 
 	String message = "";
@@ -40,7 +41,7 @@ public class DownloadService extends IntentService {
 		// TODO show progress bar in GUI
 		// TODO avoid database locking / deadlocking exceptions
 		// TODO move constants to class header
-		// TODO add locking		
+		// TODO add locking
 
 		Log.d("TumCampus DownloadService", "TumCampus service start");
 
@@ -58,7 +59,7 @@ public class DownloadService extends IntentService {
 			Utils.getCacheDir("");
 
 			notification.setLatestEventInfo(this, "TumCampus download ...",
-					"1/4", contentIntent);
+					"1/5", contentIntent);
 			mNotificationManager.notify(1, notification);
 			message("Aktualisiere: Mensen", "");
 
@@ -67,12 +68,11 @@ public class DownloadService extends IntentService {
 
 			if (!destroyed) {
 				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"2/4", contentIntent);
+						"2/5", contentIntent);
 				mNotificationManager.notify(1, notification);
 				message(", Menus", "");
 
-				CafeteriaMenuManager cmm = new CafeteriaMenuManager(this,
-						db);
+				CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, db);
 				cmm.downloadFromExternal(cm.getAllIdsFromDb());
 				cmm.close();
 			}
@@ -80,7 +80,7 @@ public class DownloadService extends IntentService {
 
 			if (!destroyed) {
 				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"3/4", contentIntent);
+						"3/5", contentIntent);
 				mNotificationManager.notify(1, notification);
 				message(", Veranstaltungen", "");
 
@@ -90,18 +90,28 @@ public class DownloadService extends IntentService {
 			}
 
 			if (!destroyed) {
-				FeedManager nm = new FeedManager(this, db);
-
 				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"4/4", contentIntent);
+						"4/5", contentIntent);
 				mNotificationManager.notify(1, notification);
 				message(", RSS", "");
 
+				FeedManager nm = new FeedManager(this, db);
 				FeedItemManager nim = new FeedItemManager(this, db);
 
 				nim.downloadFromExternal(nm.getAllIdsFromDb());
-				nim.close();
 
+				nim.close();
+				nm.close();
+			}
+
+			if (!destroyed) {
+				notification.setLatestEventInfo(this, "TumCampus download ...",
+						"5/5", contentIntent);
+				mNotificationManager.notify(1, notification);
+				message(", News", "");
+
+				NewsManager nm = new NewsManager(this, db);
+				nm.downloadFromExternal();
 				nm.close();
 			}
 
