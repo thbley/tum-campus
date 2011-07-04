@@ -20,7 +20,6 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 	public void testLinks() {
 		assertTrue(solo.searchText("Links"));
-
 		solo.clickOnText("Links");
 
 		assertTrue(solo.searchText("Spiegel"));
