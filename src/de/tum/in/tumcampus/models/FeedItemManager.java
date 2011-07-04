@@ -1,6 +1,5 @@
 package de.tum.in.tumcampus.models;
 
-import java.io.File;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
@@ -20,10 +19,13 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 
-	public SQLiteDatabase db;
+	private SQLiteDatabase db;
+
+	private Context context;
 
 	public FeedItemManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
+		this.context = context;
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -32,6 +34,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	public void downloadFromExternal(List<Integer> ids) throws Exception {
 
 		cleanupDb();
+		// TODO move transaction inside?
 		db.beginTransaction();
 		for (int i = 0; i < ids.size(); i++) {
 			deleteFromDb(ids.get(i));
@@ -79,8 +82,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 * @return Feeds
 	 * @throws JSONException
 	 */
-	public static FeedItem getFromJson(int feedId, JSONObject json)
-			throws Exception {
+	public FeedItem getFromJson(int feedId, JSONObject json) throws Exception {
 
 		String target = "";
 		if (json.has("enclosure")) {
@@ -88,10 +90,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 			target = Utils.getCacheDir("rss/cache") + Utils.md5(enclosure)
 					+ ".jpg";
-
-			if (!new File(target).exists()) {
-				Utils.downloadFile(enclosure, target);
-			}
+			Utils.downloadFileQueue(context, db, enclosure, target);
 		}
 		Date pubDate = new Date();
 		if (json.has("pubDate")) {
@@ -130,7 +129,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 	public void removeCache() {
 		Log.d("TumCampus feeds deleteAllFromDb", "");
-		
+
 		db.execSQL("DELETE FROM feeds_items");
 		Utils.emptyCacheDir("rss/cache");
 	}
