@@ -33,6 +33,9 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		b = (Button) findViewById(R.id.debugEvents);
 		b.setOnClickListener(this);
+
+		b = (Button) findViewById(R.id.debugNews);
+		b.setOnClickListener(this);
 	}
 
 	public void DebugReset() {
@@ -79,7 +82,7 @@ public class Debug extends Activity implements View.OnClickListener {
 		}
 		
 		if (v.getId() == R.id.debugFeedsItems) {
-			DebugSQL("SELECT * FROM feeds_items ORDER BY feedId");
+			DebugSQL("SELECT * FROM feeds_items ORDER BY feedId, date DESC");
 		}
 		
 		if (v.getId() == R.id.debugLinks) {
@@ -87,7 +90,11 @@ public class Debug extends Activity implements View.OnClickListener {
 		}
 		
 		if (v.getId() == R.id.debugEvents) {
-			DebugSQL("SELECT * FROM events ORDER BY id");
+			DebugSQL("SELECT * FROM events ORDER BY start_time DESC");
+		}
+		
+		if (v.getId() == R.id.debugNews) {
+			DebugSQL("SELECT * FROM news ORDER BY date DESC");
 		}
 	}
 }
