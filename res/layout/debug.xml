@@ -5,31 +5,34 @@
 
 	<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
-		<Button android:text="sqlite: cafeterias" android:id="@+id/debugCafeterias"
+		<Button android:text="cafeterias" android:id="@+id/debugCafeterias"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-		<Button android:text="sqlite: cafeterias_menus" android:id="@+id/debugCafeteriasMenus"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" />
-	</LinearLayout>
-
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="wrap_content">
-		<Button android:text="sqlite: feeds" android:id="@+id/debugFeeds"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" />
-
-		<Button android:text="sqlite: feeds_items" android:id="@+id/debugFeedsItems"
+		<Button android:text="cafeterias_menus" android:id="@+id/debugCafeteriasMenus"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 	</LinearLayout>
 
 	<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
-		<Button android:text="sqlite: links" android:id="@+id/debugLinks"
+		<Button android:text="feeds" android:id="@+id/debugFeeds"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-		<Button android:text="sqlite: events" android:id="@+id/debugEvents"
+		<Button android:text="feeds_items" android:id="@+id/debugFeedsItems"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+	</LinearLayout>
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<Button android:text="links" android:id="@+id/debugLinks"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-		<Button android:text="sqlite: news" android:id="@+id/debugNews"
+		<Button android:text="events" android:id="@+id/debugEvents"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+		<Button android:text="news" android:id="@+id/debugNews"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+		<Button android:text="downloads" android:id="@+id/debugDownloads"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 	</LinearLayout>
 
