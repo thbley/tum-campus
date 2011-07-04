@@ -10,8 +10,7 @@
 	<ListView android:layout_height="fill_parent"
 		android:background="#FFFFFF" android:layout_width="fill_parent"
 		android:id="@+id/listView2" android:layout_weight="53"
-		android:scrollbars="vertical"
-		android:padding="10px" />
+		android:scrollbars="vertical" android:padding="10px" />
 
 	<TextView android:layout_width="fill_parent" android:id="@+id/transportText2"
 		android:textColor="#FFFFFF" android:layout_height="wrap_content"
