@@ -25,7 +25,6 @@
 				android:imeOptions="actionSearch" />
 
 		</FrameLayout>
-
 	</LinearLayout>
 
 	<LinearLayout android:orientation="vertical"
