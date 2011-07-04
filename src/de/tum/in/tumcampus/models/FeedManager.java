@@ -14,7 +14,7 @@ public class FeedManager extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 
-	public SQLiteDatabase db;
+	private SQLiteDatabase db;
 
 	public FeedManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
@@ -25,9 +25,9 @@ public class FeedManager extends SQLiteOpenHelper {
 
 	public void importFromInternal() throws Exception {
 
-		db.beginTransaction();
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
 
+		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			System.out.println(files[i]);
 
@@ -91,7 +91,7 @@ public class FeedManager extends SQLiteOpenHelper {
 					new String[] { n.name, n.feedUrl });
 		}
 	}
-	
+
 	public void deleteFromDb(String id) {
 		db.execSQL("DELETE FROM feeds WHERE id = ?", new String[] { id });
 	}
