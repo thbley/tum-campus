@@ -50,23 +50,21 @@ public class EventManager extends SQLiteOpenHelper {
 	}
 
 	public Cursor getAllFromDb() {
-		return db
-				.rawQuery(
-						"SELECT image, name, strftime('%w', start_time) as weekday, strftime('%d.%m.%Y %H:%M', start_time) as start, "
-								+ "strftime('%H:%M', end_time) as end, "
-								+ "location, description, id as _id "
-								+ "FROM events WHERE end_time > datetime() "
-								+ "ORDER BY start_time ASC LIMIT 25", null);
+		return db.rawQuery(
+				"SELECT image, name, strftime('%w', start_time) as weekday, "
+						+ "strftime('%d.%m.%Y %H:%M', start_time) as start, "
+						+ "strftime('%H:%M', end_time) as end, "
+						+ "location, description, id as _id "
+						+ "FROM events WHERE end_time > datetime() "
+						+ "ORDER BY start_time ASC LIMIT 25", null);
 	}
 
 	public Cursor getDetailsFromDb(String id) {
-		return db
-				.rawQuery(
-						"SELECT image, name, strftime('%w', start_time), strftime('%d.%m.%Y %H:%M', start_time), "
-								+ "strftime('%H:%M', end_time), "
-								+ "location, description, id as _id "
-								+ "FROM events WHERE id = ? ",
-						new String[] { id });
+		return db.rawQuery("SELECT image, name, strftime('%w', start_time), "
+				+ "strftime('%d.%m.%Y %H:%M', start_time), "
+				+ "strftime('%H:%M', end_time), "
+				+ "location, description, id as _id "
+				+ "FROM events WHERE id = ? ", new String[] { id });
 	}
 
 	/**
@@ -135,7 +133,7 @@ public class EventManager extends SQLiteOpenHelper {
 
 	public void removeCache() {
 		Log.d("TumCampus events deleteAllFromDb", "");
-		
+
 		db.execSQL("DELETE FROM events");
 		Utils.emptyCacheDir("events/cache");
 	}
