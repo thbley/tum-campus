@@ -65,7 +65,7 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		String today = de.format(calendar.getTime());
 
 		assertTrue(solo.searchText("Mensa Garching: " + today));
-		assertTrue(solo.searchText("Tagesgericht 1"));
+		assertTrue(solo.searchText("Beilagen"));
 
 		assertTrue(solo.searchText("Datum auswählen"));
 		solo.clickOnText("Datum auswählen");
