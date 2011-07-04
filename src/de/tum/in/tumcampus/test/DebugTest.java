@@ -22,7 +22,7 @@ public class DebugTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Debug"));
 		solo.clickOnText("Debug");
 
-		assertTrue(solo.searchText("sqlite"));
+		assertTrue(solo.searchText("Debug SQLite"));
 
 		solo.clickOnText("cafeterias");
 		solo.clickOnText("cafeterias_menus");
