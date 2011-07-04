@@ -58,42 +58,11 @@ public class DownloadService extends IntentService {
 			// check if sd card available
 			Utils.getCacheDir("");
 
-			notification.setLatestEventInfo(this, "TumCampus download ...",
-					"1/5", contentIntent);
-			mNotificationManager.notify(1, notification);
-			message("Aktualisiere: Mensen", "");
-
-			CafeteriaManager cm = new CafeteriaManager(this, db);
-			cm.downloadFromExternal();
-
 			if (!destroyed) {
 				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"2/5", contentIntent);
+						"1/5", contentIntent);
 				mNotificationManager.notify(1, notification);
-				message(", Menus", "");
-
-				CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, db);
-				cmm.downloadFromExternal(cm.getAllIdsFromDb());
-				cmm.close();
-			}
-			cm.close();
-
-			if (!destroyed) {
-				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"3/5", contentIntent);
-				mNotificationManager.notify(1, notification);
-				message(", Veranstaltungen", "");
-
-				EventManager em = new EventManager(this, db);
-				em.downloadFromExternal();
-				em.close();
-			}
-
-			if (!destroyed) {
-				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"4/5", contentIntent);
-				mNotificationManager.notify(1, notification);
-				message(", RSS", "");
+				message("Aktualisiere: RSS", "");
 
 				FeedManager nm = new FeedManager(this, db);
 				FeedItemManager nim = new FeedItemManager(this, db);
@@ -106,7 +75,7 @@ public class DownloadService extends IntentService {
 
 			if (!destroyed) {
 				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"5/5", contentIntent);
+						"2/5", contentIntent);
 				mNotificationManager.notify(1, notification);
 				message(", News", "");
 
@@ -114,6 +83,37 @@ public class DownloadService extends IntentService {
 				nm.downloadFromExternal();
 				nm.close();
 			}
+
+			if (!destroyed) {
+				notification.setLatestEventInfo(this, "TumCampus download ...",
+						"3/5", contentIntent);
+				mNotificationManager.notify(1, notification);
+				message(", Veranstaltungen", "");
+
+				EventManager em = new EventManager(this, db);
+				em.downloadFromExternal();
+				em.close();
+			}
+
+			notification.setLatestEventInfo(this, "TumCampus download ...",
+					"4/5", contentIntent);
+			mNotificationManager.notify(1, notification);
+			message(", Mensen", "");
+
+			CafeteriaManager cm = new CafeteriaManager(this, db);
+			cm.downloadFromExternal();
+
+			if (!destroyed) {
+				notification.setLatestEventInfo(this, "TumCampus download ...",
+						"5/5", contentIntent);
+				mNotificationManager.notify(1, notification);
+				message(", Menus", "");
+
+				CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, db);
+				cmm.downloadFromExternal(cm.getAllIdsFromDb());
+				cmm.close();
+			}
+			cm.close();
 
 			if (!destroyed) {
 				LinkManager lm = new LinkManager(this, db);
