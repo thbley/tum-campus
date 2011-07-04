@@ -1,6 +1,5 @@
 package de.tum.in.tumcampus.models;
 
-import java.io.File;
 import java.net.URLEncoder;
 
 import org.json.JSONArray;
@@ -17,10 +16,13 @@ public class EventManager extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 
-	public SQLiteDatabase db;
+	private SQLiteDatabase db;
+
+	private Context context;
 
 	public EventManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
+		this.context = context;
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -82,7 +84,7 @@ public class EventManager extends SQLiteOpenHelper {
 	 * @return Event
 	 * @throws JSONException
 	 */
-	public static Event getFromJson(JSONObject json) throws Exception {
+	public Event getFromJson(JSONObject json) throws Exception {
 
 		String eventId = json.getString("id");
 
@@ -90,10 +92,7 @@ public class EventManager extends SQLiteOpenHelper {
 				+ "/Picture?type=large";
 
 		String target = Utils.getCacheDir("events/cache") + eventId + ".jpg";
-
-		if (!new File(target).exists()) {
-			Utils.downloadFile(picture, target);
-		}
+		Utils.downloadFileQueue(context, db, picture, target);
 
 		String description = "";
 		if (json.has("description")) {
@@ -113,7 +112,6 @@ public class EventManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(Event e) throws Exception {
-		// Log.d("TumCampus events replaceIntoDb", e.toString());
 
 		if (e.id.length() == 0) {
 			throw new Exception("Invalid id.");
