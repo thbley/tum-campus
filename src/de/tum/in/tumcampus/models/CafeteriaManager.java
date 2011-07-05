@@ -16,7 +16,7 @@ import android.util.Log;
 public class CafeteriaManager extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
-
+	
 	private SQLiteDatabase db;
 
 	public CafeteriaManager(Context context, String database) {
@@ -25,14 +25,14 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		db = this.getWritableDatabase();
 		onCreate(db);
 	}
-
+	
 	public void downloadFromExternal() throws Exception {
 		JSONArray jsonArray = Utils.downloadJson(
 				"http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php")
 				.getJSONArray("mensa_mensen");
 
-		db.beginTransaction();
 		removeCache();
+		db.beginTransaction();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
 		}
@@ -99,7 +99,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias ("
 				+ "id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
 	}
-
+	
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}
