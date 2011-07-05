@@ -47,7 +47,7 @@ public class EventManager extends SQLiteOpenHelper {
 			String eventId = jsonArray.getJSONObject(i).getString("id");
 			list.add(Utils.downloadJson(eventUrl + eventId));
 		}
-		
+
 		cleanupDb();
 		db.beginTransaction();
 		for (int i = 0; i < list.size(); i++) {
@@ -59,20 +59,12 @@ public class EventManager extends SQLiteOpenHelper {
 
 	public Cursor getAllFromDb() {
 		return db.rawQuery(
-				"SELECT image, name, strftime('%w', start_time) as weekday, "
-						+ "strftime('%d.%m.%Y %H:%M', start_time) as start, "
-						+ "strftime('%H:%M', end_time) as end, "
+				"SELECT image, name, strftime('%w', start) as weekday, "
+						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
+						+ "strftime('%H:%M', end) as end_de, "
 						+ "location, description, id as _id "
-						+ "FROM events WHERE end_time > datetime() "
-						+ "ORDER BY start_time ASC LIMIT 25", null);
-	}
-
-	public Cursor getDetailsFromDb(String id) {
-		return db.rawQuery("SELECT image, name, strftime('%w', start_time), "
-				+ "strftime('%d.%m.%Y %H:%M', start_time), "
-				+ "strftime('%H:%M', end_time), "
-				+ "location, description, id as _id "
-				+ "FROM events WHERE id = ? ", new String[] { id });
+						+ "FROM events WHERE end > datetime() "
+						+ "ORDER BY start ASC LIMIT 25", null);
 	}
 
 	/**
@@ -126,12 +118,12 @@ public class EventManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid name.");
 		}
 		db.execSQL(
-				"REPLACE INTO events (id, name, start_time, end_time, location, "
+				"REPLACE INTO events (id, name, start, end, location, "
 						+ "description, link, image) "
 						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 				new String[] { String.valueOf(e.id), e.name,
-						Utils.getDateTimeString(e.start_time),
-						Utils.getDateTimeString(e.end_time), e.location,
+						Utils.getDateTimeString(e.start),
+						Utils.getDateTimeString(e.end), e.location,
 						e.description, e.link, e.image });
 	}
 
@@ -143,13 +135,14 @@ public class EventManager extends SQLiteOpenHelper {
 	}
 
 	public void cleanupDb() {
-		db.execSQL("DELETE FROM events WHERE start_time < date('now','-14 day')");
+		db.execSQL("DELETE FROM events WHERE start < date('now','-14 day')");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
+		// TODO fix camelcase
 		db.execSQL("CREATE TABLE IF NOT EXISTS events ("
-				+ "id VARCHAR PRIMARY KEY, name VARCHAR, start_time VARCHAR, "
-				+ "end_time VARCHAR, location VARCHAR, description VARCHAR, "
+				+ "id VARCHAR PRIMARY KEY, name VARCHAR, start VARCHAR, "
+				+ "end VARCHAR, location VARCHAR, description VARCHAR, "
 				+ "link VARCHAR, image VARCHAR)");
 	}
 
