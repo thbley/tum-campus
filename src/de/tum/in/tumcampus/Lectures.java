@@ -24,7 +24,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 		setContentView(R.layout.lectures);
 
 		LectureItemManager lim = new LectureItemManager(this, "database.db");
-		Cursor c = lim.getAllFromDb();
+		Cursor c = lim.getRecentFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 				android.R.layout.two_line_list_item, c, c.getColumnNames(),
