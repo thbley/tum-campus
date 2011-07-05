@@ -35,17 +35,17 @@ public class Lectures extends Activity implements OnItemClickListener,
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		lim.close();
-		
+
 		// TODO context menu:
 		// TODO change series esp. time
-		// TODO delete single entry, e.g. cscw2 13.7. 
+		// TODO delete single entry, e.g. cscw2 13.7.
 		// TODO add single entry to lecture, e.g. 14.7.
 
 		// TODO add second listview with all lectures
 		// TODO delete complete lecture + confirm
-		
+
 		// TODO add horizontal view
-		
+
 		// TODO add holidays, vacation
 	}
 
