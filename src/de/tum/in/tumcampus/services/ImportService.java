@@ -42,6 +42,8 @@ public class ImportService extends IntentService {
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));
 
+			System.out.println(e);
+			System.out.println(sw);
 			// TODO implement
 		}
 	}
@@ -115,8 +117,8 @@ public class ImportService extends IntentService {
 			lm.insertUpdateIntoDb(new Link("Informatik Fakultät",
 					"http://www.in.tum.de/"));
 		}
-		lm.close();
 		lm.importFromInternal();
+		lm.close();
 	}
 
 	@Override
