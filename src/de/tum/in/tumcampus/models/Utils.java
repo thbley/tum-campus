@@ -252,6 +252,17 @@ public class Utils {
 		return new Date();
 	}
 
+	public static Date getDateTimeDe(String s) {
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat(
+					"dd.MM.yyyy HH:mm");
+			return dateFormat.parse(s);
+		} catch (Exception e) {
+			// TODO implement
+		}
+		return new Date();
+	}
+
 	public static String getDateString(Date d) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		return dateFormat.format(d);
