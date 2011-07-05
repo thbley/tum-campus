@@ -6,20 +6,20 @@ public class Event {
 
 	String id;
 	String name;
-	Date start_time;
-	Date end_time;
+	Date start;
+	Date end;
 	String location;
 	String description;
 	String link;
 	String image;
 
-	public Event(String id, String name, Date start_time, Date end_time,
+	public Event(String id, String name, Date start, Date end,
 			String location, String description, String link, String image) {
 
 		this.id = id;
 		this.name = name;
-		this.start_time = start_time;
-		this.end_time = end_time;
+		this.start = start;
+		this.end = end;
 		this.location = location;
 		this.description = description;
 		this.link = link;
@@ -27,9 +27,9 @@ public class Event {
 	}
 
 	public String toString() {
-		return "id=" + id + " name=" + name + " start_time="
-				+ Utils.getDateString(start_time) + " end_time="
-				+ Utils.getDateString(end_time) + " location=" + location
+		return "id=" + id + " name=" + name + " start="
+				+ Utils.getDateString(start) + " end="
+				+ Utils.getDateString(end) + " location=" + location
 				+ " description=" + description + " link=" + link + " image="
 				+ image;
 	}
