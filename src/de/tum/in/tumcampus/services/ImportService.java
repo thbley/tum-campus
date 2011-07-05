@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.util.Log;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.models.LectureItemManager;
+import de.tum.in.tumcampus.models.LectureManager;
 import de.tum.in.tumcampus.models.Link;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.TransportManager;
@@ -37,6 +39,8 @@ public class ImportService extends IntentService {
 			importFeeds();
 
 			importLinks();
+			
+			importLectureItems();
 
 		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
@@ -78,6 +82,16 @@ public class ImportService extends IntentService {
 		}
 		nm.importFromInternal();
 		nm.close();
+	}
+
+	public void importLectureItems() throws Exception {
+		LectureItemManager lim = new LectureItemManager(this, db);
+		lim.importFromInternal();
+		lim.close();
+		
+		LectureManager lm = new LectureManager(this, db);
+		lm.updateLectures();
+		lm.close();
 	}
 
 	public void importLinks() throws Exception {
