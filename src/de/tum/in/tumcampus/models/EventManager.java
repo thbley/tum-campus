@@ -1,6 +1,8 @@
 package de.tum.in.tumcampus.models;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,9 +32,6 @@ public class EventManager extends SQLiteOpenHelper {
 
 	public void downloadFromExternal() throws Exception {
 
-		cleanupDb();
-		db.beginTransaction();
-
 		String baseUrl = "https://graph.facebook.com/162327853831856/events?access_token=";
 		String token = URLEncoder
 				.encode("141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU");
@@ -43,9 +42,16 @@ public class EventManager extends SQLiteOpenHelper {
 		String eventUrl = "http://graph.facebook.com/";
 
 		// TODO limit 25
+		List<JSONObject> list = new ArrayList<JSONObject>();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String eventId = jsonArray.getJSONObject(i).getString("id");
-			replaceIntoDb(getFromJson(Utils.downloadJson(eventUrl + eventId)));
+			list.add(Utils.downloadJson(eventUrl + eventId));
+		}
+		
+		cleanupDb();
+		db.beginTransaction();
+		for (int i = 0; i < list.size(); i++) {
+			replaceIntoDb(getFromJson(list.get(i)));
 		}
 		db.setTransactionSuccessful();
 		db.endTransaction();
