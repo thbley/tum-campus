@@ -7,7 +7,7 @@ public class Lecture {
 	public Lecture(int id, String name) {
 		this.id = id;
 		this.name = name;
-		
+
 		// TODO add module
 	}
 
