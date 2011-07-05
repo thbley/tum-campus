@@ -40,6 +40,8 @@ public class Utils {
 	 * e.printStackTrace(); }
 	 */
 	public static JSONObject downloadJson(String url) throws Exception {
+		Log.d("TumCampus Download", "TumCampus Download " + url);
+
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
 		String data = "";
