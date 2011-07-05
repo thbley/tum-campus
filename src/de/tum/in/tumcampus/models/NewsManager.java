@@ -31,9 +31,6 @@ public class NewsManager extends SQLiteOpenHelper {
 
 	public void downloadFromExternal() throws Exception {
 
-		cleanupDb();
-		db.beginTransaction();
-
 		String baseUrl = "https://graph.facebook.com/162327853831856/feed/?access_token=";
 		String token = URLEncoder
 				.encode("141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU");
@@ -41,6 +38,8 @@ public class NewsManager extends SQLiteOpenHelper {
 		JSONArray jsonArray = Utils.downloadJson(baseUrl + token).getJSONArray(
 				"data");
 
+		cleanupDb();
+		db.beginTransaction();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject obj = jsonArray.getJSONObject(i);
 
