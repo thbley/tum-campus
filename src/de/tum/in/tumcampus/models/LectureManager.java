@@ -16,9 +16,10 @@ public class LectureManager extends SQLiteOpenHelper {
 		db = this.getWritableDatabase();
 		onCreate(db);
 	}
-	
+
 	public void updateLectures() {
-		db.execSQL("REPLACE INTO lectures (id, name) SELECT DISTINCT lectureId, name FROM lectures_items");
+		db.execSQL("REPLACE INTO lectures (id, name) "
+				+ "SELECT DISTINCT lectureId, name FROM lectures_items");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
