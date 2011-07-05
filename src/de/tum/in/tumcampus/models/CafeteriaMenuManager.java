@@ -15,7 +15,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteDatabase db;
 
@@ -30,8 +30,6 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 		cleanupDb();
 		for (int i = 0; i < ids.size(); i++) {
-			db.beginTransaction();
-
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
 					+ "WHERE mensaId = ? AND "
 					+ "date > date('now', '+7 day') LIMIT 1",
@@ -47,6 +45,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 					.downloadJson("http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php?mensa_id="
 							+ ids.get(i));
 
+			db.beginTransaction();
 			JSONArray menu = json.getJSONArray("mensa_menu");
 			for (int j = 0; j < menu.length(); j++) {
 				replaceIntoDb(getFromJson(menu.getJSONObject(j)));
