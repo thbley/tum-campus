@@ -34,10 +34,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	public void downloadFromExternal(List<Integer> ids) throws Exception {
 
 		cleanupDb();
-		// TODO move transaction inside?
-		db.beginTransaction();
 		for (int i = 0; i < ids.size(); i++) {
-			deleteFromDb(ids.get(i));
 
 			Cursor feed = db.rawQuery("SELECT feedUrl FROM feeds WHERE id = ?",
 					new String[] { String.valueOf(ids.get(i)) });
@@ -53,13 +50,15 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
 					.getJSONObject("query").getJSONObject("results")
 					.getJSONArray("item");
-
+			
+			deleteFromDb(ids.get(i));
+			db.beginTransaction();
 			for (int j = 0; j < jsonArray.length(); j++) {
 				insertIntoDb(getFromJson(ids.get(i), jsonArray.getJSONObject(j)));
 			}
+			db.setTransactionSuccessful();
+			db.endTransaction();
 		}
-		db.setTransactionSuccessful();
-		db.endTransaction();
 	}
 
 	public Cursor getAllFromDb(String feedId) {
