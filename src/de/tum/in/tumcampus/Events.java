@@ -71,8 +71,8 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		if (view.getId() == R.id.infos) {
 			TextView infos = (TextView) view;
 			infos.setText(weekDays[c.getInt(c.getColumnIndex("weekday"))]
-					+ ", " + c.getString(c.getColumnIndex("start")) + " - "
-					+ c.getString(c.getColumnIndex("end")) + "\n"
+					+ ", " + c.getString(c.getColumnIndex("start_de")) + " - "
+					+ c.getString(c.getColumnIndex("end_de")) + "\n"
 					+ c.getString(c.getColumnIndex("location")));
 			return true;
 		}
