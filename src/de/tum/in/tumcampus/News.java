@@ -42,6 +42,11 @@ public class News extends Activity implements OnItemClickListener, ViewBinder{
 		ListView lv = (ListView) findViewById(R.id.listView);
 		Cursor c = (Cursor) lv.getAdapter().getItem(position);
 		String url = c.getString(c.getColumnIndex("link"));
+		
+		if (url.equals("")){
+			return;
+			// evtl. TODO: Toast "Kein Link vorhanden"
+		}
 
 		// Connection to browser
 		Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
