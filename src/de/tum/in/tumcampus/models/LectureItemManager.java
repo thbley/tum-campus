@@ -57,6 +57,13 @@ public class LectureItemManager extends SQLiteOpenHelper {
 					String location = row[headers.indexOf("ORT")];
 					String lectureId = row[headers.indexOf("LV_NUMMER")];
 
+					String module = "";
+					if (name.contains("(") && name.contains(")")) {
+						module = name.substring(name.indexOf("(") + 1,
+								name.indexOf(")"));
+						name = name.substring(0, name.indexOf("(")).trim();
+					}
+
 					String datum = row[headers.indexOf("DATUM")];
 					String von = row[headers.indexOf("VON")];
 					String bis = row[headers.indexOf("BIS")];
@@ -82,7 +89,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 						url = row[headers.indexOf("URL")];
 					}
 					replaceIntoDb(new LectureItem(id, lectureId, start, end,
-							name, location, note, url, seriesId));
+							name, module, location, note, url, seriesId));
 				}
 				in.close();
 
@@ -100,7 +107,17 @@ public class LectureItemManager extends SQLiteOpenHelper {
 				+ "strftime('%H:%M', end) as end_de, "
 				+ "url, lectureId, id as _id "
 				+ "FROM lectures_items WHERE end > datetime() AND "
-				+ "start < date('now', '+7 day')", null);
+				+ "start < date('now', '+7 day') ORDER BY start", null);
+	}
+
+	public Cursor getAllFromDb(String lectureId) {
+		return db.rawQuery("SELECT name, note, location, "
+				+ "strftime('%w', start) as weekday, "
+				+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
+				+ "strftime('%H:%M', end) as end_de, "
+				+ "url, lectureId, id as _id FROM lectures_items "
+				+ "WHERE lectureId = ? ORDER BY start",
+				new String[] { lectureId });
 	}
 
 	public void replaceIntoDb(LectureItem l) throws Exception {
@@ -121,19 +138,23 @@ public class LectureItemManager extends SQLiteOpenHelper {
 
 		db.execSQL(
 				"REPLACE INTO lectures_items (id, lectureId, start, end, "
-						+ "name, location, note, url, seriesId) VALUES "
-						+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+						+ "name, module, location, note, url, seriesId) VALUES "
+						+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				new String[] { l.id, l.lectureId,
 						Utils.getDateTimeString(l.start),
-						Utils.getDateTimeString(l.end), l.name, l.location,
-						l.note, l.url, l.seriesId });
+						Utils.getDateTimeString(l.end), l.name, l.module,
+						l.location, l.note, l.url, l.seriesId });
+	}
+
+	public void deleteItemFromDb(String id) {
+		db.execSQL("DELETE FROM lectures_items WHERE id = ?", new String[] { id });
 	}
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS lectures_items ("
 				+ "id VARCHAR PRIMARY KEY, lectureId VARCHAR, start VARCHAR, "
-				+ "end VARCHAR, name VARCHAR, location VARCHAR, note VARCHAR, "
-				+ "url VARCHAR, seriesId VARCHAR)");
+				+ "end VARCHAR, name VARCHAR, module VARCHAR, location VARCHAR, "
+				+ "note VARCHAR, url VARCHAR, seriesId VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
