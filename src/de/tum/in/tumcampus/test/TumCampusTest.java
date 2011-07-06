@@ -75,16 +75,6 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Hello World"));
 	}
 
-	public void testNews() {
-		assertTrue(solo.searchText("Nachrichten"));
-
-		solo.clickOnText("Nachrichten");
-		assertTrue(solo.searchText("Hallo Nachrichten"));
-
-		solo.goBack();
-		assertTrue(solo.searchText("Hello World"));
-	}
-
 	public void testAppinfo() {
 		assertTrue(solo.searchText("App-Info"));
 
