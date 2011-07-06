@@ -130,10 +130,10 @@ public class Utils {
 
 			Matcher href_match = href.matcher(match);
 			if (href_match.find()) {
-				if (match.indexOf("shortcut icon") != -1 && icon.length() == 0) {
+				if (match.contains("shortcut icon") && icon.length() == 0) {
 					icon = href_match.group(1);
 				}
-				if (match.indexOf("apple-touch-icon") != -1) {
+				if (match.contains("apple-touch-icon")) {
 					icon = href_match.group(1);
 				}
 			}
@@ -145,7 +145,7 @@ public class Utils {
 			icon = "http://" + uri.getHost() + "/favicon.ico";
 		}
 		// relative url
-		if (icon.indexOf("://") == -1) {
+		if (!icon.contains("://")) {
 			icon = "http://" + uri.getHost() + "/" + icon;
 		}
 		// download icon
@@ -291,5 +291,12 @@ public class Utils {
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putString(name, value);
 		editor.commit();
+	}
+
+	public static String trunc(String str, int limit) {
+		if (str.length() > limit) {
+			str = str.substring(0, limit) + " ...";
+		}
+		return str;
 	}
 }
