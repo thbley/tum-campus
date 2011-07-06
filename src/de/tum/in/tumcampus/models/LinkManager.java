@@ -27,8 +27,9 @@ public class LinkManager extends SQLiteOpenHelper {
 
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
-			if (files[i].getName().endsWith(".URL")) {
-				String name = files[i].getName().replace(".URL", "");
+			String filename = files[i].getName();
+			if (filename.toLowerCase().endsWith(".url")) {
+				String name = filename.substring(0, filename.length() - 4);
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
 				insertUpdateIntoDb(new Link(name, url));
