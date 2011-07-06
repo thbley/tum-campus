@@ -19,7 +19,8 @@ import android.widget.SlidingDrawer;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
 
-public class Feeds extends Activity implements OnItemClickListener, ViewBinder, OnItemLongClickListener {
+public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
+		OnItemLongClickListener {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -95,24 +96,23 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder, 
 		}
 		return false;
 	}
-	
-	@Override
-	public boolean onItemLongClick(AdapterView<?> av, View v, int position,
-			long id) {
 
-		final ListView lv = (ListView) findViewById(R.id.listView);
-		Cursor c = (Cursor) lv.getAdapter().getItem(position);
-		final String _id = c.getString(c.getColumnIndex("_id"));
+	@Override
+	public boolean onItemLongClick(final AdapterView<?> av, View v,
+			final int position, long id) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Wirklch löschen?");
 		builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
-				FeedManager fm = new FeedManager(lv.getContext(), "database.db");
+				Cursor c = (Cursor) av.getAdapter().getItem(position);
+				String _id = c.getString(c.getColumnIndex("_id"));
+
+				FeedManager fm = new FeedManager(av.getContext(), "database.db");
 				fm.deleteFromDb(_id);
 
-				SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv
+				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
 						.getAdapter();
 				adapter.changeCursor(fm.getAllFromDb());
 				fm.close();
