@@ -35,6 +35,8 @@ public class Lectures extends Activity implements OnItemClickListener,
 		} else {
 			setContentView(R.layout.lectures);
 		}
+		
+		// TODO add robotium tests
 
 		LectureItemManager lim = new LectureItemManager(this, "database.db");
 		Cursor c = lim.getRecentFromDb();
