@@ -147,7 +147,8 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	}
 
 	public void deleteItemFromDb(String id) {
-		db.execSQL("DELETE FROM lectures_items WHERE id = ?", new String[] { id });
+		db.execSQL("DELETE FROM lectures_items WHERE id = ?",
+				new String[] { id });
 	}
 
 	public void onCreate(SQLiteDatabase db) {
