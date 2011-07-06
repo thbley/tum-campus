@@ -50,22 +50,21 @@ public class Links extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> av, View v, int position,
-			long id) {
-
-		final ListView lv = (ListView) findViewById(R.id.listView);
-		Cursor c = (Cursor) lv.getAdapter().getItem(position);
-		final String _id = c.getString(c.getColumnIndex("_id"));
+	public boolean onItemLongClick(final AdapterView<?> av, View v,
+			final int position, long id) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Wirklch löschen?");
 		builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
-				LinkManager lm = new LinkManager(lv.getContext(), "database.db");
+				Cursor c = (Cursor) av.getAdapter().getItem(position);
+				String _id = c.getString(c.getColumnIndex("_id"));
+
+				LinkManager lm = new LinkManager(av.getContext(), "database.db");
 				lm.deleteFromDb(_id);
 
-				SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv
+				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
 						.getAdapter();
 				adapter.changeCursor(lm.getAllFromDb());
 				lm.close();
