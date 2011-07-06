@@ -88,13 +88,15 @@ public class NewsManager extends SQLiteOpenHelper {
 			Utils.downloadFileQueue(context, db, picture, target);
 		}
 		String link = "";
-		if (json.has("link") && !json.getString("link").contains("www.facebook.com")) {
+		if (json.has("link")
+				&& !json.getString("link").contains("www.facebook.com")) {
 			link = json.getString("link");
 		}
 		if (link.length() == 0 && json.has("object_id")) {
-			link = "http://graph.facebook.com/" + json.getString("object_id") +"/Picture?type=normal";
+			link = "http://graph.facebook.com/" + json.getString("object_id")
+					+ "/Picture?type=normal";
 		}
-		
+
 		String message = "";
 		if (json.has("message")) {
 			message = json.getString("message");
@@ -135,7 +137,8 @@ public class NewsManager extends SQLiteOpenHelper {
 
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS news ("
-				+ "id VARCHAR PRIMARY KEY, message VARCHAR, link VARCHAR, image VARCHAR, date VARCHAR)");
+				+ "id VARCHAR PRIMARY KEY, message VARCHAR, link VARCHAR, "
+				+ "image VARCHAR, date VARCHAR)");
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
