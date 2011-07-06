@@ -9,7 +9,7 @@
 
 	<ListView android:layout_height="fill_parent"
 		android:background="#FFFFFF" android:layout_width="fill_parent"
-		android:id="@+id/listView2" android:layout_weight="53"
+		android:id="@+id/listView2" android:layout_weight="51"
 		android:scrollbars="vertical" android:padding="10px" />
 
 	<TextView android:layout_width="fill_parent" android:id="@+id/transportText2"
@@ -18,7 +18,7 @@
 
 	<ListView android:layout_width="fill_parent"
 		android:background="#FFFFFF" android:layout_height="fill_parent"
-		android:id="@+id/listView" android:layout_weight="47"
+		android:id="@+id/listView" android:layout_weight="49"
 		android:scrollbars="vertical" android:padding="6px" />
 
 	<EditText android:id="@+id/search" android:layout_height="wrap_content"
