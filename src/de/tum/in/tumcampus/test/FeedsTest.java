@@ -27,7 +27,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Spiegel"));
 		solo.clickOnText("Spiegel");
 
-		solo.clickOnText("Nachrichten: Spiegel");
+		assertTrue(solo.searchText("Nachrichten: Spiegel"));
 
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
