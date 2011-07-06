@@ -87,7 +87,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		// TODO optimize
 		Intent service = new Intent(this, ImportService.class);
 		startService(service);
-		
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
@@ -99,14 +98,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		addItem(list, R.drawable.zug, "MVV", new Intent(this, Transports.class));
 
-		addItem(list, R.drawable.globus, "Nachrichten", new Intent(this,
-				News.class));
-
 		addItem(list, R.drawable.rss, "RSS-Feeds",
 				new Intent(this, Feeds.class));
 
 		addItem(list, R.drawable.party, "Veranstaltungen", new Intent(this,
 				Events.class));
+
+		addItem(list, R.drawable.globus, "Nachrichten", new Intent(this,
+				News.class));
 
 		addItem(list, R.drawable.www, "Links", new Intent(this, Links.class));
 
