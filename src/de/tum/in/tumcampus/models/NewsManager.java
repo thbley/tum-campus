@@ -38,7 +38,7 @@ public class NewsManager extends SQLiteOpenHelper {
 		JSONArray jsonArray = Utils.downloadJson(baseUrl + token).getJSONArray(
 				"data");
 
-		cleanupDb();
+		removeAllFromDb();
 		db.beginTransaction();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject obj = jsonArray.getJSONObject(i);
@@ -88,9 +88,13 @@ public class NewsManager extends SQLiteOpenHelper {
 			Utils.downloadFileQueue(context, db, picture, target);
 		}
 		String link = "";
-		if (json.has("link")) {
+		if (json.has("link") && !json.getString("link").contains("www.facebook.com")) {
 			link = json.getString("link");
 		}
+		if (link.length() == 0 && json.has("object_id")) {
+			link = "http://graph.facebook.com/" + json.getString("object_id") +"/Picture?type=normal";
+		}
+		
 		String message = "";
 		if (json.has("message")) {
 			message = json.getString("message");
@@ -125,8 +129,8 @@ public class NewsManager extends SQLiteOpenHelper {
 		Utils.emptyCacheDir("news/cache");
 	}
 
-	public void cleanupDb() {
-		db.execSQL("DELETE FROM news WHERE date < date('now','-1 month')");
+	public void removeAllFromDb() {
+		db.execSQL("DELETE FROM news");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
