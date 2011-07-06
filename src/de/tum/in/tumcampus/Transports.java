@@ -97,6 +97,7 @@ public class Transports extends Activity implements OnItemClickListener,
 
 		TransportManager tm = new TransportManager(this, "database.db");
 
+		// TODO use new thread
 		Cursor c2 = null;
 		try {
 			tm.replaceIntoDb(location);
@@ -130,22 +131,22 @@ public class Transports extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> av, View v, int position,
-			long id) {
-		final ListView lv = (ListView) findViewById(R.id.listView);
-		Cursor c = (Cursor) lv.getAdapter().getItem(position);
-		final String location = c.getString(c.getColumnIndex("name"));
+	public boolean onItemLongClick(final AdapterView<?> av, View v,
+			final int position, long id) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Wirklch löschen?");
 		builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
-				TransportManager tm = new TransportManager(lv.getContext(),
+				Cursor c = (Cursor) av.getAdapter().getItem(position);
+				String location = c.getString(c.getColumnIndex("name"));
+
+				TransportManager tm = new TransportManager(av.getContext(),
 						"database.db");
 				tm.deleteFromDb(location);
 
-				SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv
+				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
 						.getAdapter();
 				adapter.changeCursor(tm.getAllFromDb());
 				tm.close();
@@ -171,6 +172,7 @@ public class Transports extends Activity implements OnItemClickListener,
 		TransportManager tm = new TransportManager(lv.getContext(),
 				"database.db");
 
+		// TODO use new thread
 		Cursor c = null;
 		try {
 			if (!connected()) {
