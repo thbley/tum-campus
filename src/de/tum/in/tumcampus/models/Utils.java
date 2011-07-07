@@ -23,7 +23,6 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -61,12 +60,28 @@ public class Utils {
 		return new JSONObject(data);
 	}
 
-	public static void downloadFile(String url, String target) throws Exception {
-		// TODO add download queue + extra thread?
+	public static void downloadFileThread(final String url, final String target) {
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					Log.d("TumCampus Download", "TumCampus Download " + url);
+					downloadFile(url, target);
+				} catch (Exception e) {
+					Log.e("TumCampus Download",
+							"TumCampus Download " + e.getMessage() + " " + url);
+				}
+			}
+		}).start();
+	}
+
+	private static void downloadFile(String url, String target)
+			throws Exception {
 		// TODO set timeouts
 
-		Log.d("TumCampus Download", "TumCampus Download " + url);
-
+		File f = new File(target);
+		if (f.exists()) {
+			return;
+		}
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
 
@@ -74,10 +89,8 @@ public class Utils {
 		HttpEntity entity = response.getEntity();
 
 		if (entity == null) {
-			// TODO implement
-			throw new Exception("error");
+			return;
 		}
-
 		File file = new File(target);
 
 		InputStream in = entity.getContent();
@@ -93,17 +106,29 @@ public class Utils {
 		in.close();
 	}
 
-	public static void downloadFileQueue(Context c, SQLiteDatabase db,
-			String url, String target) {
-		DownloadManager dm = new DownloadManager(c, db);
-		dm.insertIntoDb(url, target);
-		dm.close();
+	public static void downloadIconFileThread(final String url,
+			final String target) {
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					Log.d("TumCampus Download Icon", "TumCampus Download Icon "
+							+ url);
+					downloadIconFile(url, target);
+				} catch (Exception e) {
+					Log.e("TumCampus Download Icon", "TumCampus Download Icon "
+							+ e.getMessage() + " " + url);
+
+				}
+			}
+		}).start();
 	}
 
-	public static void downloadIconFile(String url, String target)
+	private static void downloadIconFile(String url, String target)
 			throws Exception {
-		Log.d("TumCampus Download Icon", "TumCampus Download Icon " + url);
-
+		File f = new File(target);
+		if (f.exists()) {
+			return;
+		}
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
 		httpget.addHeader("User-Agent",
@@ -113,10 +138,8 @@ public class Utils {
 		HttpEntity entity = response.getEntity();
 
 		if (entity == null) {
-			// TODO implement
-			throw new Exception("error");
+			return;
 		}
-
 		InputStream in = entity.getContent();
 		String data = convertStreamToString(in);
 
