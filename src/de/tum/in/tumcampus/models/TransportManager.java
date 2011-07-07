@@ -110,11 +110,11 @@ public class TransportManager extends SQLiteOpenHelper {
 		return result;
 	}
 
-	public void replaceIntoDb(String name) throws Exception {
+	public void replaceIntoDb(String name) {
 		Log.d("TumCampus transports replaceIntoDb", name);
 
 		if (name.length() == 0) {
-			throw new Exception("Invalid name.");
+			return;
 		}
 		db.execSQL("REPLACE INTO transports (name) VALUES (?)",
 				new String[] { name });
