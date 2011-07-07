@@ -21,21 +21,22 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 
-	private Context context;
-
 	public FeedItemManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
-		this.context = context;
 
 		db = this.getWritableDatabase();
 		onCreate(db);
 	}
 
-	public void downloadFromExternal(List<Integer> ids) throws Exception {
+	public void downloadFromExternal(List<Integer> ids, boolean force) throws Exception {
 
 		cleanupDb();
 		for (int i = 0; i < ids.size(); i++) {
 
+			String syncId = "feeditem" + i;
+			if (!force && !SyncManager.needSync(db, syncId, 900)) {
+				continue;
+			}
 			Cursor feed = db.rawQuery("SELECT feedUrl FROM feeds WHERE id = ?",
 					new String[] { String.valueOf(ids.get(i)) });
 			feed.moveToNext();
@@ -50,12 +51,13 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
 					.getJSONObject("query").getJSONObject("results")
 					.getJSONArray("item");
-			
+
 			deleteFromDb(ids.get(i));
 			db.beginTransaction();
 			for (int j = 0; j < jsonArray.length(); j++) {
 				insertIntoDb(getFromJson(ids.get(i), jsonArray.getJSONObject(j)));
 			}
+			SyncManager.replaceIntoDb(db, syncId);
 			db.setTransactionSuccessful();
 			db.endTransaction();
 		}
@@ -81,15 +83,16 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 * @return Feeds
 	 * @throws JSONException
 	 */
-	public FeedItem getFromJson(int feedId, JSONObject json) throws Exception {
+	public static FeedItem getFromJson(int feedId, JSONObject json) throws Exception {
 
 		String target = "";
 		if (json.has("enclosure")) {
-			String enclosure = json.getJSONObject("enclosure").getString("url");
+			final String enclosure = json.getJSONObject("enclosure").getString(
+					"url");
 
 			target = Utils.getCacheDir("rss/cache") + Utils.md5(enclosure)
 					+ ".jpg";
-			Utils.downloadFileQueue(context, db, enclosure, target);
+			Utils.downloadFileThread(enclosure, target);
 		}
 		Date pubDate = new Date();
 		if (json.has("pubDate")) {
@@ -102,7 +105,6 @@ public class FeedItemManager extends SQLiteOpenHelper {
 					json.getString("description").replaceAll("\\<.*?\\>", ""))
 					.toString();
 		}
-
 		return new FeedItem(feedId, json.getString("title"),
 				json.getString("link"), description, pubDate, target);
 	}
