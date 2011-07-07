@@ -13,12 +13,12 @@ import android.util.Log;
 import de.tum.in.tumcampus.TumCampus;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
-import de.tum.in.tumcampus.models.DownloadManager;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
+import de.tum.in.tumcampus.models.SyncManager;
 import de.tum.in.tumcampus.models.Utils;
 
 public class DownloadService extends IntentService {
@@ -66,6 +66,10 @@ public class DownloadService extends IntentService {
 			// check if sd card available
 			Utils.getCacheDir("");
 
+			// init sync table
+			SyncManager sm = new SyncManager(this, db);
+			sm.close();
+
 			if (!destroyed) {
 				notification.setLatestEventInfo(this, "TumCampus download ...",
 						"1/5", contentIntent);
@@ -75,7 +79,7 @@ public class DownloadService extends IntentService {
 				FeedManager nm = new FeedManager(this, db);
 				FeedItemManager nim = new FeedItemManager(this, db);
 
-				nim.downloadFromExternal(nm.getAllIdsFromDb());
+				nim.downloadFromExternal(nm.getAllIdsFromDb(), false);
 
 				nim.close();
 				nm.close();
@@ -85,10 +89,10 @@ public class DownloadService extends IntentService {
 				notification.setLatestEventInfo(this, "TumCampus download ...",
 						"2/5", contentIntent);
 				mNotificationManager.notify(1, notification);
-				message(", News", "");
+				message(", Nachrichten", "");
 
 				NewsManager nm = new NewsManager(this, db);
-				nm.downloadFromExternal();
+				nm.downloadFromExternal(false);
 				nm.close();
 			}
 
@@ -99,7 +103,7 @@ public class DownloadService extends IntentService {
 				message(", Veranstaltungen", "");
 
 				EventManager em = new EventManager(this, db);
-				em.downloadFromExternal();
+				em.downloadFromExternal(false);
 				em.close();
 			}
 
@@ -109,7 +113,7 @@ public class DownloadService extends IntentService {
 			message(", Mensen", "");
 
 			CafeteriaManager cm = new CafeteriaManager(this, db);
-			cm.downloadFromExternal();
+			cm.downloadFromExternal(false);
 
 			if (!destroyed) {
 				notification.setLatestEventInfo(this, "TumCampus download ...",
@@ -118,22 +122,13 @@ public class DownloadService extends IntentService {
 				message(", Menus", "");
 
 				CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, db);
-				cmm.downloadFromExternal(cm.getAllIdsFromDb());
+				cmm.downloadFromExternal(cm.getAllIdsFromDb(), false);
 				cmm.close();
 			}
 			cm.close();
 
 			if (!destroyed) {
-				// TODO notification
-
-				DownloadManager dm = new DownloadManager(this, db);
-				dm.processDownloads();
-				dm.close();
-			}
-
-			if (!destroyed) {
 				LinkManager lm = new LinkManager(this, db);
-				lm.checkExistingIcons();
 				lm.downloadMissingIcons();
 				lm.close();
 			}
