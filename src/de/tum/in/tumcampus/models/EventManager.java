@@ -20,18 +20,18 @@ public class EventManager extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 
-	private Context context;
-
 	public EventManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
-		this.context = context;
 
 		db = this.getWritableDatabase();
 		onCreate(db);
 	}
 
-	public void downloadFromExternal() throws Exception {
+	public void downloadFromExternal(boolean force) throws Exception {
 
+		if (!force && !SyncManager.needSync(db, this, 86400)) {
+			return;
+		}
 		String baseUrl = "https://graph.facebook.com/162327853831856/events?access_token=";
 		String token = URLEncoder
 				.encode("141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU");
@@ -53,6 +53,7 @@ public class EventManager extends SQLiteOpenHelper {
 		for (int i = 0; i < list.size(); i++) {
 			replaceIntoDb(getFromJson(list.get(i)));
 		}
+		SyncManager.replaceIntoDb(db, this);
 		db.setTransactionSuccessful();
 		db.endTransaction();
 	}
@@ -82,7 +83,7 @@ public class EventManager extends SQLiteOpenHelper {
 	 * @return Event
 	 * @throws JSONException
 	 */
-	public Event getFromJson(JSONObject json) throws Exception {
+	public static Event getFromJson(JSONObject json) throws Exception {
 
 		String eventId = json.getString("id");
 
@@ -90,7 +91,7 @@ public class EventManager extends SQLiteOpenHelper {
 				+ "/Picture?type=large";
 
 		String target = Utils.getCacheDir("events/cache") + eventId + ".jpg";
-		Utils.downloadFileQueue(context, db, picture, target);
+		Utils.downloadFileThread(picture, target);
 
 		String description = "";
 		if (json.has("description")) {
