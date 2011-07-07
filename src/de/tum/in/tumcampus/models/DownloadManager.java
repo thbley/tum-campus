@@ -47,7 +47,6 @@ public class DownloadManager extends SQLiteOpenHelper {
 
 	public void insertIntoDb(String url, String target) {
 		Log.d("TumCampus downloads insertIntoDb", url);
-		onCreate(db);
 
 		if (url.length() == 0) {
 			return;
