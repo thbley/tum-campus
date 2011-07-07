@@ -5,6 +5,8 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -28,14 +30,14 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Calendar calendar = Calendar.getInstance();  
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == Calendar.SATURDAY) {
-        	calendar.add(Calendar.DATE, 2);
-        }
-        if (dayOfWeek == Calendar.SUNDAY) {
-        	calendar.add(Calendar.DATE, 1);
-        }
+		Calendar calendar = Calendar.getInstance();
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+		if (dayOfWeek == Calendar.SATURDAY) {
+			calendar.add(Calendar.DATE, 2);
+		}
+		if (dayOfWeek == Calendar.SUNDAY) {
+			calendar.add(Calendar.DATE, 1);
+		}
 		date = Utils.getDateString(calendar.getTime());
 		dateStr = Utils.getDateStringDe(calendar.getTime());
 
@@ -118,5 +120,16 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			lv3.setAdapter(adapter);
 			cmm.close();
 		}
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO implement
+		return true;
 	}
 }
