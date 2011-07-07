@@ -110,6 +110,7 @@ public class Transports extends Activity implements OnItemClickListener,
 
 		SimpleCursorAdapter adapter = (SimpleCursorAdapter) av.getAdapter();
 		TransportManager tm = new TransportManager(this, "database.db");
+		tm.replaceIntoDb(location);
 		adapter.changeCursor(tm.getAllFromDb());
 		tm.close();
 
@@ -122,8 +123,6 @@ public class Transports extends Activity implements OnItemClickListener,
 				try {
 					TransportManager tm = new TransportManager(av.getContext(),
 							"database.db");
-					tm.replaceIntoDb(location);
-
 					if (!connected()) {
 						throw new Exception("<Keine Internetverbindung>");
 					}
