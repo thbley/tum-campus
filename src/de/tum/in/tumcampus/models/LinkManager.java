@@ -56,6 +56,8 @@ public class LinkManager extends SQLiteOpenHelper {
 	}
 
 	public void downloadMissingIcons() throws Exception {
+		checkExistingIcons();
+		
 		Cursor c = db.rawQuery("SELECT DISTINCT url FROM links WHERE icon=''",
 				null);
 
@@ -64,7 +66,7 @@ public class LinkManager extends SQLiteOpenHelper {
 
 			String target = Utils.getCacheDir("links/cache") + Utils.md5(url)
 					+ ".ico";
-			Utils.downloadIconFile(url, target);
+			Utils.downloadIconFileThread(url, target);
 
 			db.execSQL("UPDATE links SET icon=? WHERE url=?", new String[] {
 					target, url });
