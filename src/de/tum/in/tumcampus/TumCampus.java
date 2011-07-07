@@ -30,13 +30,12 @@ import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
+import de.tum.in.tumcampus.models.SyncManager;
 import de.tum.in.tumcampus.services.DownloadService;
 import de.tum.in.tumcampus.services.ImportService;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
-
-	private final int CLEAR_CACHE = Menu.FIRST;
 
 	private boolean debug = true;
 
@@ -159,13 +158,13 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, CLEAR_CACHE, 0, "Cache leeren");
+		menu.add(0, Menu.FIRST, 0, "Cache leeren");
 		return true;
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case CLEAR_CACHE:
+		case Menu.FIRST:
 
 			SharedPreferences settings = getSharedPreferences("prefs",
 					Context.MODE_PRIVATE);
@@ -200,6 +199,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			NewsManager nm = new NewsManager(this, "database.db");
 			nm.removeCache();
 			nm.close();
+
+			SyncManager sm = new SyncManager(this, "database.db");
+			sm.deleteFromDb();
+			sm.close();
 
 			return true;
 		}
