@@ -29,7 +29,8 @@ public class TransportManager extends SQLiteOpenHelper {
 	public Cursor getDeparturesFromExternal(String location) throws Exception {
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAnzeige.svc?haltestelle="
-				+ URLEncoder.encode(location, "ISO-8859-1"); // ISO needed for mvv
+				+ URLEncoder.encode(location, "ISO-8859-1"); // ISO needed for
+																// mvv
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
@@ -59,8 +60,6 @@ public class TransportManager extends SQLiteOpenHelper {
 	}
 
 	public Cursor getStationsFromExternal(String location) throws Exception {
-
-		// TODO limit lookup to 3 characters
 
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAuswahl.svc?haltestelle="
