@@ -26,8 +26,11 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public void downloadFromExternal(List<Integer> ids) throws Exception {
+	public void downloadFromExternal(List<Integer> ids, boolean force) throws Exception {
 
+		if (!force && !SyncManager.needSync(db, this, 86400)) {
+			return;
+		}
 		cleanupDb();
 		for (int i = 0; i < ids.size(); i++) {
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
@@ -58,6 +61,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			db.setTransactionSuccessful();
 			db.endTransaction();
 		}
+		SyncManager.replaceIntoDb(db, this);
 	}
 
 	public Cursor getDatesFromDb() {
