@@ -5,6 +5,9 @@
 
 	<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<Button android:text="syncs" android:id="@+id/debugSyncs"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
 		<Button android:text="cafeterias" android:id="@+id/debugCafeterias"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
@@ -19,7 +22,7 @@
 
 		<Button android:text="feeds_items" android:id="@+id/debugFeedsItems"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
-			
+
 		<Button android:text="lectures" android:id="@+id/debugLectures"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
@@ -36,9 +39,6 @@
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
 		<Button android:text="news" android:id="@+id/debugNews"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" />
-
-		<Button android:text="downloads" android:id="@+id/debugDownloads"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 	</LinearLayout>
 
