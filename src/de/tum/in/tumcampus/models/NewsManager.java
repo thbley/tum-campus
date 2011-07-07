@@ -40,6 +40,7 @@ public class NewsManager extends SQLiteOpenHelper {
 
 		removeCache();
 		db.beginTransaction();
+		int count = 0;
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject obj = jsonArray.getJSONObject(i);
 
@@ -49,7 +50,11 @@ public class NewsManager extends SQLiteOpenHelper {
 							.has("caption"))) {
 				continue;
 			}
+			if (count > 24) {
+				break;
+			}
 			replaceIntoDb(getFromJson(obj));
+			count++;
 		}
 		SyncManager.replaceIntoDb(db, this);
 		db.setTransactionSuccessful();
