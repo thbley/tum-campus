@@ -41,9 +41,11 @@ public class EventManager extends SQLiteOpenHelper {
 
 		String eventUrl = "http://graph.facebook.com/";
 
-		// TODO limit 25
 		List<JSONObject> list = new ArrayList<JSONObject>();
 		for (int i = 0; i < jsonArray.length(); i++) {
+			if (i > 24) {
+				break;
+			}
 			String eventId = jsonArray.getJSONObject(i).getString("id");
 			list.add(Utils.downloadJson(eventUrl + eventId));
 		}
