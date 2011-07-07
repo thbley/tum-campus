@@ -19,18 +19,18 @@ public class NewsManager extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 
-	private Context context;
-
 	public NewsManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
-		this.context = context;
 
 		db = this.getWritableDatabase();
 		onCreate(db);
 	}
 
-	public void downloadFromExternal() throws Exception {
+	public void downloadFromExternal(boolean force) throws Exception {
 
+		if (!force && !SyncManager.needSync(db, this, 86400)) {
+			return;
+		}
 		String baseUrl = "https://graph.facebook.com/162327853831856/feed/?access_token=";
 		String token = URLEncoder
 				.encode("141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU");
@@ -38,7 +38,7 @@ public class NewsManager extends SQLiteOpenHelper {
 		JSONArray jsonArray = Utils.downloadJson(baseUrl + token).getJSONArray(
 				"data");
 
-		removeAllFromDb();
+		removeCache();
 		db.beginTransaction();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject obj = jsonArray.getJSONObject(i);
@@ -51,14 +51,15 @@ public class NewsManager extends SQLiteOpenHelper {
 			}
 			replaceIntoDb(getFromJson(obj));
 		}
+		SyncManager.replaceIntoDb(db, this);
 		db.setTransactionSuccessful();
 		db.endTransaction();
 	}
 
 	public Cursor getAllFromDb() {
-		return db.rawQuery(
-				"SELECT image, message, strftime('%d.%m.%Y', date) as date_de, "
-						+ "link, id as _id FROM news ORDER BY date DESC", null);
+		return db.rawQuery("SELECT image, message, strftime('%d.%m.%Y', date) "
+				+ "as date_de, link, id as _id "
+				+ "FROM news ORDER BY date DESC", null);
 	}
 
 	/**
@@ -78,14 +79,14 @@ public class NewsManager extends SQLiteOpenHelper {
 	 * @return News
 	 * @throws JSONException
 	 */
-	public News getFromJson(JSONObject json) throws Exception {
+	public static News getFromJson(JSONObject json) throws Exception {
 
 		String target = "";
 		if (json.has("picture")) {
 			String picture = json.getString("picture");
 			target = Utils.getCacheDir("news/cache") + Utils.md5(picture)
 					+ ".jpg";
-			Utils.downloadFileQueue(context, db, picture, target);
+			Utils.downloadFileThread(picture, target);
 		}
 		String link = "";
 		if (json.has("link")
@@ -129,10 +130,6 @@ public class NewsManager extends SQLiteOpenHelper {
 
 		db.execSQL("DELETE FROM news");
 		Utils.emptyCacheDir("news/cache");
-	}
-
-	public void removeAllFromDb() {
-		db.execSQL("DELETE FROM news");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
