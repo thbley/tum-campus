@@ -2,6 +2,7 @@ package de.tum.in.tumcampus;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -80,40 +81,10 @@ public class Transports extends Activity implements OnItemClickListener,
 			public void afterTextChanged(Editable arg0) {
 			}
 		});
-	}
 
-	@Override
-	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
-
-		ListView lv = (ListView) findViewById(R.id.listView);
-		Cursor c = (Cursor) lv.getAdapter().getItem(position);
-		String location = c.getString(c.getColumnIndex("name"));
-
-		TextView tv = (TextView) findViewById(R.id.transportText);
-		tv.setText("Abfahrt: " + location);
-
-		tv = (TextView) findViewById(R.id.transportText2);
-		tv.setText("Gespeicherte Stationen:");
-
-		TransportManager tm = new TransportManager(this, "database.db");
-
-		// TODO use new thread
-		Cursor c2 = null;
-		try {
-			tm.replaceIntoDb(location);
-
-			if (!connected()) {
-				throw new Exception("<Keine Internetverbindung>");
-			}
-			c2 = tm.getDeparturesFromExternal(location);
-
-		} catch (Exception e) {
-			MatrixCursor c3 = new MatrixCursor(new String[] { "name", "_id" });
-			c3.addRow(new String[] { e.getMessage(), "" });
-			c2 = c3;
-		}
-
-		ListAdapter adapter2 = new SimpleCursorAdapter(this,
+		MatrixCursor c2 = new MatrixCursor(
+				new String[] { "name", "desc", "_id" });
+		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this,
 				android.R.layout.two_line_list_item, c2, c2.getColumnNames(),
 				new int[] { android.R.id.text1, android.R.id.text2 }) {
 
@@ -121,13 +92,63 @@ public class Transports extends Activity implements OnItemClickListener,
 				return false;
 			}
 		};
-
 		ListView lv2 = (ListView) findViewById(R.id.listView2);
 		lv2.setAdapter(adapter2);
+	}
 
-		SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv.getAdapter();
+	@Override
+	public void onItemClick(final AdapterView<?> av, View v, int position,
+			long id) {
+		Cursor c = (Cursor) av.getAdapter().getItem(position);
+		final String location = c.getString(c.getColumnIndex("name"));
+
+		TextView tv = (TextView) findViewById(R.id.transportText);
+		tv.setText("Abfahrt: " + location);
+
+		tv = (TextView) findViewById(R.id.transportText2);
+		tv.setText("Gespeicherte Stationen:");
+
+		SimpleCursorAdapter adapter = (SimpleCursorAdapter) av.getAdapter();
+		TransportManager tm = new TransportManager(this, "database.db");
 		adapter.changeCursor(tm.getAllFromDb());
 		tm.close();
+
+		final ProgressDialog progress = ProgressDialog.show(this, "",
+				"Lade ...", true);
+
+		new Thread(new Runnable() {
+			public void run() {
+				Cursor c = null;
+				try {
+					TransportManager tm = new TransportManager(av.getContext(),
+							"database.db");
+					tm.replaceIntoDb(location);
+
+					if (!connected()) {
+						throw new Exception("<Keine Internetverbindung>");
+					}
+					c = tm.getDeparturesFromExternal(location);
+					tm.close();
+				} catch (Exception e) {
+					MatrixCursor c2 = new MatrixCursor(new String[] { "name",
+							"desc", "_id" });
+					c2.addRow(new String[] { e.getMessage(), "", "0" });
+					c = c2;
+				}
+
+				final Cursor c2 = c;
+				runOnUiThread(new Runnable() {
+					public void run() {
+						progress.hide();
+
+						ListView lv2 = (ListView) findViewById(R.id.listView2);
+						SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv2
+								.getAdapter();
+						adapter.changeCursor(c2);
+					}
+				});
+			}
+		}).start();
 	}
 
 	@Override
@@ -166,29 +187,50 @@ public class Transports extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public boolean onEditorAction(TextView input, int code, KeyEvent key) {
+	public boolean onEditorAction(final TextView input, int code, KeyEvent key) {
+		final ProgressDialog progress = ProgressDialog.show(this, "",
+				"Lade ...", true);
 
-		ListView lv = (ListView) findViewById(R.id.listView);
-		TransportManager tm = new TransportManager(lv.getContext(),
-				"database.db");
+		new Thread(new Runnable() {
+			public void run() {
+				String message = "";
+				Cursor c = null;
+				try {
+					if (!connected()) {
+						throw new Exception("<Keine Internetverbindung>");
+					}
+					TransportManager tm = new TransportManager(
+							input.getContext(), "database.db");
+					c = tm.getStationsFromExternal(input.getText().toString());
+					tm.close();
+				} catch (Exception e) {
+					message = e.getMessage();
+				}
 
-		// TODO use new thread
-		Cursor c = null;
-		try {
-			if (!connected()) {
-				throw new Exception("<Keine Internetverbindung>");
+				final Cursor c2 = c;
+				final String message2 = message;
+
+				runOnUiThread(new Runnable() {
+					public void run() {
+						progress.hide();
+
+						if (c2 != null) {
+							TextView tv = (TextView) findViewById(R.id.transportText2);
+							tv.setText("Suchergebnis:");
+
+							ListView lv = (ListView) findViewById(R.id.listView);
+							SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv
+									.getAdapter();
+							adapter.changeCursor(c2);
+						}
+						if (message2.length() > 0) {
+							Toast.makeText(input.getContext(), message2,
+									Toast.LENGTH_LONG).show();
+						}
+					}
+				});
 			}
-			c = tm.getStationsFromExternal(input.getText().toString());
-		} catch (Exception e) {
-			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-			return false;
-		}
-		TextView tv = (TextView) findViewById(R.id.transportText2);
-		tv.setText("Suchergebnis:");
-
-		SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv.getAdapter();
-		adapter.changeCursor(c);
-		tm.close();
+		}).start();
 		return false;
 	}
 }
