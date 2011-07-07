@@ -127,12 +127,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		Button b = (Button) findViewById(R.id.refresh);
 		b.setOnClickListener(this);
 
-		IntentFilter intentFilter = new IntentFilter(
-				"de.tum.in.tumcampus.intent.action.BROADCAST_DOWNLOAD");
-		getApplicationContext().registerReceiver(receiver, intentFilter);
+		IntentFilter intentFilter = new IntentFilter(DownloadService.broadcast);
+		registerReceiver(receiver, intentFilter);
 
 		// TODO initial sync
-		// TODO partial sync
 	}
 
 	@Override
@@ -230,24 +228,24 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		@Override
 		public void onReceive(Context context, Intent intent) {
 
-			if (!intent.getAction().equals(
-					"de.tum.in.tumcampus.intent.action.BROADCAST_DOWNLOAD")) {
+			if (!intent.getAction().equals(DownloadService.broadcast)) {
 				return;
 			}
 			Bundle extra = intent.getExtras();
 
-			if (extra != null) {
-				String message = extra.getString("message");
-				String action = extra.getString("action");
+			if (extra == null) {
+				return;
+			}
+			String message = extra.getString("message");
+			String action = extra.getString("action");
 
-				if (action.equals("completed")) {
-					Button b = (Button) findViewById(R.id.refresh);
-					b.setText("Aktualisieren (" + getConnection() + ")");
-				}
-				if (message.length() > 0) {
-					TextView tv = (TextView) findViewById(R.id.hello);
-					tv.setText(message);
-				}
+			if (action.equals("completed")) {
+				Button b = (Button) findViewById(R.id.refresh);
+				b.setText("Aktualisieren (" + getConnection() + ")");
+			}
+			if (message.length() > 0) {
+				TextView tv = (TextView) findViewById(R.id.hello);
+				tv.setText(message);
 			}
 		}
 	};
