@@ -1,0 +1,2 @@
+Bewertungssystem für die Mensa bzw. einzelne Gerichte, siehe:
+http://www.infler.de/forum/viewtopic.php?t=8140
