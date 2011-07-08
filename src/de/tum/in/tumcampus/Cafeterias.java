@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -139,6 +140,9 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
 		menu.add(0, Menu.FIRST + 1, 0, "Einstellungen");
+		menu.add(0, Menu.FIRST + 2, 0, "Preise");
+		menu.add(0, Menu.FIRST + 3, 0, "Öffnungszeiten Garching");
+		menu.add(0, Menu.FIRST + 4, 0, "Öffnungszeiten München");
 		return true;
 	}
 
@@ -154,8 +158,19 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 					DownloadService.broadcast));
 			return true;
 		case Menu.FIRST + 1:
-			Intent intent = new Intent(this, Settings.class);
-			startActivity(intent);
+			startActivity(new Intent(this, Settings.class));
+			return true;
+		case Menu.FIRST + 2:
+			String url3 = "http://www.studentenwerk-muenchen.de/mensa/unsere-preise/";
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url3)));
+			return true;
+		case Menu.FIRST + 3:
+			String url = "http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/garching/";
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+			return true;
+		case Menu.FIRST + 4:
+			String url2 = "http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/muenchen/";
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url2)));
 			return true;
 		}
 		return false;
