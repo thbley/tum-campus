@@ -1,6 +1,7 @@
 package de.tum.in.tumcampus;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,26 +60,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-
-		String conn = getConnection();
-
-		Button b = (Button) findViewById(R.id.refresh);
-		TextView tv = (TextView) findViewById(R.id.hello);
-
-		if (conn.length() > 0) {
-			b.setVisibility(android.view.View.VISIBLE);
-			b.setText("Aktualisieren (" + conn + ")");
-			tv.setText(getString(R.string.hello));
-
-		} else {
-			b.setVisibility(android.view.View.GONE);
-			tv.setText(getString(R.string.hello) + " Offline.");
-		}
-	}
-
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
@@ -134,6 +115,26 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+
+		String conn = getConnection();
+
+		Button b = (Button) findViewById(R.id.refresh);
+		TextView tv = (TextView) findViewById(R.id.hello);
+
+		if (conn.length() > 0) {
+			b.setVisibility(android.view.View.VISIBLE);
+			b.setText("Aktualisieren (" + conn + ")");
+			tv.setText(getString(R.string.hello));
+
+		} else {
+			b.setVisibility(android.view.View.GONE);
+			tv.setText(getString(R.string.hello) + " Offline.");
+		}
+	}
+
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		ListView lv = (ListView) findViewById(R.id.listViewMain);
@@ -156,13 +157,19 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, Menu.FIRST, 0, "Cache leeren");
+		menu.add(0, Menu.FIRST, 0, "Einstellungen");
+		menu.add(0, Menu.FIRST + 1, 0, "Cache leeren");
 		return true;
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case Menu.FIRST:
+			Intent intent = new Intent(this, Settings.class);
+			startActivity(intent);
+			return true;
+
+		case Menu.FIRST + 1:
 
 			SharedPreferences settings = getSharedPreferences("prefs",
 					Context.MODE_PRIVATE);
@@ -201,7 +208,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			SyncManager sm = new SyncManager(this, "database.db");
 			sm.deleteFromDb();
 			sm.close();
-
 			return true;
 		}
 		return false;
@@ -231,13 +237,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			if (!intent.getAction().equals(DownloadService.broadcast)) {
 				return;
 			}
-			Bundle extra = intent.getExtras();
-
-			if (extra == null) {
-				return;
-			}
-			String message = extra.getString("message");
-			String action = extra.getString("action");
+			String message = intent.getStringExtra("message");
+			String action = intent.getStringExtra("action");
 
 			if (action.equals("completed")) {
 				Button b = (Button) findViewById(R.id.refresh);
@@ -248,5 +249,11 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				tv.setText(message);
 			}
 		}
+	};
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(receiver);
 	};
 }
