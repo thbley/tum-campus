@@ -93,7 +93,8 @@ public class LectureItemManager extends SQLiteOpenHelper {
 				}
 				in.close();
 
-				// TODO rename file
+				String target = files[i].getAbsolutePath().replace(".csv", ".csv.imported");
+				files[i].renameTo(new File(target));
 			}
 		}
 		db.setTransactionSuccessful();
