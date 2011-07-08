@@ -2,9 +2,12 @@ package de.tum.in.tumcampus;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -12,6 +15,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import de.tum.in.tumcampus.models.NewsManager;
+import de.tum.in.tumcampus.services.DownloadService;
 
 public class News extends Activity implements OnItemClickListener, ViewBinder {
 
@@ -19,6 +23,11 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 
 		NewsManager nm = new NewsManager(this, "database.db");
 		Cursor c = nm.getAllFromDb();
@@ -63,5 +72,21 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 			view.setVisibility(View.VISIBLE);
 		}
 		return false;
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent service = new Intent(this, DownloadService.class);
+		service.putExtra("action", "news");
+		startService(service);
+
+		registerReceiver(DownloadService.receiver, new IntentFilter(
+				DownloadService.broadcast));
+		return true;
 	}
 }
