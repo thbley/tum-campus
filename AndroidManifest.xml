@@ -24,32 +24,25 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".Cafeterias" android:label="Speisepläne">
-		</activity>
+		<activity android:name=".Cafeterias" android:label="Speisepläne" />
 
-		<activity android:name=".Events" android:label="Veranstaltungen">
-		</activity>
+		<activity android:name=".Events" android:label="Veranstaltungen" />
 
-		<activity android:name=".Lectures" android:label="Vorlesungen">
-		</activity>
+		<activity android:name=".Lectures" android:label="Vorlesungen" />
 
-		<activity android:name=".Links" android:label="Links">
-		</activity>
+		<activity android:name=".Links" android:label="Links" />
 
-		<activity android:name=".News" android:label="Nachrichten">
-		</activity>
+		<activity android:name=".News" android:label="Nachrichten" />
 
-		<activity android:name=".Feeds" android:label="RSS-Feeds">
-		</activity>
+		<activity android:name=".Feeds" android:label="RSS-Feeds" />
 
-		<activity android:name=".Transports" android:label="MVV Live">
-		</activity>
+		<activity android:name=".Transports" android:label="MVV Live" />
 
-		<activity android:name=".AppInfo" android:label="TUM Campus App for Android">
-		</activity>
+		<activity android:name=".AppInfo" android:label="TUM Campus App for Android" />
 
-		<activity android:name=".Debug" android:label="Debug SQLite">
-		</activity>
+		<activity android:name=".Debug" android:label="Debug SQLite" />
+
+		<activity android:name="Settings" android:theme="@android:style/Theme.Dialog" android:label="Einstellungen" />
 
 		<service android:enabled="true" android:exported="false"
 			android:name=".services.DownloadService">
@@ -62,5 +55,4 @@
 		<!-- <uses-permission android:name="android.permission.GET_TASKS"/> -->
 
 	</application>
-
 </manifest>
