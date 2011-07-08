@@ -48,7 +48,6 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		List<Integer> list = new ArrayList<Integer>();
 
 		Cursor c = db.rawQuery("SELECT id FROM cafeterias ORDER BY id", null);
-
 		while (c.moveToNext()) {
 			list.add(c.getInt(0));
 		}
@@ -56,10 +55,11 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		return list;
 	}
 
-	public Cursor getAllFromDb() {
+	public Cursor getAllFromDb(String filter) {
 		return db.rawQuery("SELECT name, address, id as _id "
-				+ "FROM cafeterias "
-				+ "ORDER BY address like '%Garching%' desc, name", null);
+				+ "FROM cafeterias WHERE name LIKE ? OR address LIKE ? "
+				+ "ORDER BY address like '%Garching%' DESC, name",
+				new String[] { filter, filter });
 	}
 
 	/**
