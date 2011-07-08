@@ -5,14 +5,18 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -231,5 +235,18 @@ public class Transports extends Activity implements OnItemClickListener,
 			}
 		}).start();
 		return false;
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, Menu.FIRST, 0, "MVV EFA");
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		String url = "http://efa.mvv-muenchen.de/mvv/XSLT_TRIP_REQUEST2?language=de";
+		Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+		startActivity(viewIntent);
+		return true;
 	}
 }
