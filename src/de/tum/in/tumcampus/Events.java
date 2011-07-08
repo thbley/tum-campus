@@ -1,9 +1,13 @@
 package de.tum.in.tumcampus;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -14,6 +18,7 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.EventManager;
+import de.tum.in.tumcampus.services.DownloadService;
 
 public class Events extends Activity implements OnItemClickListener, ViewBinder {
 
@@ -21,6 +26,11 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 
 		EventManager em = new EventManager(this, "database.db");
 		Cursor c = em.getAllFromDb();
@@ -38,7 +48,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 
 	@Override
 	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
-		
+
 		// TODO move to activity
 		ListView lv = (ListView) findViewById(R.id.listView);
 		Cursor c = (Cursor) lv.getAdapter().getItem(position);
@@ -77,5 +87,21 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 			return true;
 		}
 		return false;
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent service = new Intent(this, DownloadService.class);
+		service.putExtra("action", "events");
+		startService(service);
+
+		registerReceiver(DownloadService.receiver, new IntentFilter(
+				DownloadService.broadcast));
+		return true;
 	}
 }
