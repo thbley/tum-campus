@@ -43,6 +43,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			String feedUrl = feed.getString(0);
 			feed.close();
 
+			// TODO add try catch
+			
 			String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 			String query = URLEncoder
 					.encode("SELECT title, link, description, pubDate, enclosure.url "
