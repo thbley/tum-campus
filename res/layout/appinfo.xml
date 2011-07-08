@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:background="#0065BD" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
 
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:autoLink="web"
-		android:textColor="#0065BD"
+		android:layout_height="3px" />
+
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:autoLink="web"
+		android:background="#FFFFFF" android:textColor="#0065BD"
 		android:text="
 Android-Praktikum\n
 Sommersemester 2011\n
