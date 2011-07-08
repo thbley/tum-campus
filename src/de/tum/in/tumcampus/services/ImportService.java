@@ -39,7 +39,7 @@ public class ImportService extends IntentService {
 			importFeeds();
 
 			importLinks();
-			
+
 			importLectureItems();
 
 		} catch (Exception e) {
@@ -79,6 +79,9 @@ public class ImportService extends IntentService {
 
 			nm.insertUpdateIntoDb(new Feed("Heise",
 					"http://www.heise.de/newsticker/heise.rdf"));
+
+			nm.insertUpdateIntoDb(new Feed("MVG Störungsticker",
+					"http://www.mvg-mobil.de/Tickerrss/CreateRssClass"));
 		}
 		nm.importFromInternal();
 		nm.close();
@@ -88,7 +91,7 @@ public class ImportService extends IntentService {
 		LectureItemManager lim = new LectureItemManager(this, db);
 		lim.importFromInternal();
 		lim.close();
-		
+
 		LectureManager lm = new LectureManager(this, db);
 		lm.updateLectures();
 		lm.close();
@@ -107,6 +110,15 @@ public class ImportService extends IntentService {
 			lm.insertUpdateIntoDb(new Link("Golem", "http://golem.mobi/"));
 
 			lm.insertUpdateIntoDb(new Link("Heise", "http://heise-online.mobi/"));
+
+			lm.insertUpdateIntoDb(new Link("MVV EFA",
+					"http://efa.mvv-muenchen.de/mvv/XSLT_TRIP_REQUEST2?language=de"));
+
+			lm.insertUpdateIntoDb(new Link("MVG Newsticker",
+					"http://www.mvg-mobil.de/betriebsaenderungen/index.html"));
+
+			lm.insertUpdateIntoDb(new Link("MVV- und Bahn-Auskunft",
+					"http://mobile.bahn.de/bin/mobil/query2.exe/dox"));
 
 			lm.insertUpdateIntoDb(new Link(
 					"Informatik Infopoint",
