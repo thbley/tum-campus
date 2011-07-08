@@ -79,7 +79,6 @@ public class Links extends Activity implements OnItemClickListener,
 					}
 				});
 		builder.show();
-
 		return false;
 	}
 }
