@@ -79,10 +79,13 @@ public class TransportManager extends SQLiteOpenHelper {
 			if (obj instanceof JSONArray) {
 				jsonArray = (JSONArray) obj;
 			} else {
+				if (obj.toString().contains("aktualisieren")) {
+					throw new JSONException("");
+				}
 				jsonArray.put(obj);
 			}
 		} catch (JSONException e) {
-			throw new Exception("<Keine Station gefunden>");
+			throw new Exception("<Keine Station(en) gefunden>");
 		}
 
 		MatrixCursor mc = new MatrixCursor(new String[] { "name", "_id" });
