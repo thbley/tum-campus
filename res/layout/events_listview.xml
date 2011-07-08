@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:orientation="horizontal" android:paddingTop="6dip"
-	android:paddingBottom="6dip" android:paddingLeft="3dip">
+	android:paddingBottom="6dip" android:paddingLeft="4dip">
 
 	<ImageView android:id="@+id/icon" android:layout_width="136px"
 		android:layout_height="fill_parent" android:scaleType="matrix"
