@@ -3,14 +3,17 @@ package de.tum.in.tumcampus;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SlidingDrawer;
@@ -18,13 +21,14 @@ import android.widget.TextView;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.Utils;
+import de.tum.in.tumcampus.services.DownloadService;
 
 public class Cafeterias extends Activity implements OnItemClickListener {
 
-	String date;
-	String dateStr;
-	String mensaId;
-	String mensaName;
+	private String date;
+	private String dateStr;
+	private String mensaId;
+	private String mensaName;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,23 +50,20 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		} else {
 			setContentView(R.layout.cafeterias);
 		}
+	}
 
-		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, "database.db");
-		Cursor c = cmm.getDatesFromDb();
+	@Override
+	protected void onResume() {
+		super.onResume();
 
-		ListAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
-				new int[] { android.R.id.text1 });
-
-		ListView lv = (ListView) findViewById(R.id.listView);
-		lv.setAdapter(adapter);
-		lv.setOnItemClickListener(this);
-		cmm.close();
+		SharedPreferences sp = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		String filter = sp.getString("cafeteriaFilter", "");
 
 		CafeteriaManager cm = new CafeteriaManager(this, "database.db");
-		Cursor c2 = cm.getAllFromDb();
+		Cursor c2 = cm.getAllFromDb("%" + filter + "%");
 
-		adapter = new SimpleCursorAdapter(this,
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 				android.R.layout.two_line_list_item, c2, c2.getColumnNames(),
 				new int[] { android.R.id.text1, android.R.id.text2 });
 
@@ -70,6 +71,18 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		lv2.setAdapter(adapter);
 		lv2.setOnItemClickListener(this);
 		cm.close();
+
+		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, "database.db");
+		Cursor c = cmm.getDatesFromDb();
+
+		adapter = new SimpleCursorAdapter(this,
+				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
+				new int[] { android.R.id.text1 });
+
+		ListView lv = (ListView) findViewById(R.id.listView);
+		lv.setAdapter(adapter);
+		lv.setOnItemClickListener(this);
+		cmm.close();
 	}
 
 	@Override
@@ -125,11 +138,26 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
+		menu.add(0, Menu.FIRST + 1, 0, "Einstellungen");
 		return true;
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO implement
-		return true;
+
+		switch (item.getItemId()) {
+		case Menu.FIRST:
+			Intent service = new Intent(this, DownloadService.class);
+			service.putExtra("action", "cafeterias");
+			startService(service);
+
+			registerReceiver(DownloadService.receiver, new IntentFilter(
+					DownloadService.broadcast));
+			return true;
+		case Menu.FIRST + 1:
+			Intent intent = new Intent(this, Settings.class);
+			startActivity(intent);
+			return true;
+		}
+		return false;
 	}
 }
