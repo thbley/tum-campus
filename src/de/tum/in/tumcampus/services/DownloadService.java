@@ -7,9 +7,11 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 import de.tum.in.tumcampus.TumCampus;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
@@ -22,12 +24,13 @@ import de.tum.in.tumcampus.models.SyncManager;
 import de.tum.in.tumcampus.models.Utils;
 
 public class DownloadService extends IntentService {
-
 	private volatile boolean destroyed = false;
 
 	private NotificationManager mNotificationManager;
 
 	private Notification notification;
+
+	public final static String broadcast = "de.tum.in.tumcampus.intent.action.BROADCAST_DOWNLOAD";
 
 	public DownloadService() {
 		super("DownloadService");
@@ -36,6 +39,30 @@ public class DownloadService extends IntentService {
 	final static String db = "database.db";
 
 	String message = "";
+
+	public static BroadcastReceiver receiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+
+			if (!intent.getAction().equals(DownloadService.broadcast)) {
+				return;
+			}
+			if (intent.getStringExtra("action").length() != 0) {
+				Toast.makeText(context, intent.getStringExtra("message"),
+						Toast.LENGTH_LONG).show();
+
+				// TODO wait until pictures are loaded?
+				
+				// resume activity
+				Intent intent2 = new Intent(context, context.getClass());
+				intent2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				context.startActivity(intent2);
+
+				// unregister receiver
+				context.unregisterReceiver(DownloadService.receiver);
+			}
+		}
+	};
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
@@ -62,87 +89,116 @@ public class DownloadService extends IntentService {
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				new Intent(this, TumCampus.class), 0);
 
+		notification.setLatestEventInfo(this, "TumCampus download ...", "",
+				contentIntent);
+		mNotificationManager.notify(1, notification);
+
+		message("Aktualisiere: ", "");
+
+		String action = intent.getStringExtra("action");
+
+		boolean force = false;
+		if (action != null) {
+			force = true;
+		}
+		if (action == null || action.equals("feeds")) {
+			downloadFeeds(force);
+		}
+		if (action == null || action.equals("news")) {
+			downloadNews(force);
+		}
+		if (action == null || action.equals("events")) {
+			downloadEvents(force);
+		}
+		if (action == null || action.equals("cafeterias")) {
+			downloadCafeterias(force);
+		}
+		if (action == null || action.equals("links")) {
+			downloadLinks();
+		}
+		message("Fertig!", "completed");
+	}
+
+	public void downloadFeeds(boolean force) {
 		try {
-			// check if sd card available
-			Utils.getCacheDir("");
-
-			// init sync table
-			SyncManager sm = new SyncManager(this, db);
-			sm.close();
-
 			if (!destroyed) {
-				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"1/5", contentIntent);
-				mNotificationManager.notify(1, notification);
-				message("Aktualisiere: RSS", "");
+				message("RSS ", "");
 
+				// TODO refresh single?
 				FeedManager nm = new FeedManager(this, db);
 				FeedItemManager nim = new FeedItemManager(this, db);
-
-				nim.downloadFromExternal(nm.getAllIdsFromDb(), false);
-
+				nim.downloadFromExternal(nm.getAllIdsFromDb(), force);
 				nim.close();
 				nm.close();
 			}
+		} catch (Exception e) {
+			message(e);
+		}
+	}
 
+	public void downloadNews(boolean force) {
+		try {
 			if (!destroyed) {
-				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"2/5", contentIntent);
-				mNotificationManager.notify(1, notification);
-				message(", Nachrichten", "");
+				message("Nachrichten ", "");
 
 				NewsManager nm = new NewsManager(this, db);
-				nm.downloadFromExternal(false);
+				nm.downloadFromExternal(force);
 				nm.close();
 			}
+		} catch (Exception e) {
+			message(e);
+		}
+	}
 
+	public void downloadEvents(boolean force) {
+		try {
 			if (!destroyed) {
-				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"3/5", contentIntent);
-				mNotificationManager.notify(1, notification);
-				message(", Veranstaltungen", "");
+				message("Veranstaltungen ", "");
 
 				EventManager em = new EventManager(this, db);
-				em.downloadFromExternal(false);
+				em.downloadFromExternal(force);
 				em.close();
 			}
+		} catch (Exception e) {
+			message(e);
+		}
+	}
 
-			notification.setLatestEventInfo(this, "TumCampus download ...",
-					"4/5", contentIntent);
-			mNotificationManager.notify(1, notification);
-			message(", Mensen", "");
-
-			CafeteriaManager cm = new CafeteriaManager(this, db);
-			cm.downloadFromExternal(false);
-
+	public void downloadCafeterias(boolean force) {
+		try {
 			if (!destroyed) {
-				notification.setLatestEventInfo(this, "TumCampus download ...",
-						"5/5", contentIntent);
-				mNotificationManager.notify(1, notification);
-				message(", Menus", "");
+				message("Mensen ", "");
+
+				CafeteriaManager cm = new CafeteriaManager(this, db);
+				cm.downloadFromExternal(force);
 
 				CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, db);
-				cmm.downloadFromExternal(cm.getAllIdsFromDb(), false);
+				cmm.downloadFromExternal(cm.getAllIdsFromDb(), force);
 				cmm.close();
+				cm.close();
 			}
-			cm.close();
+		} catch (Exception e) {
+			message(e);
+		}
+	}
 
+	public void downloadLinks() {
+		try {
 			if (!destroyed) {
 				LinkManager lm = new LinkManager(this, db);
 				lm.downloadMissingIcons();
 				lm.close();
 			}
-
 		} catch (Exception e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-
-			message(e.getMessage() + sw.toString(), "error");
+			message(e);
 		}
+	}
 
-		mNotificationManager.cancel(1);
+	public void message(Exception e) {
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
 
-		message(", Fertig.", "completed");
+		message(e.getMessage() + sw.toString(), "error");
 	}
 
 	public void message(String message, String action) {
@@ -150,12 +206,10 @@ public class DownloadService extends IntentService {
 		if (action.equals("error")) {
 			this.message = "";
 		}
-
 		this.message += message;
 
 		Intent intentSend = new Intent();
-		intentSend
-				.setAction("de.tum.in.tumcampus.intent.action.BROADCAST_DOWNLOAD");
+		intentSend.setAction(broadcast);
 		intentSend.putExtra("message", this.message);
 		intentSend.putExtra("action", action);
 		this.sendBroadcast(intentSend);
@@ -166,6 +220,7 @@ public class DownloadService extends IntentService {
 		super.onDestroy();
 
 		mNotificationManager.cancel(1);
+		mNotificationManager.cancel(2);
 
 		Log.d("TumCampus DownloadService", "TumCampus service destroy");
 
@@ -177,5 +232,16 @@ public class DownloadService extends IntentService {
 		super.onCreate();
 
 		Log.d("TumCampus DownloadService", "TumCampus service create");
+
+		try {
+			// check if sd card available
+			Utils.getCacheDir("");
+
+			// init sync table
+			SyncManager sm = new SyncManager(this, db);
+			sm.close();
+		} catch (Exception e) {
+			message(e);
+		}
 	}
 }
