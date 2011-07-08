@@ -15,7 +15,6 @@
 			android:textColor="#0065BD" android:paddingLeft="6dip"
 			android:paddingRight="6dip" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" />
-
 	</LinearLayout>
 
 	<TextView android:id="@+id/description" android:textSize="20px"
