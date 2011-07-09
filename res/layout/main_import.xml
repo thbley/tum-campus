@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="#FFFFFF" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="3px" android:background="#0065BD" />
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:textColor="#0065BD"
+			android:text="TODO add text" android:layout_margin="6dip" />
+
+		<Button android:text="Vorlesungen importieren" android:id="@+id/importLectures"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_margin="6dip" />
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="1px" android:background="#0065BD" />
+
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:textColor="#0065BD"
+			android:text="TODO add text" android:layout_margin="6dip" />
+
+		<Button android:text="Links importieren" android:id="@+id/importLinks"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_margin="6dip" />
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="1px" android:background="#0065BD" />
+
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:textColor="#0065BD"
+			android:text="TODO add text" android:layout_margin="6dip" />
+
+		<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_margin="6dip" />
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="1px" android:background="#0065BD" />
+
+	<TextView android:layout_width="fill_parent" android:id="@+id/importResult"
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:scrollbars="vertical" />
+
+</LinearLayout>
