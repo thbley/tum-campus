@@ -36,4 +36,18 @@ public class LectureItem {
 				+ module + ", location=" + location + ", note=" + note
 				+ ", seriesId=" + seriesId + ", url=" + url;
 	}
+
+	public static class Holiday extends LectureItem {
+		public Holiday(String id, Date date, String name) {
+			super(id, "holiday", date, date, "Feiertag", "", "", name,
+					"about:blank", id);
+		}
+	}
+
+	public static class Vacation extends LectureItem {
+		public Vacation(String id, Date start, Date end, String name) {
+			super(id, "vacation", start, end, "Ferien", "", "", name,
+					"about:blank", id);
+		}
+	}
 }
