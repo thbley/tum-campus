@@ -35,65 +35,10 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".csv")) {
 
-				Vector<String> headers = new Vector<String>();
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						new FileInputStream(files[i]), "ISO-8859-1"));
+				importCsv(files[i], "ISO-8859-1");
 
-				String reader = "";
-				while ((reader = in.readLine()) != null) {
-					// TODO fix splitting
-					String[] row = reader.replaceAll("\"", "").split(";");
-
-					if (headers.size() == 0) {
-						headers = new Vector<String>(Arrays.asList(row));
-						continue;
-					}
-					String type = row[headers.indexOf("TERMIN_TYP")];
-					if (type.contains("abgesagt")) {
-						continue;
-					}
-
-					String name = row[headers.indexOf("TITEL")];
-					String location = row[headers.indexOf("ORT")];
-					String lectureId = row[headers.indexOf("LV_NUMMER")];
-
-					String module = "";
-					if (name.contains("(") && name.contains(")")) {
-						module = name.substring(name.indexOf("(") + 1,
-								name.indexOf(")"));
-						name = name.substring(0, name.indexOf("(")).trim();
-					}
-
-					String datum = row[headers.indexOf("DATUM")];
-					String von = row[headers.indexOf("VON")];
-					String bis = row[headers.indexOf("BIS")];
-
-					Date start = Utils.getDateTimeDe(datum + " " + von);
-					Date end = Utils.getDateTimeDe(datum + " " + bis);
-
-					String id = row[headers.indexOf("LV_NUMMER")] + "_"
-							+ String.valueOf(start.getTime());
-
-					String seriesId = row[headers.indexOf("LV_NUMMER")] + "_"
-							+ row[headers.indexOf("WOCHENTAG")] + "_"
-							+ row[headers.indexOf("VON")];
-
-					String note = "";
-					int noteId = headers.indexOf("ANMERKUNG");
-					if (row.length > noteId) {
-						note = row[noteId];
-					}
-					String url = "";
-					int urlId = headers.indexOf("URL");
-					if (urlId != -1 && row.length > urlId) {
-						url = row[headers.indexOf("URL")];
-					}
-					replaceIntoDb(new LectureItem(id, lectureId, start, end,
-							name, module, location, note, url, seriesId));
-				}
-				in.close();
-
-				String target = files[i].getAbsolutePath().replace(".csv", ".csv.imported");
+				String target = files[i].getAbsolutePath().replace(".csv",
+						".csv.imported");
 				files[i].renameTo(new File(target));
 			}
 		}
@@ -101,11 +46,75 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		db.endTransaction();
 	}
 
+	public void importCsv(File file, String encoding) throws Exception {
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				new FileInputStream(file), encoding));
+
+		Vector<String> headers = new Vector<String>();
+		String reader = "";
+		while ((reader = in.readLine()) != null) {
+			// TODO fix splitting
+			String[] row = reader.replaceAll("\"", "").split(";");
+
+			if (headers.size() == 0) {
+				headers = new Vector<String>(Arrays.asList(row));
+				continue;
+			}
+
+			int terminTypId = headers.indexOf("TERMIN_TYP");
+			if (row.length > terminTypId
+					&& row[terminTypId].contains("abgesagt")) {
+				continue;
+			}
+
+			String name = row[headers.indexOf("TITEL")];
+			String location = row[headers.indexOf("ORT")];
+			String lectureId = row[headers.indexOf("LV_NUMMER")];
+
+			String module = "";
+			if (name.contains("(") && name.contains(")")) {
+				module = name.substring(name.indexOf("(") + 1,
+						name.indexOf(")"));
+				name = name.substring(0, name.indexOf("(")).trim();
+			}
+
+			String datum = row[headers.indexOf("DATUM")];
+			String von = row[headers.indexOf("VON")];
+			String bis = row[headers.indexOf("BIS")];
+
+			Date start = Utils.getDateTimeDe(datum + " " + von);
+			Date end = Utils.getDateTimeDe(datum + " " + bis);
+
+			String id = row[headers.indexOf("LV_NUMMER")] + "_"
+					+ String.valueOf(start.getTime());
+
+			String seriesId = row[headers.indexOf("LV_NUMMER")] + "_"
+					+ row[headers.indexOf("WOCHENTAG")] + "_"
+					+ row[headers.indexOf("VON")];
+
+			String note = "";
+			int noteId = headers.indexOf("ANMERKUNG");
+			if (row.length > noteId) {
+				note = row[noteId];
+			}
+			String url = "";
+			int urlId = headers.indexOf("URL");
+			if (urlId != -1 && row.length > urlId) {
+				url = row[headers.indexOf("URL")];
+			}
+			replaceIntoDb(new LectureItem(id, lectureId, start, end, name,
+					module, location, note, url, seriesId));
+		}
+		in.close();
+	}
+
 	public Cursor getRecentFromDb() {
 		return db.rawQuery("SELECT name, note, location, "
 				+ "strftime('%w', start) as weekday, "
 				+ "strftime('%H:%M', start) as start_de, "
 				+ "strftime('%H:%M', end) as end_de, "
+				+ "strftime('%d.%m.%Y', start) as start_dt, "
+				+ "strftime('%d.%m.%Y', end) as end_dt, "
 				+ "url, lectureId, id as _id "
 				+ "FROM lectures_items WHERE end > datetime() AND "
 				+ "start < date('now', '+7 day') ORDER BY start", null);
@@ -116,9 +125,21 @@ public class LectureItemManager extends SQLiteOpenHelper {
 				+ "strftime('%w', start) as weekday, "
 				+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
 				+ "strftime('%H:%M', end) as end_de, "
-				+ "url, lectureId, id as _id FROM lectures_items "
-				+ "WHERE lectureId = ? ORDER BY start",
+				+ "strftime('%d.%m.%Y', start) as start_dt, "
+				+ "strftime('%d.%m.%Y', end) as end_dt, "
+				+ "url, lectureId, id as _id "
+				+ "FROM lectures_items WHERE lectureId = ? ORDER BY start",
 				new String[] { lectureId });
+	}
+
+	public boolean empty() {
+		boolean result = true;
+		Cursor c = db.rawQuery("SELECT id FROM lectures_items LIMIT 1", null);
+		if (c.moveToNext()) {
+			result = false;
+		}
+		c.close();
+		return result;
 	}
 
 	public void replaceIntoDb(LectureItem l) throws Exception {
