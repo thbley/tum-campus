@@ -33,20 +33,18 @@
 
 		<SlidingDrawer android:layout_width="fill_parent"
 			android:id="@+id/slidingDrawer1" android:layout_height="fill_parent"
-			android:handle="@+id/handle" android:content="@+id/options">
+			android:handle="@+id/handle" android:content="@+id/slider">
 
 			<Button android:layout_height="wrap_content"
 				android:background="#0065BD" android:textColor="#FFFFFF"
-				android:layout_width="fill_parent" android:text="Options"
-				android:id="@+id/handle" android:height="50px" />
+				android:layout_width="fill_parent" android:text="Daten importieren" android:id="@+id/handle"
+				android:height="50px" />
 
-			<LinearLayout android:id="@+id/options"
+			<LinearLayout android:id="@+id/slider"
 				android:background="#DD000000" android:layout_width="fill_parent"
 				android:orientation="vertical" android:layout_height="fill_parent">
 
-				<TextView android:layout_width="fill_parent"
-					android:scrollbars="vertical" android:layout_height="wrap_content"
-					android:id="@+id/content" />
+				<include layout="@layout/main_import" />
 
 			</LinearLayout>
 		</SlidingDrawer>
