@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import android.content.Context;
@@ -27,23 +29,22 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public void importFromInternal() throws Exception {
+	public List<String> importFromInternal() throws Exception {
+		List<String> list = new ArrayList<String>();
 
 		File[] files = new File(Utils.getCacheDir("lectures")).listFiles();
 
+		// TODO fix exceptions, db locking
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".csv")) {
-
 				importCsv(files[i], "ISO-8859-1");
-
-				String target = files[i].getAbsolutePath().replace(".csv",
-						".csv.imported");
-				files[i].renameTo(new File(target));
+				list.add(files[i].getName());
 			}
 		}
 		db.setTransactionSuccessful();
 		db.endTransaction();
+		return list;
 	}
 
 	public void importCsv(File file, String encoding) throws Exception {
