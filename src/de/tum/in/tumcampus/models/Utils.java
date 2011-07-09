@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class Utils {
@@ -203,10 +204,12 @@ public class Utils {
 			f.mkdirs();
 		}
 		if (!f.canRead()) {
-			throw new Exception("Cannot read from sd-card: " + f.getPath());
+			throw new Exception("Von der SD-Karte kann nicht gelesen werden: "
+					+ "<sd>/tumcampus/" + dir);
 		}
 		if (!f.canWrite()) {
-			throw new Exception("Cannot write to sd-card: " + f.getPath());
+			throw new Exception("Auf die SD-Karte kann nicht geschrieben "
+					+ "werden: <sd>/tumcampus/" + dir);
 		}
 		return f.getPath() + "/";
 	}
@@ -302,18 +305,14 @@ public class Utils {
 		return dateFormat.format(d);
 	}
 
-	public static String loadSetting(Context c, String name) {
-		SharedPreferences prefs = c.getSharedPreferences("prefs",
-				Context.MODE_PRIVATE);
-		return prefs.getString(name, null);
+	public static String getSetting(Context c, String name) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+		return sp.getString(name, "");
 	}
 
-	public static void saveSetting(Context c, String name, String value) {
-		SharedPreferences prefs = c.getSharedPreferences("prefs",
-				Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putString(name, value);
-		editor.commit();
+	public static boolean getSettingBool(Context c, String name) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+		return sp.getBoolean(name, false);
 	}
 
 	public static String trunc(String str, int limit) {
