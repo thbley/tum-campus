@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.models.LectureItem;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LectureManager;
 import de.tum.in.tumcampus.models.Link;
@@ -88,7 +89,29 @@ public class ImportService extends IntentService {
 	}
 
 	public void importLectureItems() throws Exception {
+
 		LectureItemManager lim = new LectureItemManager(this, db);
+		if (lim.empty()) {
+			lim.replaceIntoDb(new LectureItem.Holiday("H1", Utils
+					.getDate("2011-08-15"), "Mariä Himmelfahrt"));
+
+			lim.replaceIntoDb(new LectureItem.Holiday("H2", Utils
+					.getDate("2011-10-03"), "Tag der Deutschen Einheit"));
+
+			lim.replaceIntoDb(new LectureItem.Holiday("H3", Utils
+					.getDate("2011-11-01"), "Allerheiligen"));
+
+			lim.replaceIntoDb(new LectureItem.Holiday("H4", Utils
+					.getDate("2011-12-08"), "Dies Academicus"));
+
+			lim.replaceIntoDb(new LectureItem.Vacation("V1", Utils
+					.getDate("2011-08-01"), Utils.getDate("2011-09-30"),
+					"Sommerferien"));
+
+			lim.replaceIntoDb(new LectureItem.Vacation("V2", Utils
+					.getDate("2011-12-24"), Utils.getDate("2012-01-06"),
+					"Weihnachtsferien"));
+		}
 		lim.importFromInternal();
 		lim.close();
 
