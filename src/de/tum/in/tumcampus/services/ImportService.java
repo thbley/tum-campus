@@ -90,6 +90,7 @@ public class ImportService extends IntentService {
 
 	public void importLectureItems() throws Exception {
 
+		// TODO add to resource directory
 		LectureItemManager lim = new LectureItemManager(this, db);
 		if (lim.empty()) {
 			lim.replaceIntoDb(new LectureItem.Holiday("H1", Utils
