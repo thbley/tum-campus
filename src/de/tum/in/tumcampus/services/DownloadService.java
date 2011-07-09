@@ -24,11 +24,8 @@ import de.tum.in.tumcampus.models.SyncManager;
 import de.tum.in.tumcampus.models.Utils;
 
 public class DownloadService extends IntentService {
+
 	private volatile boolean destroyed = false;
-
-	private NotificationManager mNotificationManager;
-
-	private Notification notification;
 
 	public final static String broadcast = "de.tum.in.tumcampus.intent.action.BROADCAST_DOWNLOAD";
 
@@ -52,7 +49,7 @@ public class DownloadService extends IntentService {
 						Toast.LENGTH_LONG).show();
 
 				// TODO wait until pictures are loaded?
-				
+
 				// resume activity
 				Intent intent2 = new Intent(context, context.getClass());
 				intent2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -81,17 +78,18 @@ public class DownloadService extends IntentService {
 		Log.d("TumCampus DownloadService", "TumCampus service start");
 
 		String ns = Context.NOTIFICATION_SERVICE;
-		mNotificationManager = (NotificationManager) getSystemService(ns);
+		NotificationManager nm = (NotificationManager) getSystemService(ns);
 
-		notification = new Notification(android.R.drawable.stat_sys_download,
-				"Aktualisiere ...", System.currentTimeMillis());
+		Notification notification = new Notification(
+				android.R.drawable.stat_sys_download, "Aktualisiere ...",
+				System.currentTimeMillis());
 
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				new Intent(this, TumCampus.class), 0);
 
 		notification.setLatestEventInfo(this, "TumCampus download ...", "",
 				contentIntent);
-		mNotificationManager.notify(1, notification);
+		nm.notify(1, notification);
 
 		message("Aktualisiere: ", "");
 
@@ -117,6 +115,7 @@ public class DownloadService extends IntentService {
 			downloadLinks();
 		}
 		message("Fertig!", "completed");
+		nm.cancel(1);
 	}
 
 	public void downloadFeeds(boolean force) {
@@ -198,7 +197,11 @@ public class DownloadService extends IntentService {
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 
-		message(e.getMessage() + sw.toString(), "error");
+		String message = e.getMessage();
+		if (Utils.getSettingBool(this, "debug")) {
+			message += sw.toString();
+		}
+		message(message, "error");
 	}
 
 	public void message(String message, String action) {
@@ -219,12 +222,8 @@ public class DownloadService extends IntentService {
 	public void onDestroy() {
 		super.onDestroy();
 
-		mNotificationManager.cancel(1);
-		mNotificationManager.cancel(2);
-
-		Log.d("TumCampus DownloadService", "TumCampus service destroy");
-
 		destroyed = true;
+		Log.d("TumCampus DownloadService", "TumCampus service destroy");
 	}
 
 	@Override
