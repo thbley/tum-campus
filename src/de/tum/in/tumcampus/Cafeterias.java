@@ -5,11 +5,9 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,9 +55,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	protected void onResume() {
 		super.onResume();
 
-		SharedPreferences sp = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		String filter = sp.getString("cafeteriaFilter", "");
+		String filter = Utils.getSetting(this, "cafeteriaFilter");
 
 		CafeteriaManager cm = new CafeteriaManager(this, "database.db");
 		Cursor c2 = cm.getAllFromDb("%" + filter + "%");
