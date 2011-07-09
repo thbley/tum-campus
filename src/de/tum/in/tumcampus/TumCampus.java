@@ -16,6 +16,7 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,13 +33,12 @@ import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.models.SyncManager;
+import de.tum.in.tumcampus.models.Utils;
 import de.tum.in.tumcampus.services.DownloadService;
 import de.tum.in.tumcampus.services.ImportService;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
-
-	private boolean debug = true;
 
 	public String getConnection() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -64,10 +64,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// TODO optimize
-		Intent service = new Intent(this, ImportService.class);
-		startService(service);
-
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 		addItem(list, R.drawable.vorlesung, "Vorlesungen", new Intent(this,
@@ -92,7 +88,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.info, "App-Info", new Intent(this,
 				AppInfo.class));
 
-		if (debug) {
+		if (Utils.getSettingBool(this, "debug")) {
 			addItem(list, R.drawable.icon, "Debug", new Intent(this,
 					Debug.class));
 		}
@@ -108,10 +104,17 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		Button b = (Button) findViewById(R.id.refresh);
 		b.setOnClickListener(this);
 
-		IntentFilter intentFilter = new IntentFilter(DownloadService.broadcast);
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(ImportService.broadcast);
+		intentFilter.addAction(DownloadService.broadcast);
 		registerReceiver(receiver, intentFilter);
+		setImportButtons(true);
 
-		// TODO initial sync
+		Intent service = new Intent(this, ImportService.class);
+		service.putExtra("action", "defaults");
+		startService(service);
+		
+		// TODO ask for initial download
 	}
 
 	@Override
@@ -228,25 +231,69 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				b.setText("Abbrechen");
 			}
 		}
+		if (v.getId() == R.id.importLectures) {
+			Intent service = new Intent(this, ImportService.class);
+			service.putExtra("action", "lectures");
+			startService(service);
+			setImportButtons(false);
+		}
+		if (v.getId() == R.id.importLinks) {
+			Intent service = new Intent(this, ImportService.class);
+			service.putExtra("action", "links");
+			startService(service);
+			setImportButtons(false);
+		}
+		if (v.getId() == R.id.importFeeds) {
+			Intent service = new Intent(this, ImportService.class);
+			service.putExtra("action", "feeds");
+			startService(service);
+			setImportButtons(false);
+		}
+	}
+
+	public void setImportButtons(boolean enabled) {
+		Button b = (Button) findViewById(R.id.importLectures);
+		b.setOnClickListener(this);
+		b.setEnabled(enabled);
+
+		b = (Button) findViewById(R.id.importFeeds);
+		b.setOnClickListener(this);
+		b.setEnabled(enabled);
+
+		b = (Button) findViewById(R.id.importLinks);
+		b.setOnClickListener(this);
+		b.setEnabled(enabled);
 	}
 
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 
-			if (!intent.getAction().equals(DownloadService.broadcast)) {
-				return;
-			}
-			String message = intent.getStringExtra("message");
-			String action = intent.getStringExtra("action");
+			if (intent.getAction().equals(DownloadService.broadcast)) {
+				String message = intent.getStringExtra("message");
+				String action = intent.getStringExtra("action");
 
-			if (action.equals("completed")) {
-				Button b = (Button) findViewById(R.id.refresh);
-				b.setText("Aktualisieren (" + getConnection() + ")");
+				if (action.equals("completed")) {
+					Button b = (Button) findViewById(R.id.refresh);
+					b.setText("Aktualisieren (" + getConnection() + ")");
+				}
+				if (message.length() > 0) {
+					TextView tv = (TextView) findViewById(R.id.hello);
+					tv.setText(message);
+				}
 			}
-			if (message.length() > 0) {
-				TextView tv = (TextView) findViewById(R.id.hello);
-				tv.setText(message);
+			if (intent.getAction().equals(ImportService.broadcast)) {
+				String message = intent.getStringExtra("message");
+				String action = intent.getStringExtra("action");
+
+				if (action.length() != 0) {
+					setImportButtons(true);
+				}
+				if (message.length() > 0) {
+					TextView tv = (TextView) findViewById(R.id.importResult);
+					tv.setMovementMethod(new ScrollingMovementMethod());
+					tv.setText(message);
+				}
 			}
 		}
 	};
