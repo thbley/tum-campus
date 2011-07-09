@@ -95,17 +95,32 @@ public class Lectures extends Activity implements OnItemClickListener,
 			return true;
 		}
 		if (view.getId() == android.R.id.text2) {
-			String location = c.getString(c.getColumnIndex("location"));
-			if (location.indexOf(",") != -1) {
-				location = location.substring(0, location.indexOf(","));
+			String info = "";
+			String lectureId = c.getString(c.getColumnIndex("lectureId"));
+
+			if (lectureId.equals("vacation")) {
+				info = c.getString(c.getColumnIndex("start_dt")) + " - "
+						+ c.getString(c.getColumnIndex("end_dt"));
+
+			} else if (lectureId.equals("holiday")) {
+				info = weekDays[c.getInt(c.getColumnIndex("weekday"))] + ", "
+						+ c.getString(c.getColumnIndex("start_dt"));
+
+			} else {
+				info = weekDays[c.getInt(c.getColumnIndex("weekday"))] + ", "
+						+ c.getString(c.getColumnIndex("start_de")) + " - "
+						+ c.getString(c.getColumnIndex("end_de"));
+
+				String location = c.getString(c.getColumnIndex("location"));
+				if (location.indexOf(",") != -1) {
+					location = location.substring(0, location.indexOf(","));
+				}
+				if (location.length() != 0) {
+					info += ", " + location;
+				}
 			}
-
-			String datetime = weekDays[c.getInt(c.getColumnIndex("weekday"))]
-					+ ", " + c.getString(c.getColumnIndex("start_de")) + " - "
-					+ c.getString(c.getColumnIndex("end_de"));
-
 			TextView tv = (TextView) view;
-			tv.setText(Html.fromHtml(datetime + ", " + location));
+			tv.setText(info);
 			return true;
 		}
 		return false;
@@ -145,6 +160,9 @@ public class Lectures extends Activity implements OnItemClickListener,
 		Cursor c = (Cursor) lv.getAdapter().getItem(position);
 		String url = c.getString(c.getColumnIndex("url"));
 
+		if (url.equals("about:blank")) {
+			return;
+		}
 		if (url.length() == 0) {
 			url = "https://campus.tum.de/tumonline/wbSuche.LVSucheSimple?"
 					+ "pLVNrFlag=J&pSjNr=1573&pSemester=A&pSuchbegriff="
