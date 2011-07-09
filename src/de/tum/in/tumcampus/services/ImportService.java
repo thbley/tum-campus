@@ -2,10 +2,16 @@ package de.tum.in.tumcampus.services;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import de.tum.in.tumcampus.TumCampus;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.models.LectureItem;
@@ -24,36 +30,65 @@ public class ImportService extends IntentService {
 
 	final static String db = "database.db";
 
+	public final static String broadcast = "de.tum.in.tumcampus.intent.action.BROADCAST_IMPORT";
+
 	@Override
 	protected void onHandleIntent(Intent intent) {
 
-		// TODO add locking
-
 		Log.d("TumCampus ImportService", "TumCampus service start");
 
-		try {
-			// check if sd card available
-			Utils.getCacheDir("");
+		String action = intent.getStringExtra("action");
 
-			importTransports();
+		if (action.equals("defaults")) {
+			try {
+				importTransportsDefaults();
+				importFeedsDefaults();
+				importLinksDefaults();
+				importLectureItemsDefaults();
+			} catch (Exception e) {
+				Log.e("TumCampus ImportService",
+						"TumCampus ImportService " + e.getMessage());
+			}
+		} else {
+			String ns = Context.NOTIFICATION_SERVICE;
+			NotificationManager nm = (NotificationManager) getSystemService(ns);
 
-			importFeeds();
+			Notification notification = new Notification(
+					android.R.drawable.stat_sys_download, "Importiere ...",
+					System.currentTimeMillis());
 
-			importLinks();
+			PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+					new Intent(this, TumCampus.class), 0);
 
-			importLectureItems();
+			notification.setLatestEventInfo(this, "TumCampus import ...", "",
+					contentIntent);
+			nm.notify(1, notification);
 
-		} catch (Exception e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
+			try {
+				// check if sd card available
+				Utils.getCacheDir("");
 
-			System.out.println(e);
-			System.out.println(sw);
-			// TODO implement
+				// TODO implement
+				String files = "";
+				
+				if (action.equals("feeds")) {
+					importFeeds();
+				}
+				if (action.equals("links")) {
+					importLinks();
+				}
+				if (action.equals("lectures")) {
+					importLectureItems();
+				}
+				message("Daten importiert: "+files, "completed");
+			} catch (Exception e) {
+				message(e);
+			}
+			nm.cancel(1);
 		}
 	}
 
-	public void importTransports() throws Exception {
+	public void importTransportsDefaults() throws Exception {
 		TransportManager tm = new TransportManager(this, db);
 
 		if (tm.empty()) {
@@ -63,9 +98,16 @@ public class ImportService extends IntentService {
 		tm.close();
 	}
 
-	public void importFeeds() throws Exception {
+	public List<String> importFeeds() throws Exception {
 		FeedManager nm = new FeedManager(this, db);
+		List<String> list = nm.importFromInternal();
+		nm.close();
+		return list;
+		// TODO fix
+	}
 
+	public void importFeedsDefaults() throws Exception {
+		FeedManager nm = new FeedManager(this, db);
 		if (nm.empty()) {
 			nm.insertUpdateIntoDb(new Feed("Spiegel",
 					"http://www.spiegel.de/schlagzeilen/index.rss"));
@@ -88,7 +130,7 @@ public class ImportService extends IntentService {
 		nm.close();
 	}
 
-	public void importLectureItems() throws Exception {
+	public void importLectureItemsDefaults() throws Exception {
 
 		// TODO add to resource directory
 		LectureItemManager lim = new LectureItemManager(this, db);
@@ -113,6 +155,15 @@ public class ImportService extends IntentService {
 					.getDate("2011-12-24"), Utils.getDate("2012-01-06"),
 					"Weihnachtsferien"));
 		}
+		lim.close();
+
+		LectureManager lm = new LectureManager(this, db);
+		lm.updateLectures();
+		lm.close();
+	}
+
+	public void importLectureItems() throws Exception {
+		LectureItemManager lim = new LectureItemManager(this, db);
 		lim.importFromInternal();
 		lim.close();
 
@@ -121,7 +172,7 @@ public class ImportService extends IntentService {
 		lm.close();
 	}
 
-	public void importLinks() throws Exception {
+	public void importLinksDefaults() throws Exception {
 		LinkManager lm = new LinkManager(this, db);
 
 		if (lm.empty()) {
@@ -167,8 +218,32 @@ public class ImportService extends IntentService {
 			lm.insertUpdateIntoDb(new Link("Informatik Fakultät",
 					"http://www.in.tum.de/"));
 		}
+		lm.close();
+	}
+
+	public void importLinks() throws Exception {
+		LinkManager lm = new LinkManager(this, db);
 		lm.importFromInternal();
 		lm.close();
+	}
+
+	public void message(Exception e) {
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+
+		String message = e.getMessage();
+		if (Utils.getSettingBool(this, "debug")) {
+			message += sw.toString();
+		}
+		message(message, "error");
+	}
+
+	public void message(String message, String action) {
+		Intent intentSend = new Intent();
+		intentSend.setAction(broadcast);
+		intentSend.putExtra("message", message);
+		intentSend.putExtra("action", action);
+		this.sendBroadcast(intentSend);
 	}
 
 	@Override
