@@ -36,8 +36,6 @@ public class Lectures extends Activity implements OnItemClickListener,
 			setContentView(R.layout.lectures);
 		}
 
-		// TODO add robotium tests
-
 		LectureItemManager lim = new LectureItemManager(this, "database.db");
 		Cursor c = lim.getRecentFromDb();
 
@@ -79,7 +77,6 @@ public class Lectures extends Activity implements OnItemClickListener,
 	public boolean setViewValue(View view, Cursor c, int index) {
 		String[] weekDays = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
 
-		// TODO optimize
 		if (view.getId() == android.R.id.text1) {
 			String name = c.getString(c.getColumnIndex("name"));
 			String note = c.getString(c.getColumnIndex("note"));
