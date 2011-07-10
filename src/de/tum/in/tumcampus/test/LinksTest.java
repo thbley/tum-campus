@@ -23,10 +23,21 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnText("Links");
 
 		assertTrue(solo.searchText("Golem"));
-		assertTrue(solo.searchText("N-tv"));
-		
-		solo.clickOnText("Heise");
+		assertTrue(solo.searchText("Heise"));
 
-		// TODO inject test data
+		solo.clickOnText("Heise");
+	}
+
+	public void testLinksDelete() {
+		assertTrue(solo.searchText("Links"));
+		solo.clickOnText("Links");
+
+		assertTrue(solo.searchText("Fakultät"));
+		solo.clickLongOnText("Fakultät");
+
+		assertTrue(solo.searchButton("Ja"));
+		solo.clickOnText("Ja");
+
+		assertFalse(solo.searchText("Fakultät"));
 	}
 }
