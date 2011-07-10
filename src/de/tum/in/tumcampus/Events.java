@@ -4,18 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
-import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.services.DownloadService;
@@ -33,44 +30,37 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		super.onResume();
 
 		EventManager em = new EventManager(this, "database.db");
-		Cursor c = em.getAllFromDb();
+		Cursor c = em.getNextFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 				R.layout.events_listview, c, c.getColumnNames(), new int[] {
-						R.id.icon, R.id.title, R.id.infos });
+						R.id.icon, R.id.name, R.id.infos });
 		adapter.setViewBinder(this);
 
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
+
+		c = em.getPastFromDb();
+
+		adapter = new SimpleCursorAdapter(this, R.layout.events_listview, c,
+				c.getColumnNames(), new int[] { R.id.icon, R.id.name,
+						R.id.infos });
+		adapter.setViewBinder(this);
+
+		ListView lv2 = (ListView) findViewById(R.id.listView2);
+		lv2.setAdapter(adapter);
+		lv2.setOnItemClickListener(this);
 		em.close();
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
+		Cursor c = (Cursor) av.getAdapter().getItem(position);
 
-		// TODO move to activity
-		ListView lv = (ListView) findViewById(R.id.listView);
-		Cursor c = (Cursor) lv.getAdapter().getItem(position);
-		String description = c.getString(c.getColumnIndex("description"));
-		String image = c.getString(c.getColumnIndex("image"));
-
-		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
-		if (!sd.isOpened()) {
-			sd.animateOpen();
-		}
-
-		TextView tv = (TextView) findViewById(R.id.description);
-		tv.setText(description);
-
-		ImageView iv = (ImageView) findViewById(R.id.image);
-		iv.setImageURI(Uri.parse(image));
-
-		// TODO optimize
-		double ratio = (double) iv.getDrawable().getIntrinsicWidth()
-				/ (double) iv.getDrawable().getIntrinsicHeight();
-		iv.getLayoutParams().width = 300;
-		iv.getLayoutParams().height = (int) Math.floor(300 / ratio);
+		Intent intent = new Intent(this, EventsDetails.class);
+		intent.putExtra("id", c.getString(c.getColumnIndex("_id")));
+		startActivity(intent);
 	}
 
 	@Override
