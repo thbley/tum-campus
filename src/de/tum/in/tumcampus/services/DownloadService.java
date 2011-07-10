@@ -209,6 +209,7 @@ public class DownloadService extends IntentService {
 		if (action.equals("error")) {
 			this.message = "";
 		}
+		// TODO fix
 		this.message += message;
 
 		Intent intentSend = new Intent();
