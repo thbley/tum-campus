@@ -51,7 +51,10 @@
 		    das Verzeichnis &lt;SD-Karte&gt;\\tumcampus\\links\n
 		    im Windows Explorer ziehen\n
 		4. USB-Speicher am Telefon deaktivieren\n
-		5. Hier auf 'Links importieren' drücken"
+		5. Hier auf 'Links importieren' drücken\n
+		\n
+		Hinweis: vorhandene Links werden nicht\n
+		gelöscht, aber ggf. überschrieben!"
 				android:layout_margin="6dip" />
 
 			<Button android:text="Links importieren" android:id="@+id/importLinks"
@@ -71,7 +74,10 @@
 		    &lt;SD-Karte&gt;\\tumcampus\\feeds\n
 		    im Windows Explorer ziehen\n
 		4. USB-Speicher am Telefon deaktivieren\n
-		5. Hier auf 'RSS-Feeds importieren' drücken"
+		5. Hier auf 'RSS-Feeds importieren' drücken\n
+		\n
+		Hinweis: vorhandene Feeds werden nicht\n
+		gelöscht, aber ggf. überschrieben!"
 				android:layout_margin="6dip" />
 
 			<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
