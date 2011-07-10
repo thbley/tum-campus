@@ -1,7 +1,6 @@
 package de.tum.in.tumcampus;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +62,26 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		Button b = (Button) findViewById(R.id.refresh);
+		b.setOnClickListener(this);
+
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(ImportService.broadcast);
+		intentFilter.addAction(DownloadService.broadcast);
+		registerReceiver(receiver, intentFilter);
+		setImportButtons(true);
+
+		Intent service = new Intent(this, ImportService.class);
+		service.putExtra("action", "defaults");
+		startService(service);
+
+		// TODO ask for initial download
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 		addItem(list, R.drawable.vorlesung, "Vorlesungen", new Intent(this,
@@ -99,26 +118,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		ListView lv = (ListView) findViewById(R.id.listViewMain);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
-
-		Button b = (Button) findViewById(R.id.refresh);
-		b.setOnClickListener(this);
-
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction(ImportService.broadcast);
-		intentFilter.addAction(DownloadService.broadcast);
-		registerReceiver(receiver, intentFilter);
-		setImportButtons(true);
-
-		Intent service = new Intent(this, ImportService.class);
-		service.putExtra("action", "defaults");
-		startService(service);
-		
-		// TODO ask for initial download
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
 
 		String conn = getConnection();
 
