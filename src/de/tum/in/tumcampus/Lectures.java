@@ -73,10 +73,6 @@ public class Lectures extends Activity implements OnItemClickListener,
 		lv2.setAdapter(adapter2);
 		lv2.setOnItemClickListener(this);
 		lm.close();
-
-		// TODO change series esp. time ??
-
-		// TODO add holidays, vacation
 	}
 
 	@Override
