@@ -60,14 +60,33 @@ public class EventManager extends SQLiteOpenHelper {
 		db.endTransaction();
 	}
 
-	public Cursor getAllFromDb() {
+	public Cursor getNextFromDb() {
 		return db.rawQuery(
 				"SELECT image, name, strftime('%w', start) as weekday, "
 						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
 						+ "strftime('%H:%M', end) as end_de, "
-						+ "location, description, id as _id "
+						+ "location, id as _id "
 						+ "FROM events WHERE end > datetime() "
 						+ "ORDER BY start ASC LIMIT 25", null);
+	}
+
+	public Cursor getPastFromDb() {
+		return db.rawQuery(
+				"SELECT image, name, strftime('%w', start) as weekday, "
+						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
+						+ "strftime('%H:%M', end) as end_de, "
+						+ "location, id as _id "
+						+ "FROM events WHERE end <= datetime() "
+						+ "ORDER BY start DESC LIMIT 25", null);
+	}
+
+	public Cursor getFromDb(String id) {
+		return db.rawQuery(
+				"SELECT image, name, strftime('%w', start) as weekday, "
+						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
+						+ "strftime('%H:%M', end) as end_de, "
+						+ "location, description, link, id as _id "
+						+ "FROM events WHERE id = ?", new String[] { id });
 	}
 
 	/**
