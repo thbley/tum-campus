@@ -70,7 +70,7 @@ public class ImportService extends IntentService {
 
 				// TODO implement
 				String files = "";
-				
+
 				if (action.equals("feeds")) {
 					importFeeds();
 				}
@@ -80,7 +80,7 @@ public class ImportService extends IntentService {
 				if (action.equals("lectures")) {
 					importLectureItems();
 				}
-				message("Daten importiert: "+files, "completed");
+				message("Daten importiert: " + files, "completed");
 			} catch (Exception e) {
 				message(e);
 			}
