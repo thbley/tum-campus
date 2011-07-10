@@ -290,6 +290,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				}
 				if (message.length() > 0) {
 					TextView tv = (TextView) findViewById(R.id.importResult);
+					tv.setVisibility(View.VISIBLE);
 					tv.setText(message);
 				}
 			}
