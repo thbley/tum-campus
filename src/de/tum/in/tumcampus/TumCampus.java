@@ -16,7 +16,6 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -291,7 +290,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				}
 				if (message.length() > 0) {
 					TextView tv = (TextView) findViewById(R.id.importResult);
-					tv.setMovementMethod(new ScrollingMovementMethod());
 					tv.setText(message);
 				}
 			}
