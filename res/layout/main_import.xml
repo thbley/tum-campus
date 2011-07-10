@@ -1,48 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="#FFFFFF" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
 
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="3px" android:background="#0065BD" />
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="Vorlesungen importieren:\n
+		1. Telefon an den Computer per USB anstecken\n
+		2. USB-Speicher am Telefon aktivieren\n
+		3. Am Computer bei TumOnline.de einloggen:\n
+		    'LV-An/Abmeldung' anklicken\n
+		    'Ort/Zeit' anklicken\n
+		    'CSV-Export' anklicken\n
+		    'Download' anklicken\n
+		    Datei unter &lt;SD-Karte&gt;\\tumcampus\\lectures\n
+		    speichern\n
+		4. USB-Speicher am Telefon deaktivieren\n
+		5. Hier auf 'Vorlesungen importieren' drücken" android:layout_margin="6dip" />
 
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textColor="#0065BD"
-			android:text="TODO add text" android:layout_margin="6dip" />
+	<Button android:text="Vorlesungen importieren" android:id="@+id/importLectures"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_margin="6dip" android:textColor="#FF2546A4" />
 
-		<Button android:text="Vorlesungen importieren" android:id="@+id/importLectures"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:layout_margin="6dip" />
-
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="1px" android:background="#0065BD" />
-
-
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textColor="#0065BD"
-			android:text="TODO add text" android:layout_margin="6dip" />
-
-		<Button android:text="Links importieren" android:id="@+id/importLinks"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:layout_margin="6dip" />
-
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="1px" android:background="#0065BD" />
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="1px" android:background="#0065BD" />
 
 
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textColor="#0065BD"
-			android:text="TODO add text" android:layout_margin="6dip" />
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="Links importieren:\n
+		1. Telefon an den Computer per USB anstecken\n
+		2. USB-Speicher am Telefon aktivieren\n
+		3. Am Computer eine URL aus dem Browser in\n
+		    das Verzeichnis &lt;SD-Karte&gt;\\tumcampus\\links\n
+		    im Windows Explorer ziehen\n
+		4. USB-Speicher am Telefon deaktivieren\n
+		5. Hier auf 'Links importieren' drücken" android:layout_margin="6dip" />
 
-		<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:layout_margin="6dip" />
+	<Button android:text="Links importieren" android:id="@+id/importLinks"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_margin="6dip" android:textColor="#FF2546A4"/>
 
-		<TextView android:layout_width="fill_parent"
-			android:layout_height="1px" android:background="#0065BD" />
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="1px" android:background="#0065BD" />
+
+
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="RSS-Feeds importieren:\n
+		1. Telefon an den Computer per USB anstecken\n
+		2. USB-Speicher am Telefon aktivieren\n
+		3. Am Computer eine RSS-URL aus dem\n
+		    Browser in das Verzeichnis\n
+		    &lt;SD-Karte&gt;\\tumcampus\\feeds\n
+		    im Windows Explorer ziehen\n
+		4. USB-Speicher am Telefon deaktivieren\n
+		5. Hier auf 'RSS-Feeds importieren' drücken" android:layout_margin="6dip" />
+
+	<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_margin="6dip" android:textColor="#FF2546A4"/>
+
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="1px" android:background="#0065BD" />
 
 	<TextView android:layout_width="fill_parent" android:id="@+id/importResult"
 		android:layout_height="wrap_content" android:textColor="#0065BD"
 		android:scrollbars="vertical" />
-
 </LinearLayout>
