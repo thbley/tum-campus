@@ -20,20 +20,25 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 	public void testEvents() {
 		assertTrue(solo.searchText("Veranstaltungen"));
-
 		solo.clickOnText("Veranstaltungen");
 
 		assertTrue(solo.searchText("Rückmeldung für Wintersemester"));
 		assertTrue(solo.searchText("Mo, 15.08.2011 00:00 - 03:00"));
 		assertTrue(solo.searchText("TU München"));
-		solo.clickOnText("Rückmeldung für Wintersemester");
 
-		assertTrue(solo.searchText("Details"));
+		solo.clickOnText("Rückmeldung für Wintersemester");
 		assertTrue(solo.searchText("Rückmeldefrist"));
+		solo.goBack();
+
+		solo.clickOnText("Vergangene Veranstaltungen");
+
+		assertTrue(solo.searchText("Exkursion"));
+		solo.clickOnText("Exkursion");
+
+		assertTrue(solo.searchText("Mobilfunkbetreiber"));
+		solo.goBack();
 
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
-
-		// TODO inject test data
 	}
 }
