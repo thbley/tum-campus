@@ -26,7 +26,9 @@
 
 		<activity android:name=".Cafeterias" android:label="Speisepläne" />
 
-		<activity android:name=".Events" android:label="Veranstaltungen" />
+		<activity android:name=".Events" android:label="Aktuelle Veranstaltungen" />
+
+		<activity android:name=".EventsDetails" android:label="Veranstaltungsdetails" />
 
 		<activity android:name=".Lectures" android:label="Vorlesungen" />
 
