@@ -65,16 +65,6 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnText("Cache leeren");
 	}
 
-	public void testLectures() {
-		assertTrue(solo.searchText("Vorlesungen"));
-
-		solo.clickOnText("Vorlesungen");
-		assertTrue(solo.searchText("Hallo Vorlesungen"));
-
-		solo.goBack();
-		assertTrue(solo.searchText("Hello World"));
-	}
-
 	public void testAppinfo() {
 		assertTrue(solo.searchText("App-Info"));
 
