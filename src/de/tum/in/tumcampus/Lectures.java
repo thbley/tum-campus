@@ -140,7 +140,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 			TextView tv = (TextView) findViewById(R.id.lectureText);
 			tv.setText(Utils.trunc(name + ":", 35));
 
-			String url = "http://drehscheibe.in.tum.de/myintum/kurs_verwaltung/cm.html.de?id="
+			String url = "https://drehscheibe.in.tum.de/myintum/kurs_verwaltung/cm.html.de?id="
 					+ module;
 
 			TextView tv2 = (TextView) findViewById(R.id.moduleText);
