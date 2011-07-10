@@ -16,30 +16,19 @@
 			android:handle="@+id/handle" android:content="@+id/options">
 
 			<Button android:layout_height="wrap_content"
-				android:layout_width="fill_parent" android:text="Details"
+				android:layout_width="fill_parent" android:text="Vergangene Veranstaltungen"
 				android:background="#0065BD" android:id="@+id/handle"
 				android:height="50px" android:textColor="#FFFFFF" />
 
-			<ScrollView android:id="@+id/options"
-				android:layout_width="fill_parent" android:layout_height="fill_parent">
+			<LinearLayout android:id="@+id/options"
+				android:background="#F1FFFFFF" android:layout_width="fill_parent"
+				android:orientation="vertical" android:layout_height="fill_parent">
 
-				<LinearLayout android:background="#F1FFFFFF"
-					android:layout_width="fill_parent" android:orientation="vertical"
-					android:layout_height="fill_parent">
+				<ListView android:layout_width="fill_parent"
+					android:layout_height="fill_parent" android:id="@+id/listView2"
+					android:scrollbars="vertical" />
 
-					<ImageView android:id="@+id/image" android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:src="@drawable/icon"
-						android:layout_gravity="center" android:scaleType="fitXY"
-						android:padding="10px" />
-
-					<TextView android:layout_width="fill_parent"
-						android:textColor="#0065BD" android:text="Bitte wählen Sie eine Veranstaltung aus."
-						android:layout_height="wrap_content" android:id="@+id/description"
-						android:autoLink="web" />
-
-				</LinearLayout>
-			</ScrollView>
-
+			</LinearLayout>
 		</SlidingDrawer>
 	</FrameLayout>
 </LinearLayout>
