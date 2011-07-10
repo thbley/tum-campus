@@ -103,13 +103,15 @@ public class EventManager extends SQLiteOpenHelper {
 		if (json.has("location")) {
 			location = json.getString("location");
 		}
-
-		// TODO implement link?
+		String link = "";
+		if (json.has("link")) {
+			link = json.getString("link");
+		}
 
 		return new Event(eventId, json.getString("name"),
 				Utils.getDateTime(json.getString("start_time")),
 				Utils.getDateTime(json.getString("end_time")), location,
-				description, "", target);
+				description, link, target);
 	}
 
 	public void replaceIntoDb(Event e) throws Exception {
@@ -142,7 +144,6 @@ public class EventManager extends SQLiteOpenHelper {
 	}
 
 	public void onCreate(SQLiteDatabase db) {
-		// TODO fix camelcase
 		db.execSQL("CREATE TABLE IF NOT EXISTS events ("
 				+ "id VARCHAR PRIMARY KEY, name VARCHAR, start VARCHAR, "
 				+ "end VARCHAR, location VARCHAR, description VARCHAR, "
