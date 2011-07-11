@@ -2,6 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<EditTextPreference android:key="cafeteriaFilter"
 		android:summary="z.B. Garching" android:title="Mensa-Filter" />
+	<CheckBoxPreference android:key="silence"
+		android:title="Handy autom. lautlos" android:summary="während der Vorlesung"
+		android:defaultValue="true" />
 	<CheckBoxPreference android:key="debug"
 		android:title="Debug-Modus" />
 </PreferenceScreen>
