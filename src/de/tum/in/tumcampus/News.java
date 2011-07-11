@@ -23,6 +23,15 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
+
+		registerReceiver(DownloadService.receiver, new IntentFilter(
+				DownloadService.broadcast));
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(DownloadService.receiver);
 	}
 
 	@Override
@@ -84,9 +93,6 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		Intent service = new Intent(this, DownloadService.class);
 		service.putExtra("action", "news");
 		startService(service);
-
-		registerReceiver(DownloadService.receiver, new IntentFilter(
-				DownloadService.broadcast));
 		return true;
 	}
 }
