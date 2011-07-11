@@ -66,6 +66,14 @@ public class TransportsTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		assertFalse(solo.searchText("Kieferngarten"));
 	}
 
+	public void testTransportsContextMenu() {
+		assertTrue(solo.searchText("MVV"));
+		solo.clickOnText("MVV");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("MVV EFA");
+	}
+
 	private void _testTransports() {
 		// departures
 		assertTrue(solo.searchText("Marienplatz"));
