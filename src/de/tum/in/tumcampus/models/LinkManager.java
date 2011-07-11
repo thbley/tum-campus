@@ -1,8 +1,6 @@
 package de.tum.in.tumcampus.models;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -23,11 +21,10 @@ public class LinkManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public List<String> importFromInternal() throws Exception {
-		List<String> list = new ArrayList<String>();
-		
+	public int importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("links")).listFiles();
 
+		int count = 0;
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			String filename = files[i].getName();
@@ -36,12 +33,12 @@ public class LinkManager extends SQLiteOpenHelper {
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
 				insertUpdateIntoDb(new Link(name, url));
-				list.add(files[i].getName());
+				count++;
 			}
 		}
 		db.setTransactionSuccessful();
 		db.endTransaction();
-		return list;
+		return count;
 	}
 
 	public void checkExistingIcons() {
