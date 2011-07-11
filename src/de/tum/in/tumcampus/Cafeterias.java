@@ -49,6 +49,15 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		} else {
 			setContentView(R.layout.cafeterias);
 		}
+
+		registerReceiver(DownloadService.receiver, new IntentFilter(
+				DownloadService.broadcast));
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(DownloadService.receiver);
 	}
 
 	@Override
@@ -149,21 +158,22 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			Intent service = new Intent(this, DownloadService.class);
 			service.putExtra("action", "cafeterias");
 			startService(service);
-
-			registerReceiver(DownloadService.receiver, new IntentFilter(
-					DownloadService.broadcast));
 			return true;
+
 		case Menu.FIRST + 1:
 			startActivity(new Intent(this, Settings.class));
 			return true;
+
 		case Menu.FIRST + 2:
 			String url3 = "http://www.studentenwerk-muenchen.de/mensa/unsere-preise/";
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url3)));
 			return true;
+
 		case Menu.FIRST + 3:
 			String url = "http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/garching/";
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 			return true;
+
 		case Menu.FIRST + 4:
 			String url2 = "http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/muenchen/";
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url2)));
