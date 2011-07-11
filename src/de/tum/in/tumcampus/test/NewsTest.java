@@ -27,4 +27,13 @@ public class NewsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Öffnungszeit"));
 		solo.clickOnText("Öffnungszeit");
 	}
+	
+	public void testNewsContextMenu() {
+		assertTrue(solo.searchText("Nachrichten"));
+		solo.clickOnText("Nachrichten");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Aktualisieren");
+		solo.sleep(10000);
+	}
 }
