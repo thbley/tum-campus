@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
@@ -291,12 +292,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				String action = intent.getStringExtra("action");
 
 				if (action.length() != 0) {
+					Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 					setImportButtons(true);
-				}
-				if (message.length() > 0) {
-					TextView tv = (TextView) findViewById(R.id.importResult);
-					tv.setVisibility(View.VISIBLE);
-					tv.setText(message);
 				}
 			}
 		}
