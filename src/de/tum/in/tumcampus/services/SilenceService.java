@@ -21,7 +21,7 @@ public class SilenceService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 
 		while (Utils.getSettingBool(this, "silence")) {
-			
+
 			int mode = AudioManager.RINGER_MODE_NORMAL;
 
 			LectureItemManager lim = new LectureItemManager(this, db);
