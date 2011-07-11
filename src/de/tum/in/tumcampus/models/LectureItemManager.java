@@ -37,7 +37,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".csv")) {
-				if (importCsv(new FileInputStream(files[i]), "ISO-8859-1")) {
+				if (importCsv(files[i], "ISO-8859-1")) {
 					count++;
 				}
 			}
@@ -47,8 +47,8 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		return count;
 	}
 
-	public boolean importCsv(InputStream in, String encoding) throws Exception {
-		List<String[]> list = readCsv(in, encoding);
+	public boolean importCsv(File file, String encoding) throws Exception {
+		List<String[]> list = readCsv(new FileInputStream(file), encoding);
 
 		if (list.size() == 0) {
 			return false;
@@ -112,15 +112,18 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	}
 
 	public Cursor getRecentFromDb() {
-		return db.rawQuery("SELECT name, note, location, "
-				+ "strftime('%w', start) as weekday, "
-				+ "strftime('%H:%M', start) as start_de, "
-				+ "strftime('%H:%M', end) as end_de, "
-				+ "strftime('%d.%m.%Y', start) as start_dt, "
-				+ "strftime('%d.%m.%Y', end) as end_dt, "
-				+ "url, lectureId, id as _id "
-				+ "FROM lectures_items WHERE end > datetime('now', 'localtime') AND "
-				+ "start < date('now', '+7 day') ORDER BY start", null);
+		return db
+				.rawQuery(
+						"SELECT name, note, location, "
+								+ "strftime('%w', start) as weekday, "
+								+ "strftime('%H:%M', start) as start_de, "
+								+ "strftime('%H:%M', end) as end_de, "
+								+ "strftime('%d.%m.%Y', start) as start_dt, "
+								+ "strftime('%d.%m.%Y', end) as end_dt, "
+								+ "url, lectureId, id as _id "
+								+ "FROM lectures_items WHERE end > datetime('now', 'localtime') AND "
+								+ "start < date('now', '+7 day') ORDER BY start",
+						null);
 	}
 
 	public Cursor getAllFromDb(String lectureId) {
