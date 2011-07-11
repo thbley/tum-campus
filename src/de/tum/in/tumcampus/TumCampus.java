@@ -79,6 +79,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(receiver);
+	};
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 
@@ -294,11 +300,5 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				}
 			}
 		}
-	};
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		unregisterReceiver(receiver);
 	};
 }
