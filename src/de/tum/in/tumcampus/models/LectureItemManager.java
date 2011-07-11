@@ -4,7 +4,6 @@ import static de.tum.in.tumcampus.models.Utils.readCsv;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
