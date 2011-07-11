@@ -48,14 +48,15 @@ public class DownloadService extends IntentService {
 				Toast.makeText(context, intent.getStringExtra("message"),
 						Toast.LENGTH_LONG).show();
 
-				// TODO wait until pictures are loaded?
-
+				// TODO wait until images are loaded?
+				
 				// resume activity
 				Intent intent2 = new Intent(context, context.getClass());
 				intent2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				context.startActivity(intent2);
 
 				// unregister receiver
+				// TODO fix
 				context.unregisterReceiver(DownloadService.receiver);
 			}
 		}
@@ -63,8 +64,6 @@ public class DownloadService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-
-		// TODO show progress bar in GUI
 
 		// TODO avoid database locking / deadlocking exceptions
 		// see
