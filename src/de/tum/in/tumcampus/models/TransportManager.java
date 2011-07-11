@@ -28,9 +28,10 @@ public class TransportManager extends SQLiteOpenHelper {
 
 	public Cursor getDeparturesFromExternal(String location) throws Exception {
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
+
+		// ISO needed for mvv
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAnzeige.svc?haltestelle="
-				+ URLEncoder.encode(location, "ISO-8859-1"); // ISO needed for
-																// mvv
+				+ URLEncoder.encode(location, "ISO-8859-1");
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
