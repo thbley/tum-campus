@@ -23,11 +23,10 @@ public class FeedManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public List<String> importFromInternal() throws Exception {
-		List<String> list = new ArrayList<String>();
-
+	public int importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
 
+		int count = 0;
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".URL")) {
@@ -35,12 +34,12 @@ public class FeedManager extends SQLiteOpenHelper {
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
 				insertUpdateIntoDb(new Feed(name, url));
-				list.add(files[i].getName());
+				count++;
 			}
 		}
 		db.setTransactionSuccessful();
 		db.endTransaction();
-		return list;
+		return count;
 	}
 
 	public Cursor getAllFromDb() {
