@@ -44,7 +44,8 @@
 
 		<activity android:name=".Debug" android:label="Debug SQLite" />
 
-		<activity android:name="Settings" android:theme="@android:style/Theme.Dialog" android:label="Einstellungen" />
+		<activity android:name="Settings" android:theme="@android:style/Theme.Dialog"
+			android:label="Einstellungen" />
 
 		<service android:enabled="true" android:exported="false"
 			android:name=".services.DownloadService">
@@ -53,8 +54,5 @@
 		<service android:enabled="true" android:exported="false"
 			android:name=".services.ImportService">
 		</service>
-
-		<!-- <uses-permission android:name="android.permission.GET_TASKS"/> -->
-
 	</application>
 </manifest>
