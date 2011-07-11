@@ -20,8 +20,8 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 	public void testFeeds() {
 		assertTrue(solo.searchText("RSS-Feeds"));
-
 		solo.clickOnText("RSS-Feeds");
+
 		assertTrue(solo.searchText("Feed auswählen"));
 
 		assertTrue(solo.searchText("Spiegel"));
@@ -32,8 +32,32 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 
-		// TODO add detailed test, test data, delete item
+		// TODO add detailed test, test data
+	}
+	
+	public void testFeedsContextMenu() {
+		assertTrue(solo.searchText("RSS-Feeds"));
+		solo.clickOnText("RSS-Feeds");
+
+		assertTrue(solo.searchText("Feed auswählen"));
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Aktualisieren");
+		solo.sleep(10000);
+	}
+	
+	public void testFeedsDelete() {
+		assertTrue(solo.searchText("RSS-Feeds"));
+		solo.clickOnText("RSS-Feeds");
+
+		assertTrue(solo.searchText("Feed auswählen"));
+
+		assertTrue(solo.searchText("Heise"));
+		solo.clickLongOnText("Heise");
 		
-		// TODO test refresh
+		assertTrue(solo.searchButton("Ja"));
+		solo.clickOnText("Ja");
+
+		assertFalse(solo.searchText("Heise"));
 	}
 }
