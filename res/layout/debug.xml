@@ -40,6 +40,9 @@
 
 		<Button android:text="news" android:id="@+id/debugNews"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+		<Button android:text="time" android:id="@+id/debugTime"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 	</LinearLayout>
 
 	<TextView android:layout_width="fill_parent"
