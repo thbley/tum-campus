@@ -2,7 +2,6 @@ package de.tum.in.tumcampus.services;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.List;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -68,19 +67,18 @@ public class ImportService extends IntentService {
 				// check if sd card available
 				Utils.getCacheDir("");
 
-				// TODO implement
-				String files = "";
-
+				int count = 0;
 				if (action.equals("feeds")) {
-					importFeeds();
+					count += importFeeds();
 				}
 				if (action.equals("links")) {
-					importLinks();
+					count += importLinks();
 				}
 				if (action.equals("lectures")) {
-					importLectureItems();
+					count += importLectureItems();
 				}
-				message("Daten importiert: " + files, "completed");
+				message("Fertig! " + count + " Datei(en) importiert.",
+						"completed");
 			} catch (Exception e) {
 				message(e);
 			}
@@ -98,12 +96,11 @@ public class ImportService extends IntentService {
 		tm.close();
 	}
 
-	public List<String> importFeeds() throws Exception {
+	public int importFeeds() throws Exception {
 		FeedManager nm = new FeedManager(this, db);
-		List<String> list = nm.importFromInternal();
+		int count = nm.importFromInternal();
 		nm.close();
-		return list;
-		// TODO fix
+		return count;
 	}
 
 	public void importFeedsDefaults() throws Exception {
@@ -162,14 +159,15 @@ public class ImportService extends IntentService {
 		lm.close();
 	}
 
-	public void importLectureItems() throws Exception {
+	public int importLectureItems() throws Exception {
 		LectureItemManager lim = new LectureItemManager(this, db);
-		lim.importFromInternal();
+		int count = lim.importFromInternal();
 		lim.close();
 
 		LectureManager lm = new LectureManager(this, db);
 		lm.updateLectures();
 		lm.close();
+		return count;
 	}
 
 	public void importLinksDefaults() throws Exception {
@@ -221,10 +219,11 @@ public class ImportService extends IntentService {
 		lm.close();
 	}
 
-	public void importLinks() throws Exception {
+	public int importLinks() throws Exception {
 		LinkManager lm = new LinkManager(this, db);
-		lm.importFromInternal();
+		int count = lm.importFromInternal();
 		lm.close();
+		return count;
 	}
 
 	public void message(Exception e) {
