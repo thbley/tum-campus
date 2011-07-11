@@ -28,7 +28,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public void downloadFromExternal(List<Integer> ids, boolean force) throws Exception {
+	public void downloadFromExternal(List<Integer> ids, boolean force)
+			throws Exception {
 
 		cleanupDb();
 		for (int i = 0; i < ids.size(); i++) {
@@ -44,7 +45,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			feed.close();
 
 			// TODO add try catch
-			
+
 			String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 			String query = URLEncoder
 					.encode("SELECT title, link, description, pubDate, enclosure.url "
@@ -67,8 +68,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 	public Cursor getAllFromDb(String feedId) {
 		return db.rawQuery("SELECT image, title, description, link, id as _id "
-				+ "FROM feeds_items " + "WHERE feedId = ? "
-				+ "ORDER BY date DESC", new String[] { feedId });
+				+ "FROM feeds_items WHERE feedId = ? ORDER BY date DESC",
+				new String[] { feedId });
 	}
 
 	/**
@@ -85,7 +86,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 * @return Feeds
 	 * @throws JSONException
 	 */
-	public static FeedItem getFromJson(int feedId, JSONObject json) throws Exception {
+	public static FeedItem getFromJson(int feedId, JSONObject json)
+			throws Exception {
 
 		String target = "";
 		if (json.has("enclosure")) {
