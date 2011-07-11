@@ -215,6 +215,9 @@ public class ImportService extends IntentService {
 
 			lm.insertUpdateIntoDb(new Link("Informatik Fakultät",
 					"http://www.in.tum.de/"));
+			
+			lm.insertUpdateIntoDb(new Link("Studentenwerk München",
+					"http://www.studentenwerk-muenchen.de/"));
 		}
 		lm.close();
 	}
