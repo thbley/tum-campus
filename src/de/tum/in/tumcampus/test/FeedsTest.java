@@ -32,6 +32,8 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 
-		// TODO add detailed test, test data
+		// TODO add detailed test, test data, delete item
+		
+		// TODO test refresh
 	}
 }
