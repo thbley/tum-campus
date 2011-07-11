@@ -49,15 +49,11 @@ public class DownloadService extends IntentService {
 						Toast.LENGTH_LONG).show();
 
 				// TODO wait until images are loaded?
-				
+
 				// resume activity
 				Intent intent2 = new Intent(context, context.getClass());
 				intent2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				context.startActivity(intent2);
-
-				// unregister receiver
-				// TODO fix
-				context.unregisterReceiver(DownloadService.receiver);
 			}
 		}
 	};
@@ -122,7 +118,6 @@ public class DownloadService extends IntentService {
 			if (!destroyed) {
 				message("RSS ", "");
 
-				// TODO refresh single?
 				FeedManager nm = new FeedManager(this, db);
 				FeedItemManager nim = new FeedItemManager(this, db);
 				nim.downloadFromExternal(nm.getAllIdsFromDb(), force);
