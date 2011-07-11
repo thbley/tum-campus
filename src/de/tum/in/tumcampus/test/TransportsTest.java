@@ -19,16 +19,6 @@ public class TransportsTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
-	private void waitGui(int seconds) {
-		synchronized (this) {
-			try {
-				wait(1000 * seconds);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-	}
-
 	public void testTransportsPortrait() {
 		assertTrue(solo.searchText("MVV"));
 		solo.clickOnText("MVV");
@@ -51,24 +41,13 @@ public class TransportsTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		assertTrue(solo.searchText("Hello World"));
 	}
 
-	private void _testTransports() {
-		// departures
-		assertTrue(solo.searchText("Marienplatz"));
-		solo.clickOnText("Marienplatz");
-		waitGui(3);
-		assertTrue(solo.searchText("Abfahrt: Marienplatz"));
-		assertTrue(solo.searchText("U3 Moosach"));
-
-		assertTrue(solo.searchText("Garching-Forschungszentrum"));
-		solo.clickOnText("Garching-Forschungszentrum");
-		waitGui(3);
-
-		assertTrue(solo.searchText("Abfahrt: Garching-Forschungszentrum"));
-		assertTrue(solo.searchText("U6 Klinikum"));
+	public void testTransportsSearchDelete() {
+		assertTrue(solo.searchText("MVV"));
+		solo.clickOnText("MVV");
 
 		// search station
 		solo.enterText(0, "kie");
-		waitGui(3);
+		solo.sleep(3000);
 
 		assertTrue(solo.searchText("Kieferngarten"));
 		solo.clickOnText("Kieferngarten");
@@ -76,12 +55,30 @@ public class TransportsTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		assertTrue(solo.searchText("U6 Klinikum"));
 
 		solo.clickOnText("Marienplatz");
-		waitGui(3);
+		solo.sleep(3000);
 
 		// delete item
 		solo.clickLongOnText("Kieferngarten");
+
 		assertTrue(solo.searchButton("Ja"));
 		solo.clickOnText("Ja");
+
 		assertFalse(solo.searchText("Kieferngarten"));
+	}
+
+	private void _testTransports() {
+		// departures
+		assertTrue(solo.searchText("Marienplatz"));
+		solo.clickOnText("Marienplatz");
+		solo.sleep(3000);
+		assertTrue(solo.searchText("Abfahrt: Marienplatz"));
+		assertTrue(solo.searchText("U3 Moosach"));
+
+		assertTrue(solo.searchText("Garching-Forschungszentrum"));
+		solo.clickOnText("Garching-Forschungszentrum");
+		solo.sleep(3000);
+
+		assertTrue(solo.searchText("Abfahrt: Garching-Forschungszentrum"));
+		assertTrue(solo.searchText("U6 Klinikum"));
 	}
 }
