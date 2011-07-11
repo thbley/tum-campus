@@ -48,6 +48,58 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		// TODO inject test data
 	}
 
+	public void testCafeteriasASettings() {
+		assertTrue(solo.searchText("Speisepläne"));
+		solo.clickOnText("Speisepläne");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Einstellungen");
+		solo.clickOnText("Mensa-Filter");
+		solo.clearEditText(0);
+		solo.enterText(0, "Garching");
+		solo.goBack();
+		solo.clickOnText("OK");
+		solo.goBack();
+		assertFalse(solo.searchText("München"));
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Einstellungen");
+		solo.clickOnText("Mensa-Filter");
+		solo.clearEditText(0);
+		solo.goBack();
+		solo.clickOnText("OK");
+		solo.goBack();
+		assertTrue(solo.searchText("München"));
+	}
+
+	public void testCafeteriasContextMenu() {
+		assertTrue(solo.searchText("Speisepläne"));
+		solo.clickOnText("Speisepläne");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Aktualisieren");
+		solo.sleep(10000);
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Preise");
+	}
+
+	public void testCafeteriasContextMenu2() {
+		assertTrue(solo.searchText("Speisepläne"));
+		solo.clickOnText("Speisepläne");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Öffnungszeiten Garching");
+	}
+
+	public void testCafeteriasContextMenu3() {
+		assertTrue(solo.searchText("Speisepläne"));
+		solo.clickOnText("Speisepläne");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Öffnungszeiten München");
+	}
+
 	private void _testCafeterias() {
 		assertTrue(solo.searchText("Mensa Garching"));
 		solo.clickOnText("Mensa Garching");
