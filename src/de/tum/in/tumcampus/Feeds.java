@@ -4,23 +4,29 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.SlidingDrawer;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.services.DownloadService;
 
 public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		OnItemLongClickListener {
+
+	private String feedId;
+	private String feedName;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		FeedManager fm = new FeedManager(this, "database.db");
 		Cursor c = fm.getAllFromDb();
 
-		ListAdapter adapter = new SimpleCursorAdapter(this,
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
 				new int[] { android.R.id.text1 });
 
@@ -42,14 +48,32 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
 		fm.close();
+
+		registerReceiver(DownloadService.receiver, new IntentFilter(
+				DownloadService.broadcast));
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(DownloadService.receiver);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (feedId != null) {
+			ListView lv = (ListView) findViewById(R.id.listView);
+			onItemClick(lv, lv, -1, 0);
+		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
 
 		if (av.getId() == R.id.listView2) {
-			ListView lv = (ListView) findViewById(R.id.listView2);
-			Cursor c = (Cursor) lv.getAdapter().getItem(position);
+			Cursor c = (Cursor) av.getAdapter().getItem(position);
 			String link = c.getString(c.getColumnIndex("link"));
 
 			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
@@ -62,12 +86,13 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 			sd.animateClose();
 		}
 
-		ListView lv = (ListView) findViewById(R.id.listView);
-		Cursor c = (Cursor) lv.getAdapter().getItem(position);
-		String feedId = c.getString(c.getColumnIndex("_id"));
-		String name = c.getString(c.getColumnIndex("name"));
+		if (position != -1) {
+			Cursor c = (Cursor) av.getAdapter().getItem(position);
+			feedId = c.getString(c.getColumnIndex("_id"));
+			feedName = c.getString(c.getColumnIndex("name"));
+		}
 
-		setTitle("Nachrichten: " + name);
+		setTitle("Nachrichten: " + feedName);
 
 		FeedItemManager fim = new FeedItemManager(this, "database.db");
 		Cursor c2 = fim.getAllFromDb(feedId);
@@ -129,5 +154,18 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		builder.show();
 
 		return false;
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent service = new Intent(this, DownloadService.class);
+		service.putExtra("action", "feeds");
+		startService(service);
+		return true;
 	}
 }
