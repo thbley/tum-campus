@@ -1,11 +1,13 @@
 package de.tum.in.tumcampus.models;
 
-import java.io.BufferedReader;
+import static de.tum.in.tumcampus.models.Utils.readCsv;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import android.content.Context;
@@ -35,8 +37,9 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".csv")) {
-				importCsv(files[i], "ISO-8859-1");
-				count++;
+				if (importCsv(new FileInputStream(files[i]), "ISO-8859-1")) {
+					count++;
+				}
 			}
 		}
 		db.setTransactionSuccessful();
@@ -44,20 +47,16 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		return count;
 	}
 
-	public void importCsv(File file, String encoding) throws Exception {
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				new FileInputStream(file), encoding));
+	public boolean importCsv(InputStream in, String encoding) throws Exception {
+		List<String[]> list = readCsv(in, encoding);
 
-		Vector<String> headers = new Vector<String>();
-		String reader = "";
-		while ((reader = in.readLine()) != null) {
-			// TODO fix splitting
-			String[] row = reader.replaceAll("\"", "").split(";");
+		if (list.size() == 0) {
+			return false;
+		}
+		Vector<String> headers = new Vector<String>(Arrays.asList(list.get(0)));
 
-			if (headers.size() == 0) {
-				headers = new Vector<String>(Arrays.asList(row));
-				continue;
-			}
+		for (int i = 1; i < list.size(); i++) {
+			String[] row = list.get(i);
 
 			int terminTypId = headers.indexOf("TERMIN_TYP");
 			if (row.length > terminTypId
@@ -103,7 +102,13 @@ public class LectureItemManager extends SQLiteOpenHelper {
 			replaceIntoDb(new LectureItem(id, lectureId, start, end, name,
 					module, location, note, url, seriesId));
 		}
-		in.close();
+		return true;
+	}
+
+	public Cursor getCurrentFromDb() {
+		return db.rawQuery("SELECT name, location, id as _id "
+				+ "FROM lectures_items WHERE datetime('now', 'localtime') "
+				+ "BETWEEN start AND end LIMIT 1", null);
 	}
 
 	public Cursor getRecentFromDb() {
@@ -114,7 +119,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 				+ "strftime('%d.%m.%Y', start) as start_dt, "
 				+ "strftime('%d.%m.%Y', end) as end_dt, "
 				+ "url, lectureId, id as _id "
-				+ "FROM lectures_items WHERE end > datetime() AND "
+				+ "FROM lectures_items WHERE end > datetime('now', 'localtime') AND "
 				+ "start < date('now', '+7 day') ORDER BY start", null);
 	}
 
