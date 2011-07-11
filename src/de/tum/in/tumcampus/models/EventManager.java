@@ -66,7 +66,7 @@ public class EventManager extends SQLiteOpenHelper {
 						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
 						+ "strftime('%H:%M', end) as end_de, "
 						+ "location, id as _id "
-						+ "FROM events WHERE end > datetime() "
+						+ "FROM events WHERE end > datetime('now', 'localtime') "
 						+ "ORDER BY start ASC LIMIT 25", null);
 	}
 
@@ -76,7 +76,7 @@ public class EventManager extends SQLiteOpenHelper {
 						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
 						+ "strftime('%H:%M', end) as end_de, "
 						+ "location, id as _id "
-						+ "FROM events WHERE end <= datetime() "
+						+ "FROM events WHERE end <= datetime('now', 'localtime') "
 						+ "ORDER BY start DESC LIMIT 25", null);
 	}
 
