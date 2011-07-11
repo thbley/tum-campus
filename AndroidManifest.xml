@@ -12,6 +12,8 @@
 
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
 		android:theme="@android:style/Theme.Light">
 		<uses-library android:name="android.test.runner" />
@@ -47,12 +49,16 @@
 		<activity android:name="Settings" android:theme="@android:style/Theme.Dialog"
 			android:label="Einstellungen" />
 
-		<service android:enabled="true" android:exported="false"
-			android:name=".services.DownloadService">
-		</service>
+		<service android:exported="false" android:name=".services.DownloadService" />
 
-		<service android:enabled="true" android:exported="false"
-			android:name=".services.ImportService">
-		</service>
+		<service android:exported="false" android:name=".services.ImportService" />
+
+		<service android:exported="false" android:name=".services.SilenceService" />
+
+		<receiver android:name=".receivers.BootCompleted">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
 	</application>
 </manifest>
