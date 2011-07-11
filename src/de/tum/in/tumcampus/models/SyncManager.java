@@ -1,7 +1,5 @@
 package de.tum.in.tumcampus.models;
 
-import java.util.Date;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -38,8 +36,8 @@ public class SyncManager extends SQLiteOpenHelper {
 		if (id.length() == 0) {
 			return;
 		}
-		db.execSQL("REPLACE INTO syncs (id, lastSync) VALUES (?, ?)",
-				new String[] { id, Utils.getDateTimeString(new Date()) });
+		db.execSQL("REPLACE INTO syncs (id, lastSync) VALUES (?, datetime())",
+				new String[] { id });
 	}
 
 	public static boolean needSync(SQLiteDatabase db, Object obj, int seconds) {
