@@ -1,24 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:background="#F1FFFFFF">
+	android:layout_height="fill_parent">
 
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:id="@+id/importResult"
-		android:textColor="#0065BD" android:visibility="gone" />
-
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="1px" android:background="#0065BD" />
-
-	<ScrollView android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-
-		<LinearLayout android:orientation="vertical"
-			android:layout_width="fill_parent" android:layout_height="fill_parent">
-
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:textColor="#0065BD"
-				android:text="Vorlesungen importieren:\n
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="Vorlesungen importieren:\n
 		1. Telefon an den Computer per USB anstecken\n
 		2. USB-Speicher am Telefon aktivieren\n
 		3. Am Computer bei TumOnline.de einloggen:\n
@@ -33,18 +20,18 @@
 		\n
 		Hinweis: vorhandene Daten werden nicht\n
 		gelöscht, aber ggf. überschrieben!"
-				android:layout_margin="6dip" />
+		android:layout_margin="6dip" />
 
-			<Button android:text="Vorlesungen importieren" android:id="@+id/importLectures"
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:layout_margin="6dip" android:textColor="#FF2546A4" />
+	<Button android:text="Vorlesungen importieren" android:id="@+id/importLectures"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_margin="6dip" android:textColor="#FF2546A4" />
 
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="1px" android:background="#0065BD" />
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="1px" android:background="#0065BD" />
 
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:textColor="#0065BD"
-				android:text="Links importieren:\n
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="Links importieren:\n
 		1. Telefon an den Computer per USB anstecken\n
 		2. USB-Speicher am Telefon aktivieren\n
 		3. Am Computer eine URL aus dem Browser in\n
@@ -55,18 +42,18 @@
 		\n
 		Hinweis: vorhandene Links werden nicht\n
 		gelöscht, aber ggf. überschrieben!"
-				android:layout_margin="6dip" />
+		android:layout_margin="6dip" />
 
-			<Button android:text="Links importieren" android:id="@+id/importLinks"
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:layout_margin="6dip" android:textColor="#FF2546A4" />
+	<Button android:text="Links importieren" android:id="@+id/importLinks"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_margin="6dip" android:textColor="#FF2546A4" />
 
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="1px" android:background="#0065BD" />
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="1px" android:background="#0065BD" />
 
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:textColor="#0065BD"
-				android:text="RSS-Feeds importieren:\n
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="RSS-Feeds importieren:\n
 		1. Telefon an den Computer per USB anstecken\n
 		2. USB-Speicher am Telefon aktivieren\n
 		3. Am Computer eine RSS-URL aus dem\n
@@ -78,11 +65,9 @@
 		\n
 		Hinweis: vorhandene Feeds werden nicht\n
 		gelöscht, aber ggf. überschrieben!"
-				android:layout_margin="6dip" />
+		android:layout_margin="6dip" />
 
-			<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:layout_margin="6dip" android:textColor="#FF2546A4" />
-		</LinearLayout>
-	</ScrollView>
+	<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_margin="6dip" android:textColor="#FF2546A4" />
 </LinearLayout>

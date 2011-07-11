@@ -41,8 +41,11 @@
 				android:layout_width="fill_parent" android:text="Daten importieren"
 				android:id="@+id/handle" android:height="50px" />
 
+			<ScrollView android:id="@+id/slider" android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:background="#F1FFFFFF">
 
-					<include android:id="@+id/slider" layout="@layout/main_import" />
+				<include layout="@layout/main_import" />
+			</ScrollView>
 		</SlidingDrawer>
 	</FrameLayout>
 </LinearLayout>
