@@ -45,7 +45,7 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		b = (Button) findViewById(R.id.debugSyncs);
 		b.setOnClickListener(this);
-		
+
 		b = (Button) findViewById(R.id.debugTime);
 		b.setOnClickListener(this);
 	}
