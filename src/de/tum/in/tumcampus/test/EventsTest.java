@@ -41,4 +41,13 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
 	}
+	
+	public void testEventsContextMenu() {
+		assertTrue(solo.searchText("Veranstaltungen"));
+		solo.clickOnText("Veranstaltungen");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Aktualisieren");
+		solo.sleep(10000);
+	}
 }
