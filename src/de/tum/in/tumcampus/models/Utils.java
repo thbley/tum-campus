@@ -10,7 +10,9 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -320,5 +322,22 @@ public class Utils {
 			str = str.substring(0, limit) + " ...";
 		}
 		return str;
+	}
+
+	public static List<String[]> readCsv(InputStream fin, String encoding) {
+		List<String[]> list = new ArrayList<String[]>();
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(fin,
+					encoding));
+			String reader = "";
+			while ((reader = in.readLine()) != null) {
+				// TODO fix splitting
+				list.add(reader.replaceAll("\"", "").split(";"));
+			}
+			in.close();
+		} catch (Exception e) {
+			// TODO implement
+		}
+		return list;
 	}
 }
