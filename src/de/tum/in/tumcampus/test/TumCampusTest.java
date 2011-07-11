@@ -18,16 +18,6 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
-	private void waitGui(int seconds) {
-		synchronized (this) {
-			try {
-				wait(1000 * seconds);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-	}
-
 	public void testMenu() {
 		assertTrue(solo.searchText("Hello World"));
 		assertTrue(solo.searchText("Aktualisieren"));
@@ -49,11 +39,11 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		int duration = 0;
 		while (!solo.searchText("Fertig.") && duration <= 60) {
 			assertFalse(solo.searchText("Exception"));
-			waitGui(1);
+			solo.sleep(1000);
 			duration++;
 		}
-		assertTrue(solo
-				.searchText("Aktualisiere: RSS, News, Veranstaltungen, Mensen, Menus, Fertig."));
+		assertTrue(solo.searchText("Aktualisiere: RSS, News, Veranstaltungen, "
+				+ "Mensen, Menus, Fertig."));
 
 		// TODO check filled sections?
 	}
