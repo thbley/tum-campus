@@ -89,12 +89,14 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		cmm.close();
+		
+		CafeteriaMenuManager.lastInserted = 0;
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
 
-		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
+		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 		if (sd.isOpened()) {
 			sd.animateClose();
 		}
