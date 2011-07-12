@@ -13,8 +13,8 @@ public class Event {
 	String link;
 	String image;
 
-	public Event(String id, String name, Date start, Date end,
-			String location, String description, String link, String image) {
+	public Event(String id, String name, Date start, Date end, String location,
+			String description, String link, String image) {
 
 		this.id = id;
 		this.name = name;
