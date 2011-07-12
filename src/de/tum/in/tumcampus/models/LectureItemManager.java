@@ -18,7 +18,9 @@ public class LectureItemManager extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 
-	public SQLiteDatabase db;
+	private SQLiteDatabase db;
+
+	public static int lastInserted = 0;
 
 	public LectureItemManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
@@ -27,29 +29,30 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public int importFromInternal() throws Exception {
+	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("lectures")).listFiles();
 
+		int count = Utils.getCount(db, "lectures_items");
+		deleteAllFromDb();
+
 		// TODO fix exceptions, db locking
-		int count = 0;
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".csv")) {
-				if (importCsv(files[i], "ISO-8859-1")) {
-					count++;
-				}
+				importCsv(files[i], "ISO-8859-1");
 			}
 		}
 		db.setTransactionSuccessful();
 		db.endTransaction();
-		return count;
+
+		lastInserted += Utils.getCount(db, "lectures_items") - count;
 	}
 
-	public boolean importCsv(File file, String encoding) throws Exception {
+	public void importCsv(File file, String encoding) throws Exception {
 		List<String[]> list = readCsv(new FileInputStream(file), encoding);
 
 		if (list.size() == 0) {
-			return false;
+			return;
 		}
 		Vector<String> headers = new Vector<String>(Arrays.asList(list.get(0)));
 
@@ -100,7 +103,6 @@ public class LectureItemManager extends SQLiteOpenHelper {
 			replaceIntoDb(new LectureItem(id, lectureId, start, end, name,
 					module, location, note, url, seriesId));
 		}
-		return true;
 	}
 
 	public Cursor getCurrentFromDb() {
@@ -175,6 +177,10 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	public void deleteItemFromDb(String id) {
 		db.execSQL("DELETE FROM lectures_items WHERE id = ?",
 				new String[] { id });
+	}
+
+	public void deleteAllFromDb() {
+		db.execSQL("DELETE FROM lectures_items");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
