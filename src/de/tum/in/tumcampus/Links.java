@@ -23,7 +23,7 @@ public class Links extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.links);
 
-		LinkManager lm = new LinkManager(this, "database.db");
+		LinkManager lm = new LinkManager(this, Const.db);
 		Cursor c = lm.getAllFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
@@ -60,7 +60,7 @@ public class Links extends Activity implements OnItemClickListener,
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				String _id = c.getString(c.getColumnIndex("_id"));
 
-				LinkManager lm = new LinkManager(av.getContext(), "database.db");
+				LinkManager lm = new LinkManager(av.getContext(), Const.db);
 				lm.deleteFromDb(_id);
 
 				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
