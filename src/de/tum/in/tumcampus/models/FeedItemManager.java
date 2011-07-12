@@ -19,7 +19,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteDatabase db;
-	
+
 	public static int lastInserted = 0;
 
 	public FeedItemManager(Context context, String database) {
@@ -34,7 +34,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 		cleanupDb();
 		int count = Utils.getCount(db, "feeds_items");
-		
+
 		for (int i = 0; i < ids.size(); i++) {
 
 			String syncId = "feeditem" + i;
@@ -68,6 +68,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 				jsonArray.put(obj);
 			}
 
+			// TODO check again
 			deleteFromDb(ids.get(i));
 			db.beginTransaction();
 			for (int j = 0; j < jsonArray.length(); j++) {
@@ -77,13 +78,23 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			db.setTransactionSuccessful();
 			db.endTransaction();
 		}
-		lastInserted += Utils.getCount(db, "feeds_items") - count;		
+		lastInserted += Utils.getCount(db, "feeds_items") - count;
 	}
 
 	public Cursor getAllFromDb(String feedId) {
 		return db.rawQuery("SELECT image, title, description, link, id as _id "
 				+ "FROM feeds_items WHERE feedId = ? ORDER BY date DESC",
 				new String[] { feedId });
+	}
+
+	public boolean empty() {
+		boolean result = true;
+		Cursor c = db.rawQuery("SELECT id FROM feeds_items LIMIT 1", null);
+		if (c.moveToNext()) {
+			result = false;
+		}
+		c.close();
+		return result;
 	}
 
 	/**
