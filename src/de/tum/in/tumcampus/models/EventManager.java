@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.tum.in.tumcampus.Const;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,14 +17,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class EventManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
-
 	private SQLiteDatabase db;
 
 	public static int lastInserted = 0;
 
 	public EventManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -33,14 +33,14 @@ public class EventManager extends SQLiteOpenHelper {
 		if (!force && !SyncManager.needSync(db, this, 86400)) {
 			return;
 		}
-		String baseUrl = "https://graph.facebook.com/162327853831856/events?limit=25&access_token=";
-		String token = URLEncoder
-				.encode("141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU");
 
-		JSONArray jsonArray = Utils.downloadJson(baseUrl + token).getJSONArray(
-				"data");
-
+		String url = "https://graph.facebook.com/162327853831856/events?limit=25&access_token=";
+		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 		String eventUrl = "http://graph.facebook.com/";
+
+		JSONArray jsonArray = Utils
+				.downloadJson(url + URLEncoder.encode(token)).getJSONArray(
+						"data");
 
 		List<JSONObject> list = new ArrayList<JSONObject>();
 		for (int i = 0; i < jsonArray.length(); i++) {
