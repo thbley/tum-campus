@@ -28,6 +28,10 @@ public class LectureManager extends SQLiteOpenHelper {
 				+ "SELECT DISTINCT lectureId, name, module FROM lectures_items");
 	}
 
+	public void deleteItemFromDb(String id) {
+		db.execSQL("DELETE FROM lectures WHERE id = ?", new String[] { id });
+	}
+
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS lectures ("
 				+ "id VARCHAR PRIMARY KEY, name VARCHAR, module VARCHAR)");
