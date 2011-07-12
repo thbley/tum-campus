@@ -61,16 +61,6 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 				new String[] { filter, filter });
 	}
 
-	public boolean empty() {
-		boolean result = true;
-		Cursor c = db.rawQuery("SELECT id FROM cafeterias LIMIT 1", null);
-		if (c.moveToNext()) {
-			result = false;
-		}
-		c.close();
-		return result;
-	}
-
 	/**
 	 * 
 	 * 
