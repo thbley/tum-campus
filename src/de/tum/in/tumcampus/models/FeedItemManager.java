@@ -33,6 +33,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			throws Exception {
 
 		cleanupDb();
+		// TODO fix
 		int count = Utils.getCount(db, "feeds_items");
 
 		for (int i = 0; i < ids.size(); i++) {
