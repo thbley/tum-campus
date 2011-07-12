@@ -15,6 +15,8 @@ public class FeedManager extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 
+	public static int lastInserted = 0;
+
 	public FeedManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
 
@@ -22,10 +24,11 @@ public class FeedManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public int importFromInternal() throws Exception {
+	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
 
-		int count = 0;
+		int count = Utils.getCount(db, "feeds");
+
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".URL")) {
@@ -33,12 +36,12 @@ public class FeedManager extends SQLiteOpenHelper {
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
 				insertUpdateIntoDb(new Feed(name, url));
-				count++;
 			}
 		}
 		db.setTransactionSuccessful();
 		db.endTransaction();
-		return count;
+
+		lastInserted += Utils.getCount(db, "feeds") - count;
 	}
 
 	public Cursor getAllFromDb() {
