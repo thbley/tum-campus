@@ -1,5 +1,6 @@
 package de.tum.in.tumcampus.models;
 
+import de.tum.in.tumcampus.Const;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,24 +8,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SyncManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
-
 	private SQLiteDatabase db;
 
 	public SyncManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
 	}
-
-	public SyncManager(Context context, SQLiteDatabase db) {
-		super(context, db.getPath(), null, DATABASE_VERSION);
-
-		this.db = db;
-		onCreate(db);
-	}
-
+	
 	public static void replaceIntoDb(SQLiteDatabase db, Object obj) {
 		replaceIntoDb(db, obj.getClass().getName());
 	}
