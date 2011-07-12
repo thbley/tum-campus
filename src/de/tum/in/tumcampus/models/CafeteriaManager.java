@@ -26,6 +26,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	}
 
 	public void downloadFromExternal(boolean force) throws Exception {
+
 		if (!force && !SyncManager.needSync(db, this, 86400)) {
 			return;
 		}
