@@ -12,7 +12,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class EventManager extends SQLiteOpenHelper {
 
@@ -65,8 +64,8 @@ public class EventManager extends SQLiteOpenHelper {
 				"SELECT image, name, strftime('%w', start) as weekday, "
 						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
 						+ "strftime('%H:%M', end) as end_de, "
-						+ "location, id as _id "
-						+ "FROM events WHERE end > datetime('now', 'localtime') "
+						+ "location, id as _id FROM events "
+						+ "WHERE end > datetime('now', 'localtime') "
 						+ "ORDER BY start ASC LIMIT 25", null);
 	}
 
@@ -75,8 +74,8 @@ public class EventManager extends SQLiteOpenHelper {
 				"SELECT image, name, strftime('%w', start) as weekday, "
 						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
 						+ "strftime('%H:%M', end) as end_de, "
-						+ "location, id as _id "
-						+ "FROM events WHERE end <= datetime('now', 'localtime') "
+						+ "location, id as _id FROM events "
+						+ "WHERE end <= datetime('now', 'localtime') "
 						+ "ORDER BY start DESC LIMIT 25", null);
 	}
 
@@ -134,7 +133,6 @@ public class EventManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(Event e) throws Exception {
-
 		if (e.id.length() == 0) {
 			throw new Exception("Invalid id.");
 		}
@@ -152,8 +150,6 @@ public class EventManager extends SQLiteOpenHelper {
 	}
 
 	public void removeCache() {
-		Log.d("TumCampus events deleteAllFromDb", "");
-
 		db.execSQL("DELETE FROM events");
 		Utils.emptyCacheDir("events/cache");
 	}
