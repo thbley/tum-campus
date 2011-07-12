@@ -12,6 +12,8 @@ public class LinkManager extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteDatabase db;
+	
+	public static int lastInserted = 0;
 
 	public LinkManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
@@ -20,10 +22,10 @@ public class LinkManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public int importFromInternal() throws Exception {
+	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("links")).listFiles();
 
-		int count = 0;
+		int count = Utils.getCount(db, "links");		
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			String filename = files[i].getName();
@@ -32,12 +34,12 @@ public class LinkManager extends SQLiteOpenHelper {
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
 				insertUpdateIntoDb(new Link(name, url));
-				count++;
 			}
 		}
 		db.setTransactionSuccessful();
 		db.endTransaction();
-		return count;
+		
+		lastInserted += Utils.getCount(db, "links") - count;
 	}
 
 	public void checkExistingIcons() {
