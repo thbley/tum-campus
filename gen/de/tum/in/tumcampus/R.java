@@ -24,7 +24,6 @@ public final class R {
     }
     public static final class id {
         public static final int cafeteriaText=0x7f060000;
-        public static final int countNew=0x7f060021;
         public static final int date=0x7f060023;
         public static final int debug=0x7f060012;
         public static final int debugCafeterias=0x7f060008;
@@ -42,6 +41,7 @@ public final class R {
         public static final int handle=0x7f060004;
         public static final int hello=0x7f06001c;
         public static final int icon=0x7f060016;
+        public static final int icon2=0x7f060021;
         public static final int image=0x7f060014;
         public static final int importFeeds=0x7f060020;
         public static final int importLectures=0x7f06001e;
