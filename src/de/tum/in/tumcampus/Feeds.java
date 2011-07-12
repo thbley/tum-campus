@@ -37,7 +37,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 		sd.open();
 
-		FeedManager fm = new FeedManager(this, "database.db");
+		FeedManager fm = new FeedManager(this, Const.db);
 		Cursor c = fm.getAllFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
@@ -97,7 +97,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 		setTitle("Nachrichten: " + feedName);
 
-		FeedItemManager fim = new FeedItemManager(this, "database.db");
+		FeedItemManager fim = new FeedItemManager(this, Const.db);
 		Cursor c2 = fim.getAllFromDb(feedId);
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
@@ -135,7 +135,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				String _id = c.getString(c.getColumnIndex("_id"));
 
-				FeedManager fm = new FeedManager(av.getContext(), "database.db");
+				FeedManager fm = new FeedManager(av.getContext(), Const.db);
 				fm.deleteFromDb(_id);
 
 				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
