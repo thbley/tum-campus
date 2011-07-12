@@ -13,5 +13,4 @@
 		android:textColor="#0065BD" android:gravity="center_vertical"
 		android:paddingLeft="12dip" android:paddingTop="6dip"
 		android:layout_width="fill_parent" android:layout_height="wrap_content" />
-
 </LinearLayout>
