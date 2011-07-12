@@ -10,7 +10,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 import de.tum.in.tumcampus.TumCampus;
 import de.tum.in.tumcampus.models.CafeteriaManager;
@@ -68,9 +67,6 @@ public class DownloadService extends IntentService {
 		// enableWriteAheadLogging() => Api Level 11
 
 		// TODO move constants to class header
-		// TODO add locking
-
-		Log.d("TumCampus DownloadService", "TumCampus service start");
 
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager nm = (NotificationManager) getSystemService(ns);
@@ -89,6 +85,7 @@ public class DownloadService extends IntentService {
 		message("Aktualisiere: ", "");
 
 		String action = intent.getStringExtra("action");
+		Utils.Log(action);
 
 		boolean force = false;
 		if (action != null) {
@@ -188,6 +185,8 @@ public class DownloadService extends IntentService {
 	}
 
 	public void message(Exception e) {
+		Utils.Log(e, "");
+
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 
@@ -216,16 +215,14 @@ public class DownloadService extends IntentService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-
 		destroyed = true;
-		Log.d("TumCampus DownloadService", "TumCampus service destroy");
+		Utils.Log("");
 	}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
-		Log.d("TumCampus DownloadService", "TumCampus service create");
+		Utils.Log("");
 
 		try {
 			// check if sd card available
