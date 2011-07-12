@@ -64,18 +64,16 @@ public class ImportService extends IntentService {
 				// check if sd card available
 				Utils.getCacheDir("");
 
-				int count = 0;
 				if (action.equals("feeds")) {
-					count += importFeeds();
+					importFeeds();
 				}
 				if (action.equals("links")) {
-					count += importLinks();
+					importLinks();
 				}
 				if (action.equals("lectures")) {
-					count += importLectureItems();
+					importLectureItems();
 				}
-				message("Fertig! " + count + " Datei(en) importiert.",
-						"completed");
+				message("Fertig!", "completed");
 			} catch (Exception e) {
 				message(e);
 			}
@@ -97,11 +95,10 @@ public class ImportService extends IntentService {
 		tm.close();
 	}
 
-	public int importFeeds() throws Exception {
+	public void importFeeds() throws Exception {
 		FeedManager nm = new FeedManager(this, db);
-		int count = nm.importFromInternal();
+		nm.importFromInternal();
 		nm.close();
-		return count;
 	}
 
 	public void importFeedsDefaults() throws Exception {
@@ -146,15 +143,14 @@ public class ImportService extends IntentService {
 		lm.close();
 	}
 
-	public int importLectureItems() throws Exception {
+	public void importLectureItems() throws Exception {
 		LectureItemManager lim = new LectureItemManager(this, db);
-		int count = lim.importFromInternal();
+		lim.importFromInternal();
 		lim.close();
 
 		LectureManager lm = new LectureManager(this, db);
 		lm.updateLectures();
 		lm.close();
-		return count;
 	}
 
 	public void importLinksDefaults() throws Exception {
@@ -169,11 +165,10 @@ public class ImportService extends IntentService {
 		lm.close();
 	}
 
-	public int importLinks() throws Exception {
+	public void importLinks() throws Exception {
 		LinkManager lm = new LinkManager(this, db);
-		int count = lm.importFromInternal();
+		lm.importFromInternal();
 		lm.close();
-		return count;
 	}
 
 	public void message(Exception e) {
