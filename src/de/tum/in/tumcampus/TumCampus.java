@@ -35,9 +35,12 @@ import de.tum.in.tumcampus.models.SyncManager;
 import de.tum.in.tumcampus.models.Utils;
 import de.tum.in.tumcampus.services.DownloadService;
 import de.tum.in.tumcampus.services.ImportService;
+import de.tum.in.tumcampus.services.SilenceService;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
+
+	final static String db = "database.db";
 
 	public String getConnection() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -75,8 +78,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		Intent service = new Intent(this, ImportService.class);
 		service.putExtra("action", "defaults");
 		startService(service);
-
-		// TODO ask for initial download
 	}
 
 	@Override
@@ -90,6 +91,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		super.onResume();
 
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		CafeteriaManager cm = new CafeteriaManager(this, db);
+		if (cm.empty()) {
+			addItem(list, android.R.drawable.star_big_on,
+					"Start: Daten initial herunterladen", new Intent(this,
+							DownloadService.class));
+		}
+		cm.close();
 
 		addItem(list, R.drawable.vorlesung, "Vorlesungen", new Intent(this,
 				Lectures.class));
@@ -126,6 +135,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 
+		/* TODO implement?
+		 * LectureItemManager lim = new LectureItemManager(this, db); Cursor c =
+		 * lim.getCurrentFromDb(); if (c.moveToNext()) { String info =
+		 * c.getString(0); TextView tv = (TextView)
+		 * findViewById(R.id.lectureInfo); tv.setText("Aktuell: " + info); }
+		 * c.close(); lim.close();
+		 */
+
 		String conn = getConnection();
 
 		Button b = (Button) findViewById(R.id.refresh);
@@ -135,11 +152,13 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			b.setVisibility(android.view.View.VISIBLE);
 			b.setText("Aktualisieren (" + conn + ")");
 			tv.setText(getString(R.string.hello));
-
 		} else {
 			b.setVisibility(android.view.View.GONE);
 			tv.setText(getString(R.string.hello) + " Offline.");
 		}
+
+		Intent service = new Intent(this, SilenceService.class);
+		startService(service);
 	}
 
 	@Override
@@ -188,32 +207,33 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			// TODO check sd card readable
 			// Utils.getCacheDir("");
 
-			CafeteriaManager cm = new CafeteriaManager(this, "database.db");
+			// TODO add try catch
+
+			CafeteriaManager cm = new CafeteriaManager(this, db);
 			cm.removeCache();
 			cm.close();
 
-			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this,
-					"database.db");
+			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, db);
 			cmm.removeCache();
 			cmm.close();
 
-			FeedItemManager fim = new FeedItemManager(this, "database.db");
+			FeedItemManager fim = new FeedItemManager(this, db);
 			fim.removeCache();
 			fim.close();
 
-			EventManager em = new EventManager(this, "database.db");
+			EventManager em = new EventManager(this, db);
 			em.removeCache();
 			em.close();
 
-			LinkManager lm = new LinkManager(this, "database.db");
+			LinkManager lm = new LinkManager(this, db);
 			lm.removeCache();
 			lm.close();
 
-			NewsManager nm = new NewsManager(this, "database.db");
+			NewsManager nm = new NewsManager(this, db);
 			nm.removeCache();
 			nm.close();
 
-			SyncManager sm = new SyncManager(this, "database.db");
+			SyncManager sm = new SyncManager(this, db);
 			sm.deleteFromDb();
 			sm.close();
 			return true;
