@@ -13,7 +13,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class LectureItemManager extends SQLiteOpenHelper {
 
@@ -148,7 +147,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(LectureItem l) throws Exception {
-		Log.d("TumCampus lectureitems replaceIntoDb", l.toString());
+		Utils.Log(l.toString());
 
 		if (l.id.length() == 0) {
 			throw new Exception("Invalid id.");
