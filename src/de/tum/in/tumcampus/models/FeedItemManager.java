@@ -19,6 +19,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteDatabase db;
+	
+	public static int lastInserted = 0;
 
 	public FeedItemManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
@@ -31,6 +33,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			throws Exception {
 
 		cleanupDb();
+		int count = Utils.getCount(db, "feeds_items");
+		
 		for (int i = 0; i < ids.size(); i++) {
 
 			String syncId = "feeditem" + i;
@@ -73,6 +77,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			db.setTransactionSuccessful();
 			db.endTransaction();
 		}
+		lastInserted += Utils.getCount(db, "feeds_items") - count;		
 	}
 
 	public Cursor getAllFromDb(String feedId) {
