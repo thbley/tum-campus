@@ -35,6 +35,8 @@ public class Links extends Activity implements OnItemClickListener,
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
 		lm.close();
+
+		LinkManager.lastInserted = 0;
 	}
 
 	@Override
