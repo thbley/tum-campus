@@ -18,6 +18,5 @@
 		<TextView android:id="@+id/date" android:textSize="20px"
 			android:textColor="#0065BD" android:paddingLeft="9dip"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
-
 	</LinearLayout>
 </LinearLayout>
