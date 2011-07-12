@@ -19,15 +19,15 @@
 		</LinearLayout>
 
 		<SlidingDrawer android:layout_width="fill_parent"
-			android:id="@+id/slidingDrawer1" android:layout_height="fill_parent"
-			android:handle="@+id/handle" android:content="@+id/options">
+			android:id="@+id/slider" android:layout_height="fill_parent"
+			android:handle="@+id/handle" android:content="@+id/slide">
 
 			<Button android:layout_height="wrap_content"
 				android:layout_width="fill_parent" android:text="Feed auswählen"
 				android:background="#0065BD" android:id="@+id/handle"
 				android:height="50px" android:textColor="#FFFFFF" />
 
-			<LinearLayout android:id="@+id/options"
+			<LinearLayout android:id="@+id/slide"
 				android:background="#F1FFFFFF" android:layout_width="fill_parent"
 				android:orientation="vertical" android:layout_height="fill_parent">
 
