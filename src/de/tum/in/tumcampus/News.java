@@ -50,6 +50,8 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		nm.close();
+
+		NewsManager.lastInserted = 0;
 	}
 
 	@Override
