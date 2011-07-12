@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.tum.in.tumcampus.Const;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -14,12 +16,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class TransportManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
-
 	private SQLiteDatabase db;
 
 	public TransportManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -31,6 +31,7 @@ public class TransportManager extends SQLiteOpenHelper {
 		// ISO needed for mvv
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAnzeige.svc?haltestelle="
 				+ URLEncoder.encode(location, "ISO-8859-1");
+
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
@@ -61,8 +62,10 @@ public class TransportManager extends SQLiteOpenHelper {
 	public Cursor getStationsFromExternal(String location) throws Exception {
 
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
+
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAuswahl.svc?haltestelle="
-				+ location;
+				+ URLEncoder.encode(location, "ISO-8859-1");
+
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//a[contains(@href,'haltestelle')]\"");
