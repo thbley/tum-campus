@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class LinkManager extends SQLiteOpenHelper {
 
@@ -92,7 +91,7 @@ public class LinkManager extends SQLiteOpenHelper {
 	}
 
 	public void insertUpdateIntoDb(Link l) throws Exception {
-		Log.d("TumCampus links replaceIntoDb", l.toString());
+		Utils.Log(l.toString());
 
 		if (l.name.length() == 0) {
 			throw new Exception("Invalid name.");
