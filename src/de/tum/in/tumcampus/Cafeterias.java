@@ -64,9 +64,9 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	protected void onResume() {
 		super.onResume();
 
-		String filter = Utils.getSetting(this, "cafeteriaFilter");
+		String filter = Utils.getSetting(this, Const.settings.cafeteriaFilter);
 
-		CafeteriaManager cm = new CafeteriaManager(this, "database.db");
+		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
 		Cursor c2 = cm.getAllFromDb("%" + filter + "%");
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
@@ -78,7 +78,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		lv2.setOnItemClickListener(this);
 		cm.close();
 
-		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, "database.db");
+		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
 		Cursor c = cmm.getDatesFromDb();
 
 		adapter = new SimpleCursorAdapter(this,
@@ -89,7 +89,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		cmm.close();
-		
+
 		CafeteriaMenuManager.lastInserted = 0;
 	}
 
@@ -120,8 +120,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			TextView tv = (TextView) findViewById(R.id.cafeteriaText);
 			tv.setText(mensaName + ": " + dateStr);
 
-			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this,
-					"database.db");
+			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
 			Cursor c = cmm.getTypeNameFromDb(mensaId, date);
 
 			SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
