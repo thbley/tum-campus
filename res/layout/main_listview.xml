@@ -10,7 +10,11 @@
 		android:src="@drawable/icon" />
 
 	<TextView android:id="@+id/name" android:textSize="40px"
-		android:textColor="#0065BD" android:gravity="center_vertical"
-		android:paddingLeft="12dip" android:paddingTop="6dip"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+		android:textColor="#0065BD" android:paddingLeft="12dip"
+		android:paddingTop="6dip" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+	<ImageView android:id="@+id/icon2" android:layout_width="wrap_content"
+	android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+	android:src="@drawable/icon" android:paddingLeft="6dip" />
 </LinearLayout>
