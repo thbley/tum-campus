@@ -158,9 +158,7 @@ public class Transports extends Activity implements OnItemClickListener,
 	public boolean onItemLongClick(final AdapterView<?> av, View v,
 			final int position, long id) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Wirklch löschen?");
-		builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
@@ -174,18 +172,13 @@ public class Transports extends Activity implements OnItemClickListener,
 						.getAdapter();
 				adapter.changeCursor(tm.getAllFromDb());
 				tm.close();
-
-				dialog.dismiss();
 			}
-		});
-		builder.setNegativeButton("Nein",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
+		};
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Wirklch löschen?");
+		builder.setPositiveButton("Ja", listener);
+		builder.setNegativeButton("Nein", null);
 		builder.show();
-
 		return false;
 	}
 
