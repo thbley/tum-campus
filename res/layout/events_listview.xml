@@ -22,5 +22,4 @@
 			android:paddingLeft="6dip" android:paddingRight="6dip"
 			android:layout_height="wrap_content" />
 	</LinearLayout>
-
 </LinearLayout>
