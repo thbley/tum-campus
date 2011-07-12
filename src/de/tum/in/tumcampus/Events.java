@@ -38,7 +38,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 	protected void onResume() {
 		super.onResume();
 
-		EventManager em = new EventManager(this, "database.db");
+		EventManager em = new EventManager(this, Const.db);
 		Cursor c = em.getNextFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
