@@ -33,7 +33,6 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		File[] files = new File(Utils.getCacheDir("lectures")).listFiles();
 
 		int count = Utils.getCount(db, "lectures_items");
-		deleteAllFromDb();
 
 		// TODO fix exceptions, db locking
 		db.beginTransaction();
