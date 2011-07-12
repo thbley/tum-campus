@@ -32,6 +32,7 @@ public class NewsManager extends SQLiteOpenHelper {
 		if (!force && !SyncManager.needSync(db, this, 86400)) {
 			return;
 		}
+
 		String url = "https://graph.facebook.com/162327853831856/feed/?access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 
