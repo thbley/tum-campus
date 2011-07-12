@@ -8,7 +8,7 @@
 
 		<ImageView android:src="@drawable/tum_logo"
 			android:scaleType="fitXY" android:layout_width="wrap_content"
-			android:id="@+id/imageView1" android:layout_height="130px" />
+			android:layout_height="130px" />
 
 		<Button android:text="Aktualisieren" android:id="@+id/refresh"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -32,20 +32,20 @@
 				android:layout_height="wrap_content" android:textColor="#FFFFFF" android:paddingLeft="6px" 
 				android:layout_marginTop="6px" /> -->
 
-			<ListView android:layout_height="wrap_content" android:id="@+id/listViewMain"
+			<ListView android:layout_height="wrap_content" android:id="@+id/menu"
 				android:layout_width="fill_parent" android:paddingBottom="50px" />
 		</LinearLayout>
 
 		<SlidingDrawer android:layout_width="fill_parent"
-			android:id="@+id/slidingDrawer1" android:layout_height="fill_parent"
-			android:handle="@+id/handle" android:content="@+id/slider">
+			android:id="@+id/slider" android:layout_height="fill_parent"
+			android:handle="@+id/handle" android:content="@+id/scrollMenu">
 
 			<Button android:layout_height="wrap_content"
 				android:background="#0065BD" android:textColor="#FFFFFF"
 				android:layout_width="fill_parent" android:text="Daten importieren"
 				android:id="@+id/handle" android:height="50px" />
 
-			<ScrollView android:id="@+id/slider" android:layout_width="fill_parent"
+			<ScrollView android:id="@+id/scrollMenu" android:layout_width="fill_parent"
 				android:layout_height="fill_parent" android:background="#F1FFFFFF">
 				<include layout="@layout/main_import" />
 			</ScrollView>
