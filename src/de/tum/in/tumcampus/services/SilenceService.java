@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
+import de.tum.in.tumcampus.Const;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.Utils;
 
@@ -14,15 +15,13 @@ public class SilenceService extends IntentService {
 		super("SilenceService");
 	}
 
-	final static String db = "database.db";
-
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		while (Utils.getSettingBool(this, "silence")) {
+		while (Utils.getSettingBool(this, Const.settings.silence)) {
 
 			int mode = AudioManager.RINGER_MODE_NORMAL;
 
-			LectureItemManager lim = new LectureItemManager(this, db);
+			LectureItemManager lim = new LectureItemManager(this, Const.db);
 			Cursor c = lim.getCurrentFromDb();
 			if (c.getCount() != 0) {
 				mode = AudioManager.RINGER_MODE_SILENT;
