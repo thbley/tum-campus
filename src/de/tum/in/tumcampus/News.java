@@ -38,7 +38,7 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 	protected void onResume() {
 		super.onResume();
 
-		NewsManager nm = new NewsManager(this, "database.db");
+		NewsManager nm = new NewsManager(this, Const.db);
 		Cursor c = nm.getAllFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
