@@ -73,8 +73,6 @@ public class Utils {
 
 	private static void downloadFile(String url, String target)
 			throws Exception {
-		// TODO set timeouts
-
 		File f = new File(target);
 		if (f.exists()) {
 			return;
