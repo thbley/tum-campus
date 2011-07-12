@@ -10,7 +10,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import de.tum.in.tumcampus.TumCampus;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedManager;
@@ -34,10 +33,8 @@ public class ImportService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-
-		Log.d("TumCampus ImportService", "TumCampus service start");
-
 		String action = intent.getStringExtra("action");
+		Utils.Log(action);
 
 		if (action.equals("defaults")) {
 			try {
@@ -46,8 +43,7 @@ public class ImportService extends IntentService {
 				importLinksDefaults();
 				importLectureItemsDefaults();
 			} catch (Exception e) {
-				Log.e("TumCampus ImportService",
-						"TumCampus ImportService " + e.getMessage());
+				Utils.Log(e, "");
 			}
 		} else {
 			String ns = Context.NOTIFICATION_SERVICE;
@@ -181,6 +177,8 @@ public class ImportService extends IntentService {
 	}
 
 	public void message(Exception e) {
+		Utils.Log(e, "");
+
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 
@@ -202,14 +200,12 @@ public class ImportService extends IntentService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-
-		Log.d("TumCampus ImportService", "TumCampus service destroy");
+		Utils.Log("");
 	}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
-		Log.d("TumCampus ImportService", "TumCampus service create");
+		Utils.Log("");
 	}
 }
