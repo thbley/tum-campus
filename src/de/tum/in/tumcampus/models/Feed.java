@@ -10,7 +10,6 @@ public class Feed {
 	}
 
 	public String toString() {
-		return "name=" + this.name + " feedUrl="
-				+ this.feedUrl;
+		return "name=" + this.name + " feedUrl=" + this.feedUrl;
 	}
 }
