@@ -23,7 +23,6 @@
 				android:hint="Station suchen" android:singleLine="true"
 				android:layout_gravity="bottom" android:layout_width="fill_parent"
 				android:imeOptions="actionSearch" />
-
 		</FrameLayout>
 	</LinearLayout>
 
@@ -41,5 +40,4 @@
 			android:id="@+id/listView2" android:scrollbars="vertical"
 			android:padding="10px" />
 	</LinearLayout>
-
 </LinearLayout>
