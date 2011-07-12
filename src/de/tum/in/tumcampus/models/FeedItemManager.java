@@ -13,7 +13,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Html;
-import android.util.Log;
 
 public class FeedItemManager extends SQLiteOpenHelper {
 
@@ -51,9 +50,19 @@ public class FeedItemManager extends SQLiteOpenHelper {
 					.encode("SELECT title, link, description, pubDate, enclosure.url "
 							+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
 
-			JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
+			Object obj = Utils.downloadJson(baseUrl + query)
 					.getJSONObject("query").getJSONObject("results")
-					.getJSONArray("item");
+					.get("item");
+
+			JSONArray jsonArray = new JSONArray();
+			if (obj instanceof JSONArray) {
+				jsonArray = (JSONArray) obj;
+			} else {
+				if (obj.toString().contains("aktualisieren")) {
+					throw new JSONException("");
+				}
+				jsonArray.put(obj);
+			}
 
 			deleteFromDb(ids.get(i));
 			db.beginTransaction();
@@ -100,10 +109,10 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		}
 		Date pubDate = new Date();
 		if (json.has("pubDate")) {
-			pubDate = Utils.getDate(json.getString("pubDate"));
+			pubDate = Utils.getDateTimeRfc822(json.getString("pubDate"));
 		}
 		String description = "";
-		if (json.has("description")) {
+		if (json.has("description") && !json.isNull("description")) {
 			// decode HTML entites, remove links, images, etc.
 			description = Html.fromHtml(
 					json.getString("description").replaceAll("\\<.*?\\>", ""))
@@ -114,8 +123,6 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	}
 
 	public void insertIntoDb(FeedItem n) throws Exception {
-		Log.d("TumCampus feeds replaceIntoDb", n.toString());
-
 		if (n.feedId <= 0) {
 			throw new Exception("Invalid feedId.");
 		}
@@ -133,8 +140,6 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	}
 
 	public void removeCache() {
-		Log.d("TumCampus feeds deleteAllFromDb", "");
-
 		db.execSQL("DELETE FROM feeds_items");
 		Utils.emptyCacheDir("rss/cache");
 	}
