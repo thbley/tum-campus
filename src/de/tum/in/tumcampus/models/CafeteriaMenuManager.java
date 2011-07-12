@@ -109,8 +109,6 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(CafeteriaMenu c) throws Exception {
-		// Log.d("TumCampus cafeterias_menus replaceIntoDb", c.toString());
-
 		if (c.mensaId <= 0) {
 			throw new Exception("Invalid mensaId.");
 		}
