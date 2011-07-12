@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class SyncManager extends SQLiteOpenHelper {
 
@@ -31,7 +30,7 @@ public class SyncManager extends SQLiteOpenHelper {
 	}
 
 	public static void replaceIntoDb(SQLiteDatabase db, String id) {
-		Log.d("TumCampus sync insertIntoDb", id);
+		Utils.Log(id);
 
 		if (id.length() == 0) {
 			return;
