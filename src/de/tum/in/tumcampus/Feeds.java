@@ -1,5 +1,6 @@
 package de.tum.in.tumcampus;
 
+import static de.tum.in.tumcampus.services.DownloadService.broadcast;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -33,7 +34,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.feeds);
 
-		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
+		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 		sd.open();
 
 		FeedManager fm = new FeedManager(this, "database.db");
@@ -49,8 +50,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		lv.setOnItemLongClickListener(this);
 		fm.close();
 
-		registerReceiver(DownloadService.receiver, new IntentFilter(
-				DownloadService.broadcast));
+		registerReceiver(DownloadService.receiver, new IntentFilter(broadcast));
 	}
 
 	@Override
@@ -67,6 +67,9 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 			ListView lv = (ListView) findViewById(R.id.listView);
 			onItemClick(lv, lv, -1, 0);
 		}
+
+		FeedManager.lastInserted = 0;
+		FeedItemManager.lastInserted = 0;
 	}
 
 	@Override
@@ -81,7 +84,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 			return;
 		}
 
-		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
+		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 		if (sd.isOpened()) {
 			sd.animateClose();
 		}
@@ -126,9 +129,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 	public boolean onItemLongClick(final AdapterView<?> av, View v,
 			final int position, long id) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Wirklch löschen?");
-		builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
@@ -141,18 +142,13 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 						.getAdapter();
 				adapter.changeCursor(fm.getAllFromDb());
 				fm.close();
-
-				dialog.dismiss();
 			}
-		});
-		builder.setNegativeButton("Nein",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
+		};
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Wirklch löschen?");
+		builder.setPositiveButton("Ja", listener);
+		builder.setNegativeButton("Nein", null);
 		builder.show();
-
 		return false;
 	}
 
