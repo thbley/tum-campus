@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class TransportManager extends SQLiteOpenHelper {
 
@@ -35,8 +34,7 @@ public class TransportManager extends SQLiteOpenHelper {
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
-
-		Log.d("TumCampus transports departure", baseUrl + query);
+		Utils.Log(query);
 
 		JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
 				.getJSONObject("query").getJSONObject("results")
@@ -68,8 +66,7 @@ public class TransportManager extends SQLiteOpenHelper {
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//a[contains(@href,'haltestelle')]\"");
-
-		Log.d("TumCampus transports station", baseUrl + query);
+		Utils.Log(query);
 
 		JSONObject jsonObj = Utils.downloadJson(baseUrl + query).getJSONObject(
 				"query");
@@ -115,7 +112,7 @@ public class TransportManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(String name) {
-		Log.d("TumCampus transports replaceIntoDb", name);
+		Utils.Log(name);
 
 		if (name.length() == 0) {
 			return;
