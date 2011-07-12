@@ -58,6 +58,8 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickLongOnText("Ja");
 		
 		assertFalse(solo.searchText("Allerheiligen"));
+		
+		// TODO add lecture delete
 	}
 
 	private void _testLectures() {
