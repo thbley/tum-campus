@@ -36,7 +36,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		}
 		cleanupDb();
 		int count = Utils.getCount(db, "cafeterias_menus");
-		
+
 		for (int i = 0; i < ids.size(); i++) {
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
 					+ "WHERE mensaId = ? AND "
