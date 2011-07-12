@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
@@ -32,17 +34,8 @@ import android.util.Log;
 
 public class Utils {
 
-	// TODO optimize
-
-	/*
-	 * } catch (ClientProtocolException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
-	 * catch block e.printStackTrace(); } catch (JSONException e) { // TODO
-	 * Auto-generated catch block e.printStackTrace(); } catch (Exception e) {
-	 * e.printStackTrace(); }
-	 */
 	public static JSONObject downloadJson(String url) throws Exception {
-		Log.d("TumCampus Download", "TumCampus Download " + url);
+		Utils.Log(url);
 
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
@@ -57,7 +50,7 @@ public class Utils {
 			InputStream instream = entity.getContent();
 			data = convertStreamToString(instream);
 
-			Log.d("TumCampus Download", "TumCampus Download " + data);
+			Utils.Log(data);
 			instream.close();
 		}
 		return new JSONObject(data);
@@ -67,11 +60,10 @@ public class Utils {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					Log.d("TumCampus Download", "TumCampus Download " + url);
+					Utils.Log(url);
 					downloadFile(url, target);
 				} catch (Exception e) {
-					Log.e("TumCampus Download",
-							"TumCampus Download " + e.getMessage() + " " + url);
+					Log(e, url);
 				}
 			}
 		}).start();
@@ -114,13 +106,10 @@ public class Utils {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					Log.d("TumCampus Download Icon", "TumCampus Download Icon "
-							+ url);
+					Utils.Log(url);
 					downloadIconFile(url, target);
 				} catch (Exception e) {
-					Log.e("TumCampus Download Icon", "TumCampus Download Icon "
-							+ e.getMessage() + " " + url);
-
+					Log(e, url);
 				}
 			}
 		}).start();
@@ -226,7 +215,7 @@ public class Utils {
 				}
 			}
 		} catch (Exception e) {
-			// TODO implement
+			Log(e, directory);
 		}
 	}
 
@@ -241,52 +230,63 @@ public class Utils {
 			matcher.find();
 			return matcher.group(1);
 		} catch (Exception e) {
-			// TODO implement
+			Log(e, file.toString());
 		}
 		return "";
 	}
 
-	public static String md5(String s) {
+	public static String md5(String str) {
 		try {
-			MessageDigest m = MessageDigest.getInstance("MD5");
-			m.reset();
-			m.update(s.getBytes());
-			BigInteger bigInt = new BigInteger(1, m.digest());
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.reset();
+			md.update(str.getBytes());
+			BigInteger bigInt = new BigInteger(1, md.digest());
 			return bigInt.toString(16);
 		} catch (Exception e) {
-			// TODO implement
+			Log(e, str);
 		}
 		return "";
 	}
 
-	public static Date getDate(String s) {
+	public static Date getDate(String str) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			return dateFormat.parse(s);
+			return dateFormat.parse(str);
 		} catch (Exception e) {
-			// TODO implement
+			Log(e, str);
 		}
 		return new Date();
 	}
 
-	public static Date getDateTime(String s) {
+	public static Date getDateTime(String str) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(
 					"yyyy-MM-dd'T'HH:mm:ss");
-			return dateFormat.parse(s);
+			return dateFormat.parse(str);
 		} catch (Exception e) {
-			// TODO implement
+			Log(e, str);
 		}
 		return new Date();
 	}
 
-	public static Date getDateTimeDe(String s) {
+	public static Date getDateTimeDe(String str) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(
 					"dd.MM.yyyy HH:mm");
-			return dateFormat.parse(s);
+			return dateFormat.parse(str);
 		} catch (Exception e) {
-			// TODO implement
+			Log(e, str);
+		}
+		return new Date();
+	}
+
+	public static Date getDateTimeRfc822(String str) {
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat(
+					"d MMM yy HH:mm:ss");
+			return dateFormat.parse(str.substring(5));
+		} catch (Exception e) {
+			Log(e, str);
 		}
 		return new Date();
 	}
@@ -336,8 +336,19 @@ public class Utils {
 			}
 			in.close();
 		} catch (Exception e) {
-			// TODO implement
+			Log(e, "");
 		}
 		return list;
+	}
+
+	public static void Log(Exception e, String message) {
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		Log.e("TumCampus", e + " " + message + "\n" + sw.toString());
+	}
+
+	public static void Log(String message) {
+		StackTraceElement s = Thread.currentThread().getStackTrace()[3];
+		Log.d("TumCampus", s.toString() + " " + message);
 	}
 }
