@@ -194,15 +194,11 @@ public class DownloadService extends IntentService {
 		if (Utils.getSettingBool(this, "debug")) {
 			message += sw.toString();
 		}
-		message(message, "error");
+		message("Fehler: " + message + "\n", "error");
 	}
 
 	public void message(String message, String action) {
 
-		if (action.equals("error")) {
-			this.message = "";
-		}
-		// TODO fix
 		this.message += message;
 
 		Intent intentSend = new Intent();
@@ -233,6 +229,7 @@ public class DownloadService extends IntentService {
 			sm.close();
 		} catch (Exception e) {
 			message(e);
+			destroyed = true;
 		}
 	}
 }
