@@ -28,6 +28,10 @@
 				android:textColor="#FFFFFF" android:paddingLeft="6px"
 				android:paddingRight="6px" android:scrollbars="vertical" />
 
+			<!-- <TextView android:layout_width="fill_parent" android:id="@+id/lectureInfo" 
+				android:layout_height="wrap_content" android:textColor="#FFFFFF" android:paddingLeft="6px" 
+				android:layout_marginTop="6px" /> -->
+
 			<ListView android:layout_height="wrap_content" android:id="@+id/listViewMain"
 				android:layout_width="fill_parent" android:paddingBottom="50px" />
 		</LinearLayout>
@@ -43,9 +47,9 @@
 
 			<ScrollView android:id="@+id/slider" android:layout_width="fill_parent"
 				android:layout_height="fill_parent" android:background="#F1FFFFFF">
-
 				<include layout="@layout/main_import" />
 			</ScrollView>
+
 		</SlidingDrawer>
 	</FrameLayout>
 </LinearLayout>
