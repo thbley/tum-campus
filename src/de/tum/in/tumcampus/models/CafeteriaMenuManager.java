@@ -19,6 +19,8 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 
+	public static int lastInserted = 0;
+
 	public CafeteriaMenuManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
 
@@ -26,12 +28,15 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public void downloadFromExternal(List<Integer> ids, boolean force) throws Exception {
+	public void downloadFromExternal(List<Integer> ids, boolean force)
+			throws Exception {
 
 		if (!force && !SyncManager.needSync(db, this, 86400)) {
 			return;
 		}
 		cleanupDb();
+		int count = Utils.getCount(db, "cafeterias_menus");
+		
 		for (int i = 0; i < ids.size(); i++) {
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
 					+ "WHERE mensaId = ? AND "
@@ -61,7 +66,10 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			db.setTransactionSuccessful();
 			db.endTransaction();
 		}
+
 		SyncManager.replaceIntoDb(db, this);
+
+		lastInserted += Utils.getCount(db, "cafeterias_menus") - count;
 	}
 
 	public Cursor getDatesFromDb() {
@@ -124,7 +132,6 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		if (c.date.before(getDate("2011-01-01"))) {
 			throw new Exception("Invalid date.");
 		}
-
 		db.execSQL(
 				"REPLACE INTO cafeterias_menus (id, mensaId, date, typeShort, "
 						+ "typeLong, typeNr, name) VALUES (?, ?, ?, ?, ?, ?, ?)",
