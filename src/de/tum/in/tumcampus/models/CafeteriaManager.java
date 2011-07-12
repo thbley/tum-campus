@@ -11,7 +11,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class CafeteriaManager extends SQLiteOpenHelper {
 
@@ -90,7 +89,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(Cafeteria c) throws Exception {
-		Log.d("TumCampus cafeterias replaceIntoDb", c.toString());
+		Utils.Log(c.toString());
 
 		if (c.id <= 0) {
 			throw new Exception("Invalid id.");
@@ -105,7 +104,6 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	}
 
 	public void removeCache() {
-		Log.d("TumCampus cafeterias deleteAllFromDb", "");
 		db.execSQL("DELETE FROM cafeterias");
 	}
 
