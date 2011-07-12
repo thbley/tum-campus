@@ -10,8 +10,7 @@ public class News {
 	String image;
 	Date date;
 
-	public News(String id, String message, String link, String image,
-			Date date) {
+	public News(String id, String message, String link, String image, Date date) {
 
 		this.id = id;
 		this.message = message;
