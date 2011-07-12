@@ -36,7 +36,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 			setContentView(R.layout.lectures);
 		}
 
-		LectureItemManager lim = new LectureItemManager(this, "database.db");
+		LectureItemManager lim = new LectureItemManager(this, Const.db);
 		Cursor c = lim.getRecentFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
@@ -50,7 +50,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 		lv.setOnItemLongClickListener(this);
 		lim.close();
 
-		LectureManager lm = new LectureManager(this, "database.db");
+		LectureManager lm = new LectureManager(this, Const.db);
 		Cursor c2 = lm.getAllFromDb();
 
 		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this,
@@ -134,7 +134,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 			String name = c2.getString(c2.getColumnIndex("name"));
 			String module = c2.getString(c2.getColumnIndex("module"));
 
-			LectureItemManager lim = new LectureItemManager(this, "database.db");
+			LectureItemManager lim = new LectureItemManager(this, Const.db);
 
 			SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv.getAdapter();
 			adapter.changeCursor(lim.getAllFromDb(lectureId));
@@ -172,7 +172,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 
 	public void deleteLectureItem(String itemId) {
 		// delete lecture item
-		LectureItemManager lim = new LectureItemManager(this, "database.db");
+		LectureItemManager lim = new LectureItemManager(this, Const.db);
 		lim.deleteItemFromDb(itemId);
 
 		ListView lv = (ListView) findViewById(R.id.listView);
@@ -187,7 +187,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 
 	public void deleteLecture(String itemId) {
 		// delete lecture
-		LectureManager lm = new LectureManager(this, "database.db");
+		LectureManager lm = new LectureManager(this, Const.db);
 		lm.deleteItemFromDb(itemId);
 
 		ListView lv2 = (ListView) findViewById(R.id.listView2);
@@ -196,7 +196,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 		lm.close();
 
 		// delete lecture items
-		LectureItemManager lim = new LectureItemManager(this, "database.db");
+		LectureItemManager lim = new LectureItemManager(this, Const.db);
 		lim.deleteLectureFromDb(itemId);
 
 		ListView lv = (ListView) findViewById(R.id.listView);
