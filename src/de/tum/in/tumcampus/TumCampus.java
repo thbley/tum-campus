@@ -94,6 +94,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		CafeteriaManager cm = new CafeteriaManager(this, db);
 		if (cm.empty()) {
+			// TODO implement
 			addItem(list, android.R.drawable.star_big_on,
 					"Start: Daten initial herunterladen", new Intent(this,
 							DownloadService.class));
