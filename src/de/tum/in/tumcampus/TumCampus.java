@@ -10,8 +10,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -42,8 +40,6 @@ import de.tum.in.tumcampus.services.SilenceService;
 
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
-
-	final static String db = "database.db";
 
 	static boolean syncing = false;
 
@@ -137,7 +133,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	public List<Map<String, Object>> buildMenu() {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-		FeedItemManager fim = new FeedItemManager(this, db);
+		FeedItemManager fim = new FeedItemManager(this, Const.db);
 		if (fim.empty()) {
 			// TODO implement
 			addItem(list, android.R.drawable.star_big_on,
@@ -172,7 +168,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.info, "App-Info", false, new Intent(this,
 				AppInfo.class));
 
-		if (Utils.getSettingBool(this, "debug")) {
+		if (Utils.getSettingBool(this, Const.settings.debug)) {
 			addItem(list, R.drawable.icon, "Debug", false, new Intent(this,
 					Debug.class));
 		}
@@ -216,48 +212,47 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			return true;
 
 		case Menu.FIRST + 1:
-
-			SharedPreferences settings = getSharedPreferences("prefs",
-					Context.MODE_PRIVATE);
-			Editor e = settings.edit();
-			e.clear();
-			e.commit();
-
-			// TODO check sd card readable
-			// Utils.getCacheDir("");
-
-			// TODO add try catch
-
-			CafeteriaManager cm = new CafeteriaManager(this, db);
-			cm.removeCache();
-			cm.close();
-
-			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, db);
-			cmm.removeCache();
-			cmm.close();
-
-			FeedItemManager fim = new FeedItemManager(this, db);
-			fim.removeCache();
-			fim.close();
-
-			EventManager em = new EventManager(this, db);
-			em.removeCache();
-			em.close();
-
-			LinkManager lm = new LinkManager(this, db);
-			lm.removeCache();
-			lm.close();
-
-			NewsManager nm = new NewsManager(this, db);
-			nm.removeCache();
-			nm.close();
-
-			SyncManager sm = new SyncManager(this, db);
-			sm.deleteFromDb();
-			sm.close();
+			clearCache();
 			return true;
 		}
 		return false;
+	}
+
+	public void clearCache() {
+		try {
+			Utils.getCacheDir("");
+		} catch (Exception e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
+		cm.removeCache();
+		cm.close();
+
+		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
+		cmm.removeCache();
+		cmm.close();
+
+		FeedItemManager fim = new FeedItemManager(this, Const.db);
+		fim.removeCache();
+		fim.close();
+
+		EventManager em = new EventManager(this, Const.db);
+		em.removeCache();
+		em.close();
+
+		LinkManager lm = new LinkManager(this, Const.db);
+		lm.removeCache();
+		lm.close();
+
+		NewsManager nm = new NewsManager(this, Const.db);
+		nm.removeCache();
+		nm.close();
+
+		SyncManager sm = new SyncManager(this, Const.db);
+		sm.deleteFromDb();
+		sm.close();
 	}
 
 	@Override
