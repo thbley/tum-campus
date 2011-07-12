@@ -27,6 +27,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -350,5 +352,13 @@ public class Utils {
 	public static void Log(String message) {
 		StackTraceElement s = Thread.currentThread().getStackTrace()[3];
 		Log.d("TumCampus", s.toString() + " " + message);
+	}
+
+	public static int getCount(SQLiteDatabase db, String table) {
+		Cursor c = db.rawQuery("SELECT count(*) FROM " + table, null);
+		if (c.moveToNext()) {
+			return c.getInt(0);
+		}
+		return 0;
 	}
 }
