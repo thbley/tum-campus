@@ -53,7 +53,7 @@ public class Transports extends Activity implements OnItemClickListener,
 			setContentView(R.layout.transports);
 		}
 
-		TransportManager tm = new TransportManager(this, "database.db");
+		TransportManager tm = new TransportManager(this, Const.db);
 		Cursor c = tm.getAllFromDb();
 
 		ListAdapter adapter = new SimpleCursorAdapter(this,
@@ -113,7 +113,7 @@ public class Transports extends Activity implements OnItemClickListener,
 		tv.setText("Gespeicherte Stationen:");
 
 		SimpleCursorAdapter adapter = (SimpleCursorAdapter) av.getAdapter();
-		TransportManager tm = new TransportManager(this, "database.db");
+		TransportManager tm = new TransportManager(this, Const.db);
 		tm.replaceIntoDb(location);
 		adapter.changeCursor(tm.getAllFromDb());
 		tm.close();
@@ -126,7 +126,7 @@ public class Transports extends Activity implements OnItemClickListener,
 				Cursor c = null;
 				try {
 					TransportManager tm = new TransportManager(av.getContext(),
-							"database.db");
+							Const.db);
 					if (!connected()) {
 						throw new Exception("<Keine Internetverbindung>");
 					}
@@ -165,7 +165,7 @@ public class Transports extends Activity implements OnItemClickListener,
 				String location = c.getString(c.getColumnIndex("name"));
 
 				TransportManager tm = new TransportManager(av.getContext(),
-						"database.db");
+						Const.db);
 				tm.deleteFromDb(location);
 
 				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
@@ -196,7 +196,7 @@ public class Transports extends Activity implements OnItemClickListener,
 						throw new Exception("<Keine Internetverbindung>");
 					}
 					TransportManager tm = new TransportManager(
-							input.getContext(), "database.db");
+							input.getContext(), Const.db);
 					c = tm.getStationsFromExternal(input.getText().toString());
 					tm.close();
 				} catch (Exception e) {
