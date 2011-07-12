@@ -178,8 +178,9 @@ public class LectureItemManager extends SQLiteOpenHelper {
 				new String[] { id });
 	}
 
-	public void deleteAllFromDb() {
-		db.execSQL("DELETE FROM lectures_items");
+	public void deleteLectureFromDb(String id) {
+		db.execSQL("DELETE FROM lectures_items WHERE lectureId = ?",
+				new String[] { id });
 	}
 
 	public void onCreate(SQLiteDatabase db) {
