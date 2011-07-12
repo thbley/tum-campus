@@ -71,6 +71,8 @@ public class Lectures extends Activity implements OnItemClickListener,
 		lv2.setAdapter(adapter2);
 		lv2.setOnItemClickListener(this);
 		lm.close();
+
+		LectureItemManager.lastInserted = 0;
 	}
 
 	@Override
