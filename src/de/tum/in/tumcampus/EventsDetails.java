@@ -15,7 +15,7 @@ public class EventsDetails extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events_details);
 
-		EventManager em = new EventManager(this, "database.db");
+		EventManager em = new EventManager(this, Const.db);
 		Cursor c = em.getFromDb(getIntent().getStringExtra("id"));
 
 		if (c.moveToNext()) {
