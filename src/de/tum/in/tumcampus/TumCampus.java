@@ -23,12 +23,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
+import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.models.SyncManager;
@@ -90,49 +93,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	protected void onResume() {
 		super.onResume();
 
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		SimpleAdapter adapter = new SimpleAdapter(this, buildMenu(),
+				R.layout.main_listview,
+				new String[] { "icon", "name", "count" }, new int[] {
+						R.id.icon, R.id.name, R.id.countNew });
 
-		CafeteriaManager cm = new CafeteriaManager(this, db);
-		if (cm.empty()) {
-			// TODO implement
-			addItem(list, android.R.drawable.star_big_on,
-					"Start: Daten initial herunterladen", new Intent(this,
-							DownloadService.class));
-		}
-		cm.close();
-
-		addItem(list, R.drawable.vorlesung, "Vorlesungen", new Intent(this,
-				Lectures.class));
-
-		addItem(list, R.drawable.essen, "Speisepläne", new Intent(this,
-				Cafeterias.class));
-
-		addItem(list, R.drawable.zug, "MVV", new Intent(this, Transports.class));
-
-		addItem(list, R.drawable.rss, "RSS-Feeds",
-				new Intent(this, Feeds.class));
-
-		addItem(list, R.drawable.party, "Veranstaltungen", new Intent(this,
-				Events.class));
-
-		addItem(list, R.drawable.globus, "Nachrichten", new Intent(this,
-				News.class));
-
-		addItem(list, R.drawable.www, "Links", new Intent(this, Links.class));
-
-		addItem(list, R.drawable.info, "App-Info", new Intent(this,
-				AppInfo.class));
-
-		if (Utils.getSettingBool(this, "debug")) {
-			addItem(list, R.drawable.icon, "Debug", new Intent(this,
-					Debug.class));
-		}
-
-		SimpleAdapter adapter = new SimpleAdapter(this, list,
-				R.layout.main_listview, new String[] { "icon", "name",
-						"content" }, new int[] { R.id.icon, R.id.name });
-
-		ListView lv = (ListView) findViewById(R.id.listViewMain);
+		ListView lv = (ListView) findViewById(R.id.menu);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 
@@ -162,25 +128,77 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		startService(service);
 	}
 
+	public List<Map<String, Object>> buildMenu() {
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		CafeteriaManager cm = new CafeteriaManager(this, db);
+		if (cm.empty()) {
+			// TODO implement
+			addItem(list, android.R.drawable.star_big_on,
+					"Start: Daten initial herunterladen", 0, new Intent(this,
+							DownloadService.class));
+		}
+		cm.close();
+
+		addItem(list, R.drawable.vorlesung, "Vorlesungen",
+				LectureItemManager.lastInserted, new Intent(this,
+						Lectures.class));
+
+		addItem(list, R.drawable.essen, "Speisepläne",
+				CafeteriaMenuManager.lastInserted, new Intent(this,
+						Cafeterias.class));
+
+		addItem(list, R.drawable.zug, "MVV", 0, new Intent(this,
+				Transports.class));
+
+		addItem(list, R.drawable.rss, "RSS-Feeds", FeedItemManager.lastInserted
+				+ FeedManager.lastInserted, new Intent(this, Feeds.class));
+
+		addItem(list, R.drawable.party, "Veranstaltungen",
+				EventManager.lastInserted, new Intent(this, Events.class));
+
+		addItem(list, R.drawable.globus, "Nachrichten",
+				NewsManager.lastInserted, new Intent(this, News.class));
+
+		addItem(list, R.drawable.www, "Links", LinkManager.lastInserted,
+				new Intent(this, Links.class));
+
+		addItem(list, R.drawable.info, "App-Info", 0, new Intent(this,
+				AppInfo.class));
+
+		if (Utils.getSettingBool(this, "debug")) {
+			addItem(list, R.drawable.icon, "Debug", 0, new Intent(this,
+					Debug.class));
+		}
+		return list;
+	}
+
+	private void addItem(List<Map<String, Object>> data, int icon, String name,
+			int count, Intent intent) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("icon", icon);
+		map.put("name", name);
+		String countStr = "";
+		if (count > 0) {
+			if (count > 25) {
+				countStr = "(25+ neu)";
+			} else {
+				countStr = "(" + count + " neu)";
+			}
+		}
+		map.put("count", countStr);
+		map.put("intent", intent);
+		data.add(map);
+	}
+
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		ListView lv = (ListView) findViewById(R.id.listViewMain);
+	public void onItemClick(AdapterView<?> av, View view, int position, long id) {
 		@SuppressWarnings("unchecked")
-		Map<String, Object> map = (Map<String, Object>) lv.getAdapter()
+		Map<String, Object> map = (Map<String, Object>) av.getAdapter()
 				.getItem(position);
 
 		Intent intent = (Intent) map.get("intent");
 		startActivity(intent);
-	}
-
-	private void addItem(List<Map<String, Object>> data, int icon, String name,
-			Intent intent) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("icon", icon);
-		map.put("name", name);
-		map.put("intent", intent);
-		data.add(map);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -300,8 +318,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				String action = intent.getStringExtra("action");
 
 				if (action.length() != 0) {
-					Button b = (Button) findViewById(R.id.refresh);
-					b.setText("Aktualisieren (" + getConnection() + ")");
+					onResume();
 				}
 				if (message.length() > 0) {
 					TextView tv = (TextView) findViewById(R.id.hello);
@@ -315,6 +332,11 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				if (action.length() != 0) {
 					Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 					setImportButtons(true);
+
+					SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
+					sd.animateClose();
+
+					onResume();
 				}
 			}
 		}
