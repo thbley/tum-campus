@@ -45,6 +45,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 	final static String db = "database.db";
 
+	static boolean syncing = false;
+
 	public String getConnection() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -95,8 +97,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		SimpleAdapter adapter = new SimpleAdapter(this, buildMenu(),
 				R.layout.main_listview,
-				new String[] { "icon", "name", "count" }, new int[] {
-						R.id.icon, R.id.name, R.id.countNew });
+				new String[] { "icon", "name", "icon2" }, new int[] {
+						R.id.icon, R.id.name, R.id.icon2 });
 
 		ListView lv = (ListView) findViewById(R.id.menu);
 		lv.setAdapter(adapter);
@@ -117,8 +119,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		if (conn.length() > 0) {
 			b.setVisibility(android.view.View.VISIBLE);
-			b.setText("Aktualisieren (" + conn + ")");
-			tv.setText(getString(R.string.hello));
+			if (!syncing) {
+				b.setText("Aktualisieren (" + conn + ")");
+				tv.setText(getString(R.string.hello));
+			} else {
+				b.setText("Abbrechen");
+			}
 		} else {
 			b.setVisibility(android.view.View.GONE);
 			tv.setText(getString(R.string.hello) + " Offline.");
@@ -131,62 +137,56 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	public List<Map<String, Object>> buildMenu() {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-		CafeteriaManager cm = new CafeteriaManager(this, db);
-		if (cm.empty()) {
+		FeedItemManager fim = new FeedItemManager(this, db);
+		if (fim.empty()) {
 			// TODO implement
 			addItem(list, android.R.drawable.star_big_on,
-					"Start: Daten initial herunterladen", 0, new Intent(this,
-							DownloadService.class));
+					"Start: Daten initial herunterladen", false, new Intent(
+							this, DownloadService.class));
 		}
-		cm.close();
+		fim.close();
 
 		addItem(list, R.drawable.vorlesung, "Vorlesungen",
-				LectureItemManager.lastInserted, new Intent(this,
+				LectureItemManager.lastInserted > 0, new Intent(this,
 						Lectures.class));
 
 		addItem(list, R.drawable.essen, "Speisepläne",
-				CafeteriaMenuManager.lastInserted, new Intent(this,
+				CafeteriaMenuManager.lastInserted > 0, new Intent(this,
 						Cafeterias.class));
 
-		addItem(list, R.drawable.zug, "MVV", 0, new Intent(this,
+		addItem(list, R.drawable.zug, "MVV", false, new Intent(this,
 				Transports.class));
 
 		addItem(list, R.drawable.rss, "RSS-Feeds", FeedItemManager.lastInserted
-				+ FeedManager.lastInserted, new Intent(this, Feeds.class));
+				+ FeedManager.lastInserted > 0, new Intent(this, Feeds.class));
 
 		addItem(list, R.drawable.party, "Veranstaltungen",
-				EventManager.lastInserted, new Intent(this, Events.class));
+				EventManager.lastInserted > 0, new Intent(this, Events.class));
 
 		addItem(list, R.drawable.globus, "Nachrichten",
-				NewsManager.lastInserted, new Intent(this, News.class));
+				NewsManager.lastInserted > 0, new Intent(this, News.class));
 
-		addItem(list, R.drawable.www, "Links", LinkManager.lastInserted,
+		addItem(list, R.drawable.www, "Links", LinkManager.lastInserted > 0,
 				new Intent(this, Links.class));
 
-		addItem(list, R.drawable.info, "App-Info", 0, new Intent(this,
+		addItem(list, R.drawable.info, "App-Info", false, new Intent(this,
 				AppInfo.class));
 
 		if (Utils.getSettingBool(this, "debug")) {
-			addItem(list, R.drawable.icon, "Debug", 0, new Intent(this,
+			addItem(list, R.drawable.icon, "Debug", false, new Intent(this,
 					Debug.class));
 		}
 		return list;
 	}
 
 	private void addItem(List<Map<String, Object>> data, int icon, String name,
-			int count, Intent intent) {
+			boolean changed, Intent intent) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("icon", icon);
 		map.put("name", name);
-		String countStr = "";
-		if (count > 0) {
-			if (count > 25) {
-				countStr = "(25+ neu)";
-			} else {
-				countStr = "(" + count + " neu)";
-			}
+		if (changed) {
+			map.put("icon2", android.R.drawable.star_off);
 		}
-		map.put("count", countStr);
 		map.put("intent", intent);
 		data.add(map);
 	}
@@ -265,15 +265,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		if (v.getId() == R.id.refresh) {
 			Intent service = new Intent(this, DownloadService.class);
-			Button b = (Button) findViewById(R.id.refresh);
-
-			if (b.getText().equals("Abbrechen")) {
+			if (syncing) {
 				stopService(service);
-				b.setText("Aktualisieren (" + getConnection() + ")");
+				syncing = false;
 			} else {
 				startService(service);
-				b.setText("Abbrechen");
+				syncing = true;
 			}
+			onResume();
 		}
 		if (v.getId() == R.id.importLectures) {
 			Intent service = new Intent(this, ImportService.class);
@@ -317,7 +316,9 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				String message = intent.getStringExtra("message");
 				String action = intent.getStringExtra("action");
 
-				if (action.length() != 0) {
+				if (action.equals("completed")) {
+					syncing = false;
+					// TODO fix
 					onResume();
 				}
 				if (message.length() > 0) {
