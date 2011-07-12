@@ -23,11 +23,11 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events);
-		
+
 		registerReceiver(DownloadService.receiver, new IntentFilter(
 				DownloadService.broadcast));
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -61,6 +61,8 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		lv2.setAdapter(adapter);
 		lv2.setOnItemClickListener(this);
 		em.close();
+
+		EventManager.lastInserted = 0;
 	}
 
 	@Override
