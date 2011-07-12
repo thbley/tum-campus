@@ -18,6 +18,8 @@ public class NewsManager extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 
+	public static int lastInserted = 0;
+
 	public NewsManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
 
@@ -37,9 +39,11 @@ public class NewsManager extends SQLiteOpenHelper {
 		JSONArray jsonArray = Utils.downloadJson(baseUrl + token).getJSONArray(
 				"data");
 
-		removeCache();
+		cleanupDb();
+		int count = Utils.getCount(db, "news");
+
 		db.beginTransaction();
-		int count = 0;
+		int countItems = 0;
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject obj = jsonArray.getJSONObject(i);
 
@@ -49,15 +53,18 @@ public class NewsManager extends SQLiteOpenHelper {
 							.has("caption"))) {
 				continue;
 			}
-			if (count > 24) {
+			// TODO check again
+			if (countItems > 24) {
 				break;
 			}
 			replaceIntoDb(getFromJson(obj));
-			count++;
+			countItems++;
 		}
 		SyncManager.replaceIntoDb(db, this);
 		db.setTransactionSuccessful();
 		db.endTransaction();
+
+		lastInserted += Utils.getCount(db, "news") - count;
 	}
 
 	public Cursor getAllFromDb() {
@@ -132,6 +139,10 @@ public class NewsManager extends SQLiteOpenHelper {
 	public void removeCache() {
 		db.execSQL("DELETE FROM news");
 		Utils.emptyCacheDir("news/cache");
+	}
+
+	public void cleanupDb() {
+		db.execSQL("DELETE FROM news WHERE date < date('now','-3 month')");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
