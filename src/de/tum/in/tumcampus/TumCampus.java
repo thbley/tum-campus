@@ -136,10 +136,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 
-		/* TODO implement?
-		 * LectureItemManager lim = new LectureItemManager(this, db); Cursor c =
-		 * lim.getCurrentFromDb(); if (c.moveToNext()) { String info =
-		 * c.getString(0); TextView tv = (TextView)
+		/*
+		 * TODO implement? LectureItemManager lim = new LectureItemManager(this,
+		 * db); Cursor c = lim.getCurrentFromDb(); if (c.moveToNext()) { String
+		 * info = c.getString(0); TextView tv = (TextView)
 		 * findViewById(R.id.lectureInfo); tv.setText("Aktuell: " + info); }
 		 * c.close(); lim.close();
 		 */
@@ -299,7 +299,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				String message = intent.getStringExtra("message");
 				String action = intent.getStringExtra("action");
 
-				if (action.equals("completed")) {
+				if (action.length() != 0) {
 					Button b = (Button) findViewById(R.id.refresh);
 					b.setText("Aktualisieren (" + getConnection() + ")");
 				}
