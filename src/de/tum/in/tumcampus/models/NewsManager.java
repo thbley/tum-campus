@@ -11,7 +11,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class NewsManager extends SQLiteOpenHelper {
 
@@ -117,7 +116,7 @@ public class NewsManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(News n) throws Exception {
-		Log.d("TumCampus news replaceIntoDb", n.toString());
+		Utils.Log(n.toString());
 
 		if (n.id.length() == 0) {
 			throw new Exception("Invalid id.");
@@ -131,8 +130,6 @@ public class NewsManager extends SQLiteOpenHelper {
 	}
 
 	public void removeCache() {
-		Log.d("TumCampus news deleteAllFromDb", "");
-
 		db.execSQL("DELETE FROM news");
 		Utils.emptyCacheDir("news/cache");
 	}
