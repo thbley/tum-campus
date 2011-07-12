@@ -70,6 +70,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 		ListView lv2 = (ListView) findViewById(R.id.listView2);
 		lv2.setAdapter(adapter2);
 		lv2.setOnItemClickListener(this);
+		lv2.setOnItemLongClickListener(this);
 		lm.close();
 
 		LectureItemManager.lastInserted = 0;
@@ -169,42 +170,73 @@ public class Lectures extends Activity implements OnItemClickListener,
 		startActivity(viewIntent);
 	}
 
+	public void deleteLectureItem(String itemId) {
+		// delete lecture item
+		LectureItemManager lim = new LectureItemManager(this, "database.db");
+		lim.deleteItemFromDb(itemId);
+
+		ListView lv = (ListView) findViewById(R.id.listView);
+		SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv.getAdapter();
+		if (lectureId == null) {
+			adapter.changeCursor(lim.getRecentFromDb());
+		} else {
+			adapter.changeCursor(lim.getAllFromDb(lectureId));
+		}
+		lim.close();
+	}
+
+	public void deleteLecture(String itemId) {
+		// delete lecture
+		LectureManager lm = new LectureManager(this, "database.db");
+		lm.deleteItemFromDb(itemId);
+
+		ListView lv2 = (ListView) findViewById(R.id.listView2);
+		SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv2.getAdapter();
+		adapter.changeCursor(lm.getAllFromDb());
+		lm.close();
+
+		// delete lecture items
+		LectureItemManager lim = new LectureItemManager(this, "database.db");
+		lim.deleteLectureFromDb(itemId);
+
+		ListView lv = (ListView) findViewById(R.id.listView);
+		adapter = (SimpleCursorAdapter) lv.getAdapter();
+		if (lectureId == null || lectureId.equals(itemId)) {
+			adapter.changeCursor(lim.getRecentFromDb());
+
+			TextView tv = (TextView) findViewById(R.id.lectureText);
+			tv.setText("Nächste Vorlesungen:");
+
+			TextView tv2 = (TextView) findViewById(R.id.moduleText);
+			tv2.setText("");
+
+			lectureId = null;
+		}
+		lim.close();
+	}
+
 	@Override
 	public boolean onItemLongClick(final AdapterView<?> av, View v,
 			final int position, long id) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Wirklch löschen?");
-		builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				String itemId = c.getString(c.getColumnIndex("_id"));
 
-				LectureItemManager lim = new LectureItemManager(
-						av.getContext(), "database.db");
-				lim.deleteItemFromDb(itemId);
-
-				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
-						.getAdapter();
-				if (lectureId == null) {
-					adapter.changeCursor(lim.getRecentFromDb());
+				if (av.getId() == R.id.listView) {
+					deleteLectureItem(itemId);
 				} else {
-					adapter.changeCursor(lim.getAllFromDb(lectureId));
+					deleteLecture(itemId);
 				}
-				lim.close();
-
-				dialog.dismiss();
 			}
-		});
-		builder.setNegativeButton("Nein",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
+		};
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Wirklch löschen?");
+		builder.setPositiveButton("Ja", listener);
+		builder.setNegativeButton("Nein", null);
 		builder.show();
-
 		return false;
 	}
 }
