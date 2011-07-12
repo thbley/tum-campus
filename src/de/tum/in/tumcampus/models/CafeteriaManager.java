@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.tum.in.tumcampus.Const;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,12 +16,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class CafeteriaManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
-
 	private SQLiteDatabase db;
 
 	public CafeteriaManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -29,11 +29,13 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		if (!force && !SyncManager.needSync(db, this, 86400)) {
 			return;
 		}
-		JSONArray jsonArray = Utils.downloadJson(
-				"http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php")
-				.getJSONArray("mensa_mensen");
 
+		String url = "http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php";
+
+		JSONArray jsonArray = Utils.downloadJson(url).getJSONArray(
+				"mensa_mensen");
 		removeCache();
+
 		db.beginTransaction();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
