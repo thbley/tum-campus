@@ -19,6 +19,8 @@ public class EventManager extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 
+	public static int lastInserted = 0;
+
 	public EventManager(Context context, String database) {
 		super(context, database, null, DATABASE_VERSION);
 
@@ -31,7 +33,7 @@ public class EventManager extends SQLiteOpenHelper {
 		if (!force && !SyncManager.needSync(db, this, 86400)) {
 			return;
 		}
-		String baseUrl = "https://graph.facebook.com/162327853831856/events?access_token=";
+		String baseUrl = "https://graph.facebook.com/162327853831856/events?limit=25&access_token=";
 		String token = URLEncoder
 				.encode("141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU");
 
@@ -42,14 +44,13 @@ public class EventManager extends SQLiteOpenHelper {
 
 		List<JSONObject> list = new ArrayList<JSONObject>();
 		for (int i = 0; i < jsonArray.length(); i++) {
-			if (i > 24) {
-				break;
-			}
 			String eventId = jsonArray.getJSONObject(i).getString("id");
 			list.add(Utils.downloadJson(eventUrl + eventId));
 		}
 
 		cleanupDb();
+		int count = Utils.getCount(db, "events");
+
 		db.beginTransaction();
 		for (int i = 0; i < list.size(); i++) {
 			replaceIntoDb(getFromJson(list.get(i)));
@@ -57,6 +58,8 @@ public class EventManager extends SQLiteOpenHelper {
 		SyncManager.replaceIntoDb(db, this);
 		db.setTransactionSuccessful();
 		db.endTransaction();
+
+		lastInserted += Utils.getCount(db, "events") - count;
 	}
 
 	public Cursor getNextFromDb() {
@@ -155,7 +158,7 @@ public class EventManager extends SQLiteOpenHelper {
 	}
 
 	public void cleanupDb() {
-		db.execSQL("DELETE FROM events WHERE start < date('now','-14 day')");
+		db.execSQL("DELETE FROM events WHERE start < date('now','-3 month')");
 	}
 
 	public void onCreate(SQLiteDatabase db) {
