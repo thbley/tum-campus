@@ -36,6 +36,8 @@ import android.util.Log;
 
 public class Utils {
 
+	public static int openDownloads = 0;
+
 	public static JSONObject downloadJson(String url) throws Exception {
 		Utils.Log(url);
 
@@ -59,11 +61,13 @@ public class Utils {
 	}
 
 	public static void downloadFileThread(final String url, final String target) {
+		openDownloads++;
 		new Thread(new Runnable() {
 			public void run() {
 				try {
 					Utils.Log(url);
 					downloadFile(url, target);
+					openDownloads--;
 				} catch (Exception e) {
 					Log(e, url);
 				}
@@ -87,7 +91,6 @@ public class Utils {
 			return;
 		}
 		File file = new File(target);
-
 		InputStream in = entity.getContent();
 
 		FileOutputStream out = new FileOutputStream(file);
@@ -209,9 +212,8 @@ public class Utils {
 		try {
 			File dir = new File(getCacheDir(directory));
 			if (dir.isDirectory() && dir.canWrite()) {
-				String[] children = dir.list();
-				for (int i = 0; i < children.length; i++) {
-					new File(dir, children[i]).delete();
+				for (String child : dir.list()) {
+					new File(dir, child).delete();
 				}
 			}
 		} catch (Exception e) {
@@ -233,6 +235,53 @@ public class Utils {
 			Log(e, file.toString());
 		}
 		return "";
+	}
+
+	public static String getRssLinkFromUrl(String url) {
+		Utils.Log(url);
+
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpGet httpget = new HttpGet(url);
+
+			HttpResponse response = httpclient.execute(httpget);
+			HttpEntity entity = response.getEntity();
+
+			if (entity == null) {
+				return url;
+			}
+			InputStream instream = entity.getContent();
+			String data = convertStreamToString(instream);
+
+			if (data.startsWith("<?xml")) {
+				return url;
+			}
+			Pattern link = Pattern.compile("<link[^>]+>");
+			Pattern href = Pattern.compile("href=[\"'](.+?)[\"']");
+
+			String feedUrl = url;
+			Matcher matcher = link.matcher(data);
+			while (matcher.find()) {
+				String match = matcher.group(0);
+
+				Matcher href_match = href.matcher(match);
+				if (href_match.find()
+						&& (match.contains("application/rss+xml") || match
+								.contains("application/atom+xml"))) {
+					feedUrl = href_match.group(1);
+				}
+			}
+
+			// relative url
+			Uri uri = Uri.parse(url);
+			if (!feedUrl.contains("://")) {
+				feedUrl = "http://" + uri.getHost() + "/" + feedUrl;
+			}
+			url = feedUrl;
+		} catch (Exception e) {
+			Log(e, url);
+		}
+		return url;
 	}
 
 	public static String md5(String str) {
@@ -341,6 +390,14 @@ public class Utils {
 		return list;
 	}
 
+	public static int getCount(SQLiteDatabase db, String table) {
+		Cursor c = db.rawQuery("SELECT count(*) FROM " + table, null);
+		if (c.moveToNext()) {
+			return c.getInt(0);
+		}
+		return 0;
+	}
+
 	public static void Log(Exception e, String message) {
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
@@ -350,13 +407,5 @@ public class Utils {
 	public static void Log(String message) {
 		StackTraceElement s = Thread.currentThread().getStackTrace()[3];
 		Log.d("TumCampus", s.toString() + " " + message);
-	}
-
-	public static int getCount(SQLiteDatabase db, String table) {
-		Cursor c = db.rawQuery("SELECT count(*) FROM " + table, null);
-		if (c.moveToNext()) {
-			return c.getInt(0);
-		}
-		return 0;
 	}
 }
