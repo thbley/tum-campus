@@ -14,7 +14,7 @@
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_gravity="right|center_vertical" android:width="175px"
 			android:layout_marginTop="4px" android:layout_marginRight="4px"
-			android:textColor="#FF2546A4" />
+			android:textColor="#2546A4" />
 	</FrameLayout>
 
 	<FrameLayout android:layout_width="fill_parent"
@@ -27,6 +27,14 @@
 				android:layout_height="wrap_content" android:text="@string/hello"
 				android:textColor="#FFFFFF" android:paddingLeft="6px"
 				android:paddingRight="6px" android:scrollbars="vertical" />
+
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="1px" android:background="#FFFFFF" />
+
+			<Button android:text="Start: Daten initial herunterladen!"
+				android:id="@+id/initial" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textColor="#2546A4"
+				android:layout_marginTop="7px" android:visibility="gone" />
 
 			<ListView android:layout_height="wrap_content" android:id="@+id/menu"
 				android:layout_width="fill_parent" android:paddingBottom="50px" />
