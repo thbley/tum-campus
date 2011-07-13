@@ -2,6 +2,7 @@ package de.tum.in.tumcampus.services;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -11,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
+import de.tum.in.tumcampus.Const;
 import de.tum.in.tumcampus.TumCampus;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
@@ -32,8 +34,6 @@ public class DownloadService extends IntentService {
 		super("DownloadService");
 	}
 
-	final static String db = "database.db";
-
 	String message = "";
 
 	public static BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -47,7 +47,18 @@ public class DownloadService extends IntentService {
 				Toast.makeText(context, intent.getStringExtra("message"),
 						Toast.LENGTH_LONG).show();
 
-				// TODO wait until images are loaded?
+				// wait until images are loaded
+				synchronized (this) {
+					try {
+						int count = 0;
+						while (Utils.openDownloads > 0 && count < 10) {
+							wait(1000);
+							count++;
+						}
+					} catch (Exception e) {
+						Utils.Log(e, "");
+					}
+				}
 
 				// resume activity
 				Intent intent2 = new Intent(context, context.getClass());
@@ -59,14 +70,6 @@ public class DownloadService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-
-		// TODO avoid database locking / deadlocking exceptions
-		// see
-		// http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html
-		// beginTransactionNonExclusive() => Api Level 11
-		// enableWriteAheadLogging() => Api Level 11
-
-		// TODO move constants to class header
 
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager nm = (NotificationManager) getSystemService(ns);
@@ -111,90 +114,92 @@ public class DownloadService extends IntentService {
 	}
 
 	public void downloadFeeds(boolean force) {
-		try {
-			if (!destroyed) {
-				message("RSS ", "");
+		message("RSS ", "");
 
-				FeedManager nm = new FeedManager(this, db);
-				FeedItemManager nim = new FeedItemManager(this, db);
-				nim.downloadFromExternal(nm.getAllIdsFromDb(), force);
-				nim.close();
-				nm.close();
+		FeedManager nm = new FeedManager(this, Const.db);
+		List<Integer> list = nm.getAllIdsFromDb();
+		nm.close();
+
+		FeedItemManager nim = new FeedItemManager(this, Const.db);
+		for (int id : list) {
+			if (destroyed) {
+				break;
 			}
-		} catch (Exception e) {
-			message(e);
+			try {
+				nim.downloadFromExternal(id, force);
+			} catch (Exception e) {
+				message(e, nim.lastInfo);
+			}
 		}
+		nim.close();
 	}
 
 	public void downloadNews(boolean force) {
-		try {
-			if (!destroyed) {
-				message("Nachrichten ", "");
-
-				NewsManager nm = new NewsManager(this, db);
+		if (!destroyed) {
+			message("Nachrichten ", "");
+			NewsManager nm = new NewsManager(this, Const.db);
+			try {
 				nm.downloadFromExternal(force);
-				nm.close();
+			} catch (Exception e) {
+				message(e, "");
 			}
-		} catch (Exception e) {
-			message(e);
+			nm.close();
 		}
 	}
 
 	public void downloadEvents(boolean force) {
-		try {
-			if (!destroyed) {
-				message("Veranstaltungen ", "");
-
-				EventManager em = new EventManager(this, db);
+		if (!destroyed) {
+			message("Veranstaltungen ", "");
+			EventManager em = new EventManager(this, Const.db);
+			try {
 				em.downloadFromExternal(force);
-				em.close();
+			} catch (Exception e) {
+				message(e, "");
 			}
-		} catch (Exception e) {
-			message(e);
+			em.close();
 		}
 	}
 
 	public void downloadCafeterias(boolean force) {
-		try {
-			if (!destroyed) {
-				message("Mensen ", "");
+		if (!destroyed) {
+			message("Mensen ", "");
 
-				CafeteriaManager cm = new CafeteriaManager(this, db);
+			CafeteriaManager cm = new CafeteriaManager(this, Const.db);
+			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
+			try {
 				cm.downloadFromExternal(force);
-
-				CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, db);
 				cmm.downloadFromExternal(cm.getAllIdsFromDb(), force);
-				cmm.close();
-				cm.close();
+			} catch (Exception e) {
+				message(e, "");
 			}
-		} catch (Exception e) {
-			message(e);
+			cmm.close();
+			cm.close();
 		}
 	}
 
 	public void downloadLinks() {
-		try {
-			if (!destroyed) {
-				LinkManager lm = new LinkManager(this, db);
+		if (!destroyed) {
+			LinkManager lm = new LinkManager(this, Const.db);
+			try {
 				lm.downloadMissingIcons();
-				lm.close();
+			} catch (Exception e) {
+				message(e, "");
 			}
-		} catch (Exception e) {
-			message(e);
+			lm.close();
 		}
 	}
 
-	public void message(Exception e) {
-		Utils.Log(e, "");
+	public void message(Exception e, String info) {
+		Utils.Log(e, info);
 
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 
 		String message = e.getMessage();
-		if (Utils.getSettingBool(this, "debug")) {
+		if (Utils.getSettingBool(this, Const.settings.debug)) {
 			message += sw.toString();
 		}
-		message("Fehler: " + message + "\n", "error");
+		message("Fehler: " + message + " " + info + "\n", "error");
 	}
 
 	public void message(String message, String action) {
@@ -225,10 +230,10 @@ public class DownloadService extends IntentService {
 			Utils.getCacheDir("");
 
 			// init sync table
-			SyncManager sm = new SyncManager(this, db);
+			SyncManager sm = new SyncManager(this, Const.db);
 			sm.close();
 		} catch (Exception e) {
-			message(e);
+			message(e, "");
 			destroyed = true;
 		}
 	}
