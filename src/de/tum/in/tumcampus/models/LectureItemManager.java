@@ -34,10 +34,10 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		int count = Utils.getCount(db, "lectures_items");
 
 		db.beginTransaction();
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].getName().endsWith(".csv")) {
-				lastInfo = files[i].getName();
-				importCsv(files[i], "ISO-8859-1");
+		for (File file : files) {
+			if (file.getName().endsWith(".csv")) {
+				lastInfo = file.getName();
+				importCsv(file, "ISO-8859-1");
 			}
 		}
 		db.setTransactionSuccessful();
