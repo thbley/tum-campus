@@ -1,5 +1,6 @@
 package de.tum.in.tumcampus.models;
 
+import de.tum.in.tumcampus.Const;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,12 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class LectureManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
-
 	private SQLiteDatabase db;
 
 	public LectureManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
