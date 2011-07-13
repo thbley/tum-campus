@@ -176,13 +176,18 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 	@Override
 	public void onClick(View v) {
-		EditText name = (EditText) findViewById(R.id.name);
-		EditText url = (EditText) findViewById(R.id.url);
+		EditText editName = (EditText) findViewById(R.id.name);
+		EditText editUrl = (EditText) findViewById(R.id.url);
+
+		String url = editUrl.getText().toString();
+		if (url.length() > 0 && !url.contains(":")) {
+			url = "http://" + url;
+		}
+		String name = editName.getText().toString();
 
 		FeedManager fm = new FeedManager(this, Const.db);
 		try {
-			Feed feed = new Feed(name.getText().toString(), url.getText()
-					.toString());
+			Feed feed = new Feed(name, url);
 			fm.insertUpdateIntoDb(feed);
 		} catch (Exception e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -190,7 +195,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		adapter.changeCursor(fm.getAllFromDb());
 		fm.close();
 
-		name.setText("");
-		url.setText("");
+		editName.setText("");
+		editUrl.setText("");
 	}
 }
