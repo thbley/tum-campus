@@ -20,6 +20,14 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 
 	public void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
+
+		assertTrue(solo.searchText("Speisepläne"));
+		solo.clickOnText("Speisepläne");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Aktualisieren");
+		solo.sleep(10000);
+		solo.goBack();
 	}
 
 	public void testCafeteriasPortrait() {
@@ -31,8 +39,6 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
-
-		// TODO inject test data
 	}
 
 	public void testCafeteriasLandscape() {
@@ -44,11 +50,9 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
-
-		// TODO inject test data
 	}
 
-	public void testCafeteriasASettings() {
+	public void testCafeteriasSettings() {
 		assertTrue(solo.searchText("Speisepläne"));
 		solo.clickOnText("Speisepläne");
 
@@ -77,29 +81,9 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		solo.clickOnText("Speisepläne");
 
 		solo.sendKey(Solo.MENU);
-		solo.clickOnText("Aktualisieren");
-		solo.sleep(10000);
-
-		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Preise");
 	}
-
-	public void testCafeteriasContextMenu2() {
-		assertTrue(solo.searchText("Speisepläne"));
-		solo.clickOnText("Speisepläne");
-
-		solo.sendKey(Solo.MENU);
-		solo.clickOnText("Öffnungszeiten Garching");
-	}
-
-	public void testCafeteriasContextMenu3() {
-		assertTrue(solo.searchText("Speisepläne"));
-		solo.clickOnText("Speisepläne");
-
-		solo.sendKey(Solo.MENU);
-		solo.clickOnText("Öffnungszeiten München");
-	}
-
+	
 	private void _testCafeterias() {
 		assertTrue(solo.searchText("Mensa Garching"));
 		solo.clickOnText("Mensa Garching");
@@ -118,6 +102,7 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 
 		assertTrue(solo.searchText("Mensa Garching: " + today));
 		assertTrue(solo.searchText("Beilagen"));
+		assertTrue(solo.searchText("Tagesgericht"));
 
 		assertTrue(solo.searchText("Datum auswählen"));
 		solo.clickOnText("Datum auswählen");
