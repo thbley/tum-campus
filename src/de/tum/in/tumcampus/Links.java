@@ -92,13 +92,18 @@ public class Links extends Activity implements OnItemClickListener,
 
 	@Override
 	public void onClick(View v) {
-		EditText name = (EditText) findViewById(R.id.lname);
-		EditText url = (EditText) findViewById(R.id.url);
+		EditText editName = (EditText) findViewById(R.id.lname);
+		EditText editUrl = (EditText) findViewById(R.id.url);
+
+		String url = editUrl.getText().toString();
+		if (url.length() > 0 && !url.contains(":")) {
+			url = "http://" + url;
+		}
+		String name = editName.getText().toString();
 
 		LinkManager lm = new LinkManager(this, Const.db);
 		try {
-			Link link = new Link(name.getText().toString(), url.getText()
-					.toString());
+			Link link = new Link(name, url);
 			lm.insertUpdateIntoDb(link);
 		} catch (Exception e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -106,7 +111,7 @@ public class Links extends Activity implements OnItemClickListener,
 		adapter.changeCursor(lm.getAllFromDb());
 		lm.close();
 
-		name.setText("");
-		url.setText("");
+		editName.setText("");
+		editUrl.setText("");
 	}
 }
