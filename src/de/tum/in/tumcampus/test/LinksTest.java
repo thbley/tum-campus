@@ -28,8 +28,6 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Heise"));
 
 		solo.clickOnText("Heise");
-		
-		// TODO add import test
 	}
 
 	public void testLinksCreateDelete() {
