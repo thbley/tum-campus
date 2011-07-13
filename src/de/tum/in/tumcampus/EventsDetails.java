@@ -29,7 +29,7 @@ public class EventsDetails extends Activity {
 			String infos = weekDays[c.getInt(c.getColumnIndex("weekday"))];
 			infos += ", " + c.getString(c.getColumnIndex("start_de")) + " - "
 					+ c.getString(c.getColumnIndex("end_de")) + "\n";
-			infos += c.getString(c.getColumnIndex("location"));
+			infos += c.getString(c.getColumnIndex("location")) + "\n";
 			infos += c.getString(c.getColumnIndex("link"));
 
 			TextView tv = (TextView) findViewById(R.id.infos);
@@ -41,11 +41,13 @@ public class EventsDetails extends Activity {
 			ImageView iv = (ImageView) findViewById(R.id.image);
 			iv.setImageURI(Uri.parse(image));
 
-			double ratio = (double) iv.getDrawable().getIntrinsicWidth()
-					/ (double) iv.getDrawable().getIntrinsicHeight();
+			if (iv.getDrawable() != null) {
+				double ratio = (double) iv.getDrawable().getIntrinsicWidth()
+						/ (double) iv.getDrawable().getIntrinsicHeight();
 
-			iv.getLayoutParams().width = 350;
-			iv.getLayoutParams().height = (int) Math.floor(350 / ratio);
+				iv.getLayoutParams().width = 350;
+				iv.getLayoutParams().height = (int) Math.floor(350 / ratio);
+			}
 		}
 		em.close();
 	}
