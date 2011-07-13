@@ -3,3 +3,7 @@ Ein manueller Test aller bereits implementierten Funktionen wird jeweils mit dem
 Bei der Implementierung soll darüber hinaus auf Änderbarkeit und Erweiterbarkeit der Funktionalität sowie Übertragbarkeit innerhalb der Android-Plattform geachtet werden.
 Für jede Schnittstelle sollen automatisierte Testfälle erstellt werden, die bestimmte Eigenschaften der zurückgegebenen JSON-Objekte prüfen (Modultests).
 Die einzelnen Nutzeraktionen sollen mit Oberflächentests simuliert und geprüft werden (Black-Box-Tests). Als Grundlage dienen hier u.a. die User Stories aus Abschnitt 3.2.
+
+Anmerkungen:
+Robotium Test schlagen manchmal fehl => erneut starten
+Silence-Service nur manuell testbar
