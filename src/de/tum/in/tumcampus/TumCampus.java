@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -72,6 +70,9 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		Button b = (Button) findViewById(R.id.refresh);
 		b.setOnClickListener(this);
 
+		b = (Button) findViewById(R.id.initial);
+		b.setOnClickListener(this);
+
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(ImportService.broadcast);
 		intentFilter.addAction(DownloadService.broadcast);
@@ -81,24 +82,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		Intent service = new Intent(this, ImportService.class);
 		service.putExtra("action", "defaults");
 		startService(service);
-
-		FeedItemManager fim = new FeedItemManager(this, Const.db);
-		if (fim.empty()) {
-			DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					Intent service = new Intent(TumCampus.this,
-							DownloadService.class);
-					startService(service);
-					syncing = true;
-				}
-			};
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Daten initial herunterladen?");
-			builder.setPositiveButton("Ja", listener);
-			builder.setNegativeButton("Nein", null);
-			builder.show();
-		}
-		fim.close();
 	}
 
 	@Override
@@ -111,6 +94,15 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	protected void onResume() {
 		super.onResume();
 
+		Button b = (Button) findViewById(R.id.initial);
+		FeedItemManager fim = new FeedItemManager(this, Const.db);
+		if (fim.empty()) {
+			b.setVisibility(View.VISIBLE);
+		} else {
+			b.setVisibility(View.GONE);
+		}
+		fim.close();
+
 		SimpleAdapter adapter = new SimpleAdapter(this, buildMenu(),
 				R.layout.main_listview,
 				new String[] { "icon", "name", "icon2" }, new int[] {
@@ -122,7 +114,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		String conn = getConnection();
 
-		Button b = (Button) findViewById(R.id.refresh);
+		b = (Button) findViewById(R.id.refresh);
 		TextView tv = (TextView) findViewById(R.id.hello);
 
 		if (conn.length() > 0) {
@@ -263,7 +255,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	@Override
 	public void onClick(View v) {
 
-		if (v.getId() == R.id.refresh) {
+		if (v.getId() == R.id.refresh || v.getId() == R.id.initial) {
 			Intent service = new Intent(this, DownloadService.class);
 			if (syncing) {
 				stopService(service);
