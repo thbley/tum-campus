@@ -8,17 +8,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import de.tum.in.tumcampus.Const;
 
 public class FeedManager extends SQLiteOpenHelper {
-
-	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteDatabase db;
 
 	public static int lastInserted = 0;
 
+	public String lastInfo = "";
+
 	public FeedManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -32,6 +33,7 @@ public class FeedManager extends SQLiteOpenHelper {
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".URL")) {
+				lastInfo = files[i].getName();
 				String name = files[i].getName().replace(".URL", "");
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
