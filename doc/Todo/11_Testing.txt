@@ -5,5 +5,11 @@ Für jede Schnittstelle sollen automatisierte Testfälle erstellt werden, die best
 Die einzelnen Nutzeraktionen sollen mit Oberflächentests simuliert und geprüft werden (Black-Box-Tests). Als Grundlage dienen hier u.a. die User Stories aus Abschnitt 3.2.
 
 Anmerkungen:
+Silence-Service nur manuell testbar?
+Toast-Fehlermeldungen nicht prüfbar
 Robotium Test schlagen manchmal fehl => erneut starten
-Silence-Service nur manuell testbar
+Langsame Downloads (20 Event-Bilder = 10s bei Facebook)
+
+
+TODO:
+Code-Doku für Testfälle?
