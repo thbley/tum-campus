@@ -30,7 +30,7 @@ public class EventManager extends SQLiteOpenHelper {
 
 	public void downloadFromExternal(boolean force) throws Exception {
 
-		if (!force && !SyncManager.needSync(db, this, 86400)) {
+		if (!force && !SyncManager.needSync(db, this, 21600)) { // 6h
 			return;
 		}
 
