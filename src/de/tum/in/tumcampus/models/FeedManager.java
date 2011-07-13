@@ -31,11 +31,11 @@ public class FeedManager extends SQLiteOpenHelper {
 		int count = Utils.getCount(db, "feeds");
 
 		db.beginTransaction();
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].getName().endsWith(".URL")) {
-				lastInfo = files[i].getName();
-				String name = files[i].getName().replace(".URL", "");
-				String url = Utils.getLinkFromUrlFile(files[i]);
+		for (File file : files) {
+			if (file.getName().endsWith(".URL")) {
+				lastInfo = file.getName();
+				String name = file.getName().replace(".URL", "");
+				String url = Utils.getLinkFromUrlFile(file);
 
 				insertUpdateIntoDb(new Feed(name, url));
 			}
