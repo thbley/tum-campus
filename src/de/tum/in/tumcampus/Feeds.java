@@ -15,19 +15,24 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.SlidingDrawer;
+import android.widget.Toast;
+import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.services.DownloadService;
 
 public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
-		OnItemLongClickListener {
+		OnItemLongClickListener, View.OnClickListener {
 
 	private String feedId;
 	private String feedName;
+	private SimpleCursorAdapter adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,15 +45,22 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		FeedManager fm = new FeedManager(this, Const.db);
 		Cursor c = fm.getAllFromDb();
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+		adapter = new SimpleCursorAdapter(this,
 				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
 				new int[] { android.R.id.text1 });
 
+		View view = getLayoutInflater().inflate(R.layout.feeds_footer, null,
+				false);
+
 		ListView lv = (ListView) findViewById(R.id.listView);
+		lv.addFooterView(view);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
 		fm.close();
+
+		Button save = (Button) view.findViewById(R.id.save);
+		save.setOnClickListener(this);
 
 		registerReceiver(DownloadService.receiver, new IntentFilter(broadcast));
 	}
@@ -137,9 +149,6 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 				FeedManager fm = new FeedManager(av.getContext(), Const.db);
 				fm.deleteFromDb(_id);
-
-				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
-						.getAdapter();
 				adapter.changeCursor(fm.getAllFromDb());
 				fm.close();
 			}
@@ -163,5 +172,25 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		service.putExtra("action", "feeds");
 		startService(service);
 		return true;
+	}
+
+	@Override
+	public void onClick(View v) {
+		EditText name = (EditText) findViewById(R.id.name);
+		EditText url = (EditText) findViewById(R.id.url);
+
+		FeedManager fm = new FeedManager(this, Const.db);
+		try {
+			Feed feed = new Feed(name.getText().toString(), url.getText()
+					.toString());
+			fm.insertUpdateIntoDb(feed);
+		} catch (Exception e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+		adapter.changeCursor(fm.getAllFromDb());
+		fm.close();
+
+		name.setText("");
+		url.setText("");
 	}
 }
