@@ -37,11 +37,11 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		cleanupDb();
 		int count = Utils.getCount(db, "cafeterias_menus");
 
-		for (int i = 0; i < ids.size(); i++) {
+		for (int id : ids) {
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
 					+ "WHERE mensaId = ? AND "
 					+ "date > date('now', '+7 day') LIMIT 1",
-					new String[] { String.valueOf(ids.get(i)) });
+					new String[] { String.valueOf(id) });
 
 			if (c.getCount() > 0) {
 				c.close();
@@ -50,7 +50,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			c.close();
 
 			String url = "http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php?mensa_id=";
-			JSONObject json = Utils.downloadJson(url + ids.get(i));
+			JSONObject json = Utils.downloadJson(url + id);
 
 			db.beginTransaction();
 			JSONArray menu = json.getJSONArray("mensa_menu");
