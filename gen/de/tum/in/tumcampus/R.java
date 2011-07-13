@@ -24,7 +24,7 @@ public final class R {
     }
     public static final class id {
         public static final int cafeteriaText=0x7f060000;
-        public static final int date=0x7f060026;
+        public static final int date=0x7f060027;
         public static final int debug=0x7f060012;
         public static final int debugCafeterias=0x7f060008;
         public static final int debugCafeteriasMenus=0x7f060009;
@@ -41,29 +41,30 @@ public final class R {
         public static final int handle=0x7f060004;
         public static final int hello=0x7f06001f;
         public static final int icon=0x7f060016;
-        public static final int icon2=0x7f060024;
+        public static final int icon2=0x7f060025;
         public static final int image=0x7f060014;
-        public static final int importFeeds=0x7f060023;
-        public static final int importLectures=0x7f060021;
-        public static final int importLinks=0x7f060022;
+        public static final int importFeeds=0x7f060024;
+        public static final int importLectures=0x7f060022;
+        public static final int importLinks=0x7f060023;
         public static final int infos=0x7f060013;
+        public static final int initial=0x7f060020;
         public static final int lectureText=0x7f06001b;
         public static final int listView=0x7f060006;
         public static final int listView2=0x7f060002;
         public static final int listView3=0x7f060001;
         public static final int lname=0x7f06001d;
-        public static final int menu=0x7f060020;
-        public static final int message=0x7f060025;
+        public static final int menu=0x7f060021;
+        public static final int message=0x7f060026;
         public static final int moduleText=0x7f06001c;
         public static final int name=0x7f060017;
         public static final int refresh=0x7f06001e;
         public static final int save=0x7f060019;
-        public static final int search=0x7f060029;
+        public static final int search=0x7f06002a;
         public static final int slide=0x7f060005;
         public static final int slider=0x7f060003;
         public static final int title=0x7f06001a;
-        public static final int transportText=0x7f060027;
-        public static final int transportText2=0x7f060028;
+        public static final int transportText=0x7f060028;
+        public static final int transportText2=0x7f060029;
         public static final int url=0x7f060018;
     }
     public static final class layout {
