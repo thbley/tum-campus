@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.services.DownloadService;
@@ -62,8 +63,9 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		String url = c.getString(c.getColumnIndex("link"));
 
 		if (url.length() == 0) {
+			Toast.makeText(this, "Kein Link vorhanden.", Toast.LENGTH_LONG)
+					.show();
 			return;
-			// TODO: Toast "Kein Link vorhanden"
 		}
 
 		// Connection to browser
