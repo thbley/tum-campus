@@ -33,7 +33,6 @@
 
 				<ListView android:layout_height="fill_parent" android:id="@+id/listView"
 					android:layout_width="fill_parent" android:scrollbars="vertical" />
-
 			</LinearLayout>
 		</SlidingDrawer>
 	</FrameLayout>
