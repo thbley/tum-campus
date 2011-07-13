@@ -11,12 +11,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
+import de.tum.in.tumcampus.models.Link;
 import de.tum.in.tumcampus.models.LinkManager;
 
 public class Links extends Activity implements OnItemClickListener,
-		OnItemLongClickListener {
+		OnItemLongClickListener, View.OnClickListener {
+
+	SimpleCursorAdapter adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,15 +32,21 @@ public class Links extends Activity implements OnItemClickListener,
 		LinkManager lm = new LinkManager(this, Const.db);
 		Cursor c = lm.getAllFromDb();
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				R.layout.links_listview, c, c.getColumnNames(), new int[] {
-						R.id.icon, R.id.name });
+		adapter = new SimpleCursorAdapter(this, R.layout.links_listview, c,
+				c.getColumnNames(), new int[] { R.id.icon, R.id.name });
+
+		View view = getLayoutInflater().inflate(R.layout.links_footer, null,
+				false);
 
 		ListView lv = (ListView) findViewById(R.id.listView);
+		lv.addFooterView(view);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
 		lm.close();
+
+		Button save = (Button) view.findViewById(R.id.save);
+		save.setOnClickListener(this);
 
 		LinkManager.lastInserted = 0;
 	}
@@ -47,8 +59,12 @@ public class Links extends Activity implements OnItemClickListener,
 		String url = c.getString(c.getColumnIndex("url"));
 
 		// Connection to browser
-		Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-		startActivity(viewIntent);
+		try {
+			Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			startActivity(viewIntent);
+		} catch (Exception e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override
@@ -62,9 +78,6 @@ public class Links extends Activity implements OnItemClickListener,
 
 				LinkManager lm = new LinkManager(av.getContext(), Const.db);
 				lm.deleteFromDb(_id);
-
-				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
-						.getAdapter();
 				adapter.changeCursor(lm.getAllFromDb());
 				lm.close();
 			}
@@ -75,5 +88,25 @@ public class Links extends Activity implements OnItemClickListener,
 		builder.setNegativeButton("Nein", null);
 		builder.show();
 		return false;
+	}
+
+	@Override
+	public void onClick(View v) {
+		EditText name = (EditText) findViewById(R.id.lname);
+		EditText url = (EditText) findViewById(R.id.url);
+
+		LinkManager lm = new LinkManager(this, Const.db);
+		try {
+			Link link = new Link(name.getText().toString(), url.getText()
+					.toString());
+			lm.insertUpdateIntoDb(link);
+		} catch (Exception e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+		adapter.changeCursor(lm.getAllFromDb());
+		lm.close();
+
+		name.setText("");
+		url.setText("");
 	}
 }
