@@ -2,7 +2,6 @@ package de.tum.in.tumcampus.models;
 
 import java.net.URLEncoder;
 import java.util.Date;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,72 +12,64 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Html;
+import de.tum.in.tumcampus.Const;
 
 public class FeedItemManager extends SQLiteOpenHelper {
-
-	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteDatabase db;
 
 	public static int lastInserted = 0;
+	
+	public String lastInfo = "";
 
 	public FeedItemManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
 	}
 
-	public void downloadFromExternal(List<Integer> ids, boolean force)
-			throws Exception {
+	public void downloadFromExternal(int id, boolean force) throws Exception {
+		String syncId = "feeditem" + id;
+		if (!force && !SyncManager.needSync(db, syncId, 900)) {
+			return;
+		}
 
 		cleanupDb();
-		// TODO fix
 		int count = Utils.getCount(db, "feeds_items");
 
-		for (int i = 0; i < ids.size(); i++) {
+		Cursor feed = db.rawQuery("SELECT feedUrl FROM feeds WHERE id = ?",
+				new String[] { String.valueOf(id) });
+		feed.moveToNext();
+		String feedUrl = feed.getString(0);
+		feed.close();
 
-			String syncId = "feeditem" + i;
-			if (!force && !SyncManager.needSync(db, syncId, 900)) {
-				continue;
-			}
-			Cursor feed = db.rawQuery("SELECT feedUrl FROM feeds WHERE id = ?",
-					new String[] { String.valueOf(ids.get(i)) });
-			feed.moveToNext();
-			String feedUrl = feed.getString(0);
-			feed.close();
+		lastInfo = feedUrl;
 
-			// TODO add try catch
+		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
+		String query = URLEncoder
+				.encode("SELECT title, link, description, pubDate, enclosure.url "
+						+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
 
-			String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
-			String query = URLEncoder
-					.encode("SELECT title, link, description, pubDate, enclosure.url "
-							+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
+		Object obj = Utils.downloadJson(baseUrl + query).getJSONObject("query")
+				.getJSONObject("results").get("item");
 
-			Object obj = Utils.downloadJson(baseUrl + query)
-					.getJSONObject("query").getJSONObject("results")
-					.get("item");
-
-			JSONArray jsonArray = new JSONArray();
-			if (obj instanceof JSONArray) {
-				jsonArray = (JSONArray) obj;
-			} else {
-				if (obj.toString().contains("aktualisieren")) {
-					throw new JSONException("");
-				}
-				jsonArray.put(obj);
-			}
-
-			// TODO check again
-			deleteFromDb(ids.get(i));
-			db.beginTransaction();
-			for (int j = 0; j < jsonArray.length(); j++) {
-				insertIntoDb(getFromJson(ids.get(i), jsonArray.getJSONObject(j)));
-			}
-			SyncManager.replaceIntoDb(db, syncId);
-			db.setTransactionSuccessful();
-			db.endTransaction();
+		JSONArray jsonArray = new JSONArray();
+		if (obj instanceof JSONArray) {
+			jsonArray = (JSONArray) obj;
+		} else {
+			jsonArray.put(obj);
 		}
+
+		deleteFromDb(id);
+		db.beginTransaction();
+		for (int j = 0; j < jsonArray.length(); j++) {
+			insertIntoDb(getFromJson(id, jsonArray.getJSONObject(j)));
+		}
+		SyncManager.replaceIntoDb(db, syncId);
+		db.setTransactionSuccessful();
+		db.endTransaction();
+
 		lastInserted += Utils.getCount(db, "feeds_items") - count;
 	}
 
