@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -79,6 +82,24 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		Intent service = new Intent(this, ImportService.class);
 		service.putExtra("action", "defaults");
 		startService(service);
+
+		FeedItemManager fim = new FeedItemManager(this, Const.db);
+		if (fim.empty()) {
+			DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					Intent service = new Intent(TumCampus.this,
+							DownloadService.class);
+					startService(service);
+					syncing = true;
+				}
+			};
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Daten initial herunterladen?");
+			builder.setPositiveButton("Ja", listener);
+			builder.setNegativeButton("Nein", null);
+			builder.show();
+		}
+		fim.close();
 	}
 
 	@Override
@@ -124,15 +145,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 	public List<Map<String, Object>> buildMenu() {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-		FeedItemManager fim = new FeedItemManager(this, Const.db);
-		if (fim.empty()) {
-			// TODO implement
-			addItem(list, android.R.drawable.star_big_on,
-					"Start: Daten initial herunterladen", false, new Intent(
-							this, DownloadService.class));
-		}
-		fim.close();
 
 		addItem(list, R.drawable.vorlesung, "Vorlesungen",
 				LectureItemManager.lastInserted > 0, new Intent(this,
