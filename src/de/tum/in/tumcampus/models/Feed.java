@@ -6,7 +6,8 @@ public class Feed {
 
 	public Feed(String name, String feedUrl) {
 		this.name = name;
-		this.feedUrl = feedUrl;
+		// TODO optimize
+		this.feedUrl = Utils.getRssLinkFromUrl(feedUrl);
 	}
 
 	public String toString() {
