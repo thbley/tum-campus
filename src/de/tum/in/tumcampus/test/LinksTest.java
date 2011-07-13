@@ -1,5 +1,7 @@
 package de.tum.in.tumcampus.test;
 
+import java.util.Date;
+
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
@@ -18,7 +20,7 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
-	public void testLinks() {
+	public void testLinksList() {
 		assertTrue(solo.searchText("Links"));
 		solo.clickOnText("Links");
 
@@ -27,19 +29,27 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.clickOnText("Heise");
 		
-		// TODO add link
+		// TODO add import test
 	}
 
-	public void testLinksDelete() {
+	public void testLinksCreateDelete() {
 		assertTrue(solo.searchText("Links"));
 		solo.clickOnText("Links");
 
-		assertTrue(solo.searchText("Fakultät"));
-		solo.clickLongOnText("Fakultät");
+		solo.scrollDownList(0);
+		
+		String name = "some name " + new Date();
+		solo.enterText(0, "http://www.heise.de");
+		solo.enterText(1, name);
+
+		solo.clickOnText("Hinzufügen");
+
+		assertTrue(solo.searchText(name));
+		solo.clickLongOnText(name);
 
 		assertTrue(solo.searchButton("Ja"));
 		solo.clickOnText("Ja");
 
-		assertFalse(solo.searchText("Fakultät"));
+		assertFalse(solo.searchText(name));
 	}
 }
