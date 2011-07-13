@@ -52,8 +52,8 @@ public class EventManager extends SQLiteOpenHelper {
 		int count = Utils.getCount(db, "events");
 
 		db.beginTransaction();
-		for (int i = 0; i < list.size(); i++) {
-			replaceIntoDb(getFromJson(list.get(i)));
+		for (JSONObject json : list) {
+			replaceIntoDb(getFromJson(json));
 		}
 		SyncManager.replaceIntoDb(db, this);
 		db.setTransactionSuccessful();
