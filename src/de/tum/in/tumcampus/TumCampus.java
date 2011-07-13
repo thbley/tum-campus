@@ -100,14 +100,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 
-		/*
-		 * TODO implement? LectureItemManager lim = new LectureItemManager(this,
-		 * db); Cursor c = lim.getCurrentFromDb(); if (c.moveToNext()) { String
-		 * info = c.getString(0); TextView tv = (TextView)
-		 * findViewById(R.id.lectureInfo); tv.setText("Aktuell: " + info); }
-		 * c.close(); lim.close();
-		 */
-
 		String conn = getConnection();
 
 		Button b = (Button) findViewById(R.id.refresh);
@@ -180,9 +172,11 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("icon", icon);
 		map.put("name", name);
+		int icon2 = android.R.color.transparent;
 		if (changed) {
-			map.put("icon2", android.R.drawable.star_off);
+			icon2 = android.R.drawable.star_off;
 		}
+		map.put("icon2", icon2);
 		map.put("intent", intent);
 		data.add(map);
 	}
