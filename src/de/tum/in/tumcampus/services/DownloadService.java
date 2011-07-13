@@ -52,6 +52,7 @@ public class DownloadService extends IntentService {
 					try {
 						int count = 0;
 						while (Utils.openDownloads > 0 && count < 10) {
+							Utils.Log(String.valueOf(Utils.openDownloads));
 							wait(1000);
 							count++;
 						}
