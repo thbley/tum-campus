@@ -29,12 +29,12 @@ public class LinkManager extends SQLiteOpenHelper {
 		int count = Utils.getCount(db, "links");
 
 		db.beginTransaction();
-		for (int i = 0; i < files.length; i++) {
-			String filename = files[i].getName();
+		for (File file : files) {
+			String filename = file.getName();
 			if (filename.toLowerCase().endsWith(".url")) {
-				lastInfo = files[i].getName();
+				lastInfo = file.getName();
 				String name = filename.substring(0, filename.length() - 4);
-				String url = Utils.getLinkFromUrlFile(files[i]);
+				String url = Utils.getLinkFromUrlFile(file);
 
 				insertUpdateIntoDb(new Link(name, url));
 			}
