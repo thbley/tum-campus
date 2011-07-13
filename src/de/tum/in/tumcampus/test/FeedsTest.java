@@ -33,6 +33,8 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Hello World"));
 
 		// TODO add detailed test, test data
+		
+		// TODO add feed
 	}
 	
 	public void testFeedsContextMenu() {
