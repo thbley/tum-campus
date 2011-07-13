@@ -1,5 +1,7 @@
 package de.tum.in.tumcampus.test;
 
+import java.util.Date;
+
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
@@ -18,7 +20,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo = new Solo(getInstrumentation(), getActivity());
 	}
 
-	public void testFeeds() {
+	public void testFeedsList() {
 		assertTrue(solo.searchText("RSS-Feeds"));
 		solo.clickOnText("RSS-Feeds");
 
@@ -31,35 +33,44 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
-
-		// TODO add detailed test, test data
-		
-		// TODO add feed
 	}
-	
+
 	public void testFeedsContextMenu() {
 		assertTrue(solo.searchText("RSS-Feeds"));
 		solo.clickOnText("RSS-Feeds");
 
 		assertTrue(solo.searchText("Feed auswählen"));
 
+		assertTrue(solo.searchText("Spiegel"));
+		solo.clickOnText("Spiegel");
+
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Aktualisieren");
 		solo.sleep(10000);
+
+		solo.clickInList(0, 0);
+		solo.sleep(2000);
 	}
-	
-	public void testFeedsDelete() {
+
+	public void testAFeedsCreateDelete() {
 		assertTrue(solo.searchText("RSS-Feeds"));
 		solo.clickOnText("RSS-Feeds");
 
 		assertTrue(solo.searchText("Feed auswählen"));
 
-		assertTrue(solo.searchText("Heise"));
-		solo.clickLongOnText("Heise");
-		
+		solo.clickOnEditText(0);
+		String name = "some name " + new Date();
+		solo.enterText(0, "http://www.heise.de");
+		solo.enterText(1, name);
+
+		solo.clickOnText("Hinzufügen");
+
+		assertTrue(solo.searchText(name));
+		solo.clickLongOnText(name);
+
 		assertTrue(solo.searchButton("Ja"));
 		solo.clickOnText("Ja");
 
-		assertFalse(solo.searchText("Heise"));
+		assertFalse(solo.searchText(name));
 	}
 }
