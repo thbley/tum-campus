@@ -8,7 +8,7 @@ import de.tum.in.tumcampus.TumCampus;
 
 public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
-	private Solo solo; // simulates the user of the app, part of robotium
+	private Solo solo; // simulates the user of the app
 
 	public TumCampusTest() {
 		super("de.tum.in.tumcampus", TumCampus.class);
@@ -29,7 +29,6 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Veranstaltungen"));
 		assertTrue(solo.searchText("Links"));
 		assertTrue(solo.searchText("App-Info"));
-		assertTrue(solo.searchText("Debug"));
 	}
 
 	public void testRefresh() {
@@ -37,15 +36,13 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnText("Aktualisieren");
 
 		int duration = 0;
-		while (!solo.searchText("Fertig.") && duration <= 60) {
+		while (!solo.searchText("Fertig!") && duration <= 60) {
 			assertFalse(solo.searchText("Exception"));
 			solo.sleep(1000);
 			duration++;
 		}
-		assertTrue(solo.searchText("Aktualisiere: RSS, News, Veranstaltungen, "
-				+ "Mensen, Menus, Fertig."));
-
-		// TODO check filled sections?
+		assertTrue(solo.searchText("Aktualisiere: RSS Nachrichten "
+				+ "Veranstaltungen Mensen Fertig!"));
 	}
 
 	public void testClearCache() {
@@ -66,9 +63,5 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
-	}
-
-	public void testOptions() {
-		solo.clickOnText("Options");
 	}
 }
