@@ -1,7 +1,5 @@
 package de.tum.in.tumcampus.models;
 
-import static de.tum.in.tumcampus.models.Utils.readCsv;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
@@ -13,17 +11,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import de.tum.in.tumcampus.Const;
 
 public class LectureItemManager extends SQLiteOpenHelper {
-
-	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteDatabase db;
 
 	public static int lastInserted = 0;
 
+	public String lastInfo = "";
+
 	public LectureItemManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -34,10 +33,10 @@ public class LectureItemManager extends SQLiteOpenHelper {
 
 		int count = Utils.getCount(db, "lectures_items");
 
-		// TODO fix exceptions, db locking
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().endsWith(".csv")) {
+				lastInfo = files[i].getName();
 				importCsv(files[i], "ISO-8859-1");
 			}
 		}
@@ -48,7 +47,8 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	}
 
 	public void importCsv(File file, String encoding) throws Exception {
-		List<String[]> list = readCsv(new FileInputStream(file), encoding);
+		List<String[]> list = Utils
+				.readCsv(new FileInputStream(file), encoding);
 
 		if (list.size() == 0) {
 			return;
