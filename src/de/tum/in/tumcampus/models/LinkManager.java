@@ -6,17 +6,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import de.tum.in.tumcampus.Const;
 
 public class LinkManager extends SQLiteOpenHelper {
 
-	private static final int DATABASE_VERSION = 1;
-
 	private SQLiteDatabase db;
-	
+
 	public static int lastInserted = 0;
 
+	public String lastInfo = "";
+
 	public LinkManager(Context context, String database) {
-		super(context, database, null, DATABASE_VERSION);
+		super(context, database, null, Const.dbVersion);
 
 		db = this.getWritableDatabase();
 		onCreate(db);
@@ -25,11 +26,13 @@ public class LinkManager extends SQLiteOpenHelper {
 	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("links")).listFiles();
 
-		int count = Utils.getCount(db, "links");		
+		int count = Utils.getCount(db, "links");
+
 		db.beginTransaction();
 		for (int i = 0; i < files.length; i++) {
 			String filename = files[i].getName();
 			if (filename.toLowerCase().endsWith(".url")) {
+				lastInfo = files[i].getName();
 				String name = filename.substring(0, filename.length() - 4);
 				String url = Utils.getLinkFromUrlFile(files[i]);
 
@@ -38,7 +41,6 @@ public class LinkManager extends SQLiteOpenHelper {
 		}
 		db.setTransactionSuccessful();
 		db.endTransaction();
-		
 		lastInserted += Utils.getCount(db, "links") - count;
 	}
 
@@ -60,7 +62,7 @@ public class LinkManager extends SQLiteOpenHelper {
 
 	public void downloadMissingIcons() throws Exception {
 		checkExistingIcons();
-		
+
 		Cursor c = db.rawQuery("SELECT DISTINCT url FROM links WHERE icon=''",
 				null);
 
