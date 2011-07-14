@@ -72,10 +72,10 @@ public class ImportService extends IntentService {
 				if (action.equals("lectures")) {
 					importLectureItems();
 				}
+				message("Fertig!", "completed");
 			} catch (Exception e) {
 				message(e, "");
 			}
-			message("Fertig!", "completed");
 			nm.cancel(1);
 		}
 	}
