@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent" android:padding="6dip">
+
+	<Button android:text="Vorlesungen importieren" android:id="@+id/importLectures"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textColor="#FF2546A4" />
+
+	<Button android:text="Links importieren" android:id="@+id/importLinks"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textColor="#FF2546A4" />
+
+	<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textColor="#FF2546A4" android:layout_marginBottom="3dip" />
+
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="1px" android:background="#0065BD" />
 
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:textColor="#0065BD"
@@ -17,15 +32,8 @@
 		    speichern\n
 		    Datei evtl. mit Excel nachbearbeiten\n
 		4. USB-Speicher am Telefon deaktivieren\n
-		5. Hier auf 'Vorlesungen importieren' drücken\n
-		\n
-		Hinweis: vorhandene Daten werden nicht\n
-		gelöscht, aber ggf. überschrieben!"
-		android:layout_margin="6dip" />
-
-	<Button android:text="Vorlesungen importieren" android:id="@+id/importLectures"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_margin="6dip" android:textColor="#FF2546A4" />
+		5. Hier auf 'Vorlesungen importieren' drücken"
+		android:layout_margin="3dip" />
 
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="1px" android:background="#0065BD" />
@@ -39,15 +47,8 @@
 		    das Verzeichnis &lt;SD-Karte&gt;\\tumcampus\\links\n
 		    im Windows Explorer ziehen\n
 		4. USB-Speicher am Telefon deaktivieren\n
-		5. Hier auf 'Links importieren' drücken\n
-		\n
-		Hinweis: vorhandene Links werden nicht\n
-		gelöscht, aber ggf. überschrieben!"
-		android:layout_margin="6dip" />
-
-	<Button android:text="Links importieren" android:id="@+id/importLinks"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_margin="6dip" android:textColor="#FF2546A4" />
+		5. Hier auf 'Links importieren' drücken"
+		android:layout_margin="3dip" />
 
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="1px" android:background="#0065BD" />
@@ -62,13 +63,14 @@
 		    &lt;SD-Karte&gt;\\tumcampus\\rss\n
 		    im Windows Explorer ziehen\n
 		4. USB-Speicher am Telefon deaktivieren\n
-		5. Hier auf 'RSS-Feeds importieren' drücken\n
-		\n
-		Hinweis: vorhandene Feeds werden nicht\n
-		gelöscht, aber ggf. überschrieben!"
-		android:layout_margin="6dip" />
+		5. Hier auf 'RSS-Feeds importieren' drücken"
+		android:layout_margin="3dip" />
 
-	<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_margin="6dip" android:textColor="#FF2546A4" />
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="1px" android:background="#0065BD" />
+
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="Hinweis: vorhandene Daten werden nicht\ngelöscht, aber ggf. überschrieben!"
+		android:layout_margin="3dip" />
 </LinearLayout>
