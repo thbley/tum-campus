@@ -34,8 +34,6 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Links"));
 		solo.clickOnText("Links");
 
-		solo.scrollDownList(0);
-		
 		String name = "some name " + new Date();
 		solo.enterText(0, "http://www.heise.de");
 		solo.enterText(1, name);
