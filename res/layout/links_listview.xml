@@ -6,7 +6,7 @@
 
 	<ImageView android:id="@+id/icon" android:layout_width="40px"
 		android:scaleType="fitXY" android:layout_height="40px"
-		android:layout_gravity="center_vertical" android:src="@drawable/icon"
+		android:layout_gravity="center_vertical" android:src="@android:color/transparent"
 		android:layout_margin="6dip" />
 
 	<TextView android:id="@+id/name" android:textSize="30px"
