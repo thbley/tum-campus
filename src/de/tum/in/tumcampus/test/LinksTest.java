@@ -18,6 +18,7 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 	public void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
+		solo.scrollDown();
 	}
 
 	public void testLinksList() {
