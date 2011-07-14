@@ -374,15 +374,40 @@ public class Utils {
 		return str;
 	}
 
-	public static List<String[]> readCsv(InputStream fin, String encoding) {
+	/**
+	 * Splits a line from a CSV file into column values
+	 * 
+	 * e.g. "aaa;aaa";"bbb";1 gets aaa,aaa;bbb;1
+	 * 
+	 * @param str CSV line
+	 * @return CSV column values
+	 */
+	private static String[] splitCsvLine(String str) {
+		String result = "";
+		boolean open = false;
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (c == '"') {
+				open = !open;
+				continue;
+			}
+			if (open && c == ';') {
+				result += ",";
+			} else {
+				result += c;
+			}
+		}
+		return result.split(";");
+	}
+
+	public static List<String[]> readCsv(InputStream fin, String charset) {
 		List<String[]> list = new ArrayList<String[]>();
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(fin,
-					encoding));
+					charset));
 			String reader = "";
 			while ((reader = in.readLine()) != null) {
-				// TODO fix splitting
-				list.add(reader.replaceAll("\"", "").split(";"));
+				list.add(splitCsvLine(reader));
 			}
 			in.close();
 		} catch (Exception e) {
