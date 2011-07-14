@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -332,8 +333,8 @@ public class Utils {
 	public static Date getDateTimeRfc822(String str) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(
-					"d MMM yy HH:mm:ss");
-			return dateFormat.parse(str.substring(5));
+					"EEE, dd MMM yyyy HH:mm:ss", Locale.US);
+			return dateFormat.parse(str);
 		} catch (Exception e) {
 			Log(e, str);
 		}
