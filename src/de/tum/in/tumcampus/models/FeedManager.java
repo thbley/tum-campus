@@ -74,7 +74,7 @@ public class FeedManager extends SQLiteOpenHelper {
 		return list;
 	}
 
-	public void insertUpdateIntoDb(Feed n) throws Exception {
+	public int insertUpdateIntoDb(Feed n) throws Exception {
 		Utils.Log(n.toString());
 
 		if (n.name.length() == 0) {
@@ -90,15 +90,20 @@ public class FeedManager extends SQLiteOpenHelper {
 		if (c.moveToNext()) {
 			db.execSQL("UPDATE feeds SET name=?, feedUrl=? WHERE id=?",
 					new String[] { n.name, n.feedUrl, c.getString(0) });
-
+			return c.getInt(0);
 		} else {
 			db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)",
 					new String[] { n.name, n.feedUrl });
+
+			c = db.rawQuery("SELECT last_insert_rowid()", null);
+			c.moveToNext();
+			return c.getInt(0);
 		}
 	}
 
-	public void deleteFromDb(String id) {
-		db.execSQL("DELETE FROM feeds WHERE id = ?", new String[] { id });
+	public void deleteFromDb(int id) {
+		db.execSQL("DELETE FROM feeds WHERE id = ?",
+				new String[] { String.valueOf(id) });
 	}
 
 	public void onCreate(SQLiteDatabase db) {
