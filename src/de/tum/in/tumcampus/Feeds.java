@@ -145,7 +145,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 			public void onClick(DialogInterface dialog, int id) {
 
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
-				String _id = c.getString(c.getColumnIndex("_id"));
+				int _id = c.getInt(c.getColumnIndex("_id"));
 
 				FeedManager fm = new FeedManager(av.getContext(), Const.db);
 				fm.deleteFromDb(_id);
