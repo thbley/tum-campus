@@ -74,7 +74,7 @@ public class Links extends Activity implements OnItemClickListener,
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
-				String _id = c.getString(c.getColumnIndex("_id"));
+				int _id = c.getInt(c.getColumnIndex("_id"));
 
 				LinkManager lm = new LinkManager(av.getContext(), Const.db);
 				lm.deleteFromDb(_id);
