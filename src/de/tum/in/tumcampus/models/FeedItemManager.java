@@ -144,7 +144,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 				"INSERT INTO feeds_items (feedId, title, link, description, "
 						+ "date, image) VALUES (?, ?, ?, ?, ?, ?)",
 				new String[] { String.valueOf(n.feedId), n.title, n.link,
-						n.description, Utils.getDateString(n.date), n.image });
+						n.description, Utils.getDateTimeString(n.date), n.image });
 	}
 
 	public void removeCache() {
