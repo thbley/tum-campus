@@ -126,7 +126,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 					json.getString("description").replaceAll("\\<.*?\\>", ""))
 					.toString();
 		}
-		return new FeedItem(feedId, json.getString("title"),
+		return new FeedItem(feedId, json.getString("title").replaceAll("\n", ""),
 				json.getString("link"), description, pubDate, target);
 	}
 
