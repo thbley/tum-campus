@@ -55,7 +55,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		super.tearDown();
 	}
 
-	private void testFeedsList() {
+	public void testFeedsList() {
 		assertTrue(solo.searchText("RSS-Feeds"));
 		solo.clickOnText("RSS-Feeds");
 
@@ -72,7 +72,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Hello World"));
 	}
 
-	private void testFeedsContextMenu() {
+	public void testFeedsContextMenu() {
 		assertTrue(solo.searchText("RSS-Feeds"));
 		solo.clickOnText("RSS-Feeds");
 
