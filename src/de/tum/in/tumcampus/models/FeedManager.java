@@ -32,9 +32,10 @@ public class FeedManager extends SQLiteOpenHelper {
 
 		db.beginTransaction();
 		for (File file : files) {
-			if (file.getName().endsWith(".URL")) {
-				lastInfo = file.getName();
-				String name = file.getName().replace(".URL", "");
+			String filename = file.getName();
+			if (filename.toLowerCase().endsWith(".url")) {
+				lastInfo = filename;
+				String name = filename.substring(0, filename.length() - 4);
 				String url = Utils.getLinkFromUrlFile(file);
 
 				insertUpdateIntoDb(new Feed(name, url));
