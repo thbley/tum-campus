@@ -35,8 +35,9 @@ public class LectureItemManager extends SQLiteOpenHelper {
 
 		db.beginTransaction();
 		for (File file : files) {
-			if (file.getName().endsWith(".csv")) {
-				lastInfo = file.getName();
+			String filename = file.getName();
+			if (filename.toLowerCase().endsWith(".csv")) {
+				lastInfo = filename;
 				importCsv(file, "ISO-8859-1");
 			}
 		}
