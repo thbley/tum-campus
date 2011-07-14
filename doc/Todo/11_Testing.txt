@@ -7,6 +7,7 @@ Die einzelnen Nutzeraktionen sollen mit Oberflächentests simuliert und geprüft w
 Anmerkungen:
 Toast-Fehlermeldungen nicht prüfbar
 Robotium Test schlagen manchmal fehl => erneut starten
+Robotium Test führen falsche Aktionen aus (z.B. Klick auf Links öffnet Vorlesungen)
 Langsame Downloads (20 Event-Bilder = 10s bei Facebook)
 
 TODO:
