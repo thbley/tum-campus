@@ -32,7 +32,7 @@ public class LinkManager extends SQLiteOpenHelper {
 		for (File file : files) {
 			String filename = file.getName();
 			if (filename.toLowerCase().endsWith(".url")) {
-				lastInfo = file.getName();
+				lastInfo = filename;
 				String name = filename.substring(0, filename.length() - 4);
 				String url = Utils.getLinkFromUrlFile(file);
 
