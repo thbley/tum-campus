@@ -11,6 +11,8 @@ import de.tum.in.tumcampus.models.Utils;
 
 public class SilenceService extends IntentService {
 
+	public static int interval = 60000;
+	
 	public SilenceService() {
 		super("SilenceService");
 	}
@@ -35,7 +37,7 @@ public class SilenceService extends IntentService {
 
 			synchronized (this) {
 				try {
-					wait(60000);
+					wait(interval);
 				} catch (Exception e) {
 					Utils.Log(e, "");
 				}
