@@ -44,8 +44,7 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 	public void tearDown() throws Exception {
 		// remove test data
-		LectureItemManager lim = new LectureItemManager(
-				solo.getCurrentActivity(), Const.db);
+		LectureItemManager lim = new LectureItemManager(getActivity(), Const.db);
 		lim.deleteLectureFromDb("T1");
 		lim.deleteLectureFromDb("TH1");
 		lim.close();
