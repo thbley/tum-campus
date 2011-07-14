@@ -3,7 +3,6 @@ package de.tum.in.tumcampus.test;
 import java.util.Date;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.ListView;
 
 import com.jayway.android.robotium.solo.Solo;
 
