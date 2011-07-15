@@ -24,7 +24,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	public LectureItemManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
-		db = this.getWritableDatabase();
+		db = getWritableDatabase();
 		onCreate(db);
 	}
 
