@@ -55,7 +55,7 @@ public class ImportService extends IntentService {
 			PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 					new Intent(this, TumCampus.class), 0);
 
-			notification.setLatestEventInfo(this, "TumCampus import ...", "",
+			notification.setLatestEventInfo(this, "TUMCampus import ...", "",
 					contentIntent);
 			nm.notify(1, notification);
 
