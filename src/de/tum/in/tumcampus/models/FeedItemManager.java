@@ -19,7 +19,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	private SQLiteDatabase db;
 
 	public static int lastInserted = 0;
-	
+
 	public String lastInfo = "";
 
 	public FeedItemManager(Context context, String database) {
@@ -45,14 +45,26 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		feed.close();
 
 		lastInfo = feedUrl;
-
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String query = URLEncoder
 				.encode("SELECT title, link, description, pubDate, enclosure.url "
 						+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
 
-		Object obj = Utils.downloadJson(baseUrl + query).getJSONObject("query")
-				.getJSONObject("results").get("item");
+		JSONObject jsonObj = Utils.downloadJson(baseUrl + query).getJSONObject(
+				"query");
+
+		// TODO check again
+		if (jsonObj.isNull("results")) {
+			String url = Utils.getRssLinkFromUrl(feedUrl);
+
+			if (!url.equals(feedUrl)) {
+				db.execSQL("UPDATE feeds SET feedUrl=? WHERE id = ?",
+						new String[] { url, String.valueOf(id) });
+				downloadFromExternal(id, force);
+				return;
+			}
+		}
+		Object obj = jsonObj.getJSONObject("results").get("item");
 
 		JSONArray jsonArray = new JSONArray();
 		if (obj instanceof JSONArray) {
@@ -126,8 +138,9 @@ public class FeedItemManager extends SQLiteOpenHelper {
 					json.getString("description").replaceAll("\\<.*?\\>", ""))
 					.toString();
 		}
-		return new FeedItem(feedId, json.getString("title").replaceAll("\n", ""),
-				json.getString("link"), description, pubDate, target);
+		return new FeedItem(feedId, json.getString("title")
+				.replaceAll("\n", ""), json.getString("link"), description,
+				pubDate, target);
 	}
 
 	public void insertIntoDb(FeedItem n) throws Exception {
