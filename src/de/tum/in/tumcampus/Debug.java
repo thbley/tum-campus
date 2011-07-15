@@ -64,7 +64,7 @@ public class Debug extends Activity implements View.OnClickListener {
 	public void DebugSQL(String query) {
 		DebugReset();
 		SQLiteDatabase db = SQLiteDatabase.openDatabase(
-				this.getDatabasePath(Const.db).toString(), null,
+				getDatabasePath(Const.db).toString(), null,
 				SQLiteDatabase.OPEN_READONLY);
 
 		Cursor c = db.rawQuery(query, null);
