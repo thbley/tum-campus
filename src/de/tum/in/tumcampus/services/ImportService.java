@@ -199,7 +199,7 @@ public class ImportService extends IntentService {
 		intentSend.setAction(broadcast);
 		intentSend.putExtra("message", message);
 		intentSend.putExtra("action", action);
-		this.sendBroadcast(intentSend);
+		sendBroadcast(intentSend);
 	}
 
 	@Override
