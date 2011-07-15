@@ -1,2 +1,3 @@
 Bewertungssystem für die Mensa bzw. einzelne Gerichte, siehe:
 http://www.infler.de/forum/viewtopic.php?t=8140
+https://market.android.com/details?id=de.quist.app.mymensa&feature=related_apps
