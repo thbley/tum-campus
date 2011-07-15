@@ -24,7 +24,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	public CafeteriaMenuManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
-		db = this.getWritableDatabase();
+		db = getWritableDatabase();
 		onCreate(db);
 	}
 
@@ -65,7 +65,6 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			db.setTransactionSuccessful();
 			db.endTransaction();
 		}
-
 		SyncManager.replaceIntoDb(db, this);
 
 		lastInserted += Utils.getCount(db, "cafeterias_menus") - count;
