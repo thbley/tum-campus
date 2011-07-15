@@ -2,6 +2,7 @@ package de.tum.in.tumcampus.models;
 
 import java.io.File;
 
+import android.R;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -122,8 +123,9 @@ public class LinkManager extends SQLiteOpenHelper {
 		Utils.emptyCacheDir("links/cache");
 	}
 
-	public void deleteFromDb(String id) {
-		db.execSQL("DELETE FROM links WHERE id = ?", new String[] { id });
+	public void deleteFromDb(int id) {
+		db.execSQL("DELETE FROM links WHERE id = ?",
+				new String[] { String.valueOf(id) });
 	}
 
 	public void onCreate(SQLiteDatabase db) {
