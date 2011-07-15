@@ -33,7 +33,7 @@ public class EventsDetails extends Activity {
 			infos += c.getString(c.getColumnIndex("link"));
 
 			TextView tv = (TextView) findViewById(R.id.infos);
-			tv.setText(infos);
+			tv.setText(infos.trim());
 
 			tv = (TextView) findViewById(R.id.description);
 			tv.setText(description);
