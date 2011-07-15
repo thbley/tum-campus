@@ -25,7 +25,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	public FeedItemManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
-		db = this.getWritableDatabase();
+		db = getWritableDatabase();
 		onCreate(db);
 	}
 
