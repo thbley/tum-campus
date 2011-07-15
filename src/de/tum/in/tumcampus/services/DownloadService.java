@@ -127,7 +127,7 @@ public class DownloadService extends IntentService {
 				break;
 			}
 			try {
-				nim.downloadFromExternal(id, force);
+				nim.downloadFromExternal(id, false, force);
 			} catch (Exception e) {
 				message(e, nim.lastInfo);
 			}
@@ -211,7 +211,7 @@ public class DownloadService extends IntentService {
 		intentSend.setAction(broadcast);
 		intentSend.putExtra("message", this.message);
 		intentSend.putExtra("action", action);
-		this.sendBroadcast(intentSend);
+		sendBroadcast(intentSend);
 	}
 
 	@Override
