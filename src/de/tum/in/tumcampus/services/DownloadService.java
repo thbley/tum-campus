@@ -82,7 +82,7 @@ public class DownloadService extends IntentService {
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				new Intent(this, TumCampus.class), 0);
 
-		notification.setLatestEventInfo(this, "TumCampus download ...", "",
+		notification.setLatestEventInfo(this, "TUMCampus download ...", "",
 				contentIntent);
 		nm.notify(1, notification);
 
