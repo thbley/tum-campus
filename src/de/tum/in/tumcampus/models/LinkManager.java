@@ -2,7 +2,6 @@ package de.tum.in.tumcampus.models;
 
 import java.io.File;
 
-import android.R;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
