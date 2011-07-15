@@ -73,6 +73,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		b = (Button) findViewById(R.id.initial);
 		b.setOnClickListener(this);
 
+		FeedItemManager fim = new FeedItemManager(this, Const.db);
+		if (fim.empty()) {
+			b.setVisibility(View.VISIBLE);
+		} else {
+			b.setVisibility(View.GONE);
+		}
+		fim.close();
+
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(ImportService.broadcast);
 		intentFilter.addAction(DownloadService.broadcast);
@@ -94,15 +102,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	protected void onResume() {
 		super.onResume();
 
-		Button b = (Button) findViewById(R.id.initial);
-		FeedItemManager fim = new FeedItemManager(this, Const.db);
-		if (fim.empty()) {
-			b.setVisibility(View.VISIBLE);
-		} else {
-			b.setVisibility(View.GONE);
-		}
-		fim.close();
-
 		SimpleAdapter adapter = new SimpleAdapter(this, buildMenu(),
 				R.layout.main_listview,
 				new String[] { "icon", "name", "icon2" }, new int[] {
@@ -114,7 +113,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		String conn = getConnection();
 
-		b = (Button) findViewById(R.id.refresh);
+		Button b = (Button) findViewById(R.id.refresh);
 		TextView tv = (TextView) findViewById(R.id.hello);
 
 		if (conn.length() > 0) {
@@ -310,13 +309,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 				if (action.equals("completed")) {
 					syncing = false;
-					// TODO fix
-					onResume();
 				}
 				if (message.length() > 0) {
 					TextView tv = (TextView) findViewById(R.id.hello);
 					tv.setText(message);
 				}
+				onResume();
 			}
 			if (intent.getAction().equals(ImportService.broadcast)) {
 				String message = intent.getStringExtra("message");
