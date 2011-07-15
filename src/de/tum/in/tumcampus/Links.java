@@ -15,12 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.Toast;
 import de.tum.in.tumcampus.models.Link;
 import de.tum.in.tumcampus.models.LinkManager;
 
 public class Links extends Activity implements OnItemClickListener,
-		OnItemLongClickListener, View.OnClickListener {
+		OnItemLongClickListener, View.OnClickListener, ViewBinder {
 
 	SimpleCursorAdapter adapter;
 
@@ -34,6 +35,7 @@ public class Links extends Activity implements OnItemClickListener,
 
 		adapter = new SimpleCursorAdapter(this, R.layout.links_listview, c,
 				c.getColumnNames(), new int[] { R.id.icon, R.id.name });
+		adapter.setViewBinder(this);
 
 		View view = getLayoutInflater().inflate(R.layout.links_footer, null,
 				false);
@@ -113,5 +115,19 @@ public class Links extends Activity implements OnItemClickListener,
 
 		editName.setText("");
 		editUrl.setText("");
+	}
+
+	@Override
+	public boolean setViewValue(View view, Cursor cursor, int index) {
+		// hide empty view elements
+		if (cursor.getString(index).length() == 0) {
+			view.setVisibility(View.GONE);
+
+			// no binding needed
+			return true;
+		} else {
+			view.setVisibility(View.VISIBLE);
+		}
+		return false;
 	}
 }
