@@ -29,7 +29,8 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public void downloadFromExternal(int id, boolean force) throws Exception {
+	public void downloadFromExternal(int id, boolean retry, boolean force)
+			throws Exception {
 		String syncId = "feeditem" + id;
 		if (!force && !SyncManager.needSync(db, syncId, 900)) {
 			return;
@@ -53,14 +54,13 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		JSONObject jsonObj = Utils.downloadJson(baseUrl + query).getJSONObject(
 				"query");
 
-		// TODO check again
-		if (jsonObj.isNull("results")) {
+		if (jsonObj.isNull("results") && !retry) {
 			String url = Utils.getRssLinkFromUrl(feedUrl);
 
 			if (!url.equals(feedUrl)) {
 				db.execSQL("UPDATE feeds SET feedUrl=? WHERE id = ?",
 						new String[] { url, String.valueOf(id) });
-				downloadFromExternal(id, force);
+				downloadFromExternal(id, true, force);
 				return;
 			}
 		}
