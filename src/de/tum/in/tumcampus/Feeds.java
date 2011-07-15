@@ -179,12 +179,12 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		EditText editName = (EditText) findViewById(R.id.name);
 		EditText editUrl = (EditText) findViewById(R.id.url);
 
+		String name = editName.getText().toString();
 		String url = editUrl.getText().toString();
+
 		if (url.length() > 0 && !url.contains(":")) {
 			url = "http://" + url;
 		}
-		String name = editName.getText().toString();
-
 		FeedManager fm = new FeedManager(this, Const.db);
 		try {
 			Feed feed = new Feed(name, url);
