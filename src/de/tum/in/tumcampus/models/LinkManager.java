@@ -19,7 +19,7 @@ public class LinkManager extends SQLiteOpenHelper {
 	public LinkManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
-		db = this.getWritableDatabase();
+		db = getWritableDatabase();
 		onCreate(db);
 	}
 
