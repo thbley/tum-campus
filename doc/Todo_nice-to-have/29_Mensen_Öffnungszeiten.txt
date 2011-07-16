@@ -1,2 +1,2 @@
-Anzeige der Essensausgabezeiten der jeweiligen Mensa
+﻿Anzeige der Essensausgabezeiten der jeweiligen Mensa
 http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/garching/

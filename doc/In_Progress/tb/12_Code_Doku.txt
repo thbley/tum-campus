@@ -1,1 +1,1 @@
-Code dokumentieren mit JavaDoc
+﻿Code dokumentieren mit JavaDoc
