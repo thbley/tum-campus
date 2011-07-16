@@ -27,9 +27,24 @@ import de.tum.in.tumcampus.services.DownloadService;
  */
 public class Cafeterias extends Activity implements OnItemClickListener {
 
+	/**
+	 * Current Date selected (ISO format)
+	 */
 	private String date;
+
+	/**
+	 * Current Date selected (German format)
+	 */
 	private String dateStr;
+
+	/**
+	 * Current Cafeteria selected
+	 */
 	private String cafeteriaId;
+
+	/**
+	 * Current Cafeteria name selected
+	 */
 	private String cafeteriaName;
 
 	@Override
