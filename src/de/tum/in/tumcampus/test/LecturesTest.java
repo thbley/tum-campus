@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.test;
+ï»¿package de.tum.in.tumcampus.test;
 
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
@@ -75,7 +75,7 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Vorlesungen"));
 		solo.clickOnText("Vorlesungen");
 
-		assertTrue(solo.searchText("Nächste Vorlesungen"));
+		assertTrue(solo.searchText("NÃ¤chste Vorlesungen"));
 
 		assertTrue(solo.searchText("CSCW"));
 		solo.clickOnText("CSCW");
@@ -110,7 +110,7 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 	}
 
 	private void _testLectures() {
-		assertTrue(solo.searchText("Nächste Vorlesungen"));
+		assertTrue(solo.searchText("NÃ¤chste Vorlesungen"));
 
 		assertTrue(solo.searchText("Feiertag"));
 		solo.clickOnText("Feiertag");

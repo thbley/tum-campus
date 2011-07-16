@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.test;
+﻿package de.tum.in.tumcampus.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -22,7 +22,7 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Hello World"));
 		assertTrue(solo.searchText("Aktualisieren"));
 		assertTrue(solo.searchText("Vorlesungen"));
-		assertTrue(solo.searchText("Speisepl�ne"));
+		assertTrue(solo.searchText("Speisepläne"));
 		assertTrue(solo.searchText("MVV"));
 		assertTrue(solo.searchText("Nachrichten"));
 		assertTrue(solo.searchText("RSS-Feeds"));
