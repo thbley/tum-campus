@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.EventManager;
 
+/**
+ * Activity to show event details (name, location, image, description, etc.)
+ */
 public class EventsDetails extends Activity {
 
 	@Override
@@ -15,6 +18,7 @@ public class EventsDetails extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events_details);
 
+		// get event details from db
 		EventManager em = new EventManager(this, Const.db);
 		Cursor c = em.getFromDb(getIntent().getStringExtra("id"));
 
@@ -26,6 +30,12 @@ public class EventsDetails extends Activity {
 
 			setTitle(c.getString(c.getColumnIndex("name")));
 
+			/*
+			 * show infos as:
+			 * Week-day, Start, End
+			 * location
+			 * link
+			 */
 			String infos = weekDays[c.getInt(c.getColumnIndex("weekday"))];
 			infos += ", " + c.getString(c.getColumnIndex("start_de")) + " - "
 					+ c.getString(c.getColumnIndex("end_de")) + "\n";
@@ -41,6 +51,7 @@ public class EventsDetails extends Activity {
 			ImageView iv = (ImageView) findViewById(R.id.image);
 			iv.setImageURI(Uri.parse(image));
 
+			// resize image: 350 x height adapted in aspect ratio
 			if (iv.getDrawable() != null) {
 				double ratio = (double) iv.getDrawable().getIntrinsicWidth()
 						/ (double) iv.getDrawable().getIntrinsicHeight();
