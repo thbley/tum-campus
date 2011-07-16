@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus;
+ï»¿package de.tum.in.tumcampus;
 
 import java.util.Calendar;
 
@@ -147,8 +147,8 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
 		menu.add(0, Menu.FIRST + 1, 0, "Einstellungen");
 		menu.add(0, Menu.FIRST + 2, 0, "Preise");
-		menu.add(0, Menu.FIRST + 3, 0, "Öffnungszeiten Garching");
-		menu.add(0, Menu.FIRST + 4, 0, "Öffnungszeiten München");
+		menu.add(0, Menu.FIRST + 3, 0, "Ã–ffnungszeiten Garching");
+		menu.add(0, Menu.FIRST + 4, 0, "Ã–ffnungszeiten MÃ¼nchen");
 		return true;
 	}
 

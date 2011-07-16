@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus;
+﻿package de.tum.in.tumcampus;
 
 import static de.tum.in.tumcampus.services.DownloadService.broadcast;
 import android.app.Activity;
@@ -154,7 +154,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 			}
 		};
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Wirklch l�schen?");
+		builder.setMessage("Wirklch löschen?");
 		builder.setPositiveButton("Ja", listener);
 		builder.setNegativeButton("Nein", null);
 		builder.show();
