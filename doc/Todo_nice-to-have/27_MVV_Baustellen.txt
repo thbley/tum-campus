@@ -1,1 +1,1 @@
-MVV-Baustellenhinweise: Integration der Baustellenhinweise (http://www.mvg-mobil.de/betriebsaenderungen/index.html)
+﻿MVV-Baustellenhinweise: Integration der Baustellenhinweise (http://www.mvg-mobil.de/betriebsaenderungen/index.html)

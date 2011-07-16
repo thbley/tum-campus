@@ -1,1 +1,1 @@
-[9] App-Info: Über einen Info-Button wird dem Nutzer eine kurze Zusammenfassung über die App sowie ein Impressum angezeigt.
+ï»¿[9] App-Info: Ãœber einen Info-Button wird dem Nutzer eine kurze Zusammenfassung Ã¼ber die App sowie ein Impressum angezeigt.

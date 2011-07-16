@@ -1,4 +1,4 @@
-Initialisierung
+﻿Initialisierung
 	12.5.2011				Kickoff-Meeting, Vorstellung Projektidee
 Analyse
 	12.5.  -  22.5.			Erstellung Pflichtenheft

@@ -1,11 +1,11 @@
-Benutzeroberfläche anlegen: Hauptmenü, Info, Settings, Nachrichten, Untermenüs, usw.
+ï»¿BenutzeroberflÃ¤che anlegen: HauptmenÃ¼, Info, Settings, Nachrichten, UntermenÃ¼s, usw.
 
 Umsetzung:
-Die Oberfläche soll übersichtlich und leicht zu bedienen sein. Das Design soll auf den ersten Blick Assoziationen zur TUM wecken. Um dies zu gewährleisten, werden in erster Linie die Farben blau und weiß verwendet.
-Die Abbildung 1 soll hier beispielhaft einen Eindruck vom Hauptmenü vermitteln. Die finale App wird anders aussehen.
-Das Design ist leicht durch Einfügen neuer Funktionen erweiterbar. Angestrebt wird ein Freibereich auf der rechten Seite. Dieser Bereich soll ein „gefahrloses Scrollen“ ermöglichen, vergleichbar mit dem Startbildschirm von Windows Phone 7. Scrollt man mit dem Finger auf diesen Bereich, klickt man nicht versehentlich etwas an.
+Die OberflÃ¤che soll Ã¼bersichtlich und leicht zu bedienen sein. Das Design soll auf den ersten Blick Assoziationen zur TUM wecken. Um dies zu gewÃ¤hrleisten, werden in erster Linie die Farben blau und weiÃŸ verwendet.
+Die Abbildung 1 soll hier beispielhaft einen Eindruck vom HauptmenÃ¼ vermitteln. Die finale App wird anders aussehen.
+Das Design ist leicht durch EinfÃ¼gen neuer Funktionen erweiterbar. Angestrebt wird ein Freibereich auf der rechten Seite. Dieser Bereich soll ein â€gefahrloses Scrollenâ€œ ermÃ¶glichen, vergleichbar mit dem Startbildschirm von Windows Phone 7. Scrollt man mit dem Finger auf diesen Bereich, klickt man nicht versehentlich etwas an.
 In der Kopfzeile befinden sich das Logo und der Name der App.
-Das Hauptmenü soll einen Überblick über die wichtigsten Funktionen verschaffen. Optimalerweise ergänzen sich dafür kleine Logos mit den Namen der Funktionen.
-Die erste Funktion oben ist die Preferred Action (siehe 2.2). Möglicherweise wird diese von den Anderen optisch abgehoben.
-In der Fußzeile werden die Basisfunktionen Nachrichten, Info und Einstellungen dargestellt.
-Bei der Integration aller Funktionen soll auf eine möglichst einheitliche Menüführung geachtet werden, die den Anforderungen des Designs und der unterschiedlichen Funktionalitäten gerecht wird. Nach Möglichkeit sollten dabei kaum tief verschachtelte Menüs auftreten.
+Das HauptmenÃ¼ soll einen Ãœberblick Ã¼ber die wichtigsten Funktionen verschaffen. Optimalerweise ergÃ¤nzen sich dafÃ¼r kleine Logos mit den Namen der Funktionen.
+Die erste Funktion oben ist die Preferred Action (siehe 2.2). MÃ¶glicherweise wird diese von den Anderen optisch abgehoben.
+In der FuÃŸzeile werden die Basisfunktionen Nachrichten, Info und Einstellungen dargestellt.
+Bei der Integration aller Funktionen soll auf eine mÃ¶glichst einheitliche MenÃ¼fÃ¼hrung geachtet werden, die den Anforderungen des Designs und der unterschiedlichen FunktionalitÃ¤ten gerecht wird. Nach MÃ¶glichkeit sollten dabei kaum tief verschachtelte MenÃ¼s auftreten.

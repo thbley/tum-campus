@@ -1,1 +1,1 @@
-Benutzerhandbuch: Bereitstellung des Benutzerhandbuches im HTML-Format
+﻿Benutzerhandbuch: Bereitstellung des Benutzerhandbuches im HTML-Format

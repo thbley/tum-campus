@@ -1,4 +1,4 @@
-Anzeige der Preise zum jeweiligen Gericht
+﻿Anzeige der Preise zum jeweiligen Gericht
 http://www.studentenwerk-muenchen.de/mensa/unsere-preise/
 
 http://lu32kap.typo3.lrz.de/mensaapp/js/main.js

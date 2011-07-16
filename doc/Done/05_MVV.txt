@@ -1,7 +1,7 @@
-[5] MVV: Innerhalb der Android-Anwendung sollen die aktuellen Abfahrtszeiten für bestimmte Haltestellen aus dem MVV-Bereich angezeigt werden. Der Benutzer soll neben „Garching-Forschungszentrum“ weitere Haltestellen eintragen können. Die aktuellen Daten werden über die Webseite mobil.mvg-live.de gelesen und dargestellt. Es werden jeweils Linie, Zielhaltestelle der Linie und verbleibende Abfahrtszeit in Minuten angezeigt. Beispiel: aktuelle Abfahrtszeiten für Garching-Forschungszentrum
+ï»¿[5] MVV: Innerhalb der Android-Anwendung sollen die aktuellen Abfahrtszeiten fÃ¼r bestimmte Haltestellen aus dem MVV-Bereich angezeigt werden. Der Benutzer soll neben â€žGarching-Forschungszentrumâ€œ weitere Haltestellen eintragen kÃ¶nnen. Die aktuellen Daten werden Ã¼ber die Webseite mobil.mvg-live.de gelesen und dargestellt. Es werden jeweils Linie, Zielhaltestelle der Linie und verbleibende Abfahrtszeit in Minuten angezeigt. Beispiel: aktuelle Abfahrtszeiten fÃ¼r Garching-Forschungszentrum
 
 User Story:
-Als ein Informatik-Student der TUM möchte ich schnell die nächste U-Bahn nachschauen, damit ich pünktlich losgehe.
+Als ein Informatik-Student der TUM mÃ¶chte ich schnell die nÃ¤chste U-Bahn nachschauen, damit ich pÃ¼nktlich losgehe.
 
 Umsetzung:
 [5] MVV: (Yahoo! Query Language)
