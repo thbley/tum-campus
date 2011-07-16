@@ -17,6 +17,9 @@ import android.widget.TextView;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.services.DownloadService;
 
+/**
+ * Activity to show events (name, location, image, etc.)
+ */
 public class Events extends Activity implements OnItemClickListener, ViewBinder {
 
 	@Override
@@ -24,6 +27,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events);
 
+		// get toast feedback and resume activity
 		registerReceiver(DownloadService.receiver, new IntentFilter(
 				DownloadService.broadcast));
 	}
@@ -38,6 +42,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 	protected void onResume() {
 		super.onResume();
 
+		// get current and upcoming events from database
 		EventManager em = new EventManager(this, Const.db);
 		Cursor c = em.getNextFromDb();
 
@@ -50,8 +55,8 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 
+		// get past events from database
 		c = em.getPastFromDb();
-
 		adapter = new SimpleCursorAdapter(this, R.layout.events_listview, c,
 				c.getColumnNames(), new int[] { R.id.icon, R.id.name,
 						R.id.infos });
@@ -62,6 +67,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		lv2.setOnItemClickListener(this);
 		em.close();
 
+		// reset new items counter
 		EventManager.lastInserted = 0;
 	}
 
@@ -69,6 +75,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
 		Cursor c = (Cursor) av.getAdapter().getItem(position);
 
+		// open event details when clicking an event in the list
 		Intent intent = new Intent(this, EventsDetails.class);
 		intent.putExtra("id", c.getString(c.getColumnIndex("_id")));
 		startActivity(intent);
@@ -77,9 +84,10 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 	@Override
 	public boolean setViewValue(View view, Cursor c, int index) {
 
-		String[] weekDays = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
-
+		// Show event info text as: Week-Day, Start, End<line-break>location
 		if (view.getId() == R.id.infos) {
+			String[] weekDays = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
+
 			TextView infos = (TextView) view;
 			infos.setText(weekDays[c.getInt(c.getColumnIndex("weekday"))]
 					+ ", " + c.getString(c.getColumnIndex("start_de")) + " - "
@@ -97,6 +105,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// download latest events
 		Intent service = new Intent(this, DownloadService.class);
 		service.putExtra("action", "events");
 		startService(service);
