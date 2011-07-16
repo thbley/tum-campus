@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.receivers;
+﻿package de.tum.in.tumcampus.receivers;
 
 import de.tum.in.tumcampus.services.SilenceService;
 import android.content.BroadcastReceiver;
