@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.test;
+﻿package de.tum.in.tumcampus.test;
 
 import java.util.Date;
 
@@ -39,7 +39,7 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.enterText(0, "http://www.heise.de");
 		solo.enterText(1, name);
 
-		solo.clickOnText("Hinzuf�gen");
+		solo.clickOnText("Hinzufügen");
 
 		assertTrue(solo.searchText(name));
 		solo.clickLongOnText(name);

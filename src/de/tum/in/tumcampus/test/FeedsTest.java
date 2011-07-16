@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.test;
+Ôªøpackage de.tum.in.tumcampus.test;
 
 import java.util.Date;
 
@@ -58,7 +58,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("RSS-Feeds"));
 		solo.clickOnText("RSS-Feeds");
 
-		assertTrue(solo.searchText("Feed ausw‰hlen"));
+		assertTrue(solo.searchText("Feed ausw√§hlen"));
 
 		assertTrue(solo.searchText("Test feed"));
 		solo.clickOnText("Test feed");
@@ -75,7 +75,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("RSS-Feeds"));
 		solo.clickOnText("RSS-Feeds");
 
-		assertTrue(solo.searchText("Feed ausw‰hlen"));
+		assertTrue(solo.searchText("Feed ausw√§hlen"));
 
 		assertTrue(solo.searchText("Spiegel"));
 		solo.clickOnText("Spiegel");
@@ -92,7 +92,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("RSS-Feeds"));
 		solo.clickOnText("RSS-Feeds");
 
-		assertTrue(solo.searchText("Feed ausw‰hlen"));
+		assertTrue(solo.searchText("Feed ausw√§hlen"));
 
 		// scrollDown not working here
 		solo.drag(200, 200, 600, 200, 40);
@@ -101,7 +101,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.enterText(0, "http://www.heise.de");
 		solo.enterText(1, name);
 
-		solo.clickOnText("Hinzuf¸gen");
+		solo.clickOnText("Hinzuf√ºgen");
 
 		assertTrue(solo.searchText(name));
 		solo.clickLongOnText(name);

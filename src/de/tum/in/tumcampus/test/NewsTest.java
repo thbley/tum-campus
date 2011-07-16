@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.test;
+ï»¿package de.tum.in.tumcampus.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -59,7 +59,7 @@ public class NewsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Testing"));
 		assertTrue(solo.searchText("04.07.2011"));
 
-		assertTrue(solo.searchText("Öffnungszeit"));
-		solo.clickOnText("Öffnungszeit");
+		assertTrue(solo.searchText("Ã–ffnungszeit"));
+		solo.clickOnText("Ã–ffnungszeit");
 	}
 }

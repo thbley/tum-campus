@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.test;
+ï»¿package de.tum.in.tumcampus.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -62,12 +62,12 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnText("Aktualisieren");
 		solo.sleep(10000);
 
-		assertTrue(solo.searchText("Rückmeldung für Wintersemester"));
+		assertTrue(solo.searchText("RÃ¼ckmeldung fÃ¼r Wintersemester"));
 		assertTrue(solo.searchText("Mo, 15.08.2011 00:00 - 03:00"));
-		assertTrue(solo.searchText("TU München"));
+		assertTrue(solo.searchText("TU MÃ¼nchen"));
 
-		solo.clickOnText("Rückmeldung für Wintersemester");
-		assertTrue(solo.searchText("Rückmeldefrist"));
+		solo.clickOnText("RÃ¼ckmeldung fÃ¼r Wintersemester");
+		assertTrue(solo.searchText("RÃ¼ckmeldefrist"));
 		solo.goBack();
 
 		solo.clickOnText("Vergangene Veranstaltungen");
