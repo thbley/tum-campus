@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.models;
+﻿package de.tum.in.tumcampus.models;
 
 public class Cafeteria {
 	int id;

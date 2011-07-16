@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.models;
+﻿package de.tum.in.tumcampus.models;
 
 import java.util.ArrayList;
 import java.util.List;
