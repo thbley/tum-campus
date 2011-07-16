@@ -30,11 +30,13 @@ public class EventsDetails extends Activity {
 
 			setTitle(c.getString(c.getColumnIndex("name")));
 
-			/*
+			/**
+			 * <pre>
 			 * show infos as:
-			 * Week-day, Start, End
-			 * location
-			 * link
+			 * Week-day, Start DateTime - End Time
+			 * Location
+			 * Link
+			 * </pre>
 			 */
 			String infos = weekDays[c.getInt(c.getColumnIndex("weekday"))];
 			infos += ", " + c.getString(c.getColumnIndex("start_de")) + " - "
