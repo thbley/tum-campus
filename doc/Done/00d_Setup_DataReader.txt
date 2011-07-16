@@ -1,1 +1,1 @@
-DataReader anlegen: Liest Daten aus der SQLite-Datenbank zur Ausgabe in der GUI
+﻿DataReader anlegen: Liest Daten aus der SQLite-Datenbank zur Ausgabe in der GUI

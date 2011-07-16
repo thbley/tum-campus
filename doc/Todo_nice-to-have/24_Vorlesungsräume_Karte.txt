@@ -1,1 +1,1 @@
-Vorlesungsräume auf einer Karte zeigen: Verlinkung auf den Roomfinder, z.B. „01.07.023, Seminarraum (5607.01.023)“ => https://portal.mytum.de/displayRoomMap?roomid=01.07.023@5607&disable_decoration=yes
+ï»¿VorlesungsrÃ¤ume auf einer Karte zeigen: Verlinkung auf den Roomfinder, z.B. â€ž01.07.023, Seminarraum (5607.01.023)â€œ => https://portal.mytum.de/displayRoomMap?roomid=01.07.023@5607&disable_decoration=yes

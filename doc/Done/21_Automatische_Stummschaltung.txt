@@ -1,1 +1,1 @@
-Automatische Stummschaltung: Während einer Vorlesung wird das Handy automatisch auf lautlos geschaltet. Die jeweiligen Start- und Endzeiten einer Vorlesung werden aus dem Bereich Vorlesungen entnommen. Die Funktion lässt sich in den Einstellungen aktivieren und deaktivieren.
+ï»¿Automatische Stummschaltung: WÃ¤hrend einer Vorlesung wird das Handy automatisch auf lautlos geschaltet. Die jeweiligen Start- und Endzeiten einer Vorlesung werden aus dem Bereich Vorlesungen entnommen. Die Funktion lÃ¤sst sich in den Einstellungen aktivieren und deaktivieren.
