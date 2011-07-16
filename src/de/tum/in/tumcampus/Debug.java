@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * Activity to show raw table contents of the database
+ */
 public class Debug extends Activity implements View.OnClickListener {
 
 	@Override
@@ -16,6 +19,7 @@ public class Debug extends Activity implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.debug);
 
+		// initialize buttons
 		Button b = (Button) findViewById(R.id.debugCafeterias);
 		b.setOnClickListener(this);
 
@@ -50,29 +54,46 @@ public class Debug extends Activity implements View.OnClickListener {
 		b.setOnClickListener(this);
 	}
 
+	/**
+	 * clear debug content text view
+	 */
 	public void DebugReset() {
 		TextView tv = (TextView) findViewById(R.id.debug);
 		tv.setText("");
 	}
 
+	/**
+	 * Add a message to the debug content text view
+	 * 
+	 * @param s
+	 *            Debug message
+	 */
 	public void DebugStr(String s) {
 		TextView tv = (TextView) findViewById(R.id.debug);
 		tv.setMovementMethod(new ScrollingMovementMethod());
 		tv.append(s + "\n");
 	}
 
+	/**
+	 * Execute a database query and present the results in the GUI
+	 * 
+	 * @param query
+	 *            SQL query to execute
+	 */
 	public void DebugSQL(String query) {
 		DebugReset();
 		SQLiteDatabase db = SQLiteDatabase.openDatabase(
 				getDatabasePath(Const.db).toString(), null,
 				SQLiteDatabase.OPEN_READONLY);
 
+		// output raw data row-by-row
 		Cursor c = db.rawQuery(query, null);
 		while (c.moveToNext()) {
+			String content = "";
 			for (int i = 0; i < c.getColumnCount(); i++) {
-				DebugStr(c.getColumnName(i) + ": " + c.getString(i));
+				content += c.getColumnName(i) + ": " + c.getString(i) + "\n";
 			}
-			DebugStr("");
+			DebugStr(content);
 		}
 		c.close();
 		db.close();
@@ -81,6 +102,7 @@ public class Debug extends Activity implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 
+		// execute queries on click and present results in GUI
 		if (v.getId() == R.id.debugSyncs) {
 			DebugSQL("SELECT * FROM syncs ORDER BY id");
 		}
