@@ -87,7 +87,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		/**
 		 * <pre>
 		 * Show event info text as:
-		 * Week-Day, Start DateTime - End Time\n
+		 * Week-Day, Start DateTime - End Time
 		 * location
 		 * </pre>
 		 */
