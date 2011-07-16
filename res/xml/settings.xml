@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<EditTextPreference android:key="cafeteriaFilter"
-		android:summary="z.B. Garching" android:title="Mensa-Filter" />
+		android:summary="z.B. 'Garching' um nur Mensen in Garching auflisten" android:title="Mensa-Filter" />
 	<CheckBoxPreference android:key="silence"
 		android:title="Handy autom. lautlos" android:summary="während der Vorlesung"
 		android:defaultValue="true" />
