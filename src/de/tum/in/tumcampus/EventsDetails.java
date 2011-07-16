@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus;
+﻿package de.tum.in.tumcampus;
 
 import android.app.Activity;
 import android.database.Cursor;
