@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.models;
+﻿package de.tum.in.tumcampus.models;
 
 import java.io.BufferedReader;
 import java.io.File;
