@@ -19,6 +19,9 @@ public class SilenceService extends IntentService {
 	 */
 	public static int interval = 60000;
 	
+	/**
+	 * default init (run intent in new thread)
+	 */
 	public SilenceService() {
 		super("SilenceService");
 	}
