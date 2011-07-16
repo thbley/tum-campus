@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus;
+﻿package de.tum.in.tumcampus;
 
 /**
  * defines constants for database and settings

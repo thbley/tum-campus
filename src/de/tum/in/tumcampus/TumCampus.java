@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus;
+﻿package de.tum.in.tumcampus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,7 +140,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				LectureItemManager.lastInserted > 0, new Intent(this,
 						Lectures.class));
 
-		addItem(list, R.drawable.essen, "Speisepl�ne",
+		addItem(list, R.drawable.essen, "Speisepläne",
 				CafeteriaMenuManager.lastInserted > 0, new Intent(this,
 						Cafeterias.class));
 

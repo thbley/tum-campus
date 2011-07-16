@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus;
+ï»¿package de.tum.in.tumcampus;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -205,7 +205,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 			adapter.changeCursor(lim.getRecentFromDb());
 
 			TextView tv = (TextView) findViewById(R.id.lectureText);
-			tv.setText("Nächste Vorlesungen:");
+			tv.setText("NÃ¤chste Vorlesungen:");
 
 			TextView tv2 = (TextView) findViewById(R.id.moduleText);
 			tv2.setText("");
@@ -233,7 +233,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 			}
 		};
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Wirklch löschen?");
+		builder.setMessage("Wirklch lÃ¶schen?");
 		builder.setPositiveButton("Ja", listener);
 		builder.setNegativeButton("Nein", null);
 		builder.show();

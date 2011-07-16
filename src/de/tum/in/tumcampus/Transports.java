@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus;
+﻿package de.tum.in.tumcampus;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -175,7 +175,7 @@ public class Transports extends Activity implements OnItemClickListener,
 			}
 		};
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Wirklch l�schen?");
+		builder.setMessage("Wirklch löschen?");
 		builder.setPositiveButton("Ja", listener);
 		builder.setNegativeButton("Nein", null);
 		builder.show();
