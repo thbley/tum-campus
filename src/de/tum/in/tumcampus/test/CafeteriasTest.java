@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.test;
+Ôªøpackage de.tum.in.tumcampus.test;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,8 +21,8 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 	public void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
 
-		assertTrue(solo.searchText("Speisepl‰ne"));
-		solo.clickOnText("Speisepl‰ne");
+		assertTrue(solo.searchText("Speisepl√§ne"));
+		solo.clickOnText("Speisepl√§ne");
 
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Aktualisieren");
@@ -31,8 +31,8 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 	}
 
 	public void testCafeteriasPortrait() {
-		assertTrue(solo.searchText("Speisepl‰ne"));
-		solo.clickOnText("Speisepl‰ne");
+		assertTrue(solo.searchText("Speisepl√§ne"));
+		solo.clickOnText("Speisepl√§ne");
 
 		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		_testCafeterias();
@@ -42,8 +42,8 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 	}
 
 	public void testCafeteriasLandscape() {
-		assertTrue(solo.searchText("Speisepl‰ne"));
-		solo.clickOnText("Speisepl‰ne");
+		assertTrue(solo.searchText("Speisepl√§ne"));
+		solo.clickOnText("Speisepl√§ne");
 
 		solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		_testCafeterias();
@@ -53,8 +53,8 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 	}
 
 	public void testCafeteriasSettings() {
-		assertTrue(solo.searchText("Speisepl‰ne"));
-		solo.clickOnText("Speisepl‰ne");
+		assertTrue(solo.searchText("Speisepl√§ne"));
+		solo.clickOnText("Speisepl√§ne");
 
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Einstellungen");
@@ -64,7 +64,7 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		solo.goBack();
 		solo.clickOnText("OK");
 		solo.goBack();
-		assertFalse(solo.searchText("M¸nchen"));
+		assertFalse(solo.searchText("M√ºnchen"));
 
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Einstellungen");
@@ -73,12 +73,12 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		solo.goBack();
 		solo.clickOnText("OK");
 		solo.goBack();
-		assertTrue(solo.searchText("M¸nchen"));
+		assertTrue(solo.searchText("M√ºnchen"));
 	}
 
 	public void testCafeteriasContextMenu() {
-		assertTrue(solo.searchText("Speisepl‰ne"));
-		solo.clickOnText("Speisepl‰ne");
+		assertTrue(solo.searchText("Speisepl√§ne"));
+		solo.clickOnText("Speisepl√§ne");
 
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Preise");
@@ -104,8 +104,8 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		assertTrue(solo.searchText("Beilagen"));
 		assertTrue(solo.searchText("Tagesgericht"));
 
-		assertTrue(solo.searchText("Datum ausw‰hlen"));
-		solo.clickOnText("Datum ausw‰hlen");
+		assertTrue(solo.searchText("Datum ausw√§hlen"));
+		solo.clickOnText("Datum ausw√§hlen");
 
 		calendar.add(Calendar.DATE, 1);
 		String tomorrow = de.format(calendar.getTime());

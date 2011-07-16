@@ -1,4 +1,4 @@
-package de.tum.in.tumcampus.test;
+﻿package de.tum.in.tumcampus.test;
 
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
