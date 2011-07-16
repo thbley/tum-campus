@@ -22,17 +22,21 @@ import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.Utils;
 import de.tum.in.tumcampus.services.DownloadService;
 
+/**
+ * Activity to show cafeterias and meals selected by date
+ */
 public class Cafeterias extends Activity implements OnItemClickListener {
 
 	private String date;
 	private String dateStr;
-	private String mensaId;
-	private String mensaName;
+	private String cafeteriaId;
+	private String cafeteriaName;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// default date: today or next monday if today is weekend
 		Calendar calendar = Calendar.getInstance();
 		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 		if (dayOfWeek == Calendar.SATURDAY) {
@@ -50,6 +54,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			setContentView(R.layout.cafeterias);
 		}
 
+		// get toast feedback and resume activity
 		registerReceiver(DownloadService.receiver, new IntentFilter(
 				DownloadService.broadcast));
 	}
@@ -64,6 +69,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	protected void onResume() {
 		super.onResume();
 
+		// get cafeteria list, filtered by user-defined substring
 		String filter = Utils.getSetting(this, Const.settings.cafeteriaFilter);
 
 		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
@@ -78,6 +84,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		lv2.setOnItemClickListener(this);
 		cm.close();
 
+		// get all (distinct) dates having menus available
 		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
 		Cursor c = cmm.getDatesFromDb();
 
@@ -90,6 +97,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		lv.setOnItemClickListener(this);
 		cmm.close();
 
+		// reset new items counter
 		CafeteriaMenuManager.lastInserted = 0;
 	}
 
@@ -101,6 +109,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			sd.animateClose();
 		}
 
+		// click on date
 		if (av.getId() == R.id.listView) {
 			ListView lv = (ListView) findViewById(R.id.listView);
 			Cursor c = (Cursor) lv.getAdapter().getItem(position);
@@ -108,21 +117,24 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			dateStr = c.getString(c.getColumnIndex("date_de"));
 		}
 
+		// click on cafeteria
 		if (av.getId() == R.id.listView2) {
 			ListView lv2 = (ListView) findViewById(R.id.listView2);
 			Cursor c = (Cursor) lv2.getAdapter().getItem(position);
 
-			mensaId = c.getString(c.getColumnIndex("_id"));
-			mensaName = c.getString(c.getColumnIndex("name"));
+			cafeteriaId = c.getString(c.getColumnIndex("_id"));
+			cafeteriaName = c.getString(c.getColumnIndex("name"));
 		}
 
-		if (mensaId != null && date != null) {
+		// get menus filtered by cafeteria and date
+		if (cafeteriaId != null && date != null) {
 			TextView tv = (TextView) findViewById(R.id.cafeteriaText);
-			tv.setText(mensaName + ": " + dateStr);
+			tv.setText(cafeteriaName + ": " + dateStr);
 
 			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
-			Cursor c = cmm.getTypeNameFromDb(mensaId, date);
+			Cursor c = cmm.getTypeNameFromDb(cafeteriaId, date);
 
+			// no onclick for items, no separator line
 			SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 					android.R.layout.two_line_list_item, c, c.getColumnNames(),
 					new int[] { android.R.id.text1, android.R.id.text2 }) {
@@ -154,6 +166,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 
+		// option menu for refresh, settings and external links
 		switch (item.getItemId()) {
 		case Menu.FIRST:
 			Intent service = new Intent(this, DownloadService.class);
