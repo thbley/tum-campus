@@ -15,6 +15,9 @@ public final class Const {
 	 */
 	public final static int dbVersion = 1;
 
+	/**
+	 * constants for application settings
+	 */
 	public static final class settings {
 		/**
 		 * filter cafeterias by a substring
