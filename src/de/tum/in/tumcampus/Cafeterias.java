@@ -169,6 +169,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		// option menu for refresh, settings and external links
 		switch (item.getItemId()) {
 		case Menu.FIRST:
+			// download latest cafeterias and menus
 			Intent service = new Intent(this, DownloadService.class);
 			service.putExtra("action", "cafeterias");
 			startService(service);
