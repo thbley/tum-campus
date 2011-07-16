@@ -84,7 +84,13 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 	@Override
 	public boolean setViewValue(View view, Cursor c, int index) {
 
-		// Show event info text as: Week-Day, Start, End<line-break>location
+		/**
+		 * <pre>
+		 * Show event info text as:
+		 * Week-Day, Start DateTime - End Time\n
+		 * location
+		 * </pre>
+		 */
 		if (view.getId() == R.id.infos) {
 			String[] weekDays = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
 
