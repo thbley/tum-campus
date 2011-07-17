@@ -20,6 +20,7 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		super("de.tum.in.tumcampus", TumCampus.class);
 	}
 
+	@Override
 	public void setUp() throws Exception {
 		solo = new Solo(getInstrumentation(), getActivity());
 
@@ -42,6 +43,7 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		lm.close();
 	}
 
+	@Override
 	public void tearDown() throws Exception {
 		// remove test data
 		LectureItemManager lim = new LectureItemManager(getActivity(), Const.db);

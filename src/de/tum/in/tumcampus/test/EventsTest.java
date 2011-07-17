@@ -19,6 +19,7 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		super("de.tum.in.tumcampus", TumCampus.class);
 	}
 
+	@Override
 	public void setUp() throws Exception {
 		solo = new Solo(getInstrumentation(), getActivity());
 
@@ -34,6 +35,7 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		em.close();
 	}
 
+	@Override
 	public void tearDown() throws Exception {
 		// remove test data
 		EventManager em = new EventManager(getActivity(), Const.db);

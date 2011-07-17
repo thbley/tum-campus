@@ -24,6 +24,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		super("de.tum.in.tumcampus", TumCampus.class);
 	}
 
+	@Override
 	public void setUp() throws Exception {
 		solo = new Solo(getInstrumentation(), getActivity());
 
@@ -42,6 +43,7 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		fim.close();
 	}
 
+	@Override
 	public void tearDown() throws Exception {
 		// remove test data
 		FeedItemManager fim = new FeedItemManager(getActivity(), Const.db);
