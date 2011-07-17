@@ -153,6 +153,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 		// confirm delete
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 
 				// delete feed from list, refresh feed list
@@ -173,12 +174,14 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		return false;
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
 		return true;
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// download latest feed items
 		Intent service = new Intent(this, DownloadService.class);
@@ -207,7 +210,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		} catch (Exception e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-		
+
 		// refresh feed list
 		adapter.changeCursor(fm.getAllFromDb());
 		fm.close();
