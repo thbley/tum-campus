@@ -151,9 +151,11 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 	public boolean onItemLongClick(final AdapterView<?> av, View v,
 			final int position, long id) {
 
+		// confirm delete
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
+				// delete feed from list, refresh feed list
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				int _id = c.getInt(c.getColumnIndex("_id"));
 
