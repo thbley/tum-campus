@@ -14,10 +14,24 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Cafeteria Manager
+ */
 public class CafeteriaManager extends SQLiteOpenHelper {
 
+	/**
+	 * Database connection
+	 */
 	private SQLiteDatabase db;
 
+	/**
+	 * Constructor CafeteriaManager, open/create database
+	 * 
+	 * <pre>
+	 * @param context Context
+	 * @param database Filename, e.g. database.db
+	 * </pre>
+	 */
 	public CafeteriaManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
@@ -25,9 +39,18 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Download cafeterias from external interface (JSON)
+	 * 
+	 * <pre>
+	 * @param force Forces download over weekly sync
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void downloadFromExternal(boolean force) throws Exception {
 
-		if (!force && !SyncManager.needSync(db, this, 86400)) {
+		// sync only once per week
+		if (!force && !SyncManager.needSync(db, this, 604800)) {
 			return;
 		}
 
@@ -37,6 +60,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 				"mensa_mensen");
 		removeCache();
 
+		// write cafeterias into database, transaction = speedup
 		db.beginTransaction();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
@@ -46,6 +70,11 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		db.endTransaction();
 	}
 
+	/**
+	 * Returns all cafeteria IDs
+	 * 
+	 * @return List of all cafeteria IDs
+	 */
 	public List<Integer> getAllIdsFromDb() {
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -57,6 +86,14 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		return list;
 	}
 
+	/**
+	 * Returns all cafeterias, filterable by substring of name/address
+	 * 
+	 * <pre>
+	 * @param filter Filter name/address by substring ("" = no filter)
+	 * @return Database cursor
+	 * </pre>
+	 */
 	public Cursor getAllFromDb(String filter) {
 		return db.rawQuery("SELECT name, address, id as _id "
 				+ "FROM cafeterias WHERE name LIKE ? OR address LIKE ? "
@@ -65,15 +102,17 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * 
+	 * Get Cafeteria object by JSON object
 	 * 
 	 * Example JSON: e.g.
 	 * {"id":"411","name":"Mensa Leopoldstra\u00dfe","anschrift"
 	 * :"Leopoldstra\u00dfe 13a, M\u00fcnchen"}
 	 * 
-	 * @param json
-	 * @return Cafeteria
+	 * <pre>
+	 * @param json See example
+	 * @return Cafeteria object
 	 * @throws JSONException
+	 * </pre>
 	 */
 	public static Cafeteria getFromJson(JSONObject json) throws JSONException {
 
@@ -81,6 +120,14 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 				json.getString("anschrift"));
 	}
 
+	/**
+	 * Replace or Insert a cafeteria in the database
+	 * 
+	 * <pre>
+	 * @param c Cafeteria object
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void replaceIntoDb(Cafeteria c) throws Exception {
 		Utils.log(c.toString());
 
@@ -96,12 +143,16 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 				new String[] { String.valueOf(c.id), c.name, c.address });
 	}
 
+	/**
+	 * Removes all cache items
+	 */
 	public void removeCache() {
 		db.execSQL("DELETE FROM cafeterias");
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// create cafeteria table
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias ("
 				+ "id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
 	}
