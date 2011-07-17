@@ -27,6 +27,9 @@ import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.services.DownloadService;
 
+/**
+ * Activity to RSS-feeds and their news items
+ */
 public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		OnItemLongClickListener, View.OnClickListener {
 
@@ -42,6 +45,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 		sd.open();
 
+		// get all feeds
 		FeedManager fm = new FeedManager(this, Const.db);
 		Cursor c = fm.getAllFromDb();
 
@@ -49,6 +53,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
 				new int[] { android.R.id.text1 });
 
+		// add a footer to the list for adding new feeds
 		View view = getLayoutInflater().inflate(R.layout.feeds_footer, null,
 				false);
 
@@ -75,11 +80,13 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 	protected void onResume() {
 		super.onResume();
 
+		// refresh current selected feed on resume (finished download)
 		if (feedId != null) {
 			ListView lv = (ListView) findViewById(R.id.listView);
 			onItemClick(lv, lv, -1, 0);
 		}
 
+		// reset new items counter
 		FeedManager.lastInserted = 0;
 		FeedItemManager.lastInserted = 0;
 	}
@@ -87,6 +94,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 	@Override
 	public void onItemClick(AdapterView<?> av, View v, int position, long id) {
 
+		// click on feed item in list, open URL in browser
 		if (av.getId() == R.id.listView2) {
 			Cursor c = (Cursor) av.getAdapter().getItem(position);
 			String link = c.getString(c.getColumnIndex("link"));
@@ -101,6 +109,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 			sd.animateClose();
 		}
 
+		// click on feed in list
 		if (position != -1) {
 			Cursor c = (Cursor) av.getAdapter().getItem(position);
 			feedId = c.getString(c.getColumnIndex("_id"));
@@ -109,6 +118,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 		setTitle("Nachrichten: " + feedName);
 
+		// get all feed items for a feed
 		FeedItemManager fim = new FeedItemManager(this, Const.db);
 		Cursor c2 = fim.getAllFromDb(feedId);
 
@@ -125,7 +135,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 	@Override
 	public boolean setViewValue(View view, Cursor cursor, int index) {
-		// hide empty view elements
+		// hide empty view elements (e.g. missing image or description)
 		if (cursor.getString(index).length() == 0) {
 			view.setVisibility(View.GONE);
 
@@ -168,6 +178,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// download latest feed items
 		Intent service = new Intent(this, DownloadService.class);
 		service.putExtra("action", "feeds");
 		startService(service);
@@ -176,12 +187,14 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 	@Override
 	public void onClick(View v) {
+		// add a new feed
 		EditText editName = (EditText) findViewById(R.id.name);
 		EditText editUrl = (EditText) findViewById(R.id.url);
 
 		String name = editName.getText().toString();
 		String url = editUrl.getText().toString();
 
+		// prepend http:// if needed
 		if (url.length() > 0 && !url.contains(":")) {
 			url = "http://" + url;
 		}
@@ -192,9 +205,12 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		} catch (Exception e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
+		
+		// refresh feed list
 		adapter.changeCursor(fm.getAllFromDb());
 		fm.close();
 
+		// clear form
 		editName.setText("");
 		editUrl.setText("");
 	}
