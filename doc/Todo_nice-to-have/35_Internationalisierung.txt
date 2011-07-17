@@ -1,0 +1,1 @@
+Sprachspezifische Strings und Datumsformatierungen aus Code und Layout-Dateien in strings_lang-code.xml verschieben.
