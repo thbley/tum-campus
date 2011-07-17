@@ -47,7 +47,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	static boolean syncing = false;
 
 	/**
-	 * Check if a network connection is available or can be available soon
+	 * Returns network connection type if available or can be available soon
 	 * 
 	 * @return empty String if not available or connection type if available
 	 */
@@ -75,12 +75,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		// bind download buttons
 		Button b = (Button) findViewById(R.id.refresh);
 		b.setOnClickListener(this);
 
 		b = (Button) findViewById(R.id.initial);
 		b.setOnClickListener(this);
 
+		// show initial download button if feed items are empty
 		FeedItemManager fim = new FeedItemManager(this, Const.db);
 		if (fim.empty()) {
 			b.setVisibility(View.VISIBLE);
@@ -89,12 +91,16 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		}
 		fim.close();
 
+		// register receiver for download and import
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(ImportService.broadcast);
 		intentFilter.addAction(DownloadService.broadcast);
 		registerReceiver(receiver, intentFilter);
+
+		// initialize import buttons
 		setImportButtons(true);
 
+		// import default values into database
 		Intent service = new Intent(this, ImportService.class);
 		service.putExtra("action", "defaults");
 		startService(service);
@@ -110,6 +116,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	protected void onResume() {
 		super.onResume();
 
+		// build main menu
 		SimpleAdapter adapter = new SimpleAdapter(this, buildMenu(),
 				R.layout.main_listview,
 				new String[] { "icon", "name", "icon2" }, new int[] {
@@ -120,10 +127,16 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		lv.setOnItemClickListener(this);
 
 		String conn = getConnection();
-
 		Button b = (Button) findViewById(R.id.refresh);
 		TextView tv = (TextView) findViewById(R.id.hello);
 
+		/**
+		 * <pre>
+		 * hide download button if offline
+		 * show cancel button if currently syncing
+		 * else show download button
+		 * </pre>
+		 */
 		if (conn.length() > 0) {
 			b.setVisibility(android.view.View.VISIBLE);
 			if (!syncing) {
@@ -137,13 +150,20 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			tv.setText(getString(R.string.hello) + " Offline.");
 		}
 
+		// start silence service
 		Intent service = new Intent(this, SilenceService.class);
 		startService(service);
 	}
 
+	/**
+	 * Return main menu item list
+	 * 
+	 * @return item list of Map[] (icon, name, icon2, intent)
+	 */
 	public List<Map<String, Object>> buildMenu() {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
+		// build list, intent = start activity on click
 		addItem(list, R.drawable.vorlesung, "Vorlesungen",
 				LectureItemManager.lastInserted > 0, new Intent(this,
 						Lectures.class));
@@ -177,7 +197,18 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		return list;
 	}
 
-	private void addItem(List<Map<String, Object>> data, int icon, String name,
+	/**
+	 * Add menu item to list
+	 * 
+	 * <pre>
+	 * @param list List to append new item to
+	 * @param icon Icon ID
+	 * @param name Menu item name
+	 * @param changed Menu item was changed recently
+	 * @param intent Activity to start on click
+	 * </pre>
+	 */
+	public void addItem(List<Map<String, Object>> list, int icon, String name,
 			boolean changed, Intent intent) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("icon", icon);
@@ -188,11 +219,13 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		}
 		map.put("icon2", icon2);
 		map.put("intent", intent);
-		data.add(map);
+		list.add(map);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> av, View view, int position, long id) {
+
+		// start activity on main menu item click
 		@SuppressWarnings("unchecked")
 		Map<String, Object> map = (Map<String, Object>) av.getAdapter()
 				.getItem(position);
@@ -211,6 +244,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
+		// open settings activity, clear cache (database tables, sd-card)
 		switch (item.getItemId()) {
 		case Menu.FIRST:
 			Intent intent = new Intent(this, Settings.class);
@@ -224,6 +259,9 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		return false;
 	}
 
+	/**
+	 * Clears the cache (database tables, sd-card)
+	 */
 	public void clearCache() {
 		try {
 			Utils.getCacheDir("");
@@ -256,6 +294,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		nm.removeCache();
 		nm.close();
 
+		// table of all download events
 		SyncManager sm = new SyncManager(this, Const.db);
 		sm.deleteFromDb();
 		sm.close();
@@ -264,6 +303,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	@Override
 	public void onClick(View v) {
 
+		// Click on download/cancel button, start/stop download service
 		if (v.getId() == R.id.refresh || v.getId() == R.id.initial) {
 			Intent service = new Intent(this, DownloadService.class);
 			if (syncing) {
@@ -275,18 +315,24 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			}
 			onResume();
 		}
+
+		// Click on import lectures, start import service
 		if (v.getId() == R.id.importLectures) {
 			Intent service = new Intent(this, ImportService.class);
 			service.putExtra("action", "lectures");
 			startService(service);
 			setImportButtons(false);
 		}
+
+		// Click on import links, start import service
 		if (v.getId() == R.id.importLinks) {
 			Intent service = new Intent(this, ImportService.class);
 			service.putExtra("action", "links");
 			startService(service);
 			setImportButtons(false);
 		}
+
+		// Click on import links, start import service
 		if (v.getId() == R.id.importFeeds) {
 			Intent service = new Intent(this, ImportService.class);
 			service.putExtra("action", "feeds");
@@ -295,6 +341,13 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		}
 	}
 
+	/**
+	 * Initialize import buttons
+	 * 
+	 * <pre>
+	 * @param enabled True to enable buttons, False to disable buttons
+	 * </pre>
+	 */
 	public void setImportButtons(boolean enabled) {
 		Button b = (Button) findViewById(R.id.importLectures);
 		b.setOnClickListener(this);
@@ -309,10 +362,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		b.setEnabled(enabled);
 	}
 
+	/**
+	 * Receiver for Download and Import services
+	 */
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 
+			// show message from download service, refresh main menu
 			if (intent.getAction().equals(DownloadService.broadcast)) {
 				String message = intent.getStringExtra("message");
 				String action = intent.getStringExtra("action");
@@ -327,6 +384,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				onResume();
 			}
 
+			// show message from import service, refresh main menu
 			if (intent.getAction().equals(ImportService.broadcast)) {
 				String message = intent.getStringExtra("message");
 				String action = intent.getStringExtra("action");
