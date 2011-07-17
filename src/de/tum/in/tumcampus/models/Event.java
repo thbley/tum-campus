@@ -26,6 +26,7 @@ public class Event {
 		this.image = image;
 	}
 
+	@Override
 	public String toString() {
 		return "id=" + id + " name=" + name + " start="
 				+ Utils.getDateString(start) + " end="

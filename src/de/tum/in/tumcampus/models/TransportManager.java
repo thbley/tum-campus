@@ -35,7 +35,7 @@ public class TransportManager extends SQLiteOpenHelper {
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
-		Utils.Log(query);
+		Utils.log(query);
 
 		JSONArray jsonArray = Utils.downloadJson(baseUrl + query)
 				.getJSONObject("query").getJSONObject("results")
@@ -69,7 +69,7 @@ public class TransportManager extends SQLiteOpenHelper {
 		String query = URLEncoder
 				.encode("select content from html where url=\"" + lookupUrl
 						+ "\" and xpath=\"//a[contains(@href,'haltestelle')]\"");
-		Utils.Log(query);
+		Utils.log(query);
 
 		JSONObject jsonObj = Utils.downloadJson(baseUrl + query).getJSONObject(
 				"query");
@@ -115,7 +115,7 @@ public class TransportManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(String name) {
-		Utils.Log(name);
+		Utils.log(name);
 
 		if (name.length() == 0) {
 			return;
@@ -129,11 +129,13 @@ public class TransportManager extends SQLiteOpenHelper {
 				new String[] { name });
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS transports ("
 				+ "name VARCHAR PRIMARY KEY)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}

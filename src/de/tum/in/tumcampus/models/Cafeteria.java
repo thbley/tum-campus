@@ -11,6 +11,7 @@ public class Cafeteria {
 		this.address = address;
 	}
 
+	@Override
 	public String toString() {
 		return "id=" + this.id + " name=" + this.name + " address="
 				+ this.address;

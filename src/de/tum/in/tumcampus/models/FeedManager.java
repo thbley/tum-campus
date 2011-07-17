@@ -75,7 +75,7 @@ public class FeedManager extends SQLiteOpenHelper {
 	}
 
 	public int insertUpdateIntoDb(Feed n) throws Exception {
-		Utils.Log(n.toString());
+		Utils.log(n.toString());
 
 		if (n.name.length() == 0) {
 			throw new Exception("Invalid name.");
@@ -106,11 +106,13 @@ public class FeedManager extends SQLiteOpenHelper {
 				new String[] { String.valueOf(id) });
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS feeds ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, feedUrl VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}
