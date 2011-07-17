@@ -20,14 +20,6 @@ public class InterfacesTest extends AndroidTestCase {
 	 */
 	private static final String dateFormat = "\\d{4}-\\d{2}-\\d{2}";
 
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-
 	public final void testFacebookNews() throws Exception {
 		String url = "https://graph.facebook.com/162327853831856/feed/?access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
