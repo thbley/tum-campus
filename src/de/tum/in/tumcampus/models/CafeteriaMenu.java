@@ -6,19 +6,60 @@ import java.util.Date;
  * CafeteriaMenu object
  */
 public class CafeteriaMenu {
+
+	/**
+	 * CafeteriaMenu Id (empty for addendum)
+	 */
 	int id;
-	int mensaId;
+
+	/**
+	 * Cafeteria ID
+	 */
+	int cafeteriaId;
+
+	/**
+	 * Menu date
+	 */
 	Date date;
+
+	/**
+	 * Short type, e.g. tg
+	 */
 	String typeShort;
+
+	/**
+	 * Long type, e.g. Tagesgericht 1
+	 */
 	String typeLong;
+
+	/**
+	 * Type ID
+	 */
 	int typeNr;
+
+	/**
+	 * Menu name
+	 */
 	String name;
 
-	public CafeteriaMenu(int id, int mensaId, Date date, String typeShort,
+	/**
+	 * New CafeteriaMenu
+	 * 
+	 * <pre>
+	 * @param id CafeteriaMenu Id (empty for addendum)
+	 * @param cafeteriaId Cafeteria ID
+	 * @param date Menu date
+	 * @param typeShort Short type, e.g. tg 
+	 * @param typeLong Long type, e.g. Tagesgericht 1
+	 * @param typeNr Type ID
+	 * @param name Menu name
+	 * </pre>
+	 */
+	public CafeteriaMenu(int id, int cafeteriaId, Date date, String typeShort,
 			String typeLong, int typeNr, String name) {
 
 		this.id = id;
-		this.mensaId = mensaId;
+		this.cafeteriaId = cafeteriaId;
 		this.date = date;
 		this.typeShort = typeShort;
 		this.typeLong = typeLong;
@@ -28,7 +69,7 @@ public class CafeteriaMenu {
 
 	@Override
 	public String toString() {
-		return "id=" + this.id + " mensaId=" + this.mensaId + " date="
+		return "id=" + this.id + " cafeteriaId=" + this.cafeteriaId + " date="
 				+ Utils.getDateString(this.date) + " typeShort="
 				+ this.typeShort + " typeLong=" + this.typeLong + " typeNr="
 				+ this.typeNr + " name=" + this.name;
