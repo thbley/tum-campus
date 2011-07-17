@@ -16,6 +16,7 @@ public class LinksTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		super("de.tum.in.tumcampus", TumCampus.class);
 	}
 
+	@Override
 	public void setUp() {
 		solo = new Solo(getInstrumentation(), getActivity());
 		solo.scrollDown();

@@ -20,6 +20,7 @@ public class ImportTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		super("de.tum.in.tumcampus", TumCampus.class);
 	}
 
+	@Override
 	public void setUp() throws Exception {
 		solo = new Solo(getInstrumentation(), getActivity());
 
@@ -45,6 +46,7 @@ public class ImportTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		out.close();
 	}
 
+	@Override
 	public void tearDown() throws Exception {
 		String path = Environment.getExternalStorageDirectory().getPath()
 				+ "/tumcampus/";

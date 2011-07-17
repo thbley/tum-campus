@@ -18,6 +18,7 @@ public class NewsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		super("de.tum.in.tumcampus", TumCampus.class);
 	}
 
+	@Override
 	public void setUp() throws Exception {
 		solo = new Solo(getInstrumentation(), getActivity());
 
@@ -30,6 +31,7 @@ public class NewsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		nm.close();
 	}
 
+	@Override
 	public void tearDown() throws Exception {
 		// remove test data
 		NewsManager nm = new NewsManager(getActivity(), Const.db);

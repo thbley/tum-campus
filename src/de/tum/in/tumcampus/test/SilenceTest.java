@@ -20,6 +20,7 @@ public class SilenceTest extends ServiceTestCase<SilenceService> {
 		super(SilenceService.class);
 	}
 
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
