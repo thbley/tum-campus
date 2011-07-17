@@ -2,17 +2,65 @@
 
 import java.util.Date;
 
+/**
+ * Event object
+ */
 public class Event {
 
+	/**
+	 * Event Facebook-ID
+	 */
 	String id;
+
+	/**
+	 * Name, e.g. PartyX
+	 */
 	String name;
+
+	/**
+	 * Event start DateTime
+	 */
 	Date start;
+
+	/**
+	 * Event end DateTime
+	 */
 	Date end;
+
+	/**
+	 * Location, e.g. Munich
+	 */
 	String location;
+
+	/**
+	 * Description, multiline
+	 */
 	String description;
+
+	/**
+	 * Event link, e.g. http://www.xyz.de
+	 */
 	String link;
+
+	/**
+	 * Local image, e.g. /mnt/sdcard/tumcampus/events/cache/xy.jpg
+	 */
 	String image;
 
+	/**
+	 * New Event
+	 * 
+	 * <pre>
+	 * @param id Event Facebook-ID
+	 * @param name Name, e.g. PartyX
+	 * @param start Event start DateTime
+	 * @param end Event end DateTime
+	 * @param location Location, e.g. Munich
+	 * @param description Description, multiline
+	 * @param link Event link, e.g. http://www.xyz.de
+	 * @param image Local image, e.g. /mnt/sdcard/tumcampus/events/cache/xy.jpg
+	 * </pre>
+	 */
 	public Event(String id, String name, Date start, Date end, String location,
 			String description, String link, String image) {
 
