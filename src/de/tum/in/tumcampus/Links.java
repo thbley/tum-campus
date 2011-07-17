@@ -74,6 +74,7 @@ public class Links extends Activity implements OnItemClickListener,
 			final int position, long id) {
 
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				int _id = c.getInt(c.getColumnIndex("_id"));
