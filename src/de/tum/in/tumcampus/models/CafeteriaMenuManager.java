@@ -147,6 +147,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// TODO rename column cafeteriaId on upgrade
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
 				+ "id INTEGER, cafeteriaId INTEGER, date VARCHAR, typeShort VARCHAR, "
 				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
