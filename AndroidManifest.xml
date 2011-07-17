@@ -14,12 +14,11 @@
 
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-	<application android:icon="@drawable/icon" android:label="@string/app_name"
+	<application android:icon="@drawable/icon" android:label="TUMCampus"
 		android:theme="@android:style/Theme.Light">
 		<uses-library android:name="android.test.runner" />
 
-		<activity android:name=".TumCampus" android:label="@string/app_name"
-			android:theme="@android:style/Theme.NoTitleBar">
+		<activity android:name=".TumCampus" android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
