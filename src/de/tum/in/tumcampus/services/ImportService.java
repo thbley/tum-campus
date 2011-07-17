@@ -33,7 +33,7 @@ public class ImportService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		String action = intent.getStringExtra("action");
-		Utils.Log(action);
+		Utils.log(action);
 
 		if (action.equals("defaults")) {
 			try {
@@ -42,7 +42,7 @@ public class ImportService extends IntentService {
 				importLinksDefaults();
 				importLectureItemsDefaults();
 			} catch (Exception e) {
-				Utils.Log(e, "");
+				Utils.log(e, "");
 			}
 		} else {
 			String ns = Context.NOTIFICATION_SERVICE;
@@ -182,13 +182,13 @@ public class ImportService extends IntentService {
 	}
 
 	public void message(Exception e, String info) {
-		Utils.Log(e, info);
+		Utils.log(e, info);
 
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 
 		String message = e.getMessage();
-		if (Utils.getSettingBool(this, Const.settings.debug)) {
+		if (Utils.getSettingBool(this, Const.Settings.debug)) {
 			message += sw.toString();
 		}
 		message(info + " " + message, "error");
@@ -205,12 +205,12 @@ public class ImportService extends IntentService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Utils.Log("");
+		Utils.log("");
 	}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Utils.Log("");
+		Utils.log("");
 	}
 }

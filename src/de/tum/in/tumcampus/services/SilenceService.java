@@ -30,7 +30,7 @@ public class SilenceService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		
 		// loop until silence mode gets disabled in settings
-		while (Utils.getSettingBool(this, Const.settings.silence)) {
+		while (Utils.getSettingBool(this, Const.Settings.silence)) {
 
 			// default: no silence
 			int mode = AudioManager.RINGER_MODE_NORMAL;
@@ -44,7 +44,7 @@ public class SilenceService extends IntentService {
 			c.close();
 			lim.close();
 
-			Utils.Log("set ringer mode: " + mode);
+			Utils.log("set ringer mode: " + mode);
 			// execute (no-)silence mode
 			AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 			am.setRingerMode(mode);
@@ -54,7 +54,7 @@ public class SilenceService extends IntentService {
 				try {
 					wait(interval);
 				} catch (Exception e) {
-					Utils.Log(e, "");
+					Utils.log(e, "");
 				}
 			}
 		}
@@ -63,12 +63,12 @@ public class SilenceService extends IntentService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Utils.Log(""); // log destroy
+		Utils.log(""); // log destroy
 	}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Utils.Log(""); // log create
+		Utils.log(""); // log create
 	}
 }
