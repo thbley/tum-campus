@@ -272,6 +272,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 
 		// confirm deleting lectures or lecture units
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
