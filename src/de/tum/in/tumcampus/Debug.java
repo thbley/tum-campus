@@ -57,7 +57,7 @@ public class Debug extends Activity implements View.OnClickListener {
 	/**
 	 * clear debug content text view
 	 */
-	public void DebugReset() {
+	public void debugReset() {
 		TextView tv = (TextView) findViewById(R.id.debug);
 		tv.setText("");
 	}
@@ -68,7 +68,7 @@ public class Debug extends Activity implements View.OnClickListener {
 	 * @param s
 	 *            Debug message
 	 */
-	public void DebugStr(String s) {
+	public void debugStr(String s) {
 		TextView tv = (TextView) findViewById(R.id.debug);
 		tv.setMovementMethod(new ScrollingMovementMethod());
 		tv.append(s + "\n");
@@ -80,8 +80,8 @@ public class Debug extends Activity implements View.OnClickListener {
 	 * @param query
 	 *            SQL query to execute
 	 */
-	public void DebugSQL(String query) {
-		DebugReset();
+	public void debugSQL(String query) {
+		debugReset();
 		SQLiteDatabase db = SQLiteDatabase.openDatabase(
 				getDatabasePath(Const.db).toString(), null,
 				SQLiteDatabase.OPEN_READONLY);
@@ -89,11 +89,12 @@ public class Debug extends Activity implements View.OnClickListener {
 		// output raw data row-by-row
 		Cursor c = db.rawQuery(query, null);
 		while (c.moveToNext()) {
-			String content = "";
+			StringBuilder content = new StringBuilder();
 			for (int i = 0; i < c.getColumnCount(); i++) {
-				content += c.getColumnName(i) + ": " + c.getString(i) + "\n";
+				content.append(c.getColumnName(i) + ": " + c.getString(i)
+						+ "\n");
 			}
-			DebugStr(content);
+			debugStr(content.toString());
 		}
 		c.close();
 		db.close();
@@ -104,47 +105,47 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		// execute queries on click and present results in GUI
 		if (v.getId() == R.id.debugSyncs) {
-			DebugSQL("SELECT * FROM syncs ORDER BY id");
+			debugSQL("SELECT * FROM syncs ORDER BY id");
 		}
 
 		if (v.getId() == R.id.debugCafeterias) {
-			DebugSQL("SELECT * FROM cafeterias ORDER BY id");
+			debugSQL("SELECT * FROM cafeterias ORDER BY id");
 		}
 
 		if (v.getId() == R.id.debugCafeteriasMenus) {
-			DebugSQL("SELECT * FROM cafeterias_menus ORDER BY id");
+			debugSQL("SELECT * FROM cafeterias_menus ORDER BY id");
 		}
 
 		if (v.getId() == R.id.debugFeeds) {
-			DebugSQL("SELECT * FROM feeds ORDER BY id");
+			debugSQL("SELECT * FROM feeds ORDER BY id");
 		}
 
 		if (v.getId() == R.id.debugFeedsItems) {
-			DebugSQL("SELECT * FROM feeds_items ORDER BY feedId, date DESC");
+			debugSQL("SELECT * FROM feeds_items ORDER BY feedId, date DESC");
 		}
 
 		if (v.getId() == R.id.debugLectures) {
-			DebugSQL("SELECT * FROM lectures ORDER BY name");
+			debugSQL("SELECT * FROM lectures ORDER BY name");
 		}
 
 		if (v.getId() == R.id.debugLecturesItems) {
-			DebugSQL("SELECT * FROM lectures_items ORDER BY lectureId, id");
+			debugSQL("SELECT * FROM lectures_items ORDER BY lectureId, id");
 		}
 
 		if (v.getId() == R.id.debugLinks) {
-			DebugSQL("SELECT * FROM links ORDER BY id");
+			debugSQL("SELECT * FROM links ORDER BY id");
 		}
 
 		if (v.getId() == R.id.debugEvents) {
-			DebugSQL("SELECT * FROM events ORDER BY start DESC");
+			debugSQL("SELECT * FROM events ORDER BY start DESC");
 		}
 
 		if (v.getId() == R.id.debugNews) {
-			DebugSQL("SELECT * FROM news ORDER BY date DESC");
+			debugSQL("SELECT * FROM news ORDER BY date DESC");
 		}
 
 		if (v.getId() == R.id.debugTime) {
-			DebugSQL("SELECT datetime('now', 'localtime')");
+			debugSQL("SELECT datetime('now', 'localtime')");
 		}
 	}
 }
