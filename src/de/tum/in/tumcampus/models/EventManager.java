@@ -159,6 +159,7 @@ public class EventManager extends SQLiteOpenHelper {
 		db.execSQL("DELETE FROM events WHERE start < date('now','-3 month')");
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS events ("
 				+ "id VARCHAR PRIMARY KEY, name VARCHAR, start VARCHAR, "
@@ -166,6 +167,7 @@ public class EventManager extends SQLiteOpenHelper {
 				+ "link VARCHAR, image VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}

@@ -9,6 +9,7 @@ public class Feed {
 		this.feedUrl = feedUrl;
 	}
 
+	@Override
 	public String toString() {
 		return "name=" + this.name + " feedUrl=" + this.feedUrl;
 	}

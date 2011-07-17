@@ -40,7 +40,7 @@ public class Utils {
 	public static int openDownloads = 0;
 
 	public static JSONObject downloadJson(String url) throws Exception {
-		Utils.Log(url);
+		Utils.log(url);
 
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
@@ -55,7 +55,7 @@ public class Utils {
 			InputStream instream = entity.getContent();
 			data = convertStreamToString(instream);
 
-			Utils.Log(data);
+			Utils.log(data);
 			instream.close();
 		}
 		return new JSONObject(data);
@@ -64,13 +64,14 @@ public class Utils {
 	public static void downloadFileThread(final String url, final String target) {
 		openDownloads++;
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				try {
-					Utils.Log(url);
+					Utils.log(url);
 					downloadFile(url, target);
 					openDownloads--;
 				} catch (Exception e) {
-					Log(e, url);
+					log(e, url);
 				}
 			}
 		}).start();
@@ -108,12 +109,13 @@ public class Utils {
 	public static void downloadIconFileThread(final String url,
 			final String target) {
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				try {
-					Utils.Log(url);
+					Utils.log(url);
 					downloadIconFile(url, target);
 				} catch (Exception e) {
-					Log(e, url);
+					log(e, url);
 				}
 			}
 		}).start();
@@ -218,7 +220,7 @@ public class Utils {
 				}
 			}
 		} catch (Exception e) {
-			Log(e, directory);
+			log(e, directory);
 		}
 	}
 
@@ -233,14 +235,15 @@ public class Utils {
 			matcher.find();
 			return matcher.group(1);
 		} catch (Exception e) {
-			Log(e, file.toString());
+			log(e, file.toString());
 		}
 		return "";
 	}
 
 	public static String getRssLinkFromUrl(String url) {
-		Utils.Log(url);
+		Utils.log(url);
 
+		String result = url;
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpGet httpget = new HttpGet(url);
@@ -249,18 +252,17 @@ public class Utils {
 			HttpEntity entity = response.getEntity();
 
 			if (entity == null) {
-				return url;
+				return result;
 			}
 			InputStream instream = entity.getContent();
 			String data = convertStreamToString(instream);
 
 			if (data.startsWith("<?xml")) {
-				return url;
+				return result;
 			}
 			Pattern link = Pattern.compile("<link[^>]+>");
 			Pattern href = Pattern.compile("href=[\"'](.+?)[\"']");
 
-			String feedUrl = url;
 			Matcher matcher = link.matcher(data);
 			while (matcher.find()) {
 				String match = matcher.group(0);
@@ -269,20 +271,19 @@ public class Utils {
 				if (href_match.find()
 						&& (match.contains("application/rss+xml") || match
 								.contains("application/atom+xml"))) {
-					feedUrl = href_match.group(1);
+					result = href_match.group(1);
 				}
 			}
 
 			// relative url
 			Uri uri = Uri.parse(url);
-			if (!feedUrl.contains("://")) {
-				feedUrl = "http://" + uri.getHost() + "/" + feedUrl;
+			if (!result.contains("://")) {
+				result = "http://" + uri.getHost() + "/" + result;
 			}
-			url = feedUrl;
 		} catch (Exception e) {
-			Log(e, url);
+			log(e, url);
 		}
-		return url;
+		return result;
 	}
 
 	public static String md5(String str) {
@@ -293,7 +294,7 @@ public class Utils {
 			BigInteger bigInt = new BigInteger(1, md.digest());
 			return bigInt.toString(16);
 		} catch (Exception e) {
-			Log(e, str);
+			log(e, str);
 		}
 		return "";
 	}
@@ -303,7 +304,7 @@ public class Utils {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			return dateFormat.parse(str);
 		} catch (Exception e) {
-			Log(e, str);
+			log(e, str);
 		}
 		return new Date();
 	}
@@ -314,7 +315,7 @@ public class Utils {
 					"yyyy-MM-dd'T'HH:mm:ss");
 			return dateFormat.parse(str);
 		} catch (Exception e) {
-			Log(e, str);
+			log(e, str);
 		}
 		return new Date();
 	}
@@ -325,7 +326,7 @@ public class Utils {
 					"dd.MM.yyyy HH:mm");
 			return dateFormat.parse(str);
 		} catch (Exception e) {
-			Log(e, str);
+			log(e, str);
 		}
 		return new Date();
 	}
@@ -336,7 +337,7 @@ public class Utils {
 					"EEE, dd MMM yyyy HH:mm:ss", Locale.US);
 			return dateFormat.parse(str);
 		} catch (Exception e) {
-			Log(e, str);
+			log(e, str);
 		}
 		return new Date();
 	}
@@ -368,10 +369,11 @@ public class Utils {
 	}
 
 	public static String trunc(String str, int limit) {
+		String result = str;
 		if (str.length() > limit) {
-			str = str.substring(0, limit) + " ...";
+			result = str.substring(0, limit) + " ...";
 		}
-		return str;
+		return result;
 	}
 
 	/**
@@ -379,11 +381,13 @@ public class Utils {
 	 * 
 	 * e.g. "aaa;aaa";"bbb";1 gets aaa,aaa;bbb;1
 	 * 
+	 * <pre>
 	 * @param str CSV line
 	 * @return CSV column values
+	 * </pre>
 	 */
 	private static String[] splitCsvLine(String str) {
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		boolean open = false;
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
@@ -392,12 +396,12 @@ public class Utils {
 				continue;
 			}
 			if (open && c == ';') {
-				result += ",";
+				result.append(",");
 			} else {
-				result += c;
+				result.append(c);
 			}
 		}
-		return result.split(";");
+		return result.toString().split(";");
 	}
 
 	public static List<String[]> readCsv(InputStream fin, String charset) {
@@ -411,7 +415,7 @@ public class Utils {
 			}
 			in.close();
 		} catch (Exception e) {
-			Log(e, "");
+			log(e, "");
 		}
 		return list;
 	}
@@ -424,13 +428,13 @@ public class Utils {
 		return 0;
 	}
 
-	public static void Log(Exception e, String message) {
+	public static void log(Exception e, String message) {
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 		Log.e("TumCampus", e + " " + message + "\n" + sw.toString());
 	}
 
-	public static void Log(String message) {
+	public static void log(String message) {
 		StackTraceElement s = Thread.currentThread().getStackTrace()[3];
 		Log.d("TumCampus", s.toString() + " " + message);
 	}

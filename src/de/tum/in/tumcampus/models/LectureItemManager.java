@@ -149,7 +149,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(LectureItem l) throws Exception {
-		Utils.Log(l.toString());
+		Utils.log(l.toString());
 
 		if (l.id.length() == 0) {
 			throw new Exception("Invalid id.");
@@ -184,6 +184,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 				new String[] { id });
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS lectures_items ("
 				+ "id VARCHAR PRIMARY KEY, lectureId VARCHAR, start VARCHAR, "
@@ -191,6 +192,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 				+ "note VARCHAR, url VARCHAR, seriesId VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}

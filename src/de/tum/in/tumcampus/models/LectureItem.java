@@ -29,6 +29,7 @@ public class LectureItem {
 		this.seriesId = seriesId;
 	}
 
+	@Override
 	public String toString() {
 		return "id=" + id + ", lectureId=" + lectureId + ", start="
 				+ Utils.getDateTimeString(start) + ", end="
