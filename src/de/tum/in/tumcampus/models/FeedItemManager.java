@@ -4,7 +4,6 @@ import java.net.URLEncoder;
 import java.util.Date;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -111,9 +110,10 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 * , "pubDate": "Thu, 23 Jun 2011 20:06:53 GMT", "enclosure": { "url":
 	 * "http://www.n-tv.de/img/30/304801/Img_4_3_220_Pressestimmen.jpg" }
 	 * 
+	 * @param feedId
 	 * @param json
 	 * @return Feeds
-	 * @throws JSONException
+	 * @throws Exception
 	 */
 	public static FeedItem getFromJson(int feedId, JSONObject json)
 			throws Exception {
