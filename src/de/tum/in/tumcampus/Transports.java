@@ -41,7 +41,7 @@ public class Transports extends Activity implements OnItemClickListener,
 	 * 
 	 * @return true if available
 	 */
-	private boolean connected() {
+	public boolean connected() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
@@ -81,6 +81,7 @@ public class Transports extends Activity implements OnItemClickListener,
 
 		et.addTextChangedListener(new TextWatcher() {
 
+			@Override
 			public void onTextChanged(CharSequence input, int arg1, int arg2,
 					int arg3) {
 				if (input.length() == 3) {
@@ -88,11 +89,15 @@ public class Transports extends Activity implements OnItemClickListener,
 				}
 			}
 
+			@Override
 			public void beforeTextChanged(CharSequence arg0, int arg1,
 					int arg2, int arg3) {
+				// empty
 			}
 
+			@Override
 			public void afterTextChanged(Editable arg0) {
+				// empty
 			}
 		});
 
@@ -103,6 +108,7 @@ public class Transports extends Activity implements OnItemClickListener,
 				android.R.layout.two_line_list_item, c2, c2.getColumnNames(),
 				new int[] { android.R.id.text1, android.R.id.text2 }) {
 
+			@Override
 			public boolean isEnabled(int position) {
 				return false;
 			}
@@ -137,6 +143,7 @@ public class Transports extends Activity implements OnItemClickListener,
 				"Lade ...", true);
 
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				Cursor c = null;
 				try {
@@ -159,6 +166,7 @@ public class Transports extends Activity implements OnItemClickListener,
 				// show departures in list
 				final Cursor c2 = c;
 				runOnUiThread(new Runnable() {
+					@Override
 					public void run() {
 						progress.hide();
 
@@ -178,6 +186,7 @@ public class Transports extends Activity implements OnItemClickListener,
 
 		// confirm and delete station
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 
 				// delete station from list, refresh station list
@@ -210,6 +219,7 @@ public class Transports extends Activity implements OnItemClickListener,
 				"Lade ...", true);
 
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 
 				// search station on website
@@ -233,6 +243,7 @@ public class Transports extends Activity implements OnItemClickListener,
 				// show stations from search result in station list
 				// show error message if necessary
 				runOnUiThread(new Runnable() {
+					@Override
 					public void run() {
 						progress.hide();
 
@@ -256,6 +267,7 @@ public class Transports extends Activity implements OnItemClickListener,
 		return false;
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, "MVV EFA");
@@ -263,6 +275,7 @@ public class Transports extends Activity implements OnItemClickListener,
 		return true;
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		// option menu for external links
