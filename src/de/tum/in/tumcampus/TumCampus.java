@@ -38,11 +38,19 @@ import de.tum.in.tumcampus.services.DownloadService;
 import de.tum.in.tumcampus.services.ImportService;
 import de.tum.in.tumcampus.services.SilenceService;
 
+/**
+ * Main activity to show main menu, logo and refresh button
+ */
 public class TumCampus extends Activity implements OnItemClickListener,
 		View.OnClickListener {
 
 	static boolean syncing = false;
 
+	/**
+	 * Check if a network connection is available or can be available soon
+	 * 
+	 * @return empty String if not available or connection type if available
+	 */
 	public String getConnection() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -96,7 +104,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	public void onDestroy() {
 		super.onDestroy();
 		unregisterReceiver(receiver);
-	};
+	}
 
 	@Override
 	protected void onResume() {
@@ -162,7 +170,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.info, "App-Info", false, new Intent(this,
 				AppInfo.class));
 
-		if (Utils.getSettingBool(this, Const.settings.debug)) {
+		if (Utils.getSettingBool(this, Const.Settings.debug)) {
 			addItem(list, R.drawable.icon, "Debug", false, new Intent(this,
 					Debug.class));
 		}
@@ -193,6 +201,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		startActivity(intent);
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, "Einstellungen");
@@ -200,6 +209,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		return true;
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case Menu.FIRST:
@@ -316,6 +326,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				}
 				onResume();
 			}
+
 			if (intent.getAction().equals(ImportService.broadcast)) {
 				String message = intent.getStringExtra("message");
 				String action = intent.getStringExtra("action");
