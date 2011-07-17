@@ -13,7 +13,7 @@ public final class Const {
 	/**
 	 * database version used by SQLiteOpenHelper
 	 */
-	public final static int dbVersion = 2;
+	public final static int dbVersion = 1;
 
 	/**
 	 * constants for application settings
