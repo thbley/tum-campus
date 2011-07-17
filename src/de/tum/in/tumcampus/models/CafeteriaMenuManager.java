@@ -37,7 +37,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 		for (int id : ids) {
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
-					+ "WHERE mensaId = ? AND "
+					+ "WHERE cafeteriaId = ? AND "
 					+ "date > date('now', '+7 day') LIMIT 1",
 					new String[] { String.valueOf(id) });
 
@@ -75,13 +75,13 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 						+ "date >= date() ORDER BY date", null);
 	}
 
-	public Cursor getTypeNameFromDb(String mensaId, String date) {
+	public Cursor getTypeNameFromDb(String cafeteriaId, String date) {
 		return db
 				.rawQuery(
 						"SELECT typeLong, group_concat(name, '\n') as names, id as _id "
-								+ "FROM cafeterias_menus WHERE mensaId = ? AND "
+								+ "FROM cafeterias_menus WHERE cafeteriaId = ? AND "
 								+ "date = ? GROUP BY typeLong ORDER BY typeNr, typeLong, name",
-						new String[] { mensaId, date });
+						new String[] { cafeteriaId, date });
 	}
 
 	/**
@@ -113,8 +113,8 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(CafeteriaMenu c) throws Exception {
-		if (c.mensaId <= 0) {
-			throw new Exception("Invalid mensaId.");
+		if (c.cafeteriaId <= 0) {
+			throw new Exception("Invalid cafeteriaId.");
 		}
 		if (c.name.length() == 0) {
 			throw new Exception("Invalid name.");
@@ -129,9 +129,10 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid date.");
 		}
 		db.execSQL(
-				"REPLACE INTO cafeterias_menus (id, mensaId, date, typeShort, "
+				"REPLACE INTO cafeterias_menus (id, cafeteriaId, date, typeShort, "
 						+ "typeLong, typeNr, name) VALUES (?, ?, ?, ?, ?, ?, ?)",
-				new String[] { String.valueOf(c.id), String.valueOf(c.mensaId),
+				new String[] { String.valueOf(c.id),
+						String.valueOf(c.cafeteriaId),
 						Utils.getDateString(c.date), c.typeShort, c.typeLong,
 						String.valueOf(c.typeNr), c.name });
 	}
@@ -147,7 +148,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
-				+ "id INTEGER, mensaId INTEGER, date VARCHAR, typeShort VARCHAR, "
+				+ "id INTEGER, cafeteriaId INTEGER, date VARCHAR, typeShort VARCHAR, "
 				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
 	}
 
