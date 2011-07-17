@@ -22,7 +22,7 @@ public class SyncManager extends SQLiteOpenHelper {
 	}
 
 	public static void replaceIntoDb(SQLiteDatabase db, String id) {
-		Utils.Log(id);
+		Utils.log(id);
 
 		if (id.length() == 0) {
 			return;
@@ -51,11 +51,13 @@ public class SyncManager extends SQLiteOpenHelper {
 		db.execSQL("DELETE FROM syncs");
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS syncs ("
 				+ "id VARCHAR PRIMARY KEY, lastSync VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}

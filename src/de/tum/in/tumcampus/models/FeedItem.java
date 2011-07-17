@@ -22,6 +22,7 @@ public class FeedItem {
 		this.image = image;
 	}
 
+	@Override
 	public String toString() {
 		return "feedId=" + feedId + " title=" + title + " link=" + link
 				+ " description=" + description + " date="

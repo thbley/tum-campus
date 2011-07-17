@@ -121,7 +121,7 @@ public class NewsManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(News n) throws Exception {
-		Utils.Log(n.toString());
+		Utils.log(n.toString());
 
 		if (n.id.length() == 0) {
 			throw new Exception("Invalid id.");
@@ -143,12 +143,14 @@ public class NewsManager extends SQLiteOpenHelper {
 		db.execSQL("DELETE FROM news WHERE date < date('now','-3 month')");
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS news ("
 				+ "id VARCHAR PRIMARY KEY, message VARCHAR, link VARCHAR, "
 				+ "image VARCHAR, date VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}

@@ -144,12 +144,14 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		db.execSQL("DELETE FROM cafeterias_menus WHERE date < date('now','-7 day')");
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
 				+ "id INTEGER, mensaId INTEGER, date VARCHAR, typeShort VARCHAR, "
 				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}

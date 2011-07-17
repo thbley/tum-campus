@@ -9,6 +9,7 @@ public class Link {
 		this.url = url;
 	}
 
+	@Override
 	public String toString() {
 		return "name=" + this.name + " url=" + this.url;
 	}

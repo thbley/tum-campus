@@ -82,7 +82,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	}
 
 	public void replaceIntoDb(Cafeteria c) throws Exception {
-		Utils.Log(c.toString());
+		Utils.log(c.toString());
 
 		if (c.id <= 0) {
 			throw new Exception("Invalid id.");
@@ -100,11 +100,13 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 		db.execSQL("DELETE FROM cafeterias");
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias ("
 				+ "id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}

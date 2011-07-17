@@ -27,6 +27,7 @@ public class CafeteriaMenu {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return "id=" + this.id + " mensaId=" + this.mensaId + " date="
 				+ Utils.getDateString(this.date) + " typeShort="

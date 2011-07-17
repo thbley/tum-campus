@@ -174,6 +174,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		db.execSQL("DELETE FROM feeds_items WHERE date < date('now','-7 day')");
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS feeds_items ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, feedId INTEGER, "
@@ -181,6 +182,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 				+ "date VARCHAR, image VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}

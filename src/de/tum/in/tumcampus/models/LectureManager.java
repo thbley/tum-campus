@@ -31,11 +31,13 @@ public class LectureManager extends SQLiteOpenHelper {
 		db.execSQL("DELETE FROM lectures WHERE id = ?", new String[] { id });
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS lectures ("
 				+ "id VARCHAR PRIMARY KEY, name VARCHAR, module VARCHAR)");
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		onCreate(db);
 	}
