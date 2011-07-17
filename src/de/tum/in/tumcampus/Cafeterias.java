@@ -85,7 +85,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		super.onResume();
 
 		// get cafeteria list, filtered by user-defined substring
-		String filter = Utils.getSetting(this, Const.settings.cafeteriaFilter);
+		String filter = Utils.getSetting(this, Const.Settings.cafeteriaFilter);
 
 		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
 		Cursor c2 = cm.getAllFromDb("%" + filter + "%");
@@ -154,10 +154,12 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 					android.R.layout.two_line_list_item, c, c.getColumnNames(),
 					new int[] { android.R.id.text1, android.R.id.text2 }) {
 
+				@Override
 				public boolean areAllItemsEnabled() {
 					return false;
 				}
 
+				@Override
 				public boolean isEnabled(int position) {
 					return false;
 				}
@@ -169,6 +171,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		}
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
@@ -179,6 +182,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		return true;
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		// option menu for refresh, settings and external links

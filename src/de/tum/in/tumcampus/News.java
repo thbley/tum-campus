@@ -87,12 +87,14 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		return false;
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
 		return true;
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent service = new Intent(this, DownloadService.class);
 		service.putExtra("action", "news");
