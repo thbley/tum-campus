@@ -52,12 +52,12 @@ public class DownloadService extends IntentService {
 					try {
 						int count = 0;
 						while (Utils.openDownloads > 0 && count < 10) {
-							Utils.Log(String.valueOf(Utils.openDownloads));
+							Utils.log(String.valueOf(Utils.openDownloads));
 							wait(1000);
 							count++;
 						}
 					} catch (Exception e) {
-						Utils.Log(e, "");
+						Utils.log(e, "");
 					}
 				}
 
@@ -89,7 +89,7 @@ public class DownloadService extends IntentService {
 		message("Aktualisiere: ", "");
 
 		String action = intent.getStringExtra("action");
-		Utils.Log(action);
+		Utils.log(action);
 
 		boolean force = false;
 		if (action != null) {
@@ -191,13 +191,13 @@ public class DownloadService extends IntentService {
 	}
 
 	public void message(Exception e, String info) {
-		Utils.Log(e, info);
+		Utils.log(e, info);
 
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 
 		String message = e.getMessage();
-		if (Utils.getSettingBool(this, Const.settings.debug)) {
+		if (Utils.getSettingBool(this, Const.Settings.debug)) {
 			message += sw.toString();
 		}
 		message("Fehler: " + message + " " + info + "\n", "error");
@@ -218,13 +218,13 @@ public class DownloadService extends IntentService {
 	public void onDestroy() {
 		super.onDestroy();
 		destroyed = true;
-		Utils.Log("");
+		Utils.log("");
 	}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Utils.Log("");
+		Utils.log("");
 
 		try {
 			// check if sd card available
