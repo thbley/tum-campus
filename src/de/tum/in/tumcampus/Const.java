@@ -18,7 +18,7 @@ public final class Const {
 	/**
 	 * constants for application settings
 	 */
-	public static final class settings {
+	public static final class Settings {
 		/**
 		 * filter cafeterias by a substring
 		 */
