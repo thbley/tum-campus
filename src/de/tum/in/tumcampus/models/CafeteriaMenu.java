@@ -2,6 +2,9 @@
 
 import java.util.Date;
 
+/**
+ * CafeteriaMenu object
+ */
 public class CafeteriaMenu {
 	int id;
 	int mensaId;
@@ -10,7 +13,6 @@ public class CafeteriaMenu {
 	String typeLong;
 	int typeNr;
 	String name;
-	boolean addendum; // Beilage
 
 	public CafeteriaMenu(int id, int mensaId, Date date, String typeShort,
 			String typeLong, int typeNr, String name) {
@@ -22,9 +24,6 @@ public class CafeteriaMenu {
 		this.typeLong = typeLong;
 		this.typeNr = typeNr;
 		this.name = name;
-		if (typeNr == 0) {
-			this.addendum = true;
-		}
 	}
 
 	@Override
@@ -32,7 +31,6 @@ public class CafeteriaMenu {
 		return "id=" + this.id + " mensaId=" + this.mensaId + " date="
 				+ Utils.getDateString(this.date) + " typeShort="
 				+ this.typeShort + " typeLong=" + this.typeLong + " typeNr="
-				+ this.typeNr + " name=" + this.name + " addendum="
-				+ this.addendum;
+				+ this.typeNr + " name=" + this.name;
 	}
 }
