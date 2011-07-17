@@ -5,15 +5,13 @@ import static de.tum.in.tumcampus.models.Utils.getDate;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import de.tum.in.tumcampus.Const;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import de.tum.in.tumcampus.Const;
 
 public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
@@ -96,7 +94,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	 * 
 	 * @param json
 	 * @return CafeteriaMenu
-	 * @throws JSONException
+	 * @throws Exception
 	 */
 	public static CafeteriaMenu getFromJson(JSONObject json) throws Exception {
 
