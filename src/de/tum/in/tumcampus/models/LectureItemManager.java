@@ -13,14 +13,31 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import de.tum.in.tumcampus.Const;
 
+/**
+ * Lecture item Manager, handles database stuff, internal imports
+ */
 public class LectureItemManager extends SQLiteOpenHelper {
 
+	/**
+	 * Database connection
+	 */
 	private SQLiteDatabase db;
 
+	/**
+	 * Last insert counter
+	 */
 	public static int lastInserted = 0;
 
 	public String lastInfo = "";
 
+	/**
+	 * Constructor, open/create database, create table if necessary
+	 * 
+	 * <pre>
+	 * @param context Context
+	 * @param database Filename, e.g. database.db
+	 * </pre>
+	 */
 	public LectureItemManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
@@ -44,6 +61,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		db.setTransactionSuccessful();
 		db.endTransaction();
 
+		// update last insert counter
 		lastInserted += Utils.getCount(db, "lectures_items") - count;
 	}
 
@@ -105,12 +123,19 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		}
 	}
 
+	
 	public Cursor getCurrentFromDb() {
 		return db.rawQuery("SELECT name, location, id as _id "
 				+ "FROM lectures_items WHERE datetime('now', 'localtime') "
 				+ "BETWEEN start AND end LIMIT 1", null);
 	}
 
+	/**
+	 * Get all upcoming and unfinished lecture items from the database
+	 * 
+	 * @return Database cursor (name, note, location, weekday, start_de, end_de,
+	 *         start_dt, end_dt, url, lectureId, _id)
+	 */
 	public Cursor getRecentFromDb() {
 		return db
 				.rawQuery(
@@ -126,6 +151,15 @@ public class LectureItemManager extends SQLiteOpenHelper {
 						null);
 	}
 
+	/**
+	 * Get all lecture items for a special lecture from the database
+	 * 
+	 * <pre>
+	 * @param lectureId Lecture ID
+	 * @return Database cursor (name, note, location, weekday, start_de,
+	 * 		   end_de, start_dt, end_dt, url, location, _id)
+	 * </pre>
+	 */
 	public Cursor getAllFromDb(String lectureId) {
 		return db.rawQuery("SELECT name, note, location, "
 				+ "strftime('%w', start) as weekday, "
@@ -138,6 +172,11 @@ public class LectureItemManager extends SQLiteOpenHelper {
 				new String[] { lectureId });
 	}
 
+	/**
+	 * Checks if the lectures_items table is empty
+	 * 
+	 * @return true if no lecture items are available, else false
+	 */
 	public boolean empty() {
 		boolean result = true;
 		Cursor c = db.rawQuery("SELECT id FROM lectures_items LIMIT 1", null);
@@ -148,6 +187,14 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		return result;
 	}
 
+	/**
+	 * Replace or Insert a lecture item in the database
+	 * 
+	 * <pre>
+	 * @param l LectureItem object
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void replaceIntoDb(LectureItem l) throws Exception {
 		Utils.log(l.toString());
 
@@ -174,11 +221,25 @@ public class LectureItemManager extends SQLiteOpenHelper {
 						l.location, l.note, l.url, l.seriesId });
 	}
 
+	/**
+	 * Delete lecture item from database
+	 * 
+	 * <pre>
+	 * @param id Lecture item ID
+	 * </pre>
+	 */
 	public void deleteItemFromDb(String id) {
 		db.execSQL("DELETE FROM lectures_items WHERE id = ?",
 				new String[] { id });
 	}
 
+	/**
+	 * Delete lecture items from database
+	 * 
+	 * <pre>
+	 * @param id Lecture ID
+	 * </pre>
+	 */
 	public void deleteLectureFromDb(String id) {
 		db.execSQL("DELETE FROM lectures_items WHERE lectureId = ?",
 				new String[] { id });
@@ -186,6 +247,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS lectures_items ("
 				+ "id VARCHAR PRIMARY KEY, lectureId VARCHAR, start VARCHAR, "
 				+ "end VARCHAR, name VARCHAR, module VARCHAR, location VARCHAR, "
