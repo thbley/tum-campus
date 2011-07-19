@@ -7,10 +7,25 @@ import java.util.Date;
  */
 public class News {
 
+	/**
+	 * News ID
+	 */
 	String id;
+	/**
+	 * Message, e.g. X released
+	 */
 	String message;
+	/**
+	 * Link, e.g. http://www.in.tum.de
+	 */
 	String link;
+	/**
+	 * Image, e.g. /mnt/sdcard/tumcampus/news/cache/xy.jpg
+	 */
 	String image;
+	/**
+	 * Date
+	 */
 	Date date;
 
 	/**

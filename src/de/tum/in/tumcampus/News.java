@@ -18,6 +18,10 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.services.DownloadService;
 
+/**
+ * Activity to show News (message, image, date)
+ */
+
 public class News extends Activity implements OnItemClickListener, ViewBinder {
 
 	@Override
