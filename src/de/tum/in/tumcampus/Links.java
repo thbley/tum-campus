@@ -20,6 +20,10 @@ import android.widget.Toast;
 import de.tum.in.tumcampus.models.Link;
 import de.tum.in.tumcampus.models.LinkManager;
 
+/**
+ * Activity to show Links
+ */
+
 public class Links extends Activity implements OnItemClickListener,
 		OnItemLongClickListener, View.OnClickListener, ViewBinder {
 
