@@ -13,14 +13,34 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Html;
 import de.tum.in.tumcampus.Const;
 
+/**
+ * Feed item Manager, handles database stuff, external imports
+ */
 public class FeedItemManager extends SQLiteOpenHelper {
 
+	/**
+	 * Database connection
+	 */
 	private SQLiteDatabase db;
 
+	/**
+	 * Last insert counter
+	 */
 	public static int lastInserted = 0;
 
+	/**
+	 * Additional information for exception messages
+	 */
 	public String lastInfo = "";
 
+	/**
+	 * Constructor, open/create database, create table if necessary
+	 * 
+	 * <pre>
+	 * @param context Context
+	 * @param database Filename, e.g. database.db
+	 * </pre>
+	 */
 	public FeedItemManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
@@ -28,6 +48,16 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Download feed items from external interface (YQL+JSON)
+	 * 
+	 * <pre>
+	 * @param id Feed-ID
+	 * @param retry Retry download after resolving RSS-Url
+	 * @param force Forces download over normal sync period
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void downloadFromExternal(int id, boolean retry, boolean force)
 			throws Exception {
 		String syncId = "feeditem" + id;
@@ -81,15 +111,29 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		db.setTransactionSuccessful();
 		db.endTransaction();
 
+		// update last insert counter
 		lastInserted += Utils.getCount(db, "feeds_items") - count;
 	}
 
+	/**
+	 * Get all feed items for a feed from the database
+	 * 
+	 * <pre>
+	 * @param feedId Feed ID
+	 * @return Database cursor (image, title, description, link, _id)
+	 * </pre>
+	 */
 	public Cursor getAllFromDb(String feedId) {
 		return db.rawQuery("SELECT image, title, description, link, id as _id "
 				+ "FROM feeds_items WHERE feedId = ? ORDER BY date DESC",
 				new String[] { feedId });
 	}
 
+	/**
+	 * Checks if the feeds_items table is empty
+	 * 
+	 * @return true if no feed items are available, else false
+	 */
 	public boolean empty() {
 		boolean result = true;
 		Cursor c = db.rawQuery("SELECT id FROM feeds_items LIMIT 1", null);
@@ -101,7 +145,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * 
+	 * Convert JSON to FeedItem and download feed item iamge
 	 * 
 	 * Example JSON: e.g. { "title":
 	 * "US-Truppenabzug aus Afghanistan: \"Verlogen und verkorkst\"",
@@ -110,10 +154,12 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 * , "pubDate": "Thu, 23 Jun 2011 20:06:53 GMT", "enclosure": { "url":
 	 * "http://www.n-tv.de/img/30/304801/Img_4_3_220_Pressestimmen.jpg" }
 	 * 
-	 * @param feedId
-	 * @param json
+	 * <pre>
+	 * @param feedId Feed ID
+	 * @param json see above
 	 * @return Feeds
 	 * @throws Exception
+	 * </pre>
 	 */
 	public static FeedItem getFromJson(int feedId, JSONObject json)
 			throws Exception {
@@ -143,6 +189,14 @@ public class FeedItemManager extends SQLiteOpenHelper {
 				pubDate, target);
 	}
 
+	/**
+	 * Insert a feed item in the database
+	 * 
+	 * <pre>
+	 * @param n FeedItem object
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void insertIntoDb(FeedItem n) throws Exception {
 		if (n.feedId <= 0) {
 			throw new Exception("Invalid feedId.");
@@ -160,22 +214,36 @@ public class FeedItemManager extends SQLiteOpenHelper {
 						n.description, Utils.getDateTimeString(n.date), n.image });
 	}
 
+	/**
+	 * Removes all cache items
+	 */
 	public void removeCache() {
 		db.execSQL("DELETE FROM feeds_items");
 		Utils.emptyCacheDir("rss/cache");
 	}
 
+	/**
+	 * Deletes feed items from the database
+	 * 
+	 * <pre>
+	 * @param feedId Feed ID
+	 * </pre>
+	 */
 	public void deleteFromDb(int feedId) {
 		db.execSQL("DELETE FROM feeds_items WHERE feedId = ?",
 				new String[] { String.valueOf(feedId) });
 	}
 
+	/**
+	 * Removes all old items (older than 7 days)
+	 */
 	public void cleanupDb() {
 		db.execSQL("DELETE FROM feeds_items WHERE date < date('now','-7 day')");
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS feeds_items ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, feedId INTEGER, "
 				+ "title VARCHAR, link VARCHAR, description VARCHAR, "
