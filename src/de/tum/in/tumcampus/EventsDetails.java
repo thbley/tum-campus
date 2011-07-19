@@ -20,7 +20,7 @@ public class EventsDetails extends Activity {
 
 		// get event details from db
 		EventManager em = new EventManager(this, Const.db);
-		Cursor c = em.getFromDb(getIntent().getStringExtra("id"));
+		Cursor c = em.getDetailsFromDb(getIntent().getStringExtra("id"));
 
 		if (c.moveToNext()) {
 			String description = c.getString(c.getColumnIndex("description"));
