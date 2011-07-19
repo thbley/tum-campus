@@ -15,7 +15,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Cafeteria Manager
+ * Cafeteria Manager, handles database stuff, external imports
  */
 public class CafeteriaManager extends SQLiteOpenHelper {
 
@@ -25,7 +25,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	private SQLiteDatabase db;
 
 	/**
-	 * Constructor CafeteriaManager, open/create database
+	 * Constructor, open/create database, create table if necessary
 	 * 
 	 * <pre>
 	 * @param context Context
@@ -43,7 +43,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	 * Download cafeterias from external interface (JSON)
 	 * 
 	 * <pre>
-	 * @param force Forces download over weekly sync
+	 * @param force Forces download over normal sync period
 	 * @throws Exception
 	 * </pre>
 	 */
@@ -91,7 +91,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	 * 
 	 * <pre>
 	 * @param filter Filter name/address by substring ("" = no filter)
-	 * @return Database cursor
+	 * @return Database cursor (name, address, _id)
 	 * </pre>
 	 */
 	public Cursor getAllFromDb(String filter) {
@@ -152,7 +152,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// create cafeteria table
+		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias ("
 				+ "id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
 	}
