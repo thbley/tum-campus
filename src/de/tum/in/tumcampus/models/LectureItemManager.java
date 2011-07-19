@@ -28,6 +28,9 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	 */
 	public static int lastInserted = 0;
 
+	/**
+	 * Additional information for exception messages
+	 */
 	public String lastInfo = "";
 
 	/**
@@ -45,6 +48,11 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Import lecture items from sd-card directory
+	 * 
+	 * @throws Exception
+	 */
 	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("lectures")).listFiles();
 
@@ -65,6 +73,18 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		lastInserted += Utils.getCount(db, "lectures_items") - count;
 	}
 
+	/**
+	 * Import lecture items from a CSV file
+	 * 
+	 * Header format: TERMIN_TYP, TITEL, ORT, LV_NUMMER, DATUM, VON, BIS,
+	 * WOCHENTAG, ANMERKUNG, URL
+	 * 
+	 * <pre>
+	 * @param file CSV File
+	 * @param encoding Charset, e.g. ISO-8859-1
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void importCsv(File file, String encoding) throws Exception {
 		List<String[]> list = Utils
 				.readCsv(new FileInputStream(file), encoding);
@@ -77,6 +97,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		for (int i = 1; i < list.size(); i++) {
 			String[] row = list.get(i);
 
+			// skip canceled events on import
 			int terminTypId = headers.indexOf("TERMIN_TYP");
 			if (row.length > terminTypId
 					&& row[terminTypId].contains("abgesagt")) {
@@ -123,7 +144,11 @@ public class LectureItemManager extends SQLiteOpenHelper {
 		}
 	}
 
-	
+	/**
+	 * Get all lecture items from the database
+	 * 
+	 * @return Database cursor (name, location, _id)
+	 */
 	public Cursor getCurrentFromDb() {
 		return db.rawQuery("SELECT name, location, id as _id "
 				+ "FROM lectures_items WHERE datetime('now', 'localtime') "
