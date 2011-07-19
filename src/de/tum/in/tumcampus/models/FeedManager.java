@@ -10,14 +10,34 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import de.tum.in.tumcampus.Const;
 
+/**
+ * Feed Manager, handles database stuff, internal imports
+ */
 public class FeedManager extends SQLiteOpenHelper {
 
+	/**
+	 * Database connection
+	 */
 	private SQLiteDatabase db;
 
+	/**
+	 * Last insert counter
+	 */
 	public static int lastInserted = 0;
 
+	/**
+	 * Additional information for exception messages
+	 */
 	public String lastInfo = "";
 
+	/**
+	 * Constructor, open/create database, create table if necessary
+	 * 
+	 * <pre>
+	 * @param context Context
+	 * @param database Filename, e.g. database.db
+	 * </pre>
+	 */
 	public FeedManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
@@ -25,6 +45,11 @@ public class FeedManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Import feeds from internal sd-card directory
+	 * 
+	 * @throws Exception
+	 */
 	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
 
@@ -44,14 +69,25 @@ public class FeedManager extends SQLiteOpenHelper {
 		db.setTransactionSuccessful();
 		db.endTransaction();
 
+		// update last insert counter
 		lastInserted += Utils.getCount(db, "feeds") - count;
 	}
 
+	/**
+	 * Get all feeds from the database
+	 * 
+	 * @return Database cursor (name, feedUrl, _id)
+	 */
 	public Cursor getAllFromDb() {
 		return db.rawQuery("SELECT name, feedUrl, id as _id "
 				+ "FROM feeds ORDER BY name", null);
 	}
 
+	/**
+	 * Checks if the feeds table is empty
+	 * 
+	 * @return true if no feeds are available, else false
+	 */
 	public boolean empty() {
 		boolean result = true;
 		Cursor c = db.rawQuery("SELECT id FROM feeds LIMIT 1", null);
@@ -62,11 +98,15 @@ public class FeedManager extends SQLiteOpenHelper {
 		return result;
 	}
 
+	/**
+	 * Get all Feed IDs from the database
+	 * 
+	 * @return List of feed IDs
+	 */
 	public List<Integer> getAllIdsFromDb() {
 		List<Integer> list = new ArrayList<Integer>();
 
 		Cursor c = db.rawQuery("SELECT id FROM feeds ORDER BY id", null);
-
 		while (c.moveToNext()) {
 			list.add(c.getInt(0));
 		}
@@ -74,26 +114,35 @@ public class FeedManager extends SQLiteOpenHelper {
 		return list;
 	}
 
-	public int insertUpdateIntoDb(Feed n) throws Exception {
-		Utils.log(n.toString());
+	/**
+	 * Insert or Update a feed in the database
+	 * 
+	 * <pre>
+	 * @param f Feed object
+	 * @return Feed ID
+	 * @throws Exception
+	 * </pre>
+	 */
+	public int insertUpdateIntoDb(Feed f) throws Exception {
+		Utils.log(f.toString());
 
-		if (n.name.length() == 0) {
+		if (f.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
-		if (n.feedUrl.length() == 0) {
+		if (f.feedUrl.length() == 0) {
 			throw new Exception("Invalid feedUrl.");
 		}
 
 		Cursor c = db.rawQuery("SELECT id FROM feeds WHERE name = ?",
-				new String[] { n.name });
+				new String[] { f.name });
 
 		if (c.moveToNext()) {
 			db.execSQL("UPDATE feeds SET name=?, feedUrl=? WHERE id=?",
-					new String[] { n.name, n.feedUrl, c.getString(0) });
+					new String[] { f.name, f.feedUrl, c.getString(0) });
 			return c.getInt(0);
 		} else {
 			db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)",
-					new String[] { n.name, n.feedUrl });
+					new String[] { f.name, f.feedUrl });
 
 			c = db.rawQuery("SELECT last_insert_rowid()", null);
 			c.moveToNext();
@@ -101,6 +150,13 @@ public class FeedManager extends SQLiteOpenHelper {
 		}
 	}
 
+	/**
+	 * Delete feed from database
+	 * 
+	 * <pre>
+	 * @param id Feed ID
+	 * </pre>
+	 */
 	public void deleteFromDb(int id) {
 		db.execSQL("DELETE FROM feeds WHERE id = ?",
 				new String[] { String.valueOf(id) });
@@ -108,6 +164,7 @@ public class FeedManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS feeds ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, feedUrl VARCHAR)");
 	}
