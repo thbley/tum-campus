@@ -23,7 +23,6 @@ import de.tum.in.tumcampus.models.LinkManager;
 /**
  * Activity to show Links
  */
-
 public class Links extends Activity implements OnItemClickListener,
 		OnItemLongClickListener, View.OnClickListener, ViewBinder {
 
@@ -34,6 +33,7 @@ public class Links extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.links);
 
+		// get all links from database
 		LinkManager lm = new LinkManager(this, Const.db);
 		Cursor c = lm.getAllFromDb();
 
@@ -41,6 +41,7 @@ public class Links extends Activity implements OnItemClickListener,
 				c.getColumnNames(), new int[] { R.id.icon, R.id.name });
 		adapter.setViewBinder(this);
 
+		// add footer view to add new links
 		View view = getLayoutInflater().inflate(R.layout.links_footer, null,
 				false);
 
@@ -54,6 +55,7 @@ public class Links extends Activity implements OnItemClickListener,
 		Button save = (Button) view.findViewById(R.id.save);
 		save.setOnClickListener(this);
 
+		// reset new items counter
 		LinkManager.lastInserted = 0;
 	}
 
@@ -64,7 +66,7 @@ public class Links extends Activity implements OnItemClickListener,
 		Cursor c = (Cursor) lv.getAdapter().getItem(position);
 		String url = c.getString(c.getColumnIndex("url"));
 
-		// Connection to browser
+		// Open Url in Browser
 		try {
 			Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 			startActivity(viewIntent);
@@ -77,9 +79,12 @@ public class Links extends Activity implements OnItemClickListener,
 	public boolean onItemLongClick(final AdapterView<?> av, View v,
 			final int position, long id) {
 
+		// confirm delete
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
+				
+				// delete link from list, refresh link list
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				int _id = c.getInt(c.getColumnIndex("_id"));
 
@@ -99,9 +104,11 @@ public class Links extends Activity implements OnItemClickListener,
 
 	@Override
 	public void onClick(View v) {
+		// add a new link
 		EditText editName = (EditText) findViewById(R.id.lname);
 		EditText editUrl = (EditText) findViewById(R.id.url);
 
+		// prepend http:// if needed
 		String url = editUrl.getText().toString();
 		if (url.length() > 0 && !url.contains(":")) {
 			url = "http://" + url;
@@ -115,9 +122,11 @@ public class Links extends Activity implements OnItemClickListener,
 		} catch (Exception e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
+		// refresh link list
 		adapter.changeCursor(lm.getAllFromDb());
 		lm.close();
 
+		// clear form
 		editName.setText("");
 		editUrl.setText("");
 	}
