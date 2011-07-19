@@ -14,10 +14,24 @@ import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Transport Manager, handles database stuff, internet connections
+ */
 public class TransportManager extends SQLiteOpenHelper {
 
+	/**
+	 * Database connection
+	 */
 	private SQLiteDatabase db;
 
+	/**
+	 * Constructor, open/create database, create table if necessary
+	 * 
+	 * <pre>
+	 * @param context Context
+	 * @param database Filename, e.g. database.db
+	 * </pre>
+	 */
 	public TransportManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
@@ -25,6 +39,17 @@ public class TransportManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Get all departures for a station
+	 * 
+	 * Cursor includes target station name, departure in remaining minutes
+	 * 
+	 * <pre>
+	 * @param location Station name
+	 * @return Database cursor (name, desc, _id)
+	 * @throws Exception
+	 * </pre>
+	 */
 	public Cursor getDeparturesFromExternal(String location) throws Exception {
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 
@@ -59,6 +84,15 @@ public class TransportManager extends SQLiteOpenHelper {
 		return mc;
 	}
 
+	/**
+	 * Find stations by station name prefix
+	 * 
+	 * <pre>
+	 * @param location Name prefix
+	 * @return Database Cursor (name, _id)
+	 * @throws Exception
+	 * </pre>
+	 */
 	public Cursor getStationsFromExternal(String location) throws Exception {
 
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
@@ -99,11 +133,21 @@ public class TransportManager extends SQLiteOpenHelper {
 		return mc;
 	}
 
+	/**
+	 * Get all stations from the database
+	 * 
+	 * @return Database cursor (name, _id)
+	 */
 	public Cursor getAllFromDb() {
 		return db.rawQuery("SELECT name, name as _id FROM transports "
 				+ "ORDER BY name", null);
 	}
 
+	/**
+	 * Checks if the transports table is empty
+	 * 
+	 * @return true if no stations are available, else false
+	 */
 	public boolean empty() {
 		boolean result = true;
 		Cursor c = db.rawQuery("SELECT name FROM transports LIMIT 1", null);
@@ -114,6 +158,14 @@ public class TransportManager extends SQLiteOpenHelper {
 		return result;
 	}
 
+	/**
+	 * Replace or Insert a station into the database
+	 * 
+	 * <pre>
+	 * @param name Station name
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void replaceIntoDb(String name) {
 		Utils.log(name);
 
@@ -124,6 +176,13 @@ public class TransportManager extends SQLiteOpenHelper {
 				new String[] { name });
 	}
 
+	/**
+	 * delete a station from the database
+	 * 
+	 * <pre>
+	 * @param name Station name
+	 * </pre>
+	 */
 	public void deleteFromDb(String name) {
 		db.execSQL("DELETE FROM transports WHERE name = ?",
 				new String[] { name });
@@ -131,6 +190,7 @@ public class TransportManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS transports ("
 				+ "name VARCHAR PRIMARY KEY)");
 	}
