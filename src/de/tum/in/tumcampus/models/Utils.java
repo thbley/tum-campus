@@ -35,10 +35,25 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+/**
+ * Class for helper functions
+ */
 public class Utils {
 
+	/**
+	 * Counter for unfinished downloads
+	 */
 	public static int openDownloads = 0;
 
+	/**
+	 * Download a JSON stream from a URL
+	 * 
+	 * <pre>
+	 * @param url Valid URL
+	 * @return JSONObject
+	 * @throws Exception
+	 * </pre>
+	 */
 	public static JSONObject downloadJson(String url) throws Exception {
 		Utils.log(url);
 
@@ -61,6 +76,14 @@ public class Utils {
 		return new JSONObject(data);
 	}
 
+	/**
+	 * Download a file in a new thread
+	 * 
+	 * <pre>
+	 * @param url Download location
+	 * @param target Target filename in local file system
+	 * </pre>
+	 */
 	public static void downloadFileThread(final String url, final String target) {
 		openDownloads++;
 		new Thread(new Runnable() {
@@ -77,6 +100,15 @@ public class Utils {
 		}).start();
 	}
 
+	/**
+	 * Download a file in the same thread
+	 * 
+	 * <pre>
+	 * @param url Download location
+	 * @param target Target filename in local file system
+	 * @throws Exception
+	 * </pre>
+	 */
 	private static void downloadFile(String url, String target)
 			throws Exception {
 		File f = new File(target);
@@ -106,6 +138,14 @@ public class Utils {
 		in.close();
 	}
 
+	/**
+	 * Download an icon in a new thread
+	 * 
+	 * <pre>
+	 * @param url Download location
+	 * @param target Target filename in local file system
+	 * </pre>
+	 */
 	public static void downloadIconFileThread(final String url,
 			final String target) {
 		new Thread(new Runnable() {
@@ -121,6 +161,15 @@ public class Utils {
 		}).start();
 	}
 
+	/**
+	 * Download an icon in the same thread
+	 * 
+	 * <pre>
+	 * @param url Download location
+	 * @param target Target filename in local file system
+	 * @throws Exception
+	 * </pre>
+	 */
 	private static void downloadIconFile(String url, String target)
 			throws Exception {
 		File f = new File(target);
@@ -129,6 +178,8 @@ public class Utils {
 		}
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
+
+		// force mobile version of a web page
 		httpget.addHeader("User-Agent",
 				"Mozilla/5.0 (iPhone; de-de) AppleWebKit/528.18 Safari/528.16");
 
@@ -173,6 +224,14 @@ public class Utils {
 		downloadFile(icon, target);
 	}
 
+	/**
+	 * Convert an input stream to a string
+	 * 
+	 * <pre>
+	 * @param is input stream from file, download
+	 * @return output string
+	 * </pre>
+	 */
 	private static String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		StringBuilder sb = new StringBuilder();
@@ -383,7 +442,7 @@ public class Utils {
 	 * 
 	 * <pre>
 	 * @param str CSV line
-	 * @return CSV column values
+	 * @return String[] with CSV column values
 	 * </pre>
 	 */
 	private static String[] splitCsvLine(String str) {
