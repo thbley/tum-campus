@@ -24,18 +24,36 @@ import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.models.SyncManager;
 import de.tum.in.tumcampus.models.Utils;
 
+/**
+ * Service used to download files from external pages
+ */
 public class DownloadService extends IntentService {
 
+	/**
+	 * Indicator to avoid starting new downloads
+	 */
 	private volatile boolean destroyed = false;
 
+	/**
+	 * Download broadcast identifier
+	 */
 	public final static String broadcast = "de.tum.in.tumcampus.intent.action.BROADCAST_DOWNLOAD";
 
+	/**
+	 * default init (run intent in new thread)
+	 */
 	public DownloadService() {
 		super("DownloadService");
 	}
 
-	String message = "";
+	/**
+	 * Notificaiton message
+	 */
+	private String message = "";
 
+	/**
+	 * Default receiver: output feedback as toast and resume activity
+	 */
 	public static BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -72,6 +90,7 @@ public class DownloadService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 
+		// show download notification
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager nm = (NotificationManager) getSystemService(ns);
 
@@ -95,28 +114,47 @@ public class DownloadService extends IntentService {
 		if (action != null) {
 			force = true;
 		}
+
+		// download all or only one action
 		if (action == null || action.equals("feeds")) {
+			message("RSS ", "");
 			downloadFeeds(force);
 		}
 		if (action == null || action.equals("news")) {
-			downloadNews(force);
+			if (!destroyed) {
+				message("Nachrichten ", "");
+				downloadNews(force);
+			}
 		}
 		if (action == null || action.equals("events")) {
-			downloadEvents(force);
+			if (!destroyed) {
+				message("Veranstaltungen ", "");
+				downloadEvents(force);
+			}
 		}
 		if (action == null || action.equals("cafeterias")) {
-			downloadCafeterias(force);
+			if (!destroyed) {
+				message("Mensen ", "");
+				downloadCafeterias(force);
+			}
 		}
 		if (action == null || action.equals("links")) {
-			downloadLinks();
+			if (!destroyed) {
+				downloadLinks();
+			}
 		}
 		message("Fertig!", "completed");
 		nm.cancel(1);
 	}
 
+	/**
+	 * Download items for all feeds
+	 * 
+	 * <pre>
+	 * @param force True to force download over normal sync period, else false
+	 * </pre>
+	 */
 	public void downloadFeeds(boolean force) {
-		message("RSS ", "");
-
 		FeedManager nm = new FeedManager(this, Const.db);
 		List<Integer> list = nm.getAllIdsFromDb();
 		nm.close();
@@ -135,61 +173,81 @@ public class DownloadService extends IntentService {
 		nim.close();
 	}
 
+	/**
+	 * Download news elements
+	 * 
+	 * <pre>
+	 * @param force True to force download over normal sync period, else false
+	 * </pre>
+	 */
 	public void downloadNews(boolean force) {
-		if (!destroyed) {
-			message("Nachrichten ", "");
-			NewsManager nm = new NewsManager(this, Const.db);
-			try {
-				nm.downloadFromExternal(force);
-			} catch (Exception e) {
-				message(e, "");
-			}
-			nm.close();
+		NewsManager nm = new NewsManager(this, Const.db);
+		try {
+			nm.downloadFromExternal(force);
+		} catch (Exception e) {
+			message(e, "");
 		}
+		nm.close();
 	}
 
+	/**
+	 * Download events
+	 * 
+	 * <pre>
+	 * @param force True to force download over normal sync period, else false
+	 * </pre>
+	 */
 	public void downloadEvents(boolean force) {
-		if (!destroyed) {
-			message("Veranstaltungen ", "");
-			EventManager em = new EventManager(this, Const.db);
-			try {
-				em.downloadFromExternal(force);
-			} catch (Exception e) {
-				message(e, "");
-			}
-			em.close();
+		EventManager em = new EventManager(this, Const.db);
+		try {
+			em.downloadFromExternal(force);
+		} catch (Exception e) {
+			message(e, "");
 		}
+		em.close();
 	}
 
+	/**
+	 * Download cafeterias
+	 * 
+	 * <pre>
+	 * @param force True to force download over normal sync period, else false
+	 * </pre>
+	 */
 	public void downloadCafeterias(boolean force) {
-		if (!destroyed) {
-			message("Mensen ", "");
-
-			CafeteriaManager cm = new CafeteriaManager(this, Const.db);
-			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
-			try {
-				cm.downloadFromExternal(force);
-				cmm.downloadFromExternal(cm.getAllIdsFromDb(), force);
-			} catch (Exception e) {
-				message(e, "");
-			}
-			cmm.close();
-			cm.close();
+		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
+		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
+		try {
+			cm.downloadFromExternal(force);
+			cmm.downloadFromExternal(cm.getAllIdsFromDb(), force);
+		} catch (Exception e) {
+			message(e, "");
 		}
+		cmm.close();
+		cm.close();
 	}
 
+	/**
+	 * Download missing icons for links
+	 */
 	public void downloadLinks() {
-		if (!destroyed) {
-			LinkManager lm = new LinkManager(this, Const.db);
-			try {
-				lm.downloadMissingIcons();
-			} catch (Exception e) {
-				message(e, "");
-			}
-			lm.close();
+		LinkManager lm = new LinkManager(this, Const.db);
+		try {
+			lm.downloadMissingIcons();
+		} catch (Exception e) {
+			message(e, "");
 		}
+		lm.close();
 	}
 
+	/**
+	 * Send notification message to service caller
+	 * 
+	 * <pre>
+	 * @param e Exception, get message and stacktrace from 
+	 * @param info Notification info, appended to exception message
+	 * </pre>
+	 */
 	public void message(Exception e, String info) {
 		Utils.log(e, info);
 
@@ -203,8 +261,15 @@ public class DownloadService extends IntentService {
 		message("Fehler: " + message + " " + info + "\n", "error");
 	}
 
+	/**
+	 * Send notification message to service caller
+	 * 
+	 * <pre>
+	 * @param message Notification message
+	 * @param action Notification action (e.g. error, completed)
+	 * </pre>
+	 */
 	public void message(String message, String action) {
-
 		this.message += message;
 
 		Intent intentSend = new Intent();
@@ -217,6 +282,8 @@ public class DownloadService extends IntentService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+
+		// don't start new downloads
 		destroyed = true;
 		Utils.log("");
 	}
@@ -235,6 +302,8 @@ public class DownloadService extends IntentService {
 			sm.close();
 		} catch (Exception e) {
 			message(e, "");
+
+			// don't start new downloads
 			destroyed = true;
 		}
 	}
