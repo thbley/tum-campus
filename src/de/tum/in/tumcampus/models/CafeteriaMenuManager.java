@@ -13,12 +13,29 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import de.tum.in.tumcampus.Const;
 
+/**
+ * Cafeteria Menu Manager, handles database stuff, external imports
+ */
 public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
+	/**
+	 * Database connection
+	 */
 	private SQLiteDatabase db;
 
+	/**
+	 * Last insert counter
+	 */
 	public static int lastInserted = 0;
 
+	/**
+	 * Constructor, open/create database, create table if necessary
+	 * 
+	 * <pre>
+	 * @param context Context
+	 * @param database Filename, e.g. database.db
+	 * </pre>
+	 */
 	public CafeteriaMenuManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
@@ -26,6 +43,15 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Download cafeteria menus from external interface (JSON)
+	 * 
+	 * <pre>
+	 * @param ids List of cafeteria IDs to download items for
+	 * @param force Forces download over normal sync period
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void downloadFromExternal(List<Integer> ids, boolean force)
 			throws Exception {
 
@@ -65,9 +91,15 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		}
 		SyncManager.replaceIntoDb(db, this);
 
+		// update last insert counter
 		lastInserted += Utils.getCount(db, "cafeterias_menus") - count;
 	}
 
+	/**
+	 * Get all distinct menu dates from the database
+	 * 
+	 * @return Database cursor (date_de, _id)
+	 */
 	public Cursor getDatesFromDb() {
 		return db.rawQuery(
 				"SELECT DISTINCT strftime('%d.%m.%Y', date) as date_de, date as _id "
@@ -75,6 +107,16 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 						+ "date >= date() ORDER BY date", null);
 	}
 
+	/**
+	 * Get all types and names from the database for a special date and a
+	 * special cafeteria
+	 * 
+	 * <pre>
+	 * @param cafeteriaId Cafeteria ID, e.g. 411
+	 * @param date ISO-Date, e.g. 2011-12-31 
+	 * @return Database cursor (typeLong, names, _id)
+	 * </pre>
+	 */
 	public Cursor getTypeNameFromDb(String cafeteriaId, String date) {
 		return db
 				.rawQuery(
@@ -85,16 +127,18 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * 
+	 * Convert JSON object to CafeteriaMenu
 	 * 
 	 * Example JSON: e.g.
 	 * {"id":"25544","mensa_id":"411","date":"2011-06-20","type_short"
 	 * :"tg","type_long":"Tagesgericht 3","type_nr":"3","name":
 	 * "Cordon bleu vom Schwein (mit Formfleischhinterschinken) (S) (1,2,3,8)"}
 	 * 
-	 * @param json
+	 * <pre>
+	 * @param json see above
 	 * @return CafeteriaMenu
 	 * @throws Exception
+	 * </pre>
 	 */
 	public static CafeteriaMenu getFromJson(JSONObject json) throws Exception {
 
@@ -104,6 +148,19 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 				json.getInt("type_nr"), json.getString("name"));
 	}
 
+	/**
+	 * Convert JSON object to CafeteriaMenu (addendum)
+	 * 
+	 * Example JSON: e.g.
+	 * {"mensa_id":"411","date":"2011-07-29","name":"Pflaumenkompott"
+	 * ,"type_short":"bei","type_long":"Beilagen"}
+	 * 
+	 * <pre>
+	 * @param json see above
+	 * @return CafeteriaMenu
+	 * @throws Exception
+	 * </pre>
+	 */
 	public static CafeteriaMenu getFromJsonAddendum(JSONObject json)
 			throws Exception {
 
@@ -112,6 +169,14 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 				json.getString("type_long"), 10, json.getString("name"));
 	}
 
+	/**
+	 * Replace or Insert a cafeteria menu in the database
+	 * 
+	 * <pre>
+	 * @param c CafeteriaMenu object
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void replaceIntoDb(CafeteriaMenu c) throws Exception {
 		if (c.cafeteriaId <= 0) {
 			throw new Exception("Invalid cafeteriaId.");
@@ -137,10 +202,16 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 						String.valueOf(c.typeNr), c.name });
 	}
 
+	/**
+	 * Removes all cache items
+	 */
 	public void removeCache() {
 		db.execSQL("DELETE FROM cafeterias_menus");
 	}
 
+	/**
+	 * Removes all old items (older than 7 days)
+	 */
 	public void cleanupDb() {
 		db.execSQL("DELETE FROM cafeterias_menus WHERE date < date('now','-7 day')");
 	}
@@ -148,6 +219,8 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO rename column cafeteriaId on upgrade
+
+		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
 				+ "id INTEGER, cafeteriaId INTEGER, date VARCHAR, typeShort VARCHAR, "
 				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
