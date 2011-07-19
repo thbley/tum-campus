@@ -13,12 +13,29 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import de.tum.in.tumcampus.Const;
 
+/**
+ * Event Manager, handles database stuff, external imports
+ */
 public class EventManager extends SQLiteOpenHelper {
 
+	/**
+	 * Database connection
+	 */
 	private SQLiteDatabase db;
 
+	/**
+	 * Last insert counter
+	 */
 	public static int lastInserted = 0;
 
+	/**
+	 * Constructor, open/create database, create table if necessary
+	 * 
+	 * <pre>
+	 * @param context Context
+	 * @param database Filename, e.g. database.db
+	 * </pre>
+	 */
 	public EventManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
@@ -26,6 +43,14 @@ public class EventManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Download events from external interface (JSON)
+	 * 
+	 * <pre>
+	 * @param force Forces download over normal sync period
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void downloadFromExternal(boolean force) throws Exception {
 
 		if (!force && !SyncManager.needSync(db, this, 21600)) { // 6h
@@ -57,9 +82,16 @@ public class EventManager extends SQLiteOpenHelper {
 		db.setTransactionSuccessful();
 		db.endTransaction();
 
+		// update last insert counter
 		lastInserted += Utils.getCount(db, "events") - count;
 	}
 
+	/**
+	 * Get all upcoming or unfinished events from the database
+	 * 
+	 * @return Database cursor (image, name, weekday, start_de, end_de,
+	 *         location, _id)
+	 */
 	public Cursor getNextFromDb() {
 		return db.rawQuery(
 				"SELECT image, name, strftime('%w', start) as weekday, "
@@ -70,6 +102,12 @@ public class EventManager extends SQLiteOpenHelper {
 						+ "ORDER BY start ASC LIMIT 25", null);
 	}
 
+	/**
+	 * Get all finished events from the database
+	 * 
+	 * @return Database cursor (image, name, weekday, start_de, end_de,
+	 *         location, _id)
+	 */
 	public Cursor getPastFromDb() {
 		return db.rawQuery(
 				"SELECT image, name, strftime('%w', start) as weekday, "
@@ -80,7 +118,15 @@ public class EventManager extends SQLiteOpenHelper {
 						+ "ORDER BY start DESC LIMIT 25", null);
 	}
 
-	public Cursor getFromDb(String id) {
+	/**
+	 * Get event details form the database
+	 * 
+	 * <pre>
+	 * @param id Event-ID
+	 * @return Database cursor (image, name, weekday, start_de, end_de, location, description, link, _id)
+	 * </pre>
+	 */
+	public Cursor getDetailsFromDb(String id) {
 		return db.rawQuery(
 				"SELECT image, name, strftime('%w', start) as weekday, "
 						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
@@ -90,7 +136,7 @@ public class EventManager extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * 
+	 * Convert JSON object to Event, download event picture
 	 * 
 	 * Example JSON: e.g. { "id": "166478443419659", "owner": { "name":
 	 * "TUM Campus App for Android", "category": "Software", "id":
@@ -100,9 +146,11 @@ public class EventManager extends SQLiteOpenHelper {
 	 * "location": "TU M\u00fcnchen", "privacy": "OPEN", "updated_time":
 	 * "2011-06-25T06:26:14+0000" }
 	 * 
-	 * @param json
+	 * <pre>
+	 * @param json see above
 	 * @return Event
 	 * @throws Exception
+	 * </pre>
 	 */
 	public static Event getFromJson(JSONObject json) throws Exception {
 
@@ -133,6 +181,14 @@ public class EventManager extends SQLiteOpenHelper {
 				description, link, target);
 	}
 
+	/**
+	 * Replace or Insert a event in the database
+	 * 
+	 * <pre>
+	 * @param e Event object
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void replaceIntoDb(Event e) throws Exception {
 		if (e.id.length() == 0) {
 			throw new Exception("Invalid id.");
@@ -150,17 +206,24 @@ public class EventManager extends SQLiteOpenHelper {
 						e.description, e.link, e.image });
 	}
 
+	/**
+	 * Removes all cache items
+	 */
 	public void removeCache() {
 		db.execSQL("DELETE FROM events");
 		Utils.emptyCacheDir("events/cache");
 	}
 
+	/**
+	 * Removes all old items (older than 3 months)
+	 */
 	public void cleanupDb() {
 		db.execSQL("DELETE FROM events WHERE start < date('now','-3 month')");
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS events ("
 				+ "id VARCHAR PRIMARY KEY, name VARCHAR, start VARCHAR, "
 				+ "end VARCHAR, location VARCHAR, description VARCHAR, "
