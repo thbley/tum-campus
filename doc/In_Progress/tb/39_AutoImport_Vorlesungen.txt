@@ -1,0 +1,1 @@
+Vorlesungen: Daten werden nicht automatisch beim Anwendungsstart importiert
