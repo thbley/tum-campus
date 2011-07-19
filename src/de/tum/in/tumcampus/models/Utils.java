@@ -253,23 +253,40 @@ public class Utils {
 		return sb.toString();
 	}
 
-	public static String getCacheDir(String dir) throws Exception {
+	/**
+	 * Returns the full path of a cache directory and checks if it is readable
+	 * and writable
+	 * 
+	 * <pre>
+	 * @param directory directory postfix (e.g. feeds/cache)
+	 * @return full path of the cache directory
+	 * @throws Exception
+	 * </pre>
+	 */
+	public static String getCacheDir(String directory) throws Exception {
 		File f = new File(Environment.getExternalStorageDirectory().getPath()
-				+ "/tumcampus/" + dir);
+				+ "/tumcampus/" + directory);
 		if (!f.exists()) {
 			f.mkdirs();
 		}
 		if (!f.canRead()) {
 			throw new Exception("Von der SD-Karte kann nicht gelesen werden: "
-					+ "<sd>/tumcampus/" + dir);
+					+ "<sd>/tumcampus/" + directory);
 		}
 		if (!f.canWrite()) {
 			throw new Exception("Auf die SD-Karte kann nicht geschrieben "
-					+ "werden: <sd>/tumcampus/" + dir);
+					+ "werden: <sd>/tumcampus/" + directory);
 		}
 		return f.getPath() + "/";
 	}
 
+	/**
+	 * Deletes all contents of a cache directory
+	 * 
+	 * <pre>
+	 * @param directory directory postfix (e.g. feeds/cache)
+	 * </pre>
+	 */
 	public static void emptyCacheDir(String directory) {
 		try {
 			File dir = new File(getCacheDir(directory));
@@ -283,6 +300,14 @@ public class Utils {
 		}
 	}
 
+	/**
+	 * Returns a URL from an internet shortcut file (.url)
+	 * 
+	 * <pre>
+	 * @param file Internet shortcut file (.url)
+	 * @return URL
+	 * </pre>
+	 */
 	public static String getLinkFromUrlFile(File file) {
 		try {
 			byte[] buffer = new byte[(int) file.length()];
@@ -299,6 +324,16 @@ public class Utils {
 		return "";
 	}
 
+	/**
+	 * Returns a RSS-URL from a web page URL
+	 * 
+	 * e.g. http://www.spiegel.de returns http://www.spiegel.de/index.rss
+	 * 
+	 * <pre>
+	 * @param url Web page URL
+	 * @return RSS-URL
+	 * </pre>
+	 */
 	public static String getRssLinkFromUrl(String url) {
 		Utils.log(url);
 
@@ -345,6 +380,14 @@ public class Utils {
 		return result;
 	}
 
+	/**
+	 * Get md5 hash from string
+	 * 
+	 * <pre>
+	 * @param str String to hash
+	 * @return md5 hash as string
+	 * </pre>
+	 */
 	public static String md5(String str) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
@@ -358,6 +401,14 @@ public class Utils {
 		return "";
 	}
 
+	/**
+	 * Converts a date-string to Date
+	 * 
+	 * <pre>
+	 * @param str String with ISO-Date (yyyy-mm-dd)
+	 * @return Date
+	 * </pre>
+	 */
 	public static Date getDate(String str) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -368,6 +419,14 @@ public class Utils {
 		return new Date();
 	}
 
+	/**
+	 * Converts a datetime-string to Date
+	 * 
+	 * <pre>
+	 * @param str String with ISO-DateTime (yyyy-mm-ddThh:mm:ss)
+	 * @return Date
+	 * </pre>
+	 */
 	public static Date getDateTime(String str) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -379,6 +438,14 @@ public class Utils {
 		return new Date();
 	}
 
+	/**
+	 * Converts a German datetime-string to Date
+	 * 
+	 * <pre>
+	 * @param str String with German-DateTime (dd.mm.yyyy hh:mm)
+	 * @return Date
+	 * </pre>
+	 */
 	public static Date getDateTimeDe(String str) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -390,6 +457,14 @@ public class Utils {
 		return new Date();
 	}
 
+	/**
+	 * Converts a rfc822 datetime-string to Date
+	 * 
+	 * <pre>
+	 * @param str String with RFC822-Date (e.g. Tue, 12 Jul 2011 14:30:00)
+	 * @return Date
+	 * </pre>
+	 */
 	public static Date getDateTimeRfc822(String str) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -401,32 +476,83 @@ public class Utils {
 		return new Date();
 	}
 
+	/**
+	 * Converts Date to an ISO date-string
+	 * 
+	 * <pre>
+	 * @param d Date
+	 * @return String (yyyy-mm-dd)
+	 * </pre>
+	 */
 	public static String getDateString(Date d) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		return dateFormat.format(d);
 	}
 
+	/**
+	 * Converts Date to a German date-string
+	 * 
+	 * <pre>
+	 * @param d Date
+	 * @return String (dd.mm.yyyy)
+	 * </pre>
+	 */
 	public static String getDateStringDe(Date d) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		return dateFormat.format(d);
 	}
 
+	/**
+	 * Converts Date to an ISO datetime-string
+	 * 
+	 * <pre>
+	 * @param d Date
+	 * @return String (yyyy-mm-dd hh:mm:ss)
+	 * </pre>
+	 */
 	public static String getDateTimeString(Date d) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(d);
 	}
 
+	/**
+	 * Return the value of a setting
+	 * 
+	 * <pre>
+	 * @param c Context
+	 * @param name setting name
+	 * @return setting value, "" if undefined
+	 * </pre>
+	 */
 	public static String getSetting(Context c, String name) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
 		return sp.getString(name, "");
 	}
 
+	/**
+	 * Return the boolean value of a setting
+	 * 
+	 * <pre>
+	 * @param c Context
+	 * @param name setting name
+	 * @return true if setting was checked, else value
+	 * </pre>
+	 */
 	public static boolean getSettingBool(Context c, String name) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
 		return sp.getBoolean(name, false);
 	}
 
+	/**
+	 * Truncates a string to a specified length and appends ...
+	 * 
+	 * <pre>
+	 * @param str String
+	 * @param limit maximum length
+	 * @return truncated String
+	 * </pre>
+	 */
 	public static String trunc(String str, int limit) {
 		String result = str;
 		if (str.length() > limit) {
@@ -479,6 +605,15 @@ public class Utils {
 		return list;
 	}
 
+	/**
+	 * Returns the number of datasets in a table
+	 * 
+	 * <pre>
+	 * @param db Database connection
+	 * @param table Table name
+	 * @return number of datasets in a table
+	 * </pre>
+	 */
 	public static int getCount(SQLiteDatabase db, String table) {
 		Cursor c = db.rawQuery("SELECT count(*) FROM " + table, null);
 		if (c.moveToNext()) {
@@ -487,12 +622,51 @@ public class Utils {
 		return 0;
 	}
 
+	/**
+	 * Checks if a column exists in a database table
+	 * 
+	 * <pre>
+	 * @param db Database connection
+	 * @param table Table name
+	 * @param column Column name
+	 * @return true if column exists, else false
+	 * </pre>
+	 */
+	public static boolean columnExists(SQLiteDatabase db, String table,
+			String column) {
+		try {
+			Cursor c = db.rawQuery("SELECT " + column + " FROM " + table
+					+ " LIMIT 1", null);
+			if (c.moveToNext()) {
+				return true;
+			}
+		} catch (Exception e) {
+			log(e, "");
+		}
+		return false;
+	}
+
+	/**
+	 * Logs an exception and additional information
+	 * 
+	 * <pre>
+	 * @param e Exception (source for message and stacktrace)
+	 * @param message Additional information for exception message
+	 * </pre>
+	 */
 	public static void log(Exception e, String message) {
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 		Log.e("TumCampus", e + " " + message + "\n" + sw.toString());
 	}
 
+	/**
+	 * Logs a message
+	 * 
+	 * <pre>
+	 * @param message Information or Debug message
+	 * </pre>
+	 */
 	public static void log(String message) {
 		StackTraceElement s = Thread.currentThread().getStackTrace()[3];
 		Log.d("TumCampus", s.toString() + " " + message);
