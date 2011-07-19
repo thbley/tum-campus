@@ -43,7 +43,7 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	 * Download cafeterias from external interface (JSON)
 	 * 
 	 * <pre>
-	 * @param force Forces download over normal sync period
+	 * @param force True to force download over normal sync period, else false
 	 * @throws Exception
 	 * </pre>
 	 */

@@ -54,7 +54,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 * <pre>
 	 * @param id Feed-ID
 	 * @param retry Retry download after resolving RSS-Url
-	 * @param force Forces download over normal sync period
+	 * @param force True to force download over normal sync period, else false
 	 * @throws Exception
 	 * </pre>
 	 */

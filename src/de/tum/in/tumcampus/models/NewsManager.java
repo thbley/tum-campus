@@ -46,7 +46,7 @@ public class NewsManager extends SQLiteOpenHelper {
 	 * Download news from external interface (JSON)
 	 * 
 	 * <pre>
-	 * @param force Forces download over normal sync period
+	 * @param force True to force download over normal sync period, else false
 	 * @throws Exception
 	 * </pre>
 	 */
