@@ -12,12 +12,29 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import de.tum.in.tumcampus.Const;
 
+/**
+ * News Manager, handles database stuff, external imports
+ */
 public class NewsManager extends SQLiteOpenHelper {
 
+	/**
+	 * Database connection
+	 */
 	private SQLiteDatabase db;
 
+	/**
+	 * Last insert counter
+	 */
 	public static int lastInserted = 0;
 
+	/**
+	 * Constructor, open/create database, create table if necessary
+	 * 
+	 * <pre>
+	 * @param context Context
+	 * @param database Filename, e.g. database.db
+	 * </pre>
+	 */
 	public NewsManager(Context context, String database) {
 		super(context, database, null, Const.dbVersion);
 
@@ -25,6 +42,14 @@ public class NewsManager extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Download news from external interface (JSON)
+	 * 
+	 * <pre>
+	 * @param force Forces download over normal sync period
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void downloadFromExternal(boolean force) throws Exception {
 
 		if (!force && !SyncManager.needSync(db, this, 86400)) {
@@ -46,7 +71,7 @@ public class NewsManager extends SQLiteOpenHelper {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject obj = jsonArray.getJSONObject(i);
 
-			// events, empty items
+			// filter out events, empty items
 			if (obj.has("properties")
 					|| (!obj.has("message") && !obj.has("description") && !obj
 							.has("caption"))) {
@@ -62,9 +87,15 @@ public class NewsManager extends SQLiteOpenHelper {
 		db.setTransactionSuccessful();
 		db.endTransaction();
 
+		// update last insert counter
 		lastInserted += Utils.getCount(db, "news") - count;
 	}
 
+	/**
+	 * Get all news from the database
+	 * 
+	 * @return Database cursor (image, message, date_de, link, _id)
+	 */
 	public Cursor getAllFromDb() {
 		return db.rawQuery("SELECT image, message, strftime('%d.%m.%Y', date) "
 				+ "as date_de, link, id as _id "
@@ -72,7 +103,7 @@ public class NewsManager extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * 
+	 * Convert JSON object to News and download news image
 	 * 
 	 * Example JSON: e.g. { "id": "162327853831856_174943842570257", "from": {
 	 * ... }, "message": "Testing ...", "picture":
@@ -84,9 +115,11 @@ public class NewsManager extends SQLiteOpenHelper {
 	 * "photo", "object_id": "174943835903591", "created_time":
 	 * "2011-07-04T01:58:25+0000", "updated_time": "2011-07-04T01:58:25+0000" },
 	 * 
-	 * @param json
+	 * <pre>
+	 * @param json see above
 	 * @return News
 	 * @throws Exception
+	 * </pre>
 	 */
 	public static News getFromJson(JSONObject json) throws Exception {
 
@@ -107,6 +140,7 @@ public class NewsManager extends SQLiteOpenHelper {
 					+ "/Picture?type=normal";
 		}
 
+		// message empty => description empty => caption
 		String message = "";
 		if (json.has("message")) {
 			message = json.getString("message");
@@ -120,6 +154,14 @@ public class NewsManager extends SQLiteOpenHelper {
 		return new News(json.getString("id"), message, link, target, date);
 	}
 
+	/**
+	 * Replace or Insert a event in the database
+	 * 
+	 * <pre>
+	 * @param n News object
+	 * @throws Exception
+	 * </pre>
+	 */
 	public void replaceIntoDb(News n) throws Exception {
 		Utils.log(n.toString());
 
@@ -134,17 +176,24 @@ public class NewsManager extends SQLiteOpenHelper {
 				n.link, n.image, Utils.getDateString(n.date) });
 	}
 
+	/**
+	 * Removes all cache items
+	 */
 	public void removeCache() {
 		db.execSQL("DELETE FROM news");
 		Utils.emptyCacheDir("news/cache");
 	}
 
+	/**
+	 * Removes all old items (older than 3 months)
+	 */
 	public void cleanupDb() {
 		db.execSQL("DELETE FROM news WHERE date < date('now','-3 month')");
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS news ("
 				+ "id VARCHAR PRIMARY KEY, message VARCHAR, link VARCHAR, "
 				+ "image VARCHAR, date VARCHAR)");
