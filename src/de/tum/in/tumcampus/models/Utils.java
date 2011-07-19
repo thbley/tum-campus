@@ -589,6 +589,15 @@ public class Utils {
 		return result.toString().split(";");
 	}
 
+	/**
+	 * Returns a String[]-List from a CSV input stream
+	 * 
+	 * <pre>
+	 * @param fin CSV input stream
+	 * @param charset Encoding, e.g. ISO-8859-1
+	 * @return String[]-List with Columns matched to array values
+	 * </pre>
+	 */
 	public static List<String[]> readCsv(InputStream fin, String charset) {
 		List<String[]> list = new ArrayList<String[]>();
 		try {
