@@ -48,7 +48,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	 * 
 	 * <pre>
 	 * @param ids List of cafeteria IDs to download items for
-	 * @param force Forces download over normal sync period
+	 * @param force True to force download over normal sync period, else false
 	 * @throws Exception
 	 * </pre>
 	 */
