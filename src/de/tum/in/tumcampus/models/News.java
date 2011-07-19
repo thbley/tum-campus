@@ -8,21 +8,25 @@ import java.util.Date;
 public class News {
 
 	/**
-	 * News ID
+	 * News Facebook-ID
 	 */
 	String id;
+
 	/**
 	 * Message, e.g. X released
 	 */
 	String message;
+
 	/**
-	 * Link, e.g. http://www.in.tum.de
+	 * Link Url, e.g. http://www.in.tum.de
 	 */
 	String link;
+
 	/**
-	 * Image, e.g. /mnt/sdcard/tumcampus/news/cache/xy.jpg
+	 * Local image, e.g. /mnt/sdcard/tumcampus/news/cache/xy.jpg
 	 */
 	String image;
+
 	/**
 	 * Date
 	 */
@@ -33,10 +37,10 @@ public class News {
 	 * 
 	 * <pre>
 	 * @param id News Facebook-ID
-	 * @param message News message, e.g. X released
+	 * @param message Message, e.g. X released
 	 * @param link Url, e.g. http://www.in.tum.de
 	 * @param image Local image, e.g. /mnt/sdcard/tumcampus/news/cache/xy.jpg
-	 * @param date News date
+	 * @param date Date
 	 * </pre>
 	 */
 	public News(String id, String message, String link, String image, Date date) {
