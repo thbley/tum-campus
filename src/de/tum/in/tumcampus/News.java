@@ -29,6 +29,7 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
 
+		// get toast feedback and resume activity
 		registerReceiver(DownloadService.receiver, new IntentFilter(
 				DownloadService.broadcast));
 	}
@@ -43,6 +44,7 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 	protected void onResume() {
 		super.onResume();
 
+		// get all news from database
 		NewsManager nm = new NewsManager(this, Const.db);
 		Cursor c = nm.getAllFromDb();
 
@@ -56,6 +58,7 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		lv.setOnItemClickListener(this);
 		nm.close();
 
+		// reset new items counter
 		NewsManager.lastInserted = 0;
 	}
 
@@ -72,7 +75,7 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 			return;
 		}
 
-		// Connection to browser
+		// Open Url in Browser
 		Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		startActivity(viewIntent);
 	}
@@ -100,6 +103,7 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// download latest news
 		Intent service = new Intent(this, DownloadService.class);
 		service.putExtra("action", "news");
 		startService(service);
