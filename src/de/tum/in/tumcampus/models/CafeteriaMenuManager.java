@@ -78,17 +78,20 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 			deleteFromDb(id);
 			db.beginTransaction();
-			JSONArray menu = json.getJSONArray("mensa_menu");
-			for (int j = 0; j < menu.length(); j++) {
-				replaceIntoDb(getFromJson(menu.getJSONObject(j)));
-			}
+			try {
+				JSONArray menu = json.getJSONArray("mensa_menu");
+				for (int j = 0; j < menu.length(); j++) {
+					replaceIntoDb(getFromJson(menu.getJSONObject(j)));
+				}
 
-			JSONArray beilagen = json.getJSONArray("mensa_beilagen");
-			for (int j = 0; j < beilagen.length(); j++) {
-				replaceIntoDb(getFromJsonAddendum(beilagen.getJSONObject(j)));
+				JSONArray beilagen = json.getJSONArray("mensa_beilagen");
+				for (int j = 0; j < beilagen.length(); j++) {
+					replaceIntoDb(getFromJsonAddendum(beilagen.getJSONObject(j)));
+				}
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
 			}
-			db.setTransactionSuccessful();
-			db.endTransaction();
 		}
 		SyncManager.replaceIntoDb(db, this);
 
