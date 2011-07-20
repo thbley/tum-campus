@@ -64,7 +64,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		for (int id : ids) {
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
 					+ "WHERE cafeteriaId = ? AND "
-					+ "date > date('now', '+7 day') LIMIT 1",
+					+ "date > date('now', '+6 day') LIMIT 1",
 					new String[] { String.valueOf(id) });
 
 			if (c.getCount() > 0) {
@@ -76,6 +76,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			String url = "http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php?mensa_id=";
 			JSONObject json = Utils.downloadJson(url + id);
 
+			deleteFromDb(id);
 			db.beginTransaction();
 			JSONArray menu = json.getJSONArray("mensa_menu");
 			for (int j = 0; j < menu.length(); j++) {
@@ -210,6 +211,18 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	}
 
 	/**
+	 * Deletes menu items from the database
+	 * 
+	 * <pre>
+	 * @param cafeteriaId Cafeteria ID
+	 * </pre>
+	 */
+	public void deleteFromDb(int cafeteriaId) {
+		db.execSQL("DELETE FROM cafeterias_menus WHERE cafeteriaId = ?",
+				new String[] { String.valueOf(cafeteriaId) });
+	}
+
+	/**
 	 * Removes all old items (older than 7 days)
 	 */
 	public void cleanupDb() {
@@ -222,7 +235,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
-				+ "id INTEGER, cafeteriaId INTEGER, date VARCHAR, typeShort VARCHAR, "
+				+ "id INTEGER, cafeteriaId INTEGER KEY, date VARCHAR, typeShort VARCHAR, "
 				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
 	}
 
