@@ -62,12 +62,15 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 
 		// write cafeterias into database, transaction = speedup
 		db.beginTransaction();
-		for (int i = 0; i < jsonArray.length(); i++) {
-			replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
+		try {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
+			}
+			SyncManager.replaceIntoDb(db, this);
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
 		}
-		SyncManager.replaceIntoDb(db, this);
-		db.setTransactionSuccessful();
-		db.endTransaction();
 	}
 
 	/**
