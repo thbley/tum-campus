@@ -56,19 +56,21 @@ public class FeedManager extends SQLiteOpenHelper {
 		int count = Utils.getCount(db, "feeds");
 
 		db.beginTransaction();
-		for (File file : files) {
-			String filename = file.getName();
-			if (filename.toLowerCase().endsWith(".url")) {
-				lastInfo = filename;
-				String name = filename.substring(0, filename.length() - 4);
-				String url = Utils.getLinkFromUrlFile(file);
+		try {
+			for (File file : files) {
+				String filename = file.getName();
+				if (filename.toLowerCase().endsWith(".url")) {
+					lastInfo = filename;
+					String name = filename.substring(0, filename.length() - 4);
+					String url = Utils.getLinkFromUrlFile(file);
 
-				insertUpdateIntoDb(new Feed(name, url));
+					insertUpdateIntoDb(new Feed(name, url));
+				}
 			}
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
 		}
-		db.setTransactionSuccessful();
-		db.endTransaction();
-
 		// update last insert counter
 		lastInserted += Utils.getCount(db, "feeds") - count;
 	}
