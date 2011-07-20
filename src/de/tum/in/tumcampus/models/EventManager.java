@@ -75,13 +75,15 @@ public class EventManager extends SQLiteOpenHelper {
 		int count = Utils.getCount(db, "events");
 
 		db.beginTransaction();
-		for (JSONObject json : list) {
-			replaceIntoDb(getFromJson(json));
+		try {
+			for (JSONObject json : list) {
+				replaceIntoDb(getFromJson(json));
+			}
+			SyncManager.replaceIntoDb(db, this);
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
 		}
-		SyncManager.replaceIntoDb(db, this);
-		db.setTransactionSuccessful();
-		db.endTransaction();
-
 		// update last insert counter
 		lastInserted += Utils.getCount(db, "events") - count;
 	}
