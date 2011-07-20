@@ -67,26 +67,28 @@ public class NewsManager extends SQLiteOpenHelper {
 		int count = Utils.getCount(db, "news");
 
 		db.beginTransaction();
-		int countItems = 0;
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject obj = jsonArray.getJSONObject(i);
+		try {
+			int countItems = 0;
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject obj = jsonArray.getJSONObject(i);
 
-			// filter out events, empty items
-			if (obj.has("properties")
-					|| (!obj.has("message") && !obj.has("description") && !obj
-							.has("caption"))) {
-				continue;
+				// filter out events, empty items
+				if (obj.has("properties")
+						|| (!obj.has("message") && !obj.has("description") && !obj
+								.has("caption"))) {
+					continue;
+				}
+				if (countItems > 24) {
+					break;
+				}
+				replaceIntoDb(getFromJson(obj));
+				countItems++;
 			}
-			if (countItems > 24) {
-				break;
-			}
-			replaceIntoDb(getFromJson(obj));
-			countItems++;
+			SyncManager.replaceIntoDb(db, this);
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
 		}
-		SyncManager.replaceIntoDb(db, this);
-		db.setTransactionSuccessful();
-		db.endTransaction();
-
 		// update last insert counter
 		lastInserted += Utils.getCount(db, "news") - count;
 	}
