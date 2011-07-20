@@ -104,13 +104,15 @@ public class FeedItemManager extends SQLiteOpenHelper {
 
 		deleteFromDb(id);
 		db.beginTransaction();
-		for (int j = 0; j < jsonArray.length(); j++) {
-			insertIntoDb(getFromJson(id, jsonArray.getJSONObject(j)));
+		try {
+			for (int j = 0; j < jsonArray.length(); j++) {
+				insertIntoDb(getFromJson(id, jsonArray.getJSONObject(j)));
+			}
+			SyncManager.replaceIntoDb(db, syncId);
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
 		}
-		SyncManager.replaceIntoDb(db, syncId);
-		db.setTransactionSuccessful();
-		db.endTransaction();
-
 		// update last insert counter
 		lastInserted += Utils.getCount(db, "feeds_items") - count;
 	}
