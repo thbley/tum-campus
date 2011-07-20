@@ -17,7 +17,6 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.in.tumcampus.models.NewsManager;
-import de.tum.in.tumcampus.models.Utils;
 import de.tum.in.tumcampus.services.DownloadService;
 
 /**
@@ -84,13 +83,13 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 
 	@Override
 	public boolean setViewValue(View view, Cursor cursor, int index) {
-		// add short url to date
+		// add url (domain only) to date
 		if (view.getId() == R.id.date) {
 			String date = cursor.getString(index);
 			String link = cursor.getString(cursor.getColumnIndex("link"));
 
 			TextView tv = (TextView) view;
-			tv.setText(date + ", " + Utils.shortUrl(link));
+			tv.setText(date + ", " + Uri.parse(link).getHost());
 			return true;
 		}
 
