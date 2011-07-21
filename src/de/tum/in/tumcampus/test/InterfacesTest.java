@@ -33,9 +33,7 @@ public class InterfacesTest extends AndroidTestCase {
 		json = jsonArray.getJSONObject(0);
 
 		assertTrue(json.getString("id").length() > 0);
-		assertTrue(json.getString("object_id").length() > 0);
 		assertTrue(json.getString("type").length() > 0);
-		assertTrue(json.getString("name").length() > 0);
 	}
 
 	public final void testFacebookEvents() throws Exception {
