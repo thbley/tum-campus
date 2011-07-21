@@ -83,7 +83,8 @@ public class ImportTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.clickOnButton("Links importieren");
 		solo.sleep(1000);
-
+		solo.scrollDown();
+		
 		assertTrue(solo.searchText("Links"));
 		solo.clickOnText("Links");
 
