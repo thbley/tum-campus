@@ -1,16 +1,17 @@
-"Spiegel";"http://m.spiegel.de/"
-"N-tv";"http://mobil.n-tv.de/"
-"Zeit";"http://mobil.zeit.de/"
-"Golem";"http://golem.mobi/"
-"Heise";"http://heise-online.mobi/"
-"MVV EFA";"http://efa.mvv-muenchen.de/mvv/XSLT_TRIP_REQUEST2?language=de"
-"MVG Newsticker";"http://www.mvg-mobil.de/betriebsaenderungen/index.html"
-"MVV- und Bahn-Auskunft";"http://mobile.bahn.de/bin/mobil/query2.exe/dox"
-"Informatik Infopoint";"http://www.in.tum.de/fuer-studierende-der-tum/service-fuer-studierende/infopoint.html"
-"Informatik Studienberatung";"http://www.in.tum.de/fuer-studierende-der-tum/beratung.html"
-"Stellenangebote";"http://portal.mytum.de/jobs/index_html"
-"Fachschaft MPI";"http://mpi.fs.tum.de/"
-"OPAC TU München";"http://opac.ub.tum.de/InfoGuideClient.tumsis/start.do?Login=wotum01"
-"OPAC LMU";"https://opacplus.ub.uni-muenchen.de/InfoGuideClient.ubmsis/start.do?Login=igubm"
-"Informatik Fakultät";"http://www.in.tum.de/"
-"Studentenwerk München";"http://www.studentenwerk-muenchen.de/"
+Spiegel;http://m.spiegel.de/
+N-tv;http://mobil.n-tv.de/
+Zeit;http://mobil.zeit.de/
+Golem;http://golem.mobi/
+Heise;http://heise-online.mobi/
+MVV EFA;http://efa.mvv-muenchen.de/mvv/XSLT_TRIP_REQUEST2?language=de
+MVG Newsticker;http://www.mvg-mobil.de/betriebsaenderungen/index.html
+MVV- und Bahn-Auskunft;http://mobile.bahn.de/bin/mobil/query2.exe/dox
+Informatik Infopoint;http://www.in.tum.de/fuer-studierende-der-tum/service-fuer-studierende/infopoint.html
+Informatik Studienberatung;http://www.in.tum.de/fuer-studierende-der-tum/beratung.html
+Stellenangebote;http://portal.mytum.de/jobs/index_html
+Fachschaft MPI;http://mpi.fs.tum.de/
+OPAC TU München;http://opac.ub.tum.de/InfoGuideClient.tumsis/start.do?Login=wotum01
+OPAC LMU;https://opacplus.ub.uni-muenchen.de/InfoGuideClient.ubmsis/start.do?Login=igubm
+Informatik Fakultät;http://www.in.tum.de/
+Studentenwerk München;http://www.studentenwerk-muenchen.de/
+TUM Roomfinder;http://portal.mytum.de/campus/roomfinder/
