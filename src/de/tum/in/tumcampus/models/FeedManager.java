@@ -53,7 +53,7 @@ public class FeedManager extends SQLiteOpenHelper {
 	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("rss")).listFiles();
 
-		int count = Utils.getCount(db, "feeds");
+		int count = Utils.dbGetTableCount(db, "feeds");
 
 		db.beginTransaction();
 		try {
@@ -72,7 +72,7 @@ public class FeedManager extends SQLiteOpenHelper {
 			db.endTransaction();
 		}
 		// update last insert counter
-		lastInserted += Utils.getCount(db, "feeds") - count;
+		lastInserted += Utils.dbGetTableCount(db, "feeds") - count;
 	}
 
 	/**
