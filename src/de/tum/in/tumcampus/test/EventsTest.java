@@ -74,10 +74,10 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.clickOnText("Vergangene Veranstaltungen");
 
-		assertTrue(solo.searchText("Exkursion"));
-		solo.clickOnText("Exkursion");
+		assertTrue(solo.searchText("Netzdialog"));
+		solo.clickOnText("Netzdialog");
 
-		assertTrue(solo.searchText("Mobilfunkbetreiber"));
+		assertTrue(solo.searchText("Government"));
 		solo.goBack();
 
 		solo.goBack();
