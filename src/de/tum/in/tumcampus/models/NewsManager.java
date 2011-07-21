@@ -64,7 +64,7 @@ public class NewsManager extends SQLiteOpenHelper {
 						"data");
 
 		cleanupDb();
-		int count = Utils.getCount(db, "news");
+		int count = Utils.dbGetTableCount(db, "news");
 
 		db.beginTransaction();
 		try {
@@ -90,7 +90,7 @@ public class NewsManager extends SQLiteOpenHelper {
 			db.endTransaction();
 		}
 		// update last insert counter
-		lastInserted += Utils.getCount(db, "news") - count;
+		lastInserted += Utils.dbGetTableCount(db, "news") - count;
 	}
 
 	/**
