@@ -144,6 +144,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				tv.setText(getString(R.string.hello));
 			} else {
 				b.setText("Abbrechen");
+
+				// hide initial download button when syncing
+				b = (Button) findViewById(R.id.initial);
+				b.setVisibility(View.GONE);
 			}
 		} else {
 			b.setVisibility(android.view.View.GONE);
