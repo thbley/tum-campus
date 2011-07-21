@@ -161,6 +161,9 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 	@Override
 	public boolean onItemLongClick(final AdapterView<?> av, View v,
 			final int position, long id) {
+		if (id == -1) {
+			return false;
+		}
 
 		// confirm delete
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
