@@ -33,8 +33,19 @@ import de.tum.in.tumcampus.services.DownloadService;
 public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		OnItemLongClickListener, View.OnClickListener {
 
+	/**
+	 * Current selected feed (ID)
+	 */
 	private String feedId;
+
+	/**
+	 * Current selected feed (Name)
+	 */
 	private String feedName;
+
+	/**
+	 * Adapter for feed list
+	 */
 	private SimpleCursorAdapter adapter;
 
 	@Override
