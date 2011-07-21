@@ -72,7 +72,7 @@ public class EventManager extends SQLiteOpenHelper {
 		}
 
 		cleanupDb();
-		int count = Utils.getCount(db, "events");
+		int count = Utils.dbGetTableCount(db, "events");
 
 		db.beginTransaction();
 		try {
@@ -85,7 +85,7 @@ public class EventManager extends SQLiteOpenHelper {
 			db.endTransaction();
 		}
 		// update last insert counter
-		lastInserted += Utils.getCount(db, "events") - count;
+		lastInserted += Utils.dbGetTableCount(db, "events") - count;
 	}
 
 	/**
