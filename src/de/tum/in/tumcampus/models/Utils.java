@@ -20,7 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -58,12 +57,9 @@ public class Utils {
 		Utils.log(url);
 
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpGet httpget = new HttpGet(url);
+		HttpEntity entity = httpclient.execute(new HttpGet(url)).getEntity();
+
 		String data = "";
-
-		HttpResponse response = httpclient.execute(httpget);
-		HttpEntity entity = response.getEntity();
-
 		if (entity != null) {
 
 			// JSON Response Read
@@ -116,10 +112,7 @@ public class Utils {
 			return;
 		}
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpGet httpget = new HttpGet(url);
-
-		HttpResponse response = httpclient.execute(httpget);
-		HttpEntity entity = response.getEntity();
+		HttpEntity entity = httpclient.execute(new HttpGet(url)).getEntity();
 
 		if (entity == null) {
 			return;
@@ -183,9 +176,7 @@ public class Utils {
 		httpget.addHeader("User-Agent",
 				"Mozilla/5.0 (iPhone; de-de) AppleWebKit/528.18 Safari/528.16");
 
-		HttpResponse response = httpclient.execute(httpget);
-		HttpEntity entity = response.getEntity();
-
+		HttpEntity entity = httpclient.execute(httpget).getEntity();
 		if (entity == null) {
 			return;
 		}
@@ -340,11 +331,8 @@ public class Utils {
 		String result = url;
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpGet httpget = new HttpGet(url);
-
-			HttpResponse response = httpclient.execute(httpget);
-			HttpEntity entity = response.getEntity();
-
+			HttpEntity entity = httpclient.execute(new HttpGet(url))
+					.getEntity();
 			if (entity == null) {
 				return result;
 			}
@@ -623,7 +611,7 @@ public class Utils {
 	 * @return number of datasets in a table
 	 * </pre>
 	 */
-	public static int getCount(SQLiteDatabase db, String table) {
+	public static int dbGetTableCount(SQLiteDatabase db, String table) {
 		Cursor c = db.rawQuery("SELECT count(*) FROM " + table, null);
 		if (c.moveToNext()) {
 			return c.getInt(0);
@@ -632,20 +620,17 @@ public class Utils {
 	}
 
 	/**
-	 * Checks if a column exists in a database table
+	 * Checks if a database table exists
 	 * 
 	 * <pre>
 	 * @param db Database connection
 	 * @param table Table name
-	 * @param column Column name
-	 * @return true if column exists, else false
+	 * @return true if table exists, else false
 	 * </pre>
 	 */
-	public static boolean columnExists(SQLiteDatabase db, String table,
-			String column) {
+	public static boolean dbTableExists(SQLiteDatabase db, String table) {
 		try {
-			Cursor c = db.rawQuery("SELECT " + column + " FROM " + table
-					+ " LIMIT 1", null);
+			Cursor c = db.rawQuery("SELECT 1 FROM " + table + " LIMIT 1", null);
 			if (c.moveToNext()) {
 				return true;
 			}
