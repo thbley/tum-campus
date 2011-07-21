@@ -56,7 +56,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("lectures")).listFiles();
 
-		int count = Utils.getCount(db, "lectures_items");
+		int count = Utils.dbGetTableCount(db, "lectures_items");
 
 		db.beginTransaction();
 		try {
@@ -72,7 +72,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 			db.endTransaction();
 		}
 		// update last insert counter
-		lastInserted += Utils.getCount(db, "lectures_items") - count;
+		lastInserted += Utils.dbGetTableCount(db, "lectures_items") - count;
 	}
 
 	/**
