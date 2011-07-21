@@ -88,9 +88,11 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 			String date = cursor.getString(index);
 			String link = cursor.getString(cursor.getColumnIndex("link"));
 
-			TextView tv = (TextView) view;
-			tv.setText(date + ", " + Uri.parse(link).getHost());
-			return true;
+			if (link.length() > 0) {
+				TextView tv = (TextView) view;
+				tv.setText(date + ", " + Uri.parse(link).getHost());
+				return true;
+			}
 		}
 
 		// hide empty view elements
