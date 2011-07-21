@@ -116,32 +116,24 @@ public class DownloadService extends IntentService {
 		}
 
 		// download all or only one action
-		if (action == null || action.equals("feeds")) {
+		if ((action == null || action.equals("feeds")) && !destroyed) {
 			message("RSS ", "");
 			downloadFeeds(force);
 		}
-		if (action == null || action.equals("news")) {
-			if (!destroyed) {
-				message("Nachrichten ", "");
-				downloadNews(force);
-			}
+		if ((action == null || action.equals("news")) && !destroyed) {
+			message("Nachrichten ", "");
+			downloadNews(force);
 		}
-		if (action == null || action.equals("events")) {
-			if (!destroyed) {
-				message("Veranstaltungen ", "");
-				downloadEvents(force);
-			}
+		if ((action == null || action.equals("events")) && !destroyed) {
+			message("Veranstaltungen ", "");
+			downloadEvents(force);
 		}
-		if (action == null || action.equals("cafeterias")) {
-			if (!destroyed) {
-				message("Mensen ", "");
-				downloadCafeterias(force);
-			}
+		if ((action == null || action.equals("cafeterias")) && !destroyed) {
+			message("Mensen ", "");
+			downloadCafeterias(force);
 		}
-		if (action == null || action.equals("links")) {
-			if (!destroyed) {
-				downloadLinks();
-			}
+		if ((action == null || action.equals("links")) && !destroyed) {
+			downloadLinks();
 		}
 		message("Fertig!", "completed");
 		nm.cancel(1);
