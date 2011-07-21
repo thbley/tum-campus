@@ -141,7 +141,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			b.setVisibility(android.view.View.VISIBLE);
 			if (!syncing) {
 				b.setText("Aktualisieren (" + conn + ")");
-				tv.setText(getString(R.string.hello));
+
+				// reset text if offline message is still there
+				if (tv.getTag() != null) {
+					tv.setText(getString(R.string.hello));
+					tv.setTag(null);
+				}
 			} else {
 				b.setText("Abbrechen");
 
@@ -152,6 +157,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		} else {
 			b.setVisibility(android.view.View.GONE);
 			tv.setText(getString(R.string.hello) + " Offline.");
+			tv.setTag("offline");
 		}
 
 		// start silence service
