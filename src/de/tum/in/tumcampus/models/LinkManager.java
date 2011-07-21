@@ -52,7 +52,7 @@ public class LinkManager extends SQLiteOpenHelper {
 	public void importFromInternal() throws Exception {
 		File[] files = new File(Utils.getCacheDir("links")).listFiles();
 
-		int count = Utils.getCount(db, "links");
+		int count = Utils.dbGetTableCount(db, "links");
 
 		db.beginTransaction();
 		try {
@@ -71,7 +71,7 @@ public class LinkManager extends SQLiteOpenHelper {
 			db.endTransaction();
 		}
 		// update last insert counter
-		lastInserted += Utils.getCount(db, "links") - count;
+		lastInserted += Utils.dbGetTableCount(db, "links") - count;
 	}
 
 	/**
