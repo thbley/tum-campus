@@ -52,6 +52,9 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		b = (Button) findViewById(R.id.debugTime);
 		b.setOnClickListener(this);
+
+		b = (Button) findViewById(R.id.debugMaster);
+		b.setOnClickListener(this);
 	}
 
 	/**
@@ -146,6 +149,10 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		if (v.getId() == R.id.debugTime) {
 			debugSQL("SELECT datetime('now', 'localtime')");
+		}
+
+		if (v.getId() == R.id.debugMaster) {
+			debugSQL("SELECT * FROM sqlite_master");
 		}
 	}
 }
