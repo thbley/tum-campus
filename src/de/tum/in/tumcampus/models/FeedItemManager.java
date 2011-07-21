@@ -66,7 +66,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 		}
 
 		cleanupDb();
-		int count = Utils.getCount(db, "feeds_items");
+		int count = Utils.dbGetTableCount(db, "feeds_items");
 
 		Cursor feed = db.rawQuery("SELECT feedUrl FROM feeds WHERE id = ?",
 				new String[] { String.valueOf(id) });
@@ -114,7 +114,7 @@ public class FeedItemManager extends SQLiteOpenHelper {
 			db.endTransaction();
 		}
 		// update last insert counter
-		lastInserted += Utils.getCount(db, "feeds_items") - count;
+		lastInserted += Utils.dbGetTableCount(db, "feeds_items") - count;
 	}
 
 	/**
