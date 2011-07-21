@@ -41,7 +41,7 @@
 
 		<activity android:name=".Transports" android:label="MVV Live" />
 
-		<activity android:name=".AppInfo" android:label="TUM Campus App for Android" />
+		<activity android:name=".AppInfo" android:label="TUM Campus App for Android 0.7" />
 
 		<activity android:name=".Debug" android:label="Debug SQLite" />
 
