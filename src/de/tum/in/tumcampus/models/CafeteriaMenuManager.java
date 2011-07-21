@@ -59,11 +59,11 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			return;
 		}
 		cleanupDb();
-		int count = Utils.getCount(db, "cafeterias_menus");
+		int count = Utils.dbGetTableCount(db, "cafeterias_menus");
 
 		for (int id : ids) {
 			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus "
-					+ "WHERE cafeteriaId = ? AND "
+					+ "WHERE mensaId = ? AND "
 					+ "date > date('now', '+6 day') LIMIT 1",
 					new String[] { String.valueOf(id) });
 
@@ -96,7 +96,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 		SyncManager.replaceIntoDb(db, this);
 
 		// update last insert counter
-		lastInserted += Utils.getCount(db, "cafeterias_menus") - count;
+		lastInserted += Utils.dbGetTableCount(db, "cafeterias_menus") - count;
 	}
 
 	/**
@@ -116,18 +116,18 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	 * special cafeteria
 	 * 
 	 * <pre>
-	 * @param cafeteriaId Cafeteria ID, e.g. 411
+	 * @param mensaId Mensa ID, e.g. 411
 	 * @param date ISO-Date, e.g. 2011-12-31 
 	 * @return Database cursor (typeLong, names, _id)
 	 * </pre>
 	 */
-	public Cursor getTypeNameFromDb(String cafeteriaId, String date) {
+	public Cursor getTypeNameFromDb(String mensaId, String date) {
 		return db
 				.rawQuery(
 						"SELECT typeLong, group_concat(name, '\n') as names, id as _id "
-								+ "FROM cafeterias_menus WHERE cafeteriaId = ? AND "
+								+ "FROM cafeterias_menus WHERE mensaId = ? AND "
 								+ "date = ? GROUP BY typeLong ORDER BY typeNr, typeLong, name",
-						new String[] { cafeteriaId, date });
+						new String[] { mensaId, date });
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid date.");
 		}
 		db.execSQL(
-				"REPLACE INTO cafeterias_menus (id, cafeteriaId, date, typeShort, "
+				"REPLACE INTO cafeterias_menus (id, mensaId, date, typeShort, "
 						+ "typeLong, typeNr, name) VALUES (?, ?, ?, ?, ?, ?, ?)",
 				new String[] { String.valueOf(c.id),
 						String.valueOf(c.cafeteriaId),
@@ -217,12 +217,12 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	 * Deletes menu items from the database
 	 * 
 	 * <pre>
-	 * @param cafeteriaId Cafeteria ID
+	 * @param mensaId Mensa ID
 	 * </pre>
 	 */
-	public void deleteFromDb(int cafeteriaId) {
-		db.execSQL("DELETE FROM cafeterias_menus WHERE cafeteriaId = ?",
-				new String[] { String.valueOf(cafeteriaId) });
+	public void deleteFromDb(int mensaId) {
+		db.execSQL("DELETE FROM cafeterias_menus WHERE mensaId = ?",
+				new String[] { String.valueOf(mensaId) });
 	}
 
 	/**
@@ -234,11 +234,9 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO rename column cafeteriaId on upgrade
-
 		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
-				+ "id INTEGER, cafeteriaId INTEGER KEY, date VARCHAR, typeShort VARCHAR, "
+				+ "id INTEGER, mensaId INTEGER KEY, date VARCHAR, typeShort VARCHAR, "
 				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
 	}
 
