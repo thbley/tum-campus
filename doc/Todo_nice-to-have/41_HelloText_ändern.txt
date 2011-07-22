@@ -1,0 +1,6 @@
+Im Hauptmenü steht "Hello World, TUMCampus!". Diesen Text würde ich ändern in "TUM Campus App" oder,
+wenn möglich, weglassen so lange nix heruntergeladen wird (dann steht ja eh was anderes da).
+Die App wirkt dann vllt. noch schöner, wenn die ListView gleich unterm Header los geht.
+
+Persönliche Ansprache (Hello/Welcome) drin lassen?
+Ansprache konfigurierbar machen? Chuck Norris Sprüche? Witz des Tages? etc.
