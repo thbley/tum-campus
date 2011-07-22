@@ -1,1 +1,0 @@
-﻿Importer anlegen: Liest Daten von der SD-Karte, z.B. CSV- oder URL-Dateien und speichert diese in die SQLite-Datenbank

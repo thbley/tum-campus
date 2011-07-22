@@ -1,1 +1,0 @@
-﻿[10] Benutzerhandbuch: Ein Benutzerhandbuch wird in Form einer PDF-Datei bereitgestellt. Es enthält eine Übersicht über die Funktionen und beschreibt kurz, wie diese verwendet werden können. Besonderer Fokus liegt dabei auf Funktionen und Einstellmöglichkeiten, deren Verwendung nicht intuitiv ist.
