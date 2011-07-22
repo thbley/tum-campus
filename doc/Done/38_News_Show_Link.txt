@@ -1,3 +1,0 @@
-Es wird kein Link angezeigt, die 
-einzelnen Nachrichten sind aber direkt verlinkt, beim darauf klicken öffnet sich 
-der Browser.

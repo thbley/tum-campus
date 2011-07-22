@@ -1,5 +1,0 @@
-Abstract
-Projektablauf, etwaige Schwierigkeiten und Probleme
-- Abweichungen vom Pflichtenheft
-- Insert Performance (~200/s), usw
-Fazit, Ausblick auf Zukunft
