@@ -1,1 +1,0 @@
-﻿Download-Service anlegen: Lädt Daten von den Schnittstellen (Facebook, Mensa, MVV, RSS) und speichert diese auf der SD-Karte (Bilder) bzw. in die SQLite-Datenbank (JSON-Daten).
