@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="de.tum.in.tumcampus" android:versionCode="3"
-	android:versionName="0.7">
+	package="de.tum.in.tumcampus" android:versionCode="4"
+	android:versionName="0.71">
 	<uses-sdk android:minSdkVersion="7" />
 
 	<instrumentation android:targetPackage="de.tum.in.tumcampus"
@@ -41,7 +41,7 @@
 
 		<activity android:name=".Transports" android:label="MVV Live" />
 
-		<activity android:name=".AppInfo" android:label="TUM Campus App for Android 0.7" />
+		<activity android:name=".AppInfo" android:label="TUM Campus App for Android 0.71" />
 
 		<activity android:name=".Debug" android:label="Debug SQLite" />
 
