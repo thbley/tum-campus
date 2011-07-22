@@ -1,0 +1,5 @@
+﻿[4] Vorlesungstermine: Innerhalb der Android-Anwendung sollen die Vorlesungen des Studenten über einen Menüpunkt angezeigt werden. Die jeweiligen Daten zur Vorlesung werden vom Benutzer aus TUMonline per CSV-Datei exportiert und auf der SD-Karte des Android-Geräts gespeichert. Optional können die Daten hier nochmals über MS Excel vom Benutzer angepasst werden. Von der SD-Karte erfolgt der Import automatisch beim Starten der Anwendung. Es werden pro Veranstaltung die Felder DATUM, VON, BIS, TITEL, ORT und – falls vorhanden – ANMERKUNG angezeigt. Beispiel: 02.05.2011; 09:15; 10:00; Verteilte Anwendungen (IN2102); 00.13.009A, Medien (5613.EG.009A); Übung
+Die Semestertermine (Feiertage, Ferien, etc.) werden ebenfalls automatisch per CSV-Datei von der SD-Karte oder dem Ressourcen-Verzeichnis der App importiert.
+
+User Story:
+Als ein Informatik-Student der TUM möchte ich mobil die aktuellen Vorlesungen und Räume nachschauen, damit ich keine Vorlesung verpasse oder im falschen Raum bin. Als ein Informatik-Student der TUM möchte ich mobil die aktuellen Semestertermine anschauen, damit ich am Feiertag nicht versehentlich in die Uni fahre.

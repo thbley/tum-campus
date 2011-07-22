@@ -1,0 +1,15 @@
+﻿[5] MVV: Innerhalb der Android-Anwendung sollen die aktuellen Abfahrtszeiten für bestimmte Haltestellen aus dem MVV-Bereich angezeigt werden. Der Benutzer soll neben „Garching-Forschungszentrum“ weitere Haltestellen eintragen können. Die aktuellen Daten werden über die Webseite mobil.mvg-live.de gelesen und dargestellt. Es werden jeweils Linie, Zielhaltestelle der Linie und verbleibende Abfahrtszeit in Minuten angezeigt. Beispiel: aktuelle Abfahrtszeiten für Garching-Forschungszentrum
+
+User Story:
+Als ein Informatik-Student der TUM möchte ich schnell die nächste U-Bahn nachschauen, damit ich pünktlich losgehe.
+
+Umsetzung:
+[5] MVV: (Yahoo! Query Language)
+Abfahrtszeiten abrufen:
+Query: select content from html where url="http://www.mvg-live.de/ims/dfiStaticAnzeige.svc?haltestelle=Garching-Forschungszentrum" and xpath="//td[contains(@class,'Column')]/p"
+Url: http://query.yahooapis.com/v1/public/yql?format=json&q=<Query>
+=> {"query":{"count":10,...{"p":["Garching-Forschungszentrum","04:24"...
+Haltestelle suchen:
+Query: select content from html where url="http://www.mvg-live.de/ims/dfiStaticAuswahl.svc?haltestelle=Gar" and xpath="//a[contains(@href,'haltestelle')]"
+Url: http://query.yahooapis.com/v1/public/yql?format=json&q=<Query>
+=> {"query":{"count":8,...{"a":["Botanischer\n              Garten",...
