@@ -1,0 +1,5 @@
+Andere Gelände sind nur 
+schwer festzulegen, denn Eingabe von „München“ zeigt alle Mensen in 
+München an. Eingabe eines Mensanamens nur noch eine Mensa.
+
+=> Auswahl per MultiSelectListPreference erst ab Android 3.0
