@@ -13,6 +13,7 @@
 
 	<Preference android:title="Android Market" android:key="market"
 		android:summary="TUM Campus bewerten oder aktualisieren" />
+
 	<Preference android:title="App-Verwaltung" android:key="app_details"
 		android:summary="Daten löschen oder App deinstallieren" />
 </PreferenceScreen>
