@@ -111,6 +111,15 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertFalse(solo.searchText("CSCW"));
 	}
 
+	public void testLecturesContextMenu() {
+		assertTrue(solo.searchText("Vorlesungen"));
+		solo.clickOnText("Vorlesungen");
+
+		solo.sendKey(Solo.MENU);
+		solo.clickOnText("Roomfinder");
+		solo.sleep(2000);
+	}
+
 	private void _testLectures() {
 		assertTrue(solo.searchText("Nächste Vorlesungen"));
 
