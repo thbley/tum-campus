@@ -5,7 +5,7 @@
 
 	<TextView android:layout_width="fill_parent" android:id="@+id/transportText"
 		android:textColor="#FFFFFF" android:layout_height="wrap_content"
-		android:text="Bitte wählen Sie eine Station aus." />
+		android:paddingLeft="2dip" android:text="Bitte wählen Sie eine Station aus." />
 
 	<ListView android:layout_height="fill_parent"
 		android:background="#FFFFFF" android:layout_width="fill_parent"
@@ -14,7 +14,7 @@
 
 	<TextView android:layout_width="fill_parent" android:id="@+id/transportText2"
 		android:textColor="#FFFFFF" android:layout_height="wrap_content"
-		android:text="Gespeicherte Stationen:" />
+		android:paddingLeft="2dip" android:text="Gespeicherte Stationen:" />
 
 	<ListView android:layout_width="fill_parent"
 		android:background="#FFFFFF" android:layout_height="fill_parent"
