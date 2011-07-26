@@ -3,9 +3,16 @@
 	<EditTextPreference android:key="cafeteriaFilter"
 		android:summary="z.B. 'Garching' um nur Mensen in Garching auflisten"
 		android:title="Mensa-Filter" />
+
 	<CheckBoxPreference android:key="silence"
 		android:title="Handy autom. lautlos" android:summary="während der Vorlesung"
 		android:defaultValue="true" />
+
 	<CheckBoxPreference android:key="debug"
 		android:title="Debug-Modus" />
+
+	<Preference android:title="Android Market" android:key="market"
+		android:summary="TUM Campus bewerten oder aktualisieren" />
+	<Preference android:title="App-Verwaltung" android:key="app_details"
+		android:summary="Daten löschen oder App deinstallieren" />
 </PreferenceScreen>
