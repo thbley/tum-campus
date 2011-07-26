@@ -174,11 +174,20 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
-		menu.add(0, Menu.FIRST + 1, 0, "Einstellungen");
-		menu.add(0, Menu.FIRST + 2, 0, "Preise");
-		menu.add(0, Menu.FIRST + 3, 0, "Öffnungszeiten Garching");
-		menu.add(0, Menu.FIRST + 4, 0, "Öffnungszeiten München");
+		MenuItem m = menu.add(0, Menu.FIRST, 0, "Aktualisieren");
+		m.setIcon(R.drawable.ic_menu_refresh);
+
+		m = menu.add(0, Menu.FIRST + 1, 0, "Einstellungen");
+		m.setIcon(android.R.drawable.ic_menu_preferences);
+
+		m = menu.add(0, Menu.FIRST + 2, 0, "Preise");
+		m.setIcon(android.R.drawable.ic_menu_directions);
+
+		m = menu.add(0, Menu.FIRST + 3, 0, "Öffnungszeiten Garching");
+		m.setIcon(android.R.drawable.ic_menu_info_details);
+
+		m = menu.add(0, Menu.FIRST + 4, 0, "Öffnungszeiten München");
+		m.setIcon(android.R.drawable.ic_menu_info_details);
 		return true;
 	}
 
