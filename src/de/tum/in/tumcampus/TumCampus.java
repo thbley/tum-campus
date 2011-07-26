@@ -1,5 +1,9 @@
 ﻿package de.tum.in.tumcampus;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +16,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -251,7 +256,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		MenuItem m = menu.add(0, Menu.FIRST, 0, "Einstellungen");
 		m.setIcon(android.R.drawable.ic_menu_preferences);
 
-		m = menu.add(0, Menu.FIRST + 1, 0, "Cache leeren");
+		m = menu.add(0, Menu.FIRST + 1, 0, "Handbuch");
+		m.setIcon(android.R.drawable.ic_menu_agenda);
+
+		m = menu.add(0, Menu.FIRST + 2, 0, "Cache leeren");
 		m.setIcon(android.R.drawable.ic_menu_delete);
 		return true;
 	}
@@ -267,6 +275,32 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			return true;
 
 		case Menu.FIRST + 1:
+			try {
+				// copy pdf manual from assets to sd-card
+				String target = Utils.getCacheDir("")
+						+ "TUM Campus Handbuch.pdf";
+
+				InputStream in = getAssets().open("manual.pdf");
+				OutputStream out = new FileOutputStream(target);
+
+				byte[] buffer = new byte[8192];
+				int read;
+				while ((read = in.read(buffer)) != -1) {
+					out.write(buffer, 0, read);
+				}
+				in.close();
+				out.close();
+
+				// open pdf manual
+				Uri uri = Uri.fromFile(new File(target));
+				Intent intent2 = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(intent2);
+			} catch (Exception e) {
+				Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+			}
+			return true;
+
+		case Menu.FIRST + 2:
 			clearCache();
 			return true;
 		}
