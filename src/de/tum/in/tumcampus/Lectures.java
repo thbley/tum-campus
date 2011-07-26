@@ -22,7 +22,6 @@ import android.widget.TextView;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LectureManager;
 import de.tum.in.tumcampus.models.Utils;
-import de.tum.in.tumcampus.services.DownloadService;
 
 /**
  * Activity to show lectures and lecture units
