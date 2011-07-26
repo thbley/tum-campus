@@ -110,7 +110,8 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, Menu.FIRST, 0, "Aktualisieren");
+		MenuItem m = menu.add(0, Menu.FIRST, 0, "Aktualisieren");
+		m.setIcon(R.drawable.ic_menu_refresh);
 		return true;
 	}
 
