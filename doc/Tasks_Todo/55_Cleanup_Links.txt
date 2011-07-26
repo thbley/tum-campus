@@ -1,0 +1,6 @@
+Put links into link categories:
+- Informatik
+- News
+- TUM
+- MVV
+- etc.
