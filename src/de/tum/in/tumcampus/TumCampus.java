@@ -247,8 +247,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, Menu.FIRST, 0, "Einstellungen");
-		menu.add(0, Menu.FIRST + 1, 0, "Cache leeren");
+
+		MenuItem m = menu.add(0, Menu.FIRST, 0, "Einstellungen");
+		m.setIcon(android.R.drawable.ic_menu_preferences);
+
+		m = menu.add(0, Menu.FIRST + 1, 0, "Cache leeren");
+		m.setIcon(android.R.drawable.ic_menu_delete);
 		return true;
 	}
 
