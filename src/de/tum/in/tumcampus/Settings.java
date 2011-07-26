@@ -25,17 +25,15 @@ public class Settings extends PreferenceActivity {
 		// open application details
 		if (key.equals("app_details")) {
 
-			Intent intent;
 			if (android.os.Build.VERSION.SDK_INT >= 9) {
 				// 2.3 and newer
-				Uri packageURI = Uri.parse("package:" + getPackageName());
-				intent = new Intent(
-						"android.settings.APPLICATION_DETAILS_SETTINGS",
-						packageURI);
+				Uri uri = Uri.parse("package:" + getPackageName());
+				Intent intent = new Intent(
+						"android.settings.APPLICATION_DETAILS_SETTINGS", uri);
 				startActivity(intent);
 			} else {
 				// older Androids
-				intent = new Intent(Intent.ACTION_VIEW);
+				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setClassName("com.android.settings",
 						"com.android.settings.InstalledAppDetails");
 				intent.putExtra("com.android.settings.ApplicationPkgName",
@@ -44,8 +42,8 @@ public class Settings extends PreferenceActivity {
 			}
 		}
 		if (key.equals("market")) {
-			Intent intent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse("market://details?id=de.tum.in.tumcampus"));
+			String url = "http://market.android.com/details?id=de.tum.in.tumcampus";
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 			startActivity(intent);
 		}
 		return true;
