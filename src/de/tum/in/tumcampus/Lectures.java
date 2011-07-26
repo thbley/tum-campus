@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LectureManager;
 import de.tum.in.tumcampus.models.Utils;
+import de.tum.in.tumcampus.services.DownloadService;
 
 /**
  * Activity to show lectures and lecture units
@@ -291,5 +294,21 @@ public class Lectures extends Activity implements OnItemClickListener,
 		builder.setNegativeButton("Nein", null);
 		builder.show();
 		return false;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuItem m = menu.add(0, Menu.FIRST, 0, "Roomfinder");
+		m.setIcon(android.R.drawable.ic_menu_mylocation);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// open url in browser
+		String url = "http://portal.mytum.de/campus/roomfinder/";
+		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		return true;
 	}
 }
