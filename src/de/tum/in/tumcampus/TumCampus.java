@@ -277,7 +277,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		case Menu.FIRST + 1:
 			try {
 				// copy pdf manual from assets to sd-card
-				String target = Utils.getCacheDir("")
+				String target = Utils.getCacheDir("cache")
 						+ "TUM Campus Handbuch.pdf";
 
 				InputStream in = getAssets().open("manual.pdf");
