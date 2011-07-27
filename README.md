@@ -20,17 +20,17 @@ Features im Detail:
 - Offline-Modus
 - automatische Stummschaltung während der Vorlesung
 
-=> [Benutzerhandbuch](http://github.com/thomasbley/tum-campus/blob/master/doc/Handbuch/Handbuch_19-07-11_cr_final.pdf?raw=true)
+=> [Benutzerhandbuch](raw/master/doc/Handbuch/Handbuch_19-07-11_cr_final.pdf)
 
 Mehr Features? Portierung auf iOS? => Mach mit!
 
-[Geplante Features](https://github.com/thomasbley/tum-campus/tree/master/doc/Tasks_Nice_to_have)
+[Geplante Features](tree/master/doc/Tasks_Nice_to_have)
 
 ![Hauptmenü](raw/master/doc/Screenshots/TumCampus1_240.png)
-![Speisepläne](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus2_240.png)
-![Veranstaltungen](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus4_240.png)
+![Speisepläne](raw/master/doc/Screenshots/TumCampus2_240.png)
+![Veranstaltungen](raw/master/doc/Screenshots/TumCampus4_240.png)
 
-[=> weitere Screenshots](https://github.com/thomasbley/tum-campus/tree/master/doc/Screenshots)
+[=> weitere Screenshots](tree/master/doc/Screenshots)
 
 Datenschutz:
 Die Anwendung speichert nur personenbezogene Daten, wenn der Benutzer diese explizit eingibt oder über die SD-Karte manuell importiert.<br>
