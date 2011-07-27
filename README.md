@@ -28,11 +28,9 @@ Mehr Features? Portierung auf iOS?
 
 Screenshots:
 
-![Hauptmenü](raw/master/doc/Screenshots/TumCampus1_240.png   "Hauptmenü") 
-![Speisepläne](raw/master/doc/Screenshots/TumCampus2_240.png 
-"Speisepläne") 
-![Veranstaltungen](raw/master/doc/Screenshots/TumCampus4_240.png
-"Veranstaltungen")
+![Hauptmenü](raw/master/doc/Screenshots/TumCampus1_240.png "Hauptmenü")
+ ![Speisepläne](raw/master/doc/Screenshots/TumCampus2_240.png "Speisepläne")
+ ![Veranstaltungen](raw/master/doc/Screenshots/TumCampus4_240.png "Veranstaltungen")
 
 [=> weitere Screenshots](tree/master/doc/Screenshots)
 
