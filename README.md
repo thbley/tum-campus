@@ -31,7 +31,9 @@ Screenshots:
 <span style="padding-right:4px;">
 ![Hauptmenü](raw/master/doc/Screenshots/TumCampus1_240.png "Hauptmenü")
 </span>
+<span style="padding-right:4px;">
 ![Speisepläne](raw/master/doc/Screenshots/TumCampus2_240.png "Speisepläne")
+</span>
 ![Veranstaltungen](raw/master/doc/Screenshots/TumCampus4_240.png "Veranstaltungen")
 
 [=> weitere Screenshots](tree/master/doc/Screenshots)
