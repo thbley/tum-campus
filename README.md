@@ -20,23 +20,23 @@ Features im Detail:
 - Offline-Modus
 - automatische Stummschaltung während der Vorlesung
 
-=> [Benutzerhandbuch](raw/master/doc/Handbuch/Handbuch_19-07-11_cr_final.pdf)
+=> [Benutzerhandbuch](/thomasbley/tum-campus/raw/master/doc/Handbuch/Handbuch_19-07-11_cr_final.pdf)
 
 Mehr Features? Portierung auf iOS?
 
-=> Mach mit! [(geplante Features)](tree/master/doc/Tasks_Nice_to_have)
+=> Mach mit! [(geplante Features)](/thomasbley/tum-campus/tree/master/doc/Tasks_Nice_to_have)
 
 Screenshots:
 
 <span style="padding-right:4px;">
-![Hauptmenü](raw/master/doc/Screenshots/TumCampus1_240.png "Hauptmenü")
+![Hauptmenü](/thomasbley/tum-campus/raw/master/doc/Screenshots/TumCampus1_240.png "Hauptmenü")
 </span>
 <span style="padding-right:4px;">
-![Speisepläne](raw/master/doc/Screenshots/TumCampus2_240.png "Speisepläne")
+![Speisepläne](/thomasbley/tum-campus/raw/master/doc/Screenshots/TumCampus2_240.png "Speisepläne")
 </span>
-![Veranstaltungen](raw/master/doc/Screenshots/TumCampus4_240.png "Veranstaltungen")
+![Veranstaltungen](/thomasbley/tum-campus/raw/master/doc/Screenshots/TumCampus4_240.png "Veranstaltungen")
 
-[=> weitere Screenshots](tree/master/doc/Screenshots)
+[=> weitere Screenshots](/thomasbley/tum-campus/tree/master/doc/Screenshots)
 
 Datenschutz:  
 Die Anwendung speichert nur personenbezogene Daten, wenn der Benutzer diese explizit eingibt oder über die SD-Karte manuell importiert.<br>
