@@ -22,11 +22,11 @@ Features im Detail:
 
 => [Benutzerhandbuch](http://github.com/thomasbley/tum-campus/blob/master/doc/Handbuch/Handbuch_19-07-11_cr_final.pdf?raw=true)
 
-Mehr Features? Portierung auf iOS?
+Mehr Features? Portierung auf iOS? => Mach mit!
 
-Mach mit: [geplante Features](https://github.com/thomasbley/tum-campus/tree/master/doc/Tasks_Nice_to_have)
+[Geplante Features](https://github.com/thomasbley/tum-campus/tree/master/doc/Tasks_Nice_to_have)
 
-![Hauptmenü](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus1_240.png)
+![Hauptmenü](/doc/Screenshots/TumCampus1_240.png)
 ![Speisepläne](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus2_240.png)
 ![Veranstaltungen](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus4_240.png)
 
