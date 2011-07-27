@@ -1,5 +1,4 @@
-﻿
-TUM Campus Informations-App für Informatik
+﻿TUM Campus Informations-App für Informatik
 ==========================================
 
 Informations-App von Studenten für Studenten!
@@ -27,13 +26,15 @@ Mehr Features? Portierung auf iOS?
 
 => Mach mit! [(geplante Features)](tree/master/doc/Tasks_Nice_to_have)
 
+Screenshots:
+
 ![Hauptmenü](raw/master/doc/Screenshots/TumCampus1_240.png "Hauptmenü") 
 ![Speisepläne](raw/master/doc/Screenshots/TumCampus2_240.png "Speisepläne") 
 ![Veranstaltungen](raw/master/doc/Screenshots/TumCampus4_240.png "Veranstaltungen")
 
 [=> weitere Screenshots](tree/master/doc/Screenshots)
 
-Datenschutz:
+Datenschutz:  
 Die Anwendung speichert nur personenbezogene Daten, wenn der Benutzer diese explizit eingibt oder über die SD-Karte manuell importiert.<br>
 Die Anwendung übermittelt keinerlei personenbezogene Daten und keinerlei Nutzungsstatistiken an Dritte.
 
