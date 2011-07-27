@@ -1,7 +1,7 @@
-﻿TUM Campus Informations-App für Informatik
-==========================================
+﻿![TUM Campus](raw/master/res/drawable/tum_logo.png "TUM Campus")
 
-![TUM Campus](raw/master/res/drawable/tum_logo.png "TUM Campus")
+TUM Campus Informations-App für Informatik
+==========================================
 
 Informations-App von Studenten für Studenten!
 
