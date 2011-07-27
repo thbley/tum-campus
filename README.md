@@ -8,9 +8,6 @@ inoffizielle mobile Anwendung für Studenten geschaffen werden, die einen mobile
 
 Kein Support/Haftung durch die TU München.
 
-Aktuelle News:
-- TUM Campus jetzt bei [GitHub](https://github.com/thomasbley/tum-campus)!
-
 Features im Detail:
 - persönliche Vorlesungstermine
 - Nachrichten
@@ -27,11 +24,11 @@ Features im Detail:
 Mehr Features? Portierung auf iOS?
 
 => Macht mit: https://github.com/thomasbley/tum-campus/
-[geplante Features](https://github.com/thomasbley/tum-campus/tree/master/doc/Tasks_Nice_to_have)
+([geplante Features](https://github.com/thomasbley/tum-campus/tree/master/doc/Tasks_Nice_to_have))
 
-http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus1_240.png
-http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus2_240.png
-http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus4_240.png
+![Hauptmenü](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus1_240.png)
+![Speisepläne](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus2_240.png)
+![Veranstaltungen](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus4_240.png)
 
 [=> weitere Screenshots](https://github.com/thomasbley/tum-campus/tree/master/doc/Screenshots)
 
