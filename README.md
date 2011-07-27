@@ -26,7 +26,7 @@ Mehr Features? Portierung auf iOS? => Mach mit!
 
 [Geplante Features](https://github.com/thomasbley/tum-campus/tree/master/doc/Tasks_Nice_to_have)
 
-![Hauptmenü](/thomasbley/tum-campus/tree/master/doc/Screenshots/TumCampus1_240.png)
+![Hauptmenü](raw/master/doc/Screenshots/TumCampus1_240.png)
 ![Speisepläne](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus2_240.png)
 ![Veranstaltungen](http://tum-campus.googlecode.com/svn/trunk/doc/Screenshots/TumCampus4_240.png)
 
