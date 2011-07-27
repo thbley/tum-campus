@@ -1,4 +1,6 @@
-﻿TUM Campus Informations-App für Informatik
+﻿![TUM Campus](raw/master/res/drawable/tum_logo.png)
+
+TUM Campus Informations-App für Informatik
 ==========================================
 
 Informations-App von Studenten für Studenten!
@@ -22,9 +24,9 @@ Features im Detail:
 
 => [Benutzerhandbuch](raw/master/doc/Handbuch/Handbuch_19-07-11_cr_final.pdf)
 
-Mehr Features? Portierung auf iOS? => Mach mit!
+Mehr Features? Portierung auf iOS?
 
-[Geplante Features](tree/master/doc/Tasks_Nice_to_have)
+=> Mach mit! [(geplante Features)](tree/master/doc/Tasks_Nice_to_have)
 
 ![Hauptmenü](raw/master/doc/Screenshots/TumCampus1_240.png)
 ![Speisepläne](raw/master/doc/Screenshots/TumCampus2_240.png)
