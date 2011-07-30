@@ -39,7 +39,9 @@
 
 		<activity android:name=".Transports" android:label="MVV Live" />
 
-		<activity android:name=".AppInfo" android:label="TUM Campus App for Android 0.71" />
+		<activity android:name=".Plans" android:label="Umgebungspläne" />
+
+		<activity android:name=".AppInfo" android:label="TUM Campus App for Android 0.72" />
 
 		<activity android:name=".Debug" android:label="Debug SQLite" />
 
