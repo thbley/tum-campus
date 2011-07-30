@@ -196,6 +196,9 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		addItem(list, R.drawable.party, "Veranstaltungen",
 				EventManager.lastInserted > 0, new Intent(this, Events.class));
 
+		addItem(list, android.R.drawable.ic_menu_mapmode, "Umgebungspläne",
+				false, new Intent(this, Plans.class));
+
 		addItem(list, R.drawable.globus, "Nachrichten",
 				NewsManager.lastInserted > 0, new Intent(this, News.class));
 
