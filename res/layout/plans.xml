@@ -19,7 +19,7 @@
 				android:layout_height="wrap_content" android:gravity="center"
 				android:layout_alignParentBottom="true"
 				android:text="zum Vergrößern den Plan 2 mal antippen"
-				android:layout_marginBottom="50px" android:textColor="#CCCCCC" />
+				android:layout_marginBottom="52px" android:textColor="#CCCCCC" />
 		</RelativeLayout>
 
 		<SlidingDrawer android:layout_width="fill_parent"
