@@ -154,7 +154,8 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	public Cursor getCurrentFromDb() {
 		return db.rawQuery("SELECT name, location, id as _id "
 				+ "FROM lectures_items WHERE datetime('now', 'localtime') "
-				+ "BETWEEN start AND end LIMIT 1", null);
+				+ "BETWEEN start AND end AND "
+				+ "lectureId NOT IN ('holiday', 'vacation') LIMIT 1", null);
 	}
 
 	/**
