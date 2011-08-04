@@ -1,0 +1,1 @@
+﻿Übernahme in Kalender: Eine Veranstaltung aus dem Bereich „Veranstaltungen“ kann über einen Button in den Kalender des Endgeräts übernommen werden.

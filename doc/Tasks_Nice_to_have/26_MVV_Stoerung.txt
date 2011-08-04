@@ -1,0 +1,1 @@
+﻿MVV-Störungsticker: Integration des Störungstickers in die Anzeige der MVV-Abfahrtszeiten (http://www.mvg-mobil.de/Tickerrss/CreateRssClass)
