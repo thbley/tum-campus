@@ -296,7 +296,9 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 				// open pdf manual
 				Uri uri = Uri.fromFile(new File(target));
-				Intent intent2 = new Intent(Intent.ACTION_VIEW, uri);
+				Intent intent2 = new Intent(Intent.ACTION_VIEW);
+				intent2.setDataAndType(uri, "application/pdf");
+				intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent2);
 			} catch (Exception e) {
 				Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
