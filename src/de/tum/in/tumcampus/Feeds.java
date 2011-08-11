@@ -36,12 +36,12 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 	/**
 	 * Current selected feed (ID)
 	 */
-	private String feedId;
+	private static String feedId;
 
 	/**
 	 * Current selected feed (Name)
 	 */
-	private String feedName;
+	private static String feedName;
 
 	/**
 	 * Adapter for feed list
@@ -53,8 +53,10 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.feeds);
 
-		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
-		sd.open();
+		if (feedId == null) {
+			SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
+			sd.open();
+		}
 
 		// get all feeds
 		FeedManager fm = new FeedManager(this, Const.db);
