@@ -15,6 +15,8 @@ import android.widget.SlidingDrawer;
  */
 public class Plans extends Activity implements OnItemClickListener {
 
+	private static int position = -1;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,13 +30,26 @@ public class Plans extends Activity implements OnItemClickListener {
 				android.R.layout.simple_list_item_1, plans));
 		lv.setOnItemClickListener(this);
 
-		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
-		sd.open();
+		if (position == -1) {
+			SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
+			sd.open();
+		}
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> aview, View view, int position,
-			long id) {
+	protected void onResume() {
+		super.onResume();
+
+		// refresh current selected plan on resume (rotate)
+		if (position != -1) {
+			onItemClick(null, null, position, 0);
+		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> aview, View view, int pos, long id) {
+		position = pos;
+
 		WebView browser = (WebView) findViewById(R.id.webView);
 		// activate zoom controls
 		browser.getSettings().setBuiltInZoomControls(true);
@@ -43,20 +58,21 @@ public class Plans extends Activity implements OnItemClickListener {
 
 		// draw image from assets directory in webview
 		String file = "";
+		int width = getWindowManager().getDefaultDisplay().getWidth();
 		if (position == 0) {
 			file = "plans/CampusGarching.jpg";
 			setTitle("Plan: Campus Garching");
-			browser.setInitialScale(100 * view.getWidth() / 1024);
+			browser.setInitialScale(100 * width / 1024);
 
 		} else if (position == 1) {
 			file = "plans/mvv.jpg";
 			setTitle("Plan: MVV-Schnellbahnnetz");
-			browser.setInitialScale(100 * view.getWidth() / 1100);
+			browser.setInitialScale(100 * width / 1100);
 
 		} else {
 			file = "plans/mvv_night.jpg";
 			setTitle("Plan: MVV-Nachtlinien");
-			browser.setInitialScale(100 * view.getWidth() / 1485);
+			browser.setInitialScale(100 * width / 1485);
 		}
 
 		String data = "<body style='margin:0px;'><img src='" + file + "'/>"
@@ -66,6 +82,8 @@ public class Plans extends Activity implements OnItemClickListener {
 		browser.forceLayout();
 
 		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
-		sd.animateClose();
+		if (sd.isOpened()) {
+			sd.animateClose();
+		}
 	}
 }
