@@ -4,7 +4,7 @@
 	android:orientation="horizontal" android:paddingTop="6dip"
 	android:paddingBottom="6dip" android:paddingLeft="4dip">
 
-	<ImageView android:id="@+id/icon" android:layout_width="136px"
+	<ImageView android:id="@+id/icon" android:layout_width="90dip"
 		android:layout_height="fill_parent" android:scaleType="matrix"
 		android:src="@drawable/icon" />
 
