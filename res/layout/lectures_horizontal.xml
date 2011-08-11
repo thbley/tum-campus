@@ -5,7 +5,7 @@
 
 	<LinearLayout android:orientation="vertical"
 		android:layout_weight="50" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:layout_marginRight="5px">
+		android:layout_height="fill_parent" android:layout_marginRight="3dip">
 
 		<TextView android:layout_width="fill_parent" android:id="@+id/lectureText"
 			android:textColor="#FFFFFF" android:layout_height="wrap_content"
