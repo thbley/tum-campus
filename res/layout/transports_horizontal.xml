@@ -5,7 +5,7 @@
 
 	<LinearLayout android:orientation="vertical"
 		android:layout_weight="50" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:layout_marginRight="5px">
+		android:layout_height="fill_parent" android:layout_marginRight="3dip">
 
 		<TextView android:layout_width="wrap_content" android:id="@+id/transportText2"
 			android:textColor="#FFFFFF" android:layout_height="wrap_content"
@@ -38,6 +38,6 @@
 		<ListView android:layout_height="fill_parent"
 			android:background="#FFFFFF" android:layout_width="fill_parent"
 			android:id="@+id/listView2" android:scrollbars="vertical"
-			android:padding="10px" />
+			android:padding="6.5dip" />
 	</LinearLayout>
 </LinearLayout>
