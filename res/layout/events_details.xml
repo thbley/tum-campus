@@ -4,7 +4,7 @@
 	android:layout_height="fill_parent" android:background="#FFFFFF">
 
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="3px" android:background="#0065BD" />
+		android:layout_height="2dip" android:background="#0065BD" />
 
 	<TextView android:layout_width="fill_parent"
 		android:textColor="#0065BD" android:layout_height="wrap_content"
