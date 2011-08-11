@@ -12,7 +12,7 @@
 
 		<EditText android:id="@+id/lname" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:hint="Name"
-			android:layout_weight="35" android:layout_marginTop="2px" />
+			android:layout_weight="35" android:layout_marginTop="1dip" />
 
 		<Button android:id="@+id/save" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:text="Hinzufügen"
