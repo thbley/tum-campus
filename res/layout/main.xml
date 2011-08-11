@@ -8,11 +8,11 @@
 
 		<ImageView android:src="@drawable/tum_logo"
 			android:scaleType="fitXY" android:layout_width="wrap_content"
-			android:layout_height="130px" />
+			android:layout_height="86dip" />
 
 		<Button android:text="Aktualisieren" android:id="@+id/refresh"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_gravity="right|center_vertical" android:width="175px"
+			android:layout_gravity="right|center_vertical" android:width="116dip"
 			android:layout_marginTop="4px" android:layout_marginRight="4px"
 			android:textColor="#2546A4" />
 	</FrameLayout>
@@ -37,7 +37,7 @@
 				android:layout_marginTop="7px" android:visibility="gone" />
 
 			<ListView android:layout_height="wrap_content" android:id="@+id/menu"
-				android:layout_width="fill_parent" android:paddingBottom="50px" />
+				android:layout_width="fill_parent" android:paddingBottom="33dip" />
 		</LinearLayout>
 
 		<SlidingDrawer android:layout_width="fill_parent"
@@ -47,7 +47,7 @@
 			<Button android:layout_height="wrap_content"
 				android:background="#0065BD" android:textColor="#FFFFFF"
 				android:layout_width="fill_parent" android:text="Daten importieren"
-				android:id="@+id/handle" android:height="50px" />
+				android:id="@+id/handle" android:height="33dip" />
 
 			<ScrollView android:id="@+id/slide" android:layout_width="fill_parent"
 				android:layout_height="fill_parent" android:background="#F1FFFFFF">
