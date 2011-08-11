@@ -34,7 +34,7 @@
 			<Button android:text="Start: Daten initial herunterladen!"
 				android:id="@+id/initial" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:textColor="#2546A4"
-				android:layout_marginTop="7px" android:visibility="gone" />
+				android:layout_marginTop="5dip" android:visibility="gone" />
 
 			<ListView android:layout_height="wrap_content" android:id="@+id/menu"
 				android:layout_width="fill_parent" android:paddingBottom="33dip" />
