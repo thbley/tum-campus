@@ -58,8 +58,10 @@ public class EventsDetails extends Activity {
 				double ratio = (double) iv.getDrawable().getIntrinsicWidth()
 						/ (double) iv.getDrawable().getIntrinsicHeight();
 
-				iv.getLayoutParams().width = 350;
-				iv.getLayoutParams().height = (int) Math.floor(350 / ratio);
+				int screen = getWindowManager().getDefaultDisplay().getWidth();
+				int width = Math.min((int)(screen*0.9), 375);
+				iv.getLayoutParams().width = width;
+				iv.getLayoutParams().height = (int) Math.floor(width / ratio);
 			}
 		}
 		em.close();
