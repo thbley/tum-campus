@@ -17,7 +17,7 @@
 			<ListView android:layout_width="fill_parent"
 				android:background="#FFFFFF" android:layout_height="fill_parent"
 				android:id="@+id/listView" android:scrollbars="vertical"
-				android:padding="6px" android:layout_marginBottom="76px" />
+				android:padding="4dip" android:layout_marginBottom="76px" />
 
 			<EditText android:id="@+id/search" android:layout_height="wrap_content"
 				android:hint="Station suchen" android:singleLine="true"
