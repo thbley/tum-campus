@@ -30,12 +30,12 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	/**
 	 * Current Date selected (ISO format)
 	 */
-	private String date;
+	private static String date;
 
 	/**
 	 * Current Date selected (German format)
 	 */
-	private String dateStr;
+	private static String dateStr;
 
 	/**
 	 * Current Cafeteria selected
@@ -52,16 +52,18 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 
 		// default date: today or next monday if today is weekend
-		Calendar calendar = Calendar.getInstance();
-		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-		if (dayOfWeek == Calendar.SATURDAY) {
-			calendar.add(Calendar.DATE, 2);
+		if (date == null) {
+			Calendar calendar = Calendar.getInstance();
+			int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+			if (dayOfWeek == Calendar.SATURDAY) {
+				calendar.add(Calendar.DATE, 2);
+			}
+			if (dayOfWeek == Calendar.SUNDAY) {
+				calendar.add(Calendar.DATE, 1);
+			}
+			date = Utils.getDateString(calendar.getTime());
+			dateStr = Utils.getDateStringDe(calendar.getTime());
 		}
-		if (dayOfWeek == Calendar.SUNDAY) {
-			calendar.add(Calendar.DATE, 1);
-		}
-		date = Utils.getDateString(calendar.getTime());
-		dateStr = Utils.getDateStringDe(calendar.getTime());
 
 		if (getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
 			setContentView(R.layout.cafeterias_horizontal);
