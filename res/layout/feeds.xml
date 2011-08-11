@@ -10,12 +10,12 @@
 			android:layout_width="fill_parent" android:layout_height="fill_parent">
 
 			<TextView android:layout_width="fill_parent"
-				android:layout_height="3px" />
+				android:layout_height="2dip" />
 
 			<ListView android:layout_width="fill_parent"
 				android:background="#FFFFFF" android:layout_height="fill_parent"
 				android:id="@+id/listView2" android:scrollbars="vertical"
-				android:layout_marginBottom="50px" />
+				android:layout_marginBottom="33dip" />
 		</LinearLayout>
 
 		<SlidingDrawer android:layout_width="fill_parent"
@@ -25,7 +25,7 @@
 			<Button android:layout_height="wrap_content"
 				android:layout_width="fill_parent" android:text="Feed auswählen"
 				android:background="#0065BD" android:id="@+id/handle"
-				android:height="50px" android:textColor="#FFFFFF" />
+				android:height="33dip" android:textColor="#FFFFFF" />
 
 			<LinearLayout android:id="@+id/slide"
 				android:background="#F1FFFFFF" android:layout_width="fill_parent"
