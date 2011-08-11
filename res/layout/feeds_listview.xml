@@ -11,13 +11,13 @@
 			android:layout_height="110px" android:scaleType="fitCenter"
 			android:layout_gravity="center_vertical" android:src="@drawable/icon" />
 
-		<TextView android:id="@+id/title" android:textSize="25px"
+		<TextView android:id="@+id/title" android:textSize="17sp"
 			android:textColor="#0065BD" android:paddingLeft="6dip"
 			android:paddingRight="6dip" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" />
 	</LinearLayout>
 
-	<TextView android:id="@+id/description" android:textSize="20px"
+	<TextView android:id="@+id/description" android:textSize="13sp"
 		android:textColor="#0065BD" android:paddingTop="4dip"
 		android:layout_width="fill_parent" android:layout_height="wrap_content" />
 </LinearLayout>
