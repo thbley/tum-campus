@@ -9,7 +9,7 @@
 		android:layout_gravity="center_vertical" android:src="@android:color/transparent"
 		android:layout_margin="6dip" />
 
-	<TextView android:id="@+id/name" android:textSize="30px"
+	<TextView android:id="@+id/name" android:textSize="20sp"
 		android:paddingTop="6dip" android:textColor="#0065BD"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:gravity="center_vertical" android:paddingLeft="6dip" />
