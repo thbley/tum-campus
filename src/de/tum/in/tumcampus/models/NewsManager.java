@@ -75,7 +75,9 @@ public class NewsManager extends SQLiteOpenHelper {
 				// filter out events, empty items
 				if (obj.has("properties")
 						|| (!obj.has("message") && !obj.has("description") && !obj
-								.has("caption"))) {
+								.has("caption"))
+						|| !obj.getJSONObject("from").getString("id")
+								.equals("162327853831856")) {
 					continue;
 				}
 				if (countItems > 24) {
