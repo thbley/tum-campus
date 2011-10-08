@@ -23,7 +23,7 @@ public class Plans extends Activity implements OnItemClickListener {
 		setContentView(R.layout.plans);
 
 		String[] plans = new String[] { "Campus Garching", "Campus Klinikum",
-				"MVV-Schnellbahnnetz", "MVV-Nachtlinien" };
+				"Campus Stammgelände", "MVV-Schnellbahnnetz", "MVV-Nachtlinien" };
 
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setAdapter(new ArrayAdapter<String>(this,
@@ -55,6 +55,8 @@ public class Plans extends Activity implements OnItemClickListener {
 		browser.getSettings().setBuiltInZoomControls(true);
 		// activate double tab to zoom
 		browser.getSettings().setUseWideViewPort(true);
+		// reset zoom
+		browser.clearView();
 
 		// draw image from assets directory in webview
 		String file = "";
@@ -70,6 +72,11 @@ public class Plans extends Activity implements OnItemClickListener {
 			browser.setInitialScale(100 * width / 1024);
 
 		} else if (position == 2) {
+			file = "plans/CampusStammgelaende.jpg";
+			setTitle("Plan: Campus Stammgelände");
+			browser.setInitialScale(100 * width / 1024);
+
+		} else if (position == 3) {
 			file = "plans/mvv.jpg";
 			setTitle("Plan: MVV-Schnellbahnnetz");
 			browser.setInitialScale(100 * width / 1100);
@@ -82,7 +89,6 @@ public class Plans extends Activity implements OnItemClickListener {
 
 		String data = "<body style='margin:0px;'><img src='" + file + "'/>"
 				+ "</body>";
-		browser.clearView();
 		browser.loadDataWithBaseURL("file:///android_asset/", data,
 				"text/html", "UTF-8", null);
 		browser.forceLayout();
