@@ -23,6 +23,7 @@ public class Plans extends Activity implements OnItemClickListener {
 		setContentView(R.layout.plans);
 
 		String[] plans = new String[] { "Campus Garching", "Campus Klinikum",
+				"Campus Olympiapark", "Campus Olymp. Hallenplan",
 				"Campus Stammgelände", "MVV-Schnellbahnnetz", "MVV-Nachtlinien" };
 
 		ListView lv = (ListView) findViewById(R.id.listView);
@@ -72,11 +73,21 @@ public class Plans extends Activity implements OnItemClickListener {
 			browser.setInitialScale(100 * width / 1024);
 
 		} else if (position == 2) {
+			file = "plans/CampusOlympiapark.jpg";
+			setTitle("Plan: Campus Olympiapark");
+			browser.setInitialScale(100 * width / 900);
+
+		} else if (position == 3) {
+			file = "plans/CampusOlympiaparkHallenplan.jpg";
+			setTitle("Plan: Campus Olympiapark Hallenplan");
+			browser.setInitialScale(100 * width / 1024);
+
+		} else if (position == 4) {
 			file = "plans/CampusStammgelaende.jpg";
 			setTitle("Plan: Campus Stammgelände");
 			browser.setInitialScale(100 * width / 1024);
 
-		} else if (position == 3) {
+		} else if (position == 5) {
 			file = "plans/mvv.jpg";
 			setTitle("Plan: MVV-Schnellbahnnetz");
 			browser.setInitialScale(100 * width / 1100);
