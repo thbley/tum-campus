@@ -24,7 +24,8 @@ public class Plans extends Activity implements OnItemClickListener {
 
 		String[] plans = new String[] { "Campus Garching", "Campus Klinikum",
 				"Campus Olympiapark", "Campus Olymp. Hallenplan",
-				"Campus Stammgelände", "MVV-Schnellbahnnetz", "MVV-Nachtlinien" };
+				"Campus Stammgelände", "Campus Weihenstephan",
+				"MVV-Schnellbahnnetz", "MVV-Nachtlinien" };
 
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setAdapter(new ArrayAdapter<String>(this,
@@ -88,6 +89,11 @@ public class Plans extends Activity implements OnItemClickListener {
 			browser.setInitialScale(100 * width / 1024);
 
 		} else if (position == 5) {
+			file = "plans/CampusWeihenstephan.jpg";
+			setTitle("Plan: Campus Weihenstephan");
+			browser.setInitialScale(100 * width / 1110);
+
+		} else if (position == 6) {
 			file = "plans/mvv.jpg";
 			setTitle("Plan: MVV-Schnellbahnnetz");
 			browser.setInitialScale(100 * width / 1100);
