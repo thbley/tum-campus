@@ -55,6 +55,9 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		b = (Button) findViewById(R.id.debugMaster);
 		b.setOnClickListener(this);
+
+		b = (Button) findViewById(R.id.debugLocations);
+		b.setOnClickListener(this);
 	}
 
 	/**
@@ -117,6 +120,10 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		if (v.getId() == R.id.debugCafeteriasMenus) {
 			debugSQL("SELECT * FROM cafeterias_menus ORDER BY id");
+		}
+
+		if (v.getId() == R.id.debugLocations) {
+			debugSQL("SELECT * FROM locations ORDER BY id");
 		}
 
 		if (v.getId() == R.id.debugFeeds) {
