@@ -41,9 +41,15 @@
 		<Button android:text="lectures_items" android:id="@+id/debugLecturesItems"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-		<Button android:text="time" android:id="@+id/debugTime"
+		<Button android:text="locations" android:id="@+id/debugLocations"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
+		<Button android:text="time" android:id="@+id/debugTime"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+	</LinearLayout>
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
 		<Button android:text="master" android:id="@+id/debugMaster"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 	</LinearLayout>
