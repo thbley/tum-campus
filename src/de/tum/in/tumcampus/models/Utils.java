@@ -574,6 +574,8 @@ public class Utils {
 				result.append(c);
 			}
 		}
+		// fix trailing ";", e.g. ";;;".split().length = 0
+		result.append(" ");
 		return result.toString().split(";");
 	}
 
