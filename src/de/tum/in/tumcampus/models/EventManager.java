@@ -57,7 +57,7 @@ public class EventManager extends SQLiteOpenHelper {
 			return;
 		}
 
-		String url = "https://graph.facebook.com/162327853831856/events?limit=25&access_token=";
+		String url = "https://graph.facebook.com/162327853831856/events?limit=40&access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 		String eventUrl = "http://graph.facebook.com/";
 
