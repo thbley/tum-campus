@@ -22,6 +22,9 @@ public class Hours extends Activity implements OnItemClickListener, ViewBinder {
 	private String[] names = new String[] { "Bibliotheken", "Mensen",
 			"Information" };
 
+	// TODO add test cases
+
+	// TODO optimize categories
 	private String[] categories = new String[] { "library", "cafeteria", "info" };
 
 	private static int position = -1;
@@ -110,6 +113,8 @@ public class Hours extends Activity implements OnItemClickListener, ViewBinder {
 			String remark = c.getString(c.getColumnIndex("remark"));
 
 			// TODO use stringbuilder
+			// TODO put room into extra field
+
 			String content = hours + "\n" + address;
 			if (transport.length() > 0) {
 				content += " (" + transport + ")";
