@@ -41,6 +41,8 @@
 
 		<activity android:name=".Plans" android:label="Umgebungspläne" />
 
+		<activity android:name=".Hours" android:label="Öffnungszeiten" />
+
 		<activity android:name=".AppInfo" android:label="TUM Campus App für Android 0.74" />
 
 		<activity android:name=".Debug" android:label="Debug SQLite" />
