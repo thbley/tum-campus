@@ -19,6 +19,8 @@ import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LectureManager;
 import de.tum.in.tumcampus.models.Link;
 import de.tum.in.tumcampus.models.LinkManager;
+import de.tum.in.tumcampus.models.Location;
+import de.tum.in.tumcampus.models.LocationManager;
 import de.tum.in.tumcampus.models.TransportManager;
 import de.tum.in.tumcampus.models.Utils;
 
@@ -51,6 +53,7 @@ public class ImportService extends IntentService {
 				importFeedsDefaults();
 				importLinksDefaults();
 				importLectureItemsDefaults();
+				importLocationsDefaults();
 			} catch (Exception e) {
 				Utils.log(e, "");
 			}
@@ -170,6 +173,26 @@ public class ImportService extends IntentService {
 			}
 		}
 		nm.close();
+	}
+
+	/**
+	 * Import default location and opening hours from assets
+	 * 
+	 * @throws Exception
+	 */
+	public void importLocationsDefaults() throws Exception {
+
+		LocationManager lm = new LocationManager(this, Const.db);
+		if (lm.empty()) {
+			List<String[]> rows = Utils.readCsv(
+					getAssets().open("locations.csv"), "ISO-8859-1");
+
+			for (String[] row : rows) {
+				lm.replaceIntoDb(new Location(Integer.parseInt(row[0]), row[1],
+						row[2], row[3], row[4], row[5], row[6], row[7], row[8]));
+			}
+		}
+		lm.close();
 	}
 
 	/**
