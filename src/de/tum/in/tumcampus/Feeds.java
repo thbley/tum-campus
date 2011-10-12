@@ -28,7 +28,7 @@ import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.services.DownloadService;
 
 /**
- * Activity to RSS-feeds and their news items
+ * Activity to show RSS-feeds and their news items
  */
 public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		OnItemLongClickListener, View.OnClickListener {
