@@ -36,15 +36,28 @@ public class LocationManager extends SQLiteOpenHelper {
 	 * 
 	 * <pre>
 	 * @param category String Location category, e.g. library, cafeteria
-	 * @return Database cursor (name, address, transport, hours, remark, 
+	 * @return Database cursor (name, address, room, transport, hours, remark, 
 	 * 		url, _id)
 	 * </pre>
 	 */
 	public Cursor getAllHoursFromDb(String category) {
-		return db.rawQuery("SELECT name, address, transport, hours, "
+		return db.rawQuery("SELECT name, address, room, transport, hours, "
 				+ "remark, url, id as _id "
 				+ "FROM locations WHERE category=? ORDER BY name",
 				new String[] { category });
+	}
+
+	/**
+	 * Get opening hours for a specific location
+	 * 
+	 * <pre>
+	 * @param id String Location ID, e.g. 100
+	 * @return Database cursor (hours)
+	 * </pre>
+	 */
+	public Cursor getHoursById(String id) {
+		return db.rawQuery("SELECT hours FROM locations WHERE id=?",
+				new String[] { id });
 	}
 
 	/**
@@ -79,11 +92,13 @@ public class LocationManager extends SQLiteOpenHelper {
 		if (l.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
-		db.execSQL("REPLACE INTO locations (id, category, name, address, "
-				+ "transport, hours, remark, url) VALUES "
-				+ "(?, ?, ?, ?, ?, ?, ?, ?)",
+		db.execSQL(
+				"REPLACE INTO locations (id, category, name, address, room, "
+						+ "transport, hours, remark, url) VALUES "
+						+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				new String[] { String.valueOf(l.id), l.category, l.name,
-						l.address, l.transport, l.hours, l.remark, l.url });
+						l.address, l.room, l.transport, l.hours, l.remark,
+						l.url });
 	}
 
 	@Override
@@ -91,7 +106,7 @@ public class LocationManager extends SQLiteOpenHelper {
 		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS locations ("
 				+ "id INTEGER PRIMARY KEY, category VARCHAR, "
-				+ "name VARCHAR, address VARCHAR, transport VARCHAR, "
+				+ "name VARCHAR, address VARCHAR, room VARCHAR, transport VARCHAR, "
 				+ "hours VARCHAR, remark VARCHAR, url VARCHAR)");
 	}
 
