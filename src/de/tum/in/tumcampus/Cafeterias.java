@@ -19,6 +19,7 @@ import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
+import de.tum.in.tumcampus.models.LocationManager;
 import de.tum.in.tumcampus.models.Utils;
 import de.tum.in.tumcampus.services.DownloadService;
 
@@ -47,6 +48,11 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	 */
 	private String cafeteriaName;
 
+	/**
+	 * Footer with opening hours
+	 */
+	View footer;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,6 +76,13 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		} else {
 			setContentView(R.layout.cafeterias);
 		}
+
+		// initialize listview footer for opening hours
+		footer = getLayoutInflater().inflate(
+				android.R.layout.two_line_list_item, null, false);
+
+		ListView lv3 = (ListView) findViewById(R.id.listView3);
+		lv3.addFooterView(footer);
 
 		// get toast feedback and resume activity
 		registerReceiver(DownloadService.receiver, new IntentFilter(
@@ -148,8 +161,22 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			TextView tv = (TextView) findViewById(R.id.cafeteriaText);
 			tv.setText(cafeteriaName + ": " + dateStr);
 
+			// opening hours
+			LocationManager lm = new LocationManager(this, Const.db);
+			tv = (TextView) footer.findViewById(android.R.id.text2);
+			tv.setText(lm.getHoursById(cafeteriaId));
+			lm.close();
+
+			// menus
 			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
 			Cursor c = cmm.getTypeNameFromDb(cafeteriaId, date);
+
+			TextView tv3 = (TextView) footer.findViewById(android.R.id.text1);
+			if (c.getCount() == 0) {
+				tv3.setText("Öffnungszeiten");
+			} else {
+				tv3.setText("Ausgabezeiten");
+			}
 
 			// no onclick for items, no separator line
 			SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
