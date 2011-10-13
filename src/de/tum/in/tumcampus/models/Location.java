@@ -26,6 +26,11 @@ public class Location {
 	String address;
 
 	/**
+	 * Room
+	 */
+	String room;
+
+	/**
 	 * Next transport station
 	 */
 	String transport;
@@ -53,6 +58,7 @@ public class Location {
 	 * @param category Location category, e.g. library, cafeteria, info
 	 * @param name Location name, e.g. Studentenwerksbibliothek
 	 * @param address Address, e.g. Arcisstr. 21
+	 * @param room Room, e.g. MI 00.01.123
 	 * @param transport Transportation station name, e.g. U2 Königsplatz
 	 * @param hours Opening hours, e.g. Mo–Fr 8–24
 	 * @param remark Additional information, e.g. Tel: 089-11111
@@ -60,11 +66,13 @@ public class Location {
 	 * </pre>
 	 */
 	public Location(int id, String category, String name, String address,
-			String transport, String hours, String remark, String url) {
+			String room, String transport, String hours, String remark,
+			String url) {
 		this.id = id;
 		this.category = category;
 		this.name = name;
 		this.address = address;
+		this.room = room;
 		this.transport = transport;
 		this.hours = hours;
 		this.remark = remark;
@@ -74,7 +82,8 @@ public class Location {
 	@Override
 	public String toString() {
 		return "id=" + id + ", category=" + category + ", name=" + name
-				+ ", address=" + address + ", transport=" + transport
-				+ ", hours=" + hours + ", remark=" + remark + ", url=" + url;
+				+ ", address=" + address + ", room=" + room + ", transport="
+				+ transport + ", hours=" + hours + ", remark=" + remark
+				+ ", url=" + url;
 	}
 }
