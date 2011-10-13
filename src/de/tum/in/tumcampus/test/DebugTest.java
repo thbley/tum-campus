@@ -43,6 +43,7 @@ public class DebugTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnText("events");
 		solo.clickOnText("news");
 		solo.clickOnText("time");
+		solo.clickOnText("locations");
 		solo.clickOnText("master");
 
 		solo.goBack();
