@@ -52,12 +52,17 @@ public class LocationManager extends SQLiteOpenHelper {
 	 * 
 	 * <pre>
 	 * @param id String Location ID, e.g. 100
-	 * @return Database cursor (hours)
+	 * @return String hours
 	 * </pre>
 	 */
-	public Cursor getHoursById(String id) {
-		return db.rawQuery("SELECT hours FROM locations WHERE id=?",
+	public String getHoursById(String id) {
+		Cursor c = db.rawQuery("SELECT hours FROM locations WHERE id=?",
 				new String[] { id });
+
+		if (c.moveToNext()) {
+			return c.getString(0);
+		}
+		return "";
 	}
 
 	/**
