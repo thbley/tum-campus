@@ -20,13 +20,13 @@ public class PlansTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.scrollDown();
 	}
 
-	public void testLinksList() {
+	public void testPlansList() {
 		assertTrue(solo.searchText("Umgebungspläne"));
 		solo.clickOnText("Umgebungspläne");
 
 		assertTrue(solo.searchText("Campus Garching"));
+		assertTrue(solo.searchText("Campus Stammgelände"));
 		assertTrue(solo.searchText("MVV-Schnellbahnnetz"));
-		assertTrue(solo.searchText("MVV-Nachtlinien"));
 
 		solo.clickOnText("Campus Garching");
 		assertTrue(solo.searchText("Plan: Campus Garching"));
