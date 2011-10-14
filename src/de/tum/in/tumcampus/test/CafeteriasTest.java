@@ -39,7 +39,7 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		_testCafeterias();
 
 		solo.goBack();
-		assertTrue(solo.searchText("Hello World"));
+		assertTrue(solo.searchText("Speisepläne"));
 	}
 
 	public void testCafeteriasLandscape() {
@@ -50,7 +50,7 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		_testCafeterias();
 
 		solo.goBack();
-		assertTrue(solo.searchText("Hello World"));
+		assertTrue(solo.searchText("Speisepläne"));
 	}
 
 	public void testCafeteriasSettings() {
