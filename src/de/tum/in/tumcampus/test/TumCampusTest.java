@@ -28,6 +28,8 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		assertTrue(solo.searchText("Nachrichten"));
 		assertTrue(solo.searchText("RSS-Feeds"));
 		assertTrue(solo.searchText("Veranstaltungen"));
+		assertTrue(solo.searchText("Umgebungspläne"));
+		assertTrue(solo.searchText("Öffnungszeiten"));
 		assertTrue(solo.searchText("Links"));
 		assertTrue(solo.searchText("App-Info"));
 	}
@@ -58,13 +60,15 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		assertTrue(solo.searchText("Handbuch"));
 		solo.clickOnText("Handbuch");
+
+		solo.goBackToActivity(".TumCampus");
 	}
 
 	public void testAppinfo() {
 		assertTrue(solo.searchText("App-Info"));
 
 		solo.clickOnText("App-Info");
-		assertTrue(solo.searchText("TUM Campus App for Android"));
+		assertTrue(solo.searchText("TUM Campus App für Android"));
 
 		assertTrue(solo.searchText("GNU GPL v3"));
 		assertTrue(solo.searchText("Source-Code"));
