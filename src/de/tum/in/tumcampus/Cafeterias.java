@@ -210,12 +210,6 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		m.setIcon(android.R.drawable.ic_menu_preferences);
 
 		m = menu.add(0, Menu.FIRST + 2, 0, "Preise");
-		m.setIcon(android.R.drawable.ic_menu_directions);
-
-		m = menu.add(0, Menu.FIRST + 3, 0, "Öffnungszeiten Garching");
-		m.setIcon(android.R.drawable.ic_menu_info_details);
-
-		m = menu.add(0, Menu.FIRST + 4, 0, "Öffnungszeiten München");
 		m.setIcon(android.R.drawable.ic_menu_info_details);
 		return true;
 	}
