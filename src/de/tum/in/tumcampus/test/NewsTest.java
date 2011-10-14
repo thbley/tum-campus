@@ -58,10 +58,10 @@ public class NewsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnText("Aktualisieren");
 		solo.sleep(10000);
 
-		assertTrue(solo.searchText("Testing"));
-		assertTrue(solo.searchText("04.07.2011"));
+		assertTrue(solo.searchText("Statistiken"));
+		assertTrue(solo.searchText("04.10.2011"));
 
-		assertTrue(solo.searchText("Öffnungszeit"));
-		solo.clickOnText("Öffnungszeit");
+		assertTrue(solo.searchText("Öffnungszeiten"));
+		solo.clickOnText("Öffnungszeiten");
 	}
 }
