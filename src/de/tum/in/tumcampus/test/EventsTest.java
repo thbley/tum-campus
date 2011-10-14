@@ -62,22 +62,22 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Aktualisieren");
-		solo.sleep(10000);
+		solo.sleep(25000);
 
-		assertTrue(solo.searchText("Rückmeldung für Wintersemester"));
-		assertTrue(solo.searchText("Mo, 15.08.2011 00:00 - 03:00"));
-		assertTrue(solo.searchText("TU München"));
+		assertTrue(solo.searchText("Tag der Informatik"));
+		assertTrue(solo.searchText("Fr, 02.12.2011 16:00 - 19:00"));
+		assertTrue(solo.searchText("Campus Garching"));
 
-		solo.clickOnText("Rückmeldung für Wintersemester");
-		assertTrue(solo.searchText("Rückmeldefrist"));
+		solo.clickOnText("Tag der Informatik");
+		assertTrue(solo.searchText("Universität München lädt ein"));
 		solo.goBack();
 
 		solo.clickOnText("Vergangene Veranstaltungen");
 
-		assertTrue(solo.searchText("Netzdialog"));
-		solo.clickOnText("Netzdialog");
+		assertTrue(solo.searchText("Rückmeldung"));
+		solo.clickOnText("Rückmeldung");
 
-		assertTrue(solo.searchText("Government"));
+		assertTrue(solo.searchText("Rückmeldefrist"));
 		solo.goBack();
 
 		solo.goBack();
