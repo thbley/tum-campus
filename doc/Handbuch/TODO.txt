@@ -1,3 +1,4 @@
 Vorlesungen -> Option menu -> Roomfinder
 Option menu -> Handbuch
 Umgebungspläne
+Öffnungszeiten
