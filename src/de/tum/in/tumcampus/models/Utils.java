@@ -552,7 +552,7 @@ public class Utils {
 	/**
 	 * Splits a line from a CSV file into column values
 	 * 
-	 * e.g. "aaa;aaa";"bbb";1 gets aaa,aaa;bbb;1
+	 * e.g. "aaa;aaa";"bbb";1 gets aaa,aaa;bbb;1;
 	 * 
 	 * <pre>
 	 * @param str CSV line
@@ -575,7 +575,7 @@ public class Utils {
 			}
 		}
 		// fix trailing ";", e.g. ";;;".split().length = 0
-		result.append(" ");
+		result.append("; ");
 		return result.toString().split(";");
 	}
 
