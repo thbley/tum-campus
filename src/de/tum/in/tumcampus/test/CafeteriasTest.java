@@ -84,7 +84,7 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Preise");
 	}
-	
+
 	private void _testCafeterias() {
 		assertTrue(solo.searchText("Mensa Garching"));
 		solo.clickOnText("Mensa Garching");
@@ -108,7 +108,11 @@ public class CafeteriasTest extends ActivityInstrumentationTestCase2<TumCampus> 
 		assertTrue(solo.searchText("Datum auswählen"));
 		solo.clickOnText("Datum auswählen");
 
-		calendar.add(Calendar.DATE, 1);
+		if (dayOfWeek == Calendar.FRIDAY) {
+			calendar.add(Calendar.DATE, 3);
+		} else {
+			calendar.add(Calendar.DATE, 1);
+		}
 		String tomorrow = de.format(calendar.getTime());
 
 		assertTrue(solo.searchText(tomorrow));
