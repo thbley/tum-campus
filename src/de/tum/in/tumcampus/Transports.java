@@ -145,16 +145,15 @@ public class Transports extends Activity implements OnItemClickListener,
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				// get departures from website
+				TransportManager tm = new TransportManager(av.getContext(),
+						Const.db);
 				Cursor c = null;
 				try {
-					// get departures from website
-					TransportManager tm = new TransportManager(av.getContext(),
-							Const.db);
 					if (!connected()) {
 						throw new Exception("<Keine Internetverbindung>");
 					}
 					c = tm.getDeparturesFromExternal(location);
-					tm.close();
 				} catch (Exception e) {
 					// show errors in departures list
 					MatrixCursor c2 = new MatrixCursor(new String[] { "name",
@@ -162,6 +161,7 @@ public class Transports extends Activity implements OnItemClickListener,
 					c2.addRow(new String[] { e.getMessage(), "", "0" });
 					c = c2;
 				}
+				tm.close();
 
 				// show departures in list
 				final Cursor c2 = c;
@@ -224,18 +224,18 @@ public class Transports extends Activity implements OnItemClickListener,
 
 				// search station on website
 				String message = "";
+				TransportManager tm = new TransportManager(input.getContext(),
+						Const.db);
 				Cursor c = null;
 				try {
 					if (!connected()) {
 						throw new Exception("<Keine Internetverbindung>");
 					}
-					TransportManager tm = new TransportManager(
-							input.getContext(), Const.db);
 					c = tm.getStationsFromExternal(input.getText().toString());
-					tm.close();
 				} catch (Exception e) {
 					message = e.getMessage();
 				}
+				tm.close();
 
 				final Cursor c2 = c;
 				final String message2 = message;
