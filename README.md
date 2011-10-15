@@ -29,14 +29,14 @@ Mehr Features? Portierung auf iOS?
 Screenshots:
 
 <span style="padding-right:4px;">
-![Hauptmenü](/thomasbley/tum-campus/raw/master/doc/Screenshots/TumCampus1_240.png "Hauptmenü")
+![Hauptmenü](/thomasbley/tum-campus/raw/master/doc/Screenshots/2011-10/device-2011-10-14-050839_240.png "Hauptmenü")
 </span>
 <span style="padding-right:4px;">
-![Speisepläne](/thomasbley/tum-campus/raw/master/doc/Screenshots/TumCampus2_240.png "Speisepläne")
+![Speisepläne](/thomasbley/tum-campus/raw/master/doc/Screenshots/2011-10/device-2011-10-14-052035_240.png "Speisepläne")
 </span>
-![Veranstaltungen](/thomasbley/tum-campus/raw/master/doc/Screenshots/TumCampus4_240.png "Veranstaltungen")
+![Veranstaltungen](/thomasbley/tum-campus/raw/master/doc/Screenshots/2011-10/device-2011-10-14-051401_240.png "Veranstaltungen")
 
-[=> weitere Screenshots](/thomasbley/tum-campus/tree/master/doc/Screenshots)
+[=> weitere Screenshots](/thomasbley/tum-campus/tree/master/doc/Screenshots/2011-10)
 
 Datenschutz:  
 Die Anwendung speichert nur personenbezogene Daten, wenn der Benutzer diese explizit eingibt oder über die SD-Karte manuell importiert.<br>
