@@ -15,6 +15,8 @@ Features im Detail:
 - Veranstaltungen
 - Mensa Speiseplan
 - MVV Abfahrtszeiten (live!)
+- Umgebungspläne
+- Öffnungszeiten
 - Wichtige Links
 - RSS-Feeds
 - Offline-Modus
