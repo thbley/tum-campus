@@ -193,9 +193,10 @@ public class Lectures extends Activity implements OnItemClickListener,
 		}
 
 		// tumonline search page => more lecture details
+		// 1593 = WS2011/12
 		if (url.length() == 0) {
 			url = "https://campus.tum.de/tumonline/wbSuche.LVSucheSimple?"
-					+ "pLVNrFlag=J&pSjNr=1573&pSemester=A&pSuchbegriff="
+					+ "pLVNrFlag=J&pSjNr=1593&pSemester=A&pSuchbegriff="
 					+ c.getString(c.getColumnIndex("lectureId"));
 		}
 
