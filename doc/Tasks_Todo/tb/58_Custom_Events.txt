@@ -1,0 +1,3 @@
+Import custom calendar entries from Tum-Online (CSV-Download)
+Check for empty LV_NUMMER, LV_ART, LV_GRUPPE, ORT
+EREIGNIS_TYP = kein Ereignistyp
