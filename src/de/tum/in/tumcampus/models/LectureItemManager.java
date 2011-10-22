@@ -141,6 +141,10 @@ public class LectureItemManager extends SQLiteOpenHelper {
 			if (urlId != -1 && row.length > urlId) {
 				url = row[headers.indexOf("URL")];
 			}
+			if (lectureId.length() == 0) {
+				lectureId = Utils.md5(name);
+			}
+
 			replaceIntoDb(new LectureItem(id, lectureId, start, end, name,
 					module, location, note, url, seriesId));
 		}
