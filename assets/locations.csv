@@ -18,7 +18,7 @@
 527;cafeteria_gar;Cafeteria Boltzmannstraﬂe;Boltzmannstr. 15, Garching;;;Mo-Do 10.30-14.30, Fr 10.30-13.45;;
 1015;cafeteria_gar;Espresso-Bar Mensa Garching;Lichtenbergstr. 2, Garching;;;Mo-Do 11-14, Fr 11-13.30;;
 1016;cafeteria_gar;Espresso-Bar Maschinenwesen;Boltzmannstr. 15, Garching;;;Mo-Fr 7-19;;
-1035;cafeteria_gar;C2 Campus-Cneipe;Lichtenbergstr. 2, Garching;;;Mo-Do 11-23:30, Fr 11-22;;
+1035;cafeteria_gar;C2 Campus-Cneipe;Lichtenbergstr. 2, Garching;;;Mo-Do 11-23.30, Fr 11-22;;
 411;cafeteria;Mensa Leopoldstr;Leopoldstr. 13a;;;Mo-Do 11-14.30, Fr 11-14;;
 421;cafeteria;Mensa Arcisstraﬂe;Arcisstr. 17;;;Mo-Do 11-14.30, Fr 11-14;;
 431;cafeteria;Mensa Lothstraﬂe;Lothstr. 13d;;;Mo-Do 11-14, Fr 11-13.45;;
@@ -52,5 +52,6 @@
 1030;info;Studienberatung Informatik (A. Reiser);Boltzmannstr. 3, Garching;MI 02.11.053;;Mo 13-14, Mi 13-15, Ausland Mi 10-11;Telefon: 089-28917284\nEmail: reiser@in.tum.de;
 1031;info;Studienberatung Informatik (V. Simic);Boltzmannstr. 3, Garching;MI 02.11.033;;Di 13-15, Do 10-11, Fr 9-11;Telefon: 089-28917296\nEmail: vivija.simic@in.tum.de;
 1032;info;Rechnerhalle Informatik;Boltzmannstr. 3, Garching;MI 00.05.011;;Mo-Fr 8-18;bei Bedarf bis 22 Uhr\nService Desk RBG\nTelefon: 089-28918018\nEmail: rbg@in.tum.de;
-1033;info;LRZ Beratung und Unterst¸tzung;Boltzmannstr. 1, Garching;Raum I.E.042;;Mo-Fr 8-17;;
-1037;info;LRZ Benutzersekretariat;Boltzmannstr. 1, Garching;EG;;Mo-Do 7:30-17:30, Fr 7:30-16:30;Erwerb von Software bis 16 Uhr\nTelefon: 089-358318000;
+1033;info;LRZ Beratung;Boltzmannstr. 1, Garching;Raum I.E.042;;Mo-Fr 8-17;;
+1037;info;LRZ Benutzersekretariat;Boltzmannstr. 1, Garching;EG;;Mo-Do 7.30-17.30, Fr 7.30-16.30;Erwerb von Software bis 16 Uhr\nTelefon: 089-358318000;
+1038;info;LRZ PC-Arbeitspl‰tze;Boltzmannstr. 1, Garching;Raum I.E.076;;Mo-Do 7.30-18, Fr 7.30-17;;
