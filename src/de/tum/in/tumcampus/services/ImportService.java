@@ -1,5 +1,6 @@
 ﻿package de.tum.in.tumcampus.services;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -49,11 +50,22 @@ public class ImportService extends IntentService {
 		// import all defaults or only one action
 		if (action.equals("defaults")) {
 			try {
+				// get current app version
+				String version = getPackageManager().getPackageInfo(
+						this.getPackageName(), 0).versionName;
+
+				// check if database update is needed
+				boolean update = false;
+				File f = new File(getFilesDir() + "/" + version);
+				if (!f.exists()) {
+					update = true;
+				}
 				importTransportsDefaults();
 				importFeedsDefaults();
 				importLinksDefaults();
 				importLectureItemsDefaults();
-				importLocationsDefaults();
+				importLocationsDefaults(update);
+				f.createNewFile();
 			} catch (Exception e) {
 				Utils.log(e, "");
 			}
@@ -178,12 +190,15 @@ public class ImportService extends IntentService {
 	/**
 	 * Import default location and opening hours from assets
 	 * 
+	 * <pre>
+	 * @param force boolean force import of locations
 	 * @throws Exception
+	 * </pre>
 	 */
-	public void importLocationsDefaults() throws Exception {
+	public void importLocationsDefaults(boolean force) throws Exception {
 
 		LocationManager lm = new LocationManager(this, Const.db);
-		if (lm.empty()) {
+		if (lm.empty() || force) {
 			List<String[]> rows = Utils.readCsv(
 					getAssets().open("locations.csv"), "ISO-8859-1");
 
