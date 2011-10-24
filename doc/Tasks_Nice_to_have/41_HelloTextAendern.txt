@@ -4,3 +4,5 @@ Die App wirkt dann vllt. noch schöner, wenn die ListView gleich unterm Header lo
 
 Persönliche Ansprache (Hello/Welcome) drin lassen?
 Ansprache konfigurierbar machen? Chuck Norris Sprüche? Witz des Tages? etc.
+
+Aktuelle + Nächste Vorlesung anzeigen
