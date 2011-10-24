@@ -2,3 +2,4 @@ Vorlesungen -> Option menu -> Roomfinder
 Option menu -> Handbuch
 Umgebungspläne
 Öffnungszeiten
+Update Vorlesungen-Import + eigene Termine aus Tum-Online
