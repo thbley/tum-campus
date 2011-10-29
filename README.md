@@ -3,7 +3,7 @@
 
 Informations-App von Studenten für Studenten!
 
-Die TU München gehört zu den größten technischen Hochschulen in Deutschland. Verteilt über mehrere Standorte und Sondereinrichtungen studieren über 26000 Studenten an der TUM. Neben dem zentralen Online-Informationsmanagementsystem TUMonline soll mit diesem Projekt eine
+Die TU München gehört zu den größten technischen Hochschulen in Deutschland. Verteilt über mehrere Standorte und Sondereinrichtungen studieren über 31000 Studenten an der TUM. Neben dem zentralen Online-Informationsmanagementsystem TUMonline soll mit diesem Projekt eine
 inoffizielle mobile Anwendung für Studenten geschaffen werden, die einen mobilen Zugriff auf Veranstaltungen, Nachrichten, Speisepläne der Mensen, usw. ermöglicht. Diese Anwendung dient vor allem der Aggregation von besonders häufig genutzten Informationsquellen.
 
 Kein Support/Haftung durch die TU München.
