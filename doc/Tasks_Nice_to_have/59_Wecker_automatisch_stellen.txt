@@ -1,1 +1,5 @@
 Wecker jeden Tag automatisch x Minuten vor der ersten Vorlesung stellen.
+x ggf. automatisch erhöhen,
+- falls Einträge im MVV-Ticker http://www.mvg-mobil.de/Tickerrss/CreateRssClass
+- falls Staumeldungen zwischen aktueller Position und Garching, Forschungszentrum
+- falls aktuelle Fahrtzeit nach Garching, Forschungszentrum die übliche Fahrtzeit um mehr als 10% übersteigt
