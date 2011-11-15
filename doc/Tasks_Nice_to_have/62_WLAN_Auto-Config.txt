@@ -1,0 +1,16 @@
+Automatische Konfiguration des Smartphones für Uni-WLAN (Eduroam):
+Der Benutzer gibt Benutzernamen und Passwort ein (mytum-Kennung) und die App richtet das WLAN automatisch ein.
+Hinweis in der App, dass die Autoren der App keinen Support für die Funktionalität bzw. die Qualität des WLANs übernehmen.
+
+Quellen:
+http://www.lrz.de/services/netz/mobil/802_1x/android/index.html
+http://vikram.eggwall.com/computers/wyscan.html
+http://groups.google.com/group/android-developers/browse_thread/thread/f722d5f90cfae69?pli=1
+http://stackoverflow.com/questions/4249911/android-how-to-create-eap-wifi-configuration-programmatically
+http://code.google.com/p/zxing/
+
+Relevante Folien:
+Administration v. Funknetzwerken I (Nils T. Kannengiesser)
+
+Weitere Features:
+Auto-Config Exchange?
