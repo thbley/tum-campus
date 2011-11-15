@@ -5,6 +5,7 @@ Hinweis in der App, dass die Autoren der App keinen Support für die Funktionalit
 Quellen:
 http://www.lrz.de/services/netz/mobil/802_1x/android/index.html
 http://vikram.eggwall.com/computers/wyscan.html
+http://stackoverflow.com/questions/4374862/how-to-programatically-create-and-read-wep-eap-wifi-configurations-in-android
 http://groups.google.com/group/android-developers/browse_thread/thread/f722d5f90cfae69?pli=1
 http://stackoverflow.com/questions/4249911/android-how-to-create-eap-wifi-configuration-programmatically
 http://code.google.com/p/zxing/
