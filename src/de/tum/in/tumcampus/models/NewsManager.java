@@ -56,7 +56,7 @@ public class NewsManager extends SQLiteOpenHelper {
 			return;
 		}
 
-		String url = "https://graph.facebook.com/162327853831856/feed/?access_token=";
+		String url = "https://graph.facebook.com/162327853831856/feed/?limit=50&access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 
 		JSONArray jsonArray = Utils
