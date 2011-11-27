@@ -6,7 +6,7 @@
 	<FrameLayout android:layout_width="wrap_content"
 		android:layout_height="wrap_content">
 
-		<ImageView android:src="@drawable/tum_logo"
+		<ImageView android:src="@drawable/tum_logo" android:id="@+id/logo"
 			android:scaleType="fitXY" android:layout_width="wrap_content"
 			android:layout_height="86dip" />
 
