@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.SlidingDrawer;
@@ -79,6 +80,11 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		// adjust logo width to screen width
+		ImageView iv = (ImageView) findViewById(R.id.logo);
+		iv.getLayoutParams().width = getWindowManager().getDefaultDisplay()
+				.getWidth();
 
 		// bind download buttons
 		Button b = (Button) findViewById(R.id.refresh);
