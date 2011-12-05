@@ -1,2 +1,0 @@
-Testing und ggf. Bugfixing für Tablets (Galaxy Tab, Xoom, etc.)
-Auch Tablets mit Android 2.x ?
