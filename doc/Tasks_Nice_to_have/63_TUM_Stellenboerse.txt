@@ -1,0 +1,13 @@
+Ansprechpartner:
+- career@tum.de (Fr Lemke)
+- eschbach@in.tum.de (Fr Eschbach)
+
+Einbindung des kompletten Service für Stellenanzeigen des TUM Career Service.
+Problem:
+- Kontrolle der Stellenanzeige durch den/die Betreiber der App (ähnlich Forum-Beiträge)
+- >50 Stellenanzeigen pro Tag auf den kleinen Handy-Displays unübersichtlich, Filter nötig
+- unseriöse / unpassende Stellenanzeigen, Filter nötig
+
+Lizenzmodell der TUM: http://portal.mytum.de/service/career_service/career_partner_angebot/flyer_unternehmen/unternehmensflyer.pdf
+Vergütung für Studenten, Provision: derzeit keine
+Einbindung von Fremdwerbung, Eigenvermarktung, Filterung von Stellenanzeigen bisher nicht durch die TUM genehmigt
