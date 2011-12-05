@@ -9,5 +9,8 @@ Problem:
 - unseriöse / unpassende Stellenanzeigen, Filter nötig
 
 Lizenzmodell der TUM: http://portal.mytum.de/service/career_service/career_partner_angebot/flyer_unternehmen/unternehmensflyer.pdf
+Geltende AGBs: http://portal.mytum.de/service/career_service/career_partner_angebot/AGB_CW_deu.pdf/download
+
 Laut TUM wird der TUM Career Service den Firmen kostenlos angeboten. Eine Auszahlung von Provisionen jeglicher Art ist daher leider nicht vorgesehen bzw. möglich.
 Einbindung von Fremdwerbung, Eigenvermarktung, Filterung von Stellenanzeigen bisher nicht durch die TUM genehmigt.
+
