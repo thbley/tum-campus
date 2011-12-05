@@ -1,0 +1,3 @@
+Tablet detection:
+- http://www.androidsnippets.com/how-to-detect-tablet-device
+- 
