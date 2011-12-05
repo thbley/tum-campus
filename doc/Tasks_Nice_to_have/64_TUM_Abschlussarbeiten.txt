@@ -1,0 +1,11 @@
+Integration eines zentralen Verzeichnisses für offene Abschlussarbeiten
+
+Status:
+- gestartete Abschlussarbeiten in TumOnline gelistet
+- offene Abschlussarbeiten i.d.R. separat auf den jeweiligen Webseiten der Lehrstühle gelistet
+  oder
+  in Schaukästen ausgehängt
+  oder
+  http://intranet.in.tum.de/wikis/thesisankuendigungen/home
+
+=> zentrale Plattform + Schnittstelle für alle Arbeiten nötig
