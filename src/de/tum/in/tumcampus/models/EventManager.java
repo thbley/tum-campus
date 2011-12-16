@@ -1,8 +1,6 @@
 ﻿package de.tum.in.tumcampus.models;
 
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,27 +55,22 @@ public class EventManager extends SQLiteOpenHelper {
 			return;
 		}
 
-		String url = "https://graph.facebook.com/162327853831856/events?limit=50&access_token=";
+		String url = "https://graph.facebook.com/162327853831856/events?"
+				+ "fields=id,name,start_time,end_time,location,description"
+				+ "&limit=50&access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
-		String eventUrl = "http://graph.facebook.com/";
 
 		JSONArray jsonArray = Utils
 				.downloadJson(url + URLEncoder.encode(token)).getJSONArray(
 						"data");
-
-		List<JSONObject> list = new ArrayList<JSONObject>();
-		for (int i = 0; i < jsonArray.length(); i++) {
-			String eventId = jsonArray.getJSONObject(i).getString("id");
-			list.add(Utils.downloadJson(eventUrl + eventId));
-		}
 
 		cleanupDb();
 		int count = Utils.dbGetTableCount(db, "events");
 
 		db.beginTransaction();
 		try {
-			for (JSONObject json : list) {
-				replaceIntoDb(getFromJson(json));
+			for (int i = 0; i < jsonArray.length(); i++) {
+				replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
 			}
 			SyncManager.replaceIntoDb(db, this);
 			db.setTransactionSuccessful();
@@ -172,10 +165,8 @@ public class EventManager extends SQLiteOpenHelper {
 		if (json.has("location")) {
 			location = json.getString("location");
 		}
+		// Link only available in event/feed
 		String link = "";
-		if (json.has("link")) {
-			link = json.getString("link");
-		}
 
 		return new Event(eventId, json.getString("name"),
 				Utils.getDateTime(json.getString("start_time")),
