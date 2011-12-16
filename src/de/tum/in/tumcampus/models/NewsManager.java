@@ -1,6 +1,7 @@
 ﻿package de.tum.in.tumcampus.models;
 
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.json.JSONArray;
@@ -56,7 +57,7 @@ public class NewsManager extends SQLiteOpenHelper {
 			return;
 		}
 
-		String url = "https://graph.facebook.com/162327853831856/feed/?limit=50&access_token=";
+		String url = "https://graph.facebook.com/162327853831856/feed/?limit=100&access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 
 		JSONArray jsonArray = Utils
@@ -72,10 +73,15 @@ public class NewsManager extends SQLiteOpenHelper {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject obj = jsonArray.getJSONObject(i);
 
+				String[] types = new String[] { "photo", "link" };
+				String[] ids = new String[] {
+						"162327853831856_228060957258545",
+						"162327853831856_228060957258545",
+						"162327853831856_224344127630228" };
+
 				// filter out events, empty items
-				if (obj.has("properties")
-						|| (!obj.has("message") && !obj.has("description") && !obj
-								.has("caption"))
+				if ((!Arrays.asList(types).contains(obj.getString("type")) && !Arrays
+						.asList(ids).contains(obj.getString("id")))
 						|| !obj.getJSONObject("from").getString("id")
 								.equals("162327853831856")) {
 					continue;
