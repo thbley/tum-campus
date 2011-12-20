@@ -102,14 +102,18 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		}
 		fim.close();
 
+		// initialize import buttons, open import if required
+		setImportButtons(true);
+		if (getIntent().getAction().equals("import")) {
+			SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
+			sd.animateOpen();
+		}
+
 		// register receiver for download and import
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(ImportService.broadcast);
 		intentFilter.addAction(DownloadService.broadcast);
 		registerReceiver(receiver, intentFilter);
-
-		// initialize import buttons
-		setImportButtons(true);
 
 		// import default values into database
 		Intent service = new Intent(this, ImportService.class);
