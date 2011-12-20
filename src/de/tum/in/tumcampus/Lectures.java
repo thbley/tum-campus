@@ -299,16 +299,27 @@ public class Lectures extends Activity implements OnItemClickListener,
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem m = menu.add(0, Menu.FIRST, 0, "Roomfinder");
+		MenuItem m = menu.add(0, Menu.FIRST, 0, "Vorlesungen importieren");
+		m.setIcon(android.R.drawable.ic_menu_add);
+		m = menu.add(0, Menu.FIRST + 1, 0, "Roomfinder");
 		m.setIcon(android.R.drawable.ic_menu_mylocation);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// open url in browser
-		String url = "http://portal.mytum.de/campus/roomfinder/";
-		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		switch (item.getItemId()) {
+		case Menu.FIRST:
+			Intent intent = new Intent(this, TumCampus.class);
+			intent.setAction("import");
+			startActivity(intent);
+			break;
+		case Menu.FIRST + 1:
+			// open url in browser
+			String url = "http://portal.mytum.de/campus/roomfinder/";
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+			break;
+		}
 		return true;
 	}
 }
