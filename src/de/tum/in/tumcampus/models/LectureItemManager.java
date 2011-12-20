@@ -220,6 +220,22 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	}
 
 	/**
+	 * Checks if lectures are available
+	 * 
+	 * @return true if lectures are available, else false
+	 */
+	public boolean hasLectures() {
+		boolean result = false;
+		Cursor c = db.rawQuery("SELECT id FROM lectures_items WHERE "
+				+ "lectureId NOT IN ('holiday', 'vacation') LIMIT 1", null);
+		if (c.moveToNext()) {
+			result = true;
+		}
+		c.close();
+		return result;
+	}
+
+	/**
 	 * Replace or Insert a lecture item in the database
 	 * 
 	 * <pre>
