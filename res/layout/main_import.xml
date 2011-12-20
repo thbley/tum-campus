@@ -21,17 +21,17 @@
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:textColor="#0065BD"
 		android:text="Vorlesungen importieren:\n
-		1. Telefon an den Computer per USB anstecken\n
-		2. USB-Speicher am Telefon aktivieren\n
+		1. Handy an den Computer per USB anstecken\n
+		2. USB-Speicher am Handy aktivieren\n
 		3. Am Computer bei TumOnline.de einloggen:\n
 		    'Terminkalender' anklicken\n
 		    'Export' anklicken\n
 		    'Download als CSV für Excel' auswählen\n
 		    'Download' anklicken\n
-		    Datei unter &lt;SD-Karte&gt;\\tumcampus\\lectures\n
-		    speichern\n
+		    Datei unter\n
+		    &lt;SD-Karte&gt;\\tumcampus\\lectures speichern\n
 		    Datei evtl. mit Excel nachbearbeiten\n
-		4. USB-Speicher am Telefon deaktivieren\n
+		4. USB-Speicher am Handy deaktivieren\n
 		5. Hier auf 'Vorlesungen importieren' drücken"
 		android:layout_margin="3dip" />
 
@@ -41,12 +41,13 @@
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:textColor="#0065BD"
 		android:text="Links importieren:\n
-		1. Telefon an den Computer per USB anstecken\n
-		2. USB-Speicher am Telefon aktivieren\n
+		1. Handy an den Computer per USB anstecken\n
+		2. USB-Speicher am Handy aktivieren\n
 		3. Am Computer eine URL aus dem Browser in\n
-		    das Verzeichnis &lt;SD-Karte&gt;\\tumcampus\\links\n
+		    das Verzeichnis\n
+		    &lt;SD-Karte&gt;\\tumcampus\\links\n
 		    im Windows Explorer ziehen\n
-		4. USB-Speicher am Telefon deaktivieren\n
+		4. USB-Speicher am Handy deaktivieren\n
 		5. Hier auf 'Links importieren' drücken"
 		android:layout_margin="3dip" />
 
@@ -56,13 +57,13 @@
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:textColor="#0065BD"
 		android:text="RSS-Feeds importieren:\n
-		1. Telefon an den Computer per USB anstecken\n
-		2. USB-Speicher am Telefon aktivieren\n
+		1. Handy an den Computer per USB anstecken\n
+		2. USB-Speicher am Handy aktivieren\n
 		3. Am Computer eine RSS-URL aus dem\n
 		    Browser in das Verzeichnis\n
 		    &lt;SD-Karte&gt;\\tumcampus\\rss\n
 		    im Windows Explorer ziehen\n
-		4. USB-Speicher am Telefon deaktivieren\n
+		4. USB-Speicher am Handy deaktivieren\n
 		5. Hier auf 'RSS-Feeds importieren' drücken"
 		android:layout_margin="3dip" />
 
