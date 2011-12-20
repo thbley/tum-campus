@@ -36,6 +36,10 @@ public class SilenceService extends IntentService {
 			int mode = AudioManager.RINGER_MODE_NORMAL;
 
 			LectureItemManager lim = new LectureItemManager(this, Const.db);
+			if (lim.empty()) {
+				// no lectures available
+				return;
+			}
 			Cursor c = lim.getCurrentFromDb();
 			if (c.getCount() != 0) {
 				// if current lecture(s) found, silence the mobile 
