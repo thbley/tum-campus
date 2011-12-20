@@ -36,7 +36,7 @@ public class SilenceService extends IntentService {
 			int mode = AudioManager.RINGER_MODE_NORMAL;
 
 			LectureItemManager lim = new LectureItemManager(this, Const.db);
-			if (lim.empty()) {
+			if (!lim.hasLectures()) {
 				// no lectures available
 				return;
 			}
