@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="de.tum.in.tumcampus" android:versionCode="11"
-	android:versionName="0.78">
+	android:versionName="0.79">
 	<uses-sdk android:minSdkVersion="7" />
 
 	<instrumentation android:targetPackage="de.tum.in.tumcampus"
@@ -43,7 +43,7 @@
 
 		<activity android:name=".Hours" android:label="Öffnungszeiten" />
 
-		<activity android:name=".AppInfo" android:label="TUM Campus App für Android 0.78" />
+		<activity android:name=".AppInfo" android:label="TUM Campus App für Android 0.79" />
 
 		<activity android:name=".Debug" android:label="Debug SQLite" />
 
@@ -62,14 +62,9 @@
 			</intent-filter>
 		</receiver>
 
-<!--
-		<uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-		<receiver android:name=".receivers.Update">
-			<intent-filter>
-				<action android:name="android.intent.action.PACKAGE_REPLACED" />
-				<data android:scheme="package" android:path="de.tum.in.tumcampus" />
-			</intent-filter>
-		</receiver>
-		-->
+		<!-- <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" 
+			/> <receiver android:name=".receivers.Update"> <intent-filter> <action android:name="android.intent.action.PACKAGE_REPLACED" 
+			/> <data android:scheme="package" android:path="de.tum.in.tumcampus" /> </intent-filter> 
+			</receiver> -->
 	</application>
 </manifest>
