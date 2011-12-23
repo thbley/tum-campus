@@ -76,6 +76,20 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		return "";
 	}
 
+	/**
+	 * <pre>
+	 * Create home screen icon
+	 * 	Intent shortcutIntent = new Intent(this, TumCampus.class);
+	 * 	Intent addIntent = new Intent();
+	 * 	addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+	 * 	addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "TUMCampus");
+	 * 	addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+	 * 			Intent.ShortcutIconResource.fromContext(this, R.drawable.icon));
+	 * 	addIntent.setAction(Intent.ACTION_CREATE_SHORTCUT);
+	 * 	sendBroadcast(addIntent);
+	 * </pre>
+	 */
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
