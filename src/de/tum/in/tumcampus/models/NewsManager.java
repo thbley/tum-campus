@@ -73,7 +73,7 @@ public class NewsManager extends SQLiteOpenHelper {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject obj = jsonArray.getJSONObject(i);
 
-				String[] types = new String[] { "photo", "link" };
+				String[] types = new String[] { "photo", "link", "video" };
 				String[] ids = new String[] {
 						"162327853831856_228060957258545",
 						"162327853831856_228060957258545",
