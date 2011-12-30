@@ -1,0 +1,5 @@
+Integration http://www.mitfahrgelegenheit.de/, https://market.android.com/details?id=com.carpooling.android.de
+
+Mitfahrgelegenheiten (Beispiele):
+- Garching-Forschungszentrum - Innenstadt (Kieferngarten, Stusta, Oberwiesenfeld, Donnersbergerbrücke, Leuchtenbergring)
+- Garching-Forschungszentrum - Neufahrn, Eching
