@@ -114,25 +114,29 @@ public class DownloadService extends IntentService {
 		if (action != null) {
 			force = true;
 		}
-
 		// download all or only one action
-		if ((action == null || action.equals("feeds")) && !destroyed) {
+		if ((action == null || action.equals("feeds")) && !destroyed
+				&& Utils.getSettingBool(this, "feeds")) {
 			message("RSS ", "");
 			downloadFeeds(force);
 		}
-		if ((action == null || action.equals("news")) && !destroyed) {
+		if ((action == null || action.equals("news")) && !destroyed
+				&& Utils.getSettingBool(this, "news")) {
 			message("Nachrichten ", "");
 			downloadNews(force);
 		}
-		if ((action == null || action.equals("events")) && !destroyed) {
+		if ((action == null || action.equals("events")) && !destroyed
+				&& Utils.getSettingBool(this, "events")) {
 			message("Veranstaltungen ", "");
 			downloadEvents(force);
 		}
-		if ((action == null || action.equals("cafeterias")) && !destroyed) {
+		if ((action == null || action.equals("cafeterias")) && !destroyed
+				&& Utils.getSettingBool(this, "cafeterias")) {
 			message("Mensen ", "");
 			downloadCafeterias(force);
 		}
-		if ((action == null || action.equals("links")) && !destroyed) {
+		if ((action == null || action.equals("links")) && !destroyed
+				&& Utils.getSettingBool(this, "links")) {
 			downloadLinks();
 		}
 		message("Fertig!", "completed");
