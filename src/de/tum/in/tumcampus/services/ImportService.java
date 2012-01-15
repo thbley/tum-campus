@@ -63,7 +63,7 @@ public class ImportService extends IntentService {
 				importTransportsDefaults();
 				importFeedsDefaults();
 				importLinksDefaults();
-				importLectureItemsDefaults();
+				importLectureItemsDefaults(update);
 				importLocationsDefaults(update);
 				f.createNewFile();
 			} catch (Exception e) {
@@ -213,11 +213,14 @@ public class ImportService extends IntentService {
 	/**
 	 * Import default lectures, lecture items (holidays, vacations) from assets
 	 * 
+	 * <pre>
+	 * @param force boolean force import of lecture items
 	 * @throws Exception
+	 * </pre>
 	 */
-	public void importLectureItemsDefaults() throws Exception {
+	public void importLectureItemsDefaults(boolean force) throws Exception {
 		LectureItemManager lim = new LectureItemManager(this, Const.db);
-		if (lim.empty()) {
+		if (lim.empty() || force) {
 			List<String[]> rows = Utils.readCsv(
 					getAssets().open("lectures_holidays.csv"), "ISO-8859-1");
 
