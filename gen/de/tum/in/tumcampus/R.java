@@ -27,7 +27,7 @@ public final class R {
     }
     public static final class id {
         public static final int cafeteriaText=0x7f050000;
-        public static final int date=0x7f05002a;
+        public static final int date=0x7f05002f;
         public static final int debug=0x7f050014;
         public static final int debugCafeterias=0x7f050008;
         public static final int debugCafeteriasMenus=0x7f050009;
@@ -46,7 +46,7 @@ public final class R {
         public static final int handle=0x7f050004;
         public static final int hello=0x7f050022;
         public static final int icon=0x7f050018;
-        public static final int icon2=0x7f050028;
+        public static final int icon2=0x7f05002d;
         public static final int image=0x7f050016;
         public static final int importFeeds=0x7f050027;
         public static final int importLectures=0x7f050025;
@@ -60,19 +60,24 @@ public final class R {
         public static final int lname=0x7f05001f;
         public static final int logo=0x7f050020;
         public static final int menu=0x7f050024;
-        public static final int message=0x7f050029;
+        public static final int message=0x7f05002e;
         public static final int moduleText=0x7f05001e;
         public static final int name=0x7f050019;
+        public static final int noteFeeds=0x7f05002b;
+        public static final int noteLectures1=0x7f050028;
+        public static final int noteLectures2=0x7f050029;
+        public static final int noteLinks=0x7f05002a;
+        public static final int noteModules=0x7f05002c;
         public static final int refresh=0x7f050021;
         public static final int save=0x7f05001b;
-        public static final int search=0x7f05002e;
+        public static final int search=0x7f050033;
         public static final int slide=0x7f050005;
         public static final int slider=0x7f050003;
         public static final int title=0x7f05001c;
-        public static final int transportText=0x7f05002c;
-        public static final int transportText2=0x7f05002d;
+        public static final int transportText=0x7f050031;
+        public static final int transportText2=0x7f050032;
         public static final int url=0x7f05001a;
-        public static final int webView=0x7f05002b;
+        public static final int webView=0x7f050030;
     }
     public static final class layout {
         public static final int appinfo=0x7f030000;
