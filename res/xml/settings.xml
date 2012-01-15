@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceScreen android:title="Module" android:key="modules"
+		android:summary="aktivieren, deaktivieren">
+		<CheckBoxPreference android:key="lectures"
+			android:title="Vorlesungen" android:defaultValue="true" />
+		<CheckBoxPreference android:key="cafeterias"
+			android:title="Speisepläne" android:defaultValue="true" />
+		<CheckBoxPreference android:key="transports"
+			android:title="MVV" android:defaultValue="true" />
+		<CheckBoxPreference android:key="feeds"
+			android:title="RSS-Feeds" android:defaultValue="true" />
+		<CheckBoxPreference android:key="events"
+			android:title="Veranstaltungen" android:defaultValue="true" />
+		<CheckBoxPreference android:key="plans"
+			android:title="Umgebungspläne" android:defaultValue="true" />
+		<CheckBoxPreference android:key="hours"
+			android:title="Öffnungszeiten" android:defaultValue="true" />
+		<CheckBoxPreference android:key="news"
+			android:title="Nachrichten" android:defaultValue="true" />
+		<CheckBoxPreference android:key="links"
+			android:title="Links" android:defaultValue="true" />
+	</PreferenceScreen>
+
 	<EditTextPreference android:key="cafeteriaFilter"
 		android:summary="z.B. 'Garching' um nur Mensen in Garching auflisten"
 		android:title="Mensa-Filter" />
@@ -9,7 +31,7 @@
 		android:defaultValue="true" />
 
 	<CheckBoxPreference android:key="debug"
-		android:title="Debug-Modus" />
+		android:summary="für Entwickler" android:title="Debug-Modus" />
 
 	<Preference android:title="Android Market" android:key="market"
 		android:summary="TUM Campus bewerten oder aktualisieren" />
