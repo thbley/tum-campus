@@ -18,9 +18,9 @@
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="0.5dip" android:background="#0065BD" />
 
-	<TextView android:layout_width="fill_parent"
+	<TextView android:layout_width="fill_parent" android:id="@+id/noteLectures1"
 		android:layout_height="wrap_content" android:textColor="#0065BD"
-		android:text="Vorlesungen importieren:\n
+		android:text="Vorlesungen importieren (TUM):\n
 		1. Handy an den Computer per USB anstecken\n
 		2. USB-Speicher am Handy aktivieren\n
 		3. Am Computer bei TumOnline.de einloggen:\n
@@ -38,7 +38,24 @@
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="0.5dip" android:background="#0065BD" />
 
+	<TextView android:layout_width="fill_parent" android:id="@+id/noteLectures2"
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="Vorlesungen importieren (andere Hochschule):\n
+		1. Handy an den Computer per USB anstecken\n
+		2. USB-Speicher am Handy aktivieren\n
+		3. Template herunterladen unter:\n
+		    http://bit.ly/LectureCsv\n
+		4. Template mit Excel bearbeiten\n
+		5. Datei unter\n
+		    &lt;SD-Karte&gt;\\tumcampus\\lectures speichern\n
+		6. USB-Speicher am Handy deaktivieren\n
+		7. Hier auf 'Vorlesungen importieren' drücken"
+		android:layout_margin="3dip" />
+
 	<TextView android:layout_width="fill_parent"
+		android:layout_height="0.5dip" android:background="#0065BD" />
+
+	<TextView android:layout_width="fill_parent" android:id="@+id/noteLinks"
 		android:layout_height="wrap_content" android:textColor="#0065BD"
 		android:text="Links importieren:\n
 		1. Handy an den Computer per USB anstecken\n
@@ -54,7 +71,7 @@
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="0.5dip" android:background="#0065BD" />
 
-	<TextView android:layout_width="fill_parent"
+	<TextView android:layout_width="fill_parent" android:id="@+id/noteFeeds"
 		android:layout_height="wrap_content" android:textColor="#0065BD"
 		android:text="RSS-Feeds importieren:\n
 		1. Handy an den Computer per USB anstecken\n
@@ -66,6 +83,11 @@
 		4. USB-Speicher am Handy deaktivieren\n
 		5. Hier auf 'RSS-Feeds importieren' drücken"
 		android:layout_margin="3dip" />
+
+	<TextView android:layout_width="fill_parent" android:id="@+id/noteModules"
+		android:layout_height="wrap_content" android:textColor="#0065BD"
+		android:text="Module für den Datenimport deaktiviert."
+		android:visibility="gone" android:layout_margin="3dip" />
 
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="0.5dip" android:background="#0065BD" />
