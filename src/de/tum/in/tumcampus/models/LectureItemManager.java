@@ -101,7 +101,7 @@ public class LectureItemManager extends SQLiteOpenHelper {
 
 			// skip canceled events on import
 			int terminTypId = headers.indexOf("TERMIN_TYP");
-			if (row.length > terminTypId
+			if (terminTypId != -1 && row.length > terminTypId
 					&& row[terminTypId].contains("abgesagt")) {
 				continue;
 			}
