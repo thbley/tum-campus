@@ -102,8 +102,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		}
 		fim.close();
 
-		// initialize import buttons, open import if required
-		setImportButtons(true);
+		// open import if required
 		if (getIntent().getAction().equals("import")) {
 			SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 			sd.animateOpen();
@@ -159,7 +158,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 				// reset text if offline message is still there
 				if (tv.getTag() != null) {
-					tv.setText(getString(R.string.hello));
+					tv.setText("Hello World, TUMCampus!");
 					tv.setTag(null);
 				}
 			} else {
@@ -171,9 +170,12 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			}
 		} else {
 			b.setVisibility(android.view.View.GONE);
-			tv.setText(getString(R.string.hello) + " Offline.");
+			tv.setText("Hello World, TUMCampus offline.");
 			tv.setTag("offline");
 		}
+
+		// initialize import buttons
+		setImportButtons(true);
 
 		// start silence service
 		Intent service = new Intent(this, SilenceService.class);
@@ -189,35 +191,46 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 		// build list, intent = start activity on click
-		addItem(list, R.drawable.vorlesung, "Vorlesungen",
-				LectureItemManager.lastInserted > 0, new Intent(this,
-						Lectures.class));
-
-		addItem(list, R.drawable.essen, "Speisepläne",
-				CafeteriaMenuManager.lastInserted > 0, new Intent(this,
-						Cafeterias.class));
-
-		addItem(list, R.drawable.zug, "MVV", false, new Intent(this,
-				Transports.class));
-
-		addItem(list, R.drawable.rss, "RSS-Feeds", FeedItemManager.lastInserted
-				+ FeedManager.lastInserted > 0, new Intent(this, Feeds.class));
-
-		addItem(list, R.drawable.party, "Veranstaltungen",
-				EventManager.lastInserted > 0, new Intent(this, Events.class));
-
-		addItem(list, R.drawable.kompass, "Umgebungspläne", false, new Intent(
-				this, Plans.class));
-
-		addItem(list, R.drawable.hours, "Öffnungszeiten", false, new Intent(
-				this, Hours.class));
-
-		addItem(list, R.drawable.globus, "Nachrichten",
-				NewsManager.lastInserted > 0, new Intent(this, News.class));
-
-		addItem(list, R.drawable.www, "Links", LinkManager.lastInserted > 0,
-				new Intent(this, Links.class));
-
+		if (Utils.getSettingBool(this, "lectures")) {
+			addItem(list, R.drawable.vorlesung, "Vorlesungen",
+					LectureItemManager.lastInserted > 0, new Intent(this,
+							Lectures.class));
+		}
+		if (Utils.getSettingBool(this, "cafeterias")) {
+			addItem(list, R.drawable.essen, "Speisepläne",
+					CafeteriaMenuManager.lastInserted > 0, new Intent(this,
+							Cafeterias.class));
+		}
+		if (Utils.getSettingBool(this, "transports")) {
+			addItem(list, R.drawable.zug, "MVV", false, new Intent(this,
+					Transports.class));
+		}
+		if (Utils.getSettingBool(this, "feeds")) {
+			int count = FeedItemManager.lastInserted + FeedManager.lastInserted;
+			addItem(list, R.drawable.rss, "RSS-Feeds", count > 0, new Intent(
+					this, Feeds.class));
+		}
+		if (Utils.getSettingBool(this, "events")) {
+			addItem(list, R.drawable.party, "Veranstaltungen",
+					EventManager.lastInserted > 0, new Intent(this,
+							Events.class));
+		}
+		if (Utils.getSettingBool(this, "plans")) {
+			addItem(list, R.drawable.kompass, "Umgebungspläne", false,
+					new Intent(this, Plans.class));
+		}
+		if (Utils.getSettingBool(this, "hours")) {
+			addItem(list, R.drawable.hours, "Öffnungszeiten", false,
+					new Intent(this, Hours.class));
+		}
+		if (Utils.getSettingBool(this, "news")) {
+			addItem(list, R.drawable.globus, "Nachrichten",
+					NewsManager.lastInserted > 0, new Intent(this, News.class));
+		}
+		if (Utils.getSettingBool(this, "links")) {
+			addItem(list, R.drawable.www, "Links",
+					LinkManager.lastInserted > 0, new Intent(this, Links.class));
+		}
 		addItem(list, R.drawable.info, "App-Info", false, new Intent(this,
 				AppInfo.class));
 
@@ -415,17 +428,54 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	 * </pre>
 	 */
 	public void setImportButtons(boolean enabled) {
-		Button b = (Button) findViewById(R.id.importLectures);
-		b.setOnClickListener(this);
-		b.setEnabled(enabled);
 
-		b = (Button) findViewById(R.id.importFeeds);
-		b.setOnClickListener(this);
-		b.setEnabled(enabled);
+		View n = findViewById(R.id.noteLectures1);
+		View n2 = findViewById(R.id.noteLectures2);
+		View v = findViewById(R.id.importLectures);
+		v.setOnClickListener(this);
+		v.setEnabled(enabled);
+		if (!Utils.getSettingBool(this, "lectures")) {
+			v.setVisibility(View.GONE);
+			n.setVisibility(View.GONE);
+			n2.setVisibility(View.GONE);
+		} else {
+			v.setVisibility(View.VISIBLE);
+			n.setVisibility(View.VISIBLE);
+			n2.setVisibility(View.VISIBLE);
+		}
 
-		b = (Button) findViewById(R.id.importLinks);
-		b.setOnClickListener(this);
-		b.setEnabled(enabled);
+		n = findViewById(R.id.noteFeeds);
+		v = findViewById(R.id.importFeeds);
+		v.setOnClickListener(this);
+		v.setEnabled(enabled);
+		if (!Utils.getSettingBool(this, "feeds")) {
+			v.setVisibility(View.GONE);
+			n.setVisibility(View.GONE);
+		} else {
+			v.setVisibility(View.VISIBLE);
+			n.setVisibility(View.VISIBLE);
+		}
+
+		n = findViewById(R.id.noteLinks);
+		v = findViewById(R.id.importLinks);
+		v.setOnClickListener(this);
+		v.setEnabled(enabled);
+		if (!Utils.getSettingBool(this, "links")) {
+			v.setVisibility(View.GONE);
+			n.setVisibility(View.GONE);
+		} else {
+			v.setVisibility(View.VISIBLE);
+			n.setVisibility(View.VISIBLE);
+		}
+
+		n = findViewById(R.id.noteModules);
+		if (!Utils.getSettingBool(this, "lectures")
+				&& !Utils.getSettingBool(this, "feeds")
+				&& !Utils.getSettingBool(this, "links")) {
+			n.setVisibility(View.VISIBLE);
+		} else {
+			n.setVisibility(View.GONE);
+		}
 	}
 
 	/**
