@@ -14,10 +14,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,7 +82,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
+		PreferenceManager.setDefaultValues(this, R.xml.settings, true);
+		
 		// adjust logo width to screen width
 		ImageView iv = (ImageView) findViewById(R.id.logo);
 		iv.getLayoutParams().width = getWindowManager().getDefaultDisplay()
