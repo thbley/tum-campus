@@ -33,5 +33,10 @@ public final class Const {
 		 * enable silence service, silence the mobile during lectures
 		 */
 		public final static String silence = "silence";
+
+		/**
+		 * mobile is switched to silence
+		 */
+		public final static String silence_on = "silence_on";
 	}
 }
