@@ -21,10 +21,11 @@
 		android:layout_height="fill_parent">
 
 		<LinearLayout android:orientation="vertical"
-			android:layout_width="fill_parent" android:layout_height="fill_parent">
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_marginBottom="33dip">
 
 			<TextView android:layout_width="fill_parent" android:id="@+id/hello"
-				android:layout_height="wrap_content" android:text="@string/hello"
+				android:layout_height="wrap_content" android:text="Hello World, TUMCampus!"
 				android:textColor="#FFFFFF" android:paddingLeft="4dip"
 				android:paddingRight="4dip" android:scrollbars="vertical" />
 
@@ -37,7 +38,13 @@
 				android:layout_marginTop="5dip" android:visibility="gone" />
 
 			<ListView android:layout_height="wrap_content" android:id="@+id/menu"
-				android:layout_width="fill_parent" android:paddingBottom="33dip" />
+				android:layout_width="fill_parent" />
+
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="0.5dip" android:background="#000000" />
+
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:background="#FFFFFF" />
 		</LinearLayout>
 
 		<SlidingDrawer android:layout_width="fill_parent"
