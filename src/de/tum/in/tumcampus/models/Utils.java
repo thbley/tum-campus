@@ -342,14 +342,12 @@ public class Utils {
 			if (data.startsWith("<?xml")) {
 				return result;
 			}
-			Pattern link = Pattern.compile("<link[^>]+>");
-			Pattern href = Pattern.compile("href=[\"'](.+?)[\"']");
-
-			Matcher matcher = link.matcher(data);
+			Matcher matcher = Pattern.compile("<link[^>]+>").matcher(data);
 			while (matcher.find()) {
 				String match = matcher.group(0);
 
-				Matcher href_match = href.matcher(match);
+				Matcher href_match = Pattern.compile("href=[\"'](.+?)[\"']")
+						.matcher(match);
 				if (href_match.find()
 						&& (match.contains("application/rss+xml") || match
 								.contains("application/atom+xml"))) {
@@ -358,9 +356,8 @@ public class Utils {
 			}
 
 			// relative url
-			Uri uri = Uri.parse(url);
 			if (!result.contains("://")) {
-				result = "http://" + uri.getHost() + "/" + result;
+				result = "http://" + Uri.parse(url).getHost() + "/" + result;
 			}
 		} catch (Exception e) {
 			log(e, url);
@@ -530,6 +527,22 @@ public class Utils {
 	public static boolean getSettingBool(Context c, String name) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
 		return sp.getBoolean(name, false);
+	}
+
+	/**
+	 * Sets the boolean value of a setting
+	 * 
+	 * <pre>
+	 * @param c Context
+	 * @param name setting name
+	 * @param value setting value
+	 * </pre>
+	 */
+	public static void setSettingBool(Context c, String name, boolean value) {
+		SharedPreferences.Editor editor = PreferenceManager
+				.getDefaultSharedPreferences(c).edit();
+		editor.putBoolean(name, value);
+		editor.commit();
 	}
 
 	/**
