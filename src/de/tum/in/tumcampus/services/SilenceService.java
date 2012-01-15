@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
 import de.tum.in.tumcampus.Const;
+import de.tum.in.tumcampus.Const.Settings;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.Utils;
 
@@ -15,10 +16,10 @@ import de.tum.in.tumcampus.models.Utils;
 public class SilenceService extends IntentService {
 
 	/**
-	 * interval in milli seconds to check for current lectures 
+	 * interval in milli seconds to check for current lectures
 	 */
 	public static int interval = 60000;
-	
+
 	/**
 	 * default init (run intent in new thread)
 	 */
@@ -28,12 +29,11 @@ public class SilenceService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		
+
 		// loop until silence mode gets disabled in settings
 		while (Utils.getSettingBool(this, Const.Settings.silence)) {
 
-			// default: no silence
-			int mode = AudioManager.RINGER_MODE_NORMAL;
+			AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
 			LectureItemManager lim = new LectureItemManager(this, Const.db);
 			if (!lim.hasLectures()) {
@@ -42,16 +42,19 @@ public class SilenceService extends IntentService {
 			}
 			Cursor c = lim.getCurrentFromDb();
 			if (c.getCount() != 0) {
-				// if current lecture(s) found, silence the mobile 
-				mode = AudioManager.RINGER_MODE_SILENT;
+				// if current lecture(s) found, silence the mobile
+				Utils.setSettingBool(this, Settings.silence_on, true);
+
+				Utils.log("set ringer mode: silent");
+				am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+
+			} else if (Utils.getSettingBool(this, Settings.silence_on)) {
+				// default: no silence
+				Utils.log("set ringer mode: normal");
+				am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 			}
 			c.close();
 			lim.close();
-
-			Utils.log("set ringer mode: " + mode);
-			// execute (no-)silence mode
-			AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-			am.setRingerMode(mode);
 
 			// wait unteil next check
 			synchronized (this) {
