@@ -52,6 +52,7 @@ public class SilenceService extends IntentService {
 				// default: no silence
 				Utils.log("set ringer mode: normal");
 				am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+				Utils.setSettingBool(this, Settings.silence_on, false);
 			}
 			c.close();
 			lim.close();
