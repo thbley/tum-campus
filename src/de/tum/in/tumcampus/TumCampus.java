@@ -219,6 +219,16 @@ public class TumCampus extends Activity implements OnItemClickListener,
 					EventManager.lastInserted > 0, new Intent(this,
 							Events.class));
 		}
+		/*
+		if (Utils.getSettingBool(this, "gallery")) {
+			addItem(list, R.drawable.gallery, "Kurz notiert", false,
+					new Intent(this, Gallery.class));
+		}
+		*/
+		if (Utils.getSettingBool(this, "news")) {
+			addItem(list, R.drawable.globus, "Nachrichten",
+					NewsManager.lastInserted > 0, new Intent(this, News.class));
+		}
 		if (Utils.getSettingBool(this, "plans")) {
 			addItem(list, R.drawable.kompass, "Umgebungspläne", false,
 					new Intent(this, Plans.class));
@@ -226,10 +236,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		if (Utils.getSettingBool(this, "hours")) {
 			addItem(list, R.drawable.hours, "Öffnungszeiten", false,
 					new Intent(this, Hours.class));
-		}
-		if (Utils.getSettingBool(this, "news")) {
-			addItem(list, R.drawable.globus, "Nachrichten",
-					NewsManager.lastInserted > 0, new Intent(this, News.class));
 		}
 		if (Utils.getSettingBool(this, "links")) {
 			addItem(list, R.drawable.www, "Links",
