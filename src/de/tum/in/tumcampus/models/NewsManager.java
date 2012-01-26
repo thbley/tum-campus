@@ -158,6 +158,8 @@ public class NewsManager extends SQLiteOpenHelper {
 			message = json.getString("description");
 		} else if (json.has("caption")) {
 			message = json.getString("caption");
+		} else if (json.has("name")) {
+			message = json.getString("name");
 		}
 		Date date = Utils.getDate(json.getString("created_time"));
 
