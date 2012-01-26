@@ -43,6 +43,8 @@
 
 		<activity android:name=".Hours" android:label="Öffnungszeiten" />
 
+		<!--<activity android:name=".Gallery" android:label="Kurz notiert" />-->
+
 		<activity android:name=".AppInfo" android:label="TUM Campus App für Android 0.82" />
 
 		<activity android:name=".Debug" android:label="Debug SQLite" />
