@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="de.tum.in.tumcampus" android:versionCode="13"
-	android:versionName="0.81">
+	package="de.tum.in.tumcampus" android:versionCode="14"
+	android:versionName="0.82">
 	<uses-sdk android:minSdkVersion="7" />
 
 	<instrumentation android:targetPackage="de.tum.in.tumcampus"
@@ -43,7 +43,7 @@
 
 		<activity android:name=".Hours" android:label="Öffnungszeiten" />
 
-		<activity android:name=".AppInfo" android:label="TUM Campus App für Android 0.81" />
+		<activity android:name=".AppInfo" android:label="TUM Campus App für Android 0.82" />
 
 		<activity android:name=".Debug" android:label="Debug SQLite" />
 
