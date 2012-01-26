@@ -83,7 +83,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		PreferenceManager.setDefaultValues(this, R.xml.settings, true);
-		
+
 		// adjust logo width to screen width
 		ImageView iv = (ImageView) findViewById(R.id.logo);
 		iv.getLayoutParams().width = getWindowManager().getDefaultDisplay()
@@ -106,7 +106,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		fim.close();
 
 		// open import if required
-		if (getIntent().getAction().equals("import")) {
+		String s = getIntent().getAction();
+		if (s != null && s.equals("import")) {
 			SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 			sd.animateOpen();
 		}
