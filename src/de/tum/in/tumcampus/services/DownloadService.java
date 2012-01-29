@@ -19,6 +19,7 @@ import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.models.GalleryManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.models.SyncManager;
@@ -130,6 +131,11 @@ public class DownloadService extends IntentService {
 			message("Veranstaltungen ", "");
 			downloadEvents(force);
 		}
+		if ((action == null || action.equals("gallery")) && !destroyed
+				&& Utils.getSettingBool(this, "gallery")) {
+			message("Kurz notiert ", "");
+			downloadGallery(force);
+		}
 		if ((action == null || action.equals("cafeterias")) && !destroyed
 				&& Utils.getSettingBool(this, "cafeterias")) {
 			message("Mensen ", "");
@@ -201,6 +207,23 @@ public class DownloadService extends IntentService {
 			message(e, "");
 		}
 		em.close();
+	}
+
+	/**
+	 * Download gallery
+	 * 
+	 * <pre>
+	 * @param force True to force download over normal sync period, else false
+	 * </pre>
+	 */
+	public void downloadGallery(boolean force) {
+		GalleryManager gm = new GalleryManager(this, Const.db);
+		try {
+			gm.downloadFromExternal(force);
+		} catch (Exception e) {
+			message(e, "");
+		}
+		gm.close();
 	}
 
 	/**
