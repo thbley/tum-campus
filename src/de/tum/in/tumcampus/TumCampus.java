@@ -14,7 +14,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -37,6 +36,7 @@ import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.models.GalleryManager;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
@@ -219,12 +219,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 					EventManager.lastInserted > 0, new Intent(this,
 							Events.class));
 		}
-		/*
 		if (Utils.getSettingBool(this, "gallery")) {
 			addItem(list, R.drawable.gallery, "Kurz notiert", false,
 					new Intent(this, Gallery.class));
 		}
-		*/
 		if (Utils.getSettingBool(this, "news")) {
 			addItem(list, R.drawable.globus, "Nachrichten",
 					NewsManager.lastInserted > 0, new Intent(this, News.class));
@@ -241,8 +239,9 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			addItem(list, R.drawable.www, "Links",
 					LinkManager.lastInserted > 0, new Intent(this, Links.class));
 		}
-		addItem(list, R.drawable.info, "App-Info", false, new Intent(this,
-				AppInfo.class));
+		String url = "https://m.facebook.com/TUMCampus";
+		addItem(list, R.drawable.info, "Facebook", false, new Intent(
+				Intent.ACTION_VIEW, Uri.parse(url)));
 
 		if (Utils.getSettingBool(this, Const.Settings.debug)) {
 			addItem(list, R.drawable.icon, "Debug", false, new Intent(this,
@@ -292,13 +291,16 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 
-		MenuItem m = menu.add(0, Menu.FIRST, 0, "Einstellungen");
+		MenuItem m = menu.add(0, Menu.FIRST, 0, "App-Info");
+		m.setIcon(android.R.drawable.ic_menu_info_details);
+
+		m = menu.add(0, Menu.FIRST + 1, 0, "Einstellungen");
 		m.setIcon(android.R.drawable.ic_menu_preferences);
 
-		m = menu.add(0, Menu.FIRST + 1, 0, "Handbuch");
+		m = menu.add(0, Menu.FIRST + 2, 0, "Handbuch");
 		m.setIcon(android.R.drawable.ic_menu_agenda);
 
-		m = menu.add(0, Menu.FIRST + 2, 0, "Cache leeren");
+		m = menu.add(0, Menu.FIRST + 3, 0, "Cache leeren");
 		m.setIcon(android.R.drawable.ic_menu_delete);
 		return true;
 	}
@@ -309,11 +311,14 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		// open settings activity, clear cache (database tables, sd-card)
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			Intent intent = new Intent(this, Settings.class);
-			startActivity(intent);
+			startActivity(new Intent(this, AppInfo.class));
 			return true;
 
 		case Menu.FIRST + 1:
+			startActivity(new Intent(this, Settings.class));
+			return true;
+
+		case Menu.FIRST + 2:
 			try {
 				// copy pdf manual from assets to sd-card
 				String target = Utils.getCacheDir("cache")
@@ -341,7 +346,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			}
 			return true;
 
-		case Menu.FIRST + 2:
+		case Menu.FIRST + 3:
 			clearCache();
 			return true;
 		}
@@ -374,6 +379,10 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		EventManager em = new EventManager(this, Const.db);
 		em.removeCache();
 		em.close();
+
+		GalleryManager gm = new GalleryManager(this, Const.db);
+		gm.removeCache();
+		gm.close();
 
 		LinkManager lm = new LinkManager(this, Const.db);
 		lm.removeCache();
