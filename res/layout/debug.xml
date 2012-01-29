@@ -52,6 +52,9 @@
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
 		<Button android:text="master" android:id="@+id/debugMaster"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+		<Button android:text="gallery" android:id="@+id/debugGallery"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 	</LinearLayout>
 
 	<TextView android:layout_width="fill_parent"
