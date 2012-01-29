@@ -12,12 +12,12 @@ public final class R {
     }
     public static final class drawable {
         public static final int essen=0x7f020000;
-        public static final int gallery=0x7f020001;
-        public static final int globus=0x7f020002;
-        public static final int hours=0x7f020003;
-        public static final int ic_menu_refresh=0x7f020004;
-        public static final int icon=0x7f020005;
-        public static final int info=0x7f020006;
+        public static final int fb=0x7f020001;
+        public static final int gallery=0x7f020002;
+        public static final int globus=0x7f020003;
+        public static final int hours=0x7f020004;
+        public static final int ic_menu_refresh=0x7f020005;
+        public static final int icon=0x7f020006;
         public static final int kompass=0x7f020007;
         public static final int party=0x7f020008;
         public static final int rss=0x7f020009;
