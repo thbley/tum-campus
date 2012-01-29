@@ -12,8 +12,8 @@
 			android:title="RSS-Feeds" android:defaultValue="true" />
 		<CheckBoxPreference android:key="events"
 			android:title="Veranstaltungen" android:defaultValue="true" />
-		<!--<CheckBoxPreference android:key="gallery" android:title="Kurz notiert" 
-			android:defaultValue="true" /> -->
+		<CheckBoxPreference android:key="gallery"
+			android:title="Kurz notiert" android:defaultValue="true" />
 		<CheckBoxPreference android:key="news"
 			android:title="Nachrichten" android:defaultValue="true" />
 		<CheckBoxPreference android:key="plans"
