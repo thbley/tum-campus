@@ -86,6 +86,10 @@ public class NewsManager extends SQLiteOpenHelper {
 								.equals("162327853831856")) {
 					continue;
 				}
+				if (obj.has("name")
+						&& obj.getString("name").equals("Kurz notiert")) {
+					continue;
+				}
 				if (countItems > 24) {
 					break;
 				}
