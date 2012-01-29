@@ -110,7 +110,7 @@ public class EventManager extends SQLiteOpenHelper {
 						+ "strftime('%H:%M', end) as end_de, "
 						+ "location, id as _id FROM events "
 						+ "WHERE end <= datetime('now', 'localtime') "
-						+ "ORDER BY start DESC LIMIT 25", null);
+						+ "ORDER BY start DESC LIMIT 50", null);
 	}
 
 	/**
@@ -189,12 +189,10 @@ public class EventManager extends SQLiteOpenHelper {
 		if (e.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
-		db.execSQL(
-				"REPLACE INTO events (id, name, start, end, location, "
-						+ "description, link, image) "
-						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-				new String[] { String.valueOf(e.id), e.name,
-						Utils.getDateTimeString(e.start),
+		db.execSQL("REPLACE INTO events (id, name, start, end, location, "
+				+ "description, link, image) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+				new String[] { e.id, e.name, Utils.getDateTimeString(e.start),
 						Utils.getDateTimeString(e.end), e.location,
 						e.description, e.link, e.image });
 	}
