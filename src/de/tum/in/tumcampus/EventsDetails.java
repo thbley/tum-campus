@@ -2,7 +2,8 @@
 
 import android.app.Activity;
 import android.database.Cursor;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,18 +52,9 @@ public class EventsDetails extends Activity {
 			tv.setText(description);
 
 			ImageView iv = (ImageView) findViewById(R.id.image);
-			iv.setImageURI(Uri.parse(image));
-
-			// resize image: 350 x height adapted in aspect ratio
-			if (iv.getDrawable() != null) {
-				double ratio = (double) iv.getDrawable().getIntrinsicWidth()
-						/ (double) iv.getDrawable().getIntrinsicHeight();
-
-				int screen = getWindowManager().getDefaultDisplay().getWidth();
-				int width = Math.min((int)(screen*0.9), 375);
-				iv.getLayoutParams().width = width;
-				iv.getLayoutParams().height = (int) Math.floor(width / ratio);
-			}
+			Bitmap b = BitmapFactory.decodeFile(image);
+			iv.setImageBitmap(Bitmap.createScaledBitmap(b, 360,
+					(b.getHeight() * 360) / b.getWidth(), true));
 		}
 		em.close();
 	}
