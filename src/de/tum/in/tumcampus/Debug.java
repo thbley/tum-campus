@@ -44,6 +44,9 @@ public class Debug extends Activity implements View.OnClickListener {
 		b = (Button) findViewById(R.id.debugEvents);
 		b.setOnClickListener(this);
 
+		b = (Button) findViewById(R.id.debugGallery);
+		b.setOnClickListener(this);
+
 		b = (Button) findViewById(R.id.debugNews);
 		b.setOnClickListener(this);
 
@@ -148,6 +151,10 @@ public class Debug extends Activity implements View.OnClickListener {
 
 		if (v.getId() == R.id.debugEvents) {
 			debugSQL("SELECT * FROM events ORDER BY start DESC");
+		}
+
+		if (v.getId() == R.id.debugGallery) {
+			debugSQL("SELECT * FROM gallery ORDER BY position ASC");
 		}
 
 		if (v.getId() == R.id.debugNews) {
