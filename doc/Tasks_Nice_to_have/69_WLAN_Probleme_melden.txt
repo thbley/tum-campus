@@ -1,0 +1,12 @@
+http://info.fs.tum.de/Internet_im_FMI-Geb%C3%A4ude
+
+WLAN-Probleme: Solltet ihr ein Problem mit dem Internet im Informatk-Gebäude haben, sendet bitte eine Mail an rbg@in.tum.de mit folgendem Inhalt:
+- SSID? FMI
+- Was? Internet sehr langsam
+- Wo? Magistrale, Nähe Cafeteria
+- Wann? 06.07.2011 12:10
+- Ausgabe von: ping google.de
+
+Funktion in die App einbauen, die die Mail vorgeneriert.
+
+Addons: Signalstärke, IP-Adresse, Gateway, etc.
