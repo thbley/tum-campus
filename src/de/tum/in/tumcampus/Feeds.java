@@ -154,9 +154,8 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 			// no binding needed
 			return true;
-		} else {
-			view.setVisibility(View.VISIBLE);
 		}
+		view.setVisibility(View.VISIBLE);
 		return false;
 	}
 
