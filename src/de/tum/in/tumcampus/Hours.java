@@ -90,10 +90,10 @@ public class Hours extends Activity implements OnItemClickListener, ViewBinder {
 		lm.close();
 	}
 
-	@Override
 	/**
 	 * change presentation of locations in the list
 	 */
+	@Override
 	public boolean setViewValue(View view, Cursor c, int index) {
 		if (view.getId() == android.R.id.text2) {
 			String transport = c.getString(c.getColumnIndex("transport"));
