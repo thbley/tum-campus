@@ -96,12 +96,12 @@ public class Plans extends Activity implements OnItemClickListener {
 		} else if (position == 6) {
 			file = "plans/mvv.jpg";
 			setTitle("Plan: MVV-Schnellbahnnetz");
-			browser.setInitialScale(100 * width / 1100);
+			browser.setInitialScale(100 * width / 1454);
 
 		} else {
 			file = "plans/mvv_night.jpg";
 			setTitle("Plan: MVV-Nachtlinien");
-			browser.setInitialScale(100 * width / 1485);
+			browser.setInitialScale(100 * width / 1480);
 		}
 
 		String data = "<body style='margin:0px;'><img src='" + file + "'/>"
