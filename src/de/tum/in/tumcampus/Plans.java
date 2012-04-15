@@ -81,7 +81,7 @@ public class Plans extends Activity implements OnItemClickListener {
 		} else if (position == 3) {
 			file = "plans/CampusOlympiaparkHallenplan.jpg";
 			setTitle("Plan: Campus Olympiapark Hallenplan");
-			browser.setInitialScale(100 * width / 1024);
+			browser.setInitialScale(100 * width / 800);
 
 		} else if (position == 4) {
 			file = "plans/CampusStammgelaende.jpg";
