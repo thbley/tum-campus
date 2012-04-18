@@ -179,6 +179,13 @@ public class GalleryManager extends SQLiteOpenHelper {
 		Utils.emptyCacheDir("gallery/cache");
 	}
 
+	/**
+	 * Update database
+	 */
+	public void update() {
+		db.execSQL("DROP TABLE gallery");
+	}
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// create table if needed
