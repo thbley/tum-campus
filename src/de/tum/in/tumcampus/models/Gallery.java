@@ -24,6 +24,11 @@ public class Gallery {
 	 * Position in gallery
 	 */
 	String position;
+	
+	/**
+	 * Image is archived
+	 */
+	boolean archive;
 
 	/**
 	 * New Event
@@ -33,14 +38,16 @@ public class Gallery {
 	 * @param name Name, e.g. PartyX
 	 * @param image Local image, e.g. /mnt/sdcard/tumcampus/events/cache/xy.jpg
 	 * @param position Position in gallery
+	 * @param archive Image is archived
 	 * </pre>
 	 */
-	public Gallery(String id, String name, String image, String position) {
+	public Gallery(String id, String name, String image, String position, boolean archive) {
 
 		this.id = id;
 		this.name = name;
 		this.image = image;
 		this.position = position;
+		this.archive = archive;
 	}
 
 	@Override
