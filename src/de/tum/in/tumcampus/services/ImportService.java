@@ -240,6 +240,13 @@ public class ImportService extends IntentService {
 						.getDate(row[1]), row[2]));
 			}
 
+			// remove old items
+			String[] outdated = new String[] { "H5", "H6", "H7", "H8", "H9",
+					"H10", "H11", "V1", "V2" };
+			for (String s : outdated) {
+				lim.deleteItemFromDb(s);
+			}
+
 			rows = Utils.readCsv(getAssets().open("lectures_vacations.csv"),
 					"ISO-8859-1");
 
