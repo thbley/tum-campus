@@ -239,9 +239,11 @@ public class TumCampus extends Activity implements OnItemClickListener,
 			addItem(list, R.drawable.www, "Links",
 					LinkManager.lastInserted > 0, new Intent(this, Links.class));
 		}
-		String url = "https://m.facebook.com/TUMCampus";
-		addItem(list, R.drawable.fb, "Facebook", false, new Intent(
-				Intent.ACTION_VIEW, Uri.parse(url)));
+		if (Utils.getSettingBool(this, "facebook")) {
+			String url = "https://m.facebook.com/TUMCampus";
+			addItem(list, R.drawable.fb, "Facebook", false, new Intent(
+					Intent.ACTION_VIEW, Uri.parse(url)));
+		}
 
 		if (Utils.getSettingBool(this, Const.Settings.debug)) {
 			addItem(list, R.drawable.icon, "Debug", false, new Intent(this,
