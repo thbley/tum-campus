@@ -2,9 +2,9 @@ package de.tum.in.tumcampus;
 
 import android.app.Activity;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.GalleryManager;
 
@@ -29,8 +29,15 @@ public class GalleryDetails extends Activity {
 			TextView tv = (TextView) findViewById(R.id.infos);
 			tv.setText(name);
 
-			ImageView iv = (ImageView) findViewById(R.id.image);
-			iv.setImageBitmap(BitmapFactory.decodeFile(image));
+			WebView browser = (WebView) findViewById(R.id.webView);
+			// activate zoom controls
+			browser.getSettings().setBuiltInZoomControls(true);
+			browser.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+
+			String data = "<body style='margin:0px;'><img src='" + image
+					+ "'/></body>";
+			browser.loadDataWithBaseURL("file:///android_asset/", data,
+					"text/html", "UTF-8", null);
 		}
 		gm.close();
 	}
