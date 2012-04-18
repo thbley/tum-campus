@@ -51,6 +51,15 @@ public class Gallery extends Activity implements OnItemClickListener {
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(adapter);
 		gridview.setOnItemClickListener(this);
+		
+		Cursor c2 = gm.getFromDbArchive();
+		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this,
+				R.layout.gallery_image, c2, c2.getColumnNames(),
+				new int[] { R.id.image });
+
+		GridView gridview2 = (GridView) findViewById(R.id.gridview2);
+		gridview2.setAdapter(adapter2);
+		gridview2.setOnItemClickListener(this);
 		gm.close();
 
 		// reset new items counter
