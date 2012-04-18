@@ -12,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.SlidingDrawer;
 import android.widget.SimpleCursorAdapter.ViewBinder;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 import de.tum.in.tumcampus.models.EventManager;
 import de.tum.in.tumcampus.services.DownloadService;
@@ -54,18 +56,27 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
-
-		// get past events from database
-		c = em.getPastFromDb();
-		adapter = new SimpleCursorAdapter(this, R.layout.events_listview, c,
-				c.getColumnNames(), new int[] { R.id.icon, R.id.name,
-						R.id.infos });
-		adapter.setViewBinder(this);
-
-		ListView lv2 = (ListView) findViewById(R.id.listView2);
-		lv2.setAdapter(adapter);
-		lv2.setOnItemClickListener(this);
 		em.close();
+
+		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
+		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
+			@Override
+			public void onDrawerOpened() {
+				// get past events from database
+				EventManager em = new EventManager(Events.this, Const.db);
+				Cursor c = em.getPastFromDb();
+				SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+						Events.this, R.layout.events_listview, c, c
+								.getColumnNames(), new int[] { R.id.icon,
+								R.id.name, R.id.infos });
+				adapter.setViewBinder(Events.this);
+
+				ListView lv2 = (ListView) findViewById(R.id.listView2);
+				lv2.setAdapter(adapter);
+				lv2.setOnItemClickListener(Events.this);
+				em.close();
+			}
+		});
 
 		// reset new items counter
 		EventManager.lastInserted = 0;
