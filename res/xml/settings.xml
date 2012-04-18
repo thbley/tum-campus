@@ -1,43 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceScreen android:title="Module" android:key="modules"
-		android:summary="aktivieren, deaktivieren">
-		<CheckBoxPreference android:key="lectures"
-			android:title="Vorlesungen" android:defaultValue="true" />
-		<CheckBoxPreference android:key="cafeterias"
-			android:title="Speisepläne" android:defaultValue="true" />
-		<CheckBoxPreference android:key="transports"
-			android:title="MVV" android:defaultValue="true" />
-		<CheckBoxPreference android:key="feeds"
-			android:title="RSS-Feeds" android:defaultValue="true" />
-		<CheckBoxPreference android:key="events"
-			android:title="Veranstaltungen" android:defaultValue="true" />
-		<CheckBoxPreference android:key="gallery"
-			android:title="Kurz notiert" android:defaultValue="true" />
-		<CheckBoxPreference android:key="news"
-			android:title="Nachrichten" android:defaultValue="true" />
-		<CheckBoxPreference android:key="plans"
-			android:title="Umgebungspläne" android:defaultValue="true" />
-		<CheckBoxPreference android:key="hours"
-			android:title="Öffnungszeiten" android:defaultValue="true" />
-		<CheckBoxPreference android:key="links"
-			android:title="Links" android:defaultValue="true" />
-	</PreferenceScreen>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<EditTextPreference android:key="cafeteriaFilter"
-		android:summary="z.B. 'Garching' um nur Mensen in Garching auflisten"
-		android:title="Mensa-Filter" />
+    <PreferenceScreen
+        android:key="modules"
+        android:summary="aktivieren, deaktivieren"
+        android:title="Module" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="lectures"
+            android:title="Vorlesungen" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="cafeterias"
+            android:title="Speisepläne" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="transports"
+            android:title="MVV" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="feeds"
+            android:title="RSS-Feeds" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="events"
+            android:title="Veranstaltungen" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="gallery"
+            android:title="Kurz notiert" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="news"
+            android:title="Nachrichten" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="plans"
+            android:title="Umgebungspläne" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="hours"
+            android:title="Öffnungszeiten" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="links"
+            android:title="Links" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="facebook"
+            android:title="Facebook-Link" />
+    </PreferenceScreen>
 
-	<CheckBoxPreference android:key="silence"
-		android:title="Handy autom. lautlos" android:summary="während der Vorlesung"
-		android:defaultValue="true" />
+    <EditTextPreference
+        android:key="cafeteriaFilter"
+        android:summary="z.B. &apos;Garching&apos; um nur Mensen in Garching auflisten"
+        android:title="Mensa-Filter" />
 
-	<CheckBoxPreference android:key="debug"
-		android:summary="für Entwickler" android:title="Debug-Modus" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="silence"
+        android:summary="während der Vorlesung"
+        android:title="Handy autom. lautlos" />
+    <CheckBoxPreference
+        android:key="debug"
+        android:summary="für Entwickler"
+        android:title="Debug-Modus" />
 
-	<Preference android:title="Android Market" android:key="market"
-		android:summary="TUM Campus bewerten oder aktualisieren" />
+    <Preference
+        android:key="market"
+        android:summary="TUM Campus bewerten oder aktualisieren"
+        android:title="Android Market" />
+    <Preference
+        android:key="app_details"
+        android:summary="Daten löschen oder App deinstallieren"
+        android:title="App-Verwaltung" />
 
-	<Preference android:title="App-Verwaltung" android:key="app_details"
-		android:summary="Daten löschen oder App deinstallieren" />
 </PreferenceScreen>
