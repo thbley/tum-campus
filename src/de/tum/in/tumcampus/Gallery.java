@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.SlidingDrawer;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import de.tum.in.tumcampus.models.GalleryManager;
 import de.tum.in.tumcampus.services.DownloadService;
 
@@ -51,16 +53,25 @@ public class Gallery extends Activity implements OnItemClickListener {
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(adapter);
 		gridview.setOnItemClickListener(this);
-		
-		Cursor c2 = gm.getFromDbArchive();
-		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this,
-				R.layout.gallery_image, c2, c2.getColumnNames(),
-				new int[] { R.id.image });
-
-		GridView gridview2 = (GridView) findViewById(R.id.gridview2);
-		gridview2.setAdapter(adapter2);
-		gridview2.setOnItemClickListener(this);
 		gm.close();
+
+		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
+		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
+
+			@Override
+			public void onDrawerOpened() {
+				GalleryManager gm = new GalleryManager(Gallery.this, Const.db);
+				Cursor c = gm.getFromDbArchive();
+				SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+						Gallery.this, R.layout.gallery_image, c, c
+								.getColumnNames(), new int[] { R.id.image });
+
+				GridView gridview2 = (GridView) findViewById(R.id.gridview2);
+				gridview2.setAdapter(adapter);
+				gridview2.setOnItemClickListener(Gallery.this);
+				gm.close();
+			}
+		});
 
 		// reset new items counter
 		GalleryManager.lastInserted = 0;
