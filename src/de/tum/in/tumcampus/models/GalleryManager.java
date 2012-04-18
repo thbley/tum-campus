@@ -56,12 +56,16 @@ public class GalleryManager extends SQLiteOpenHelper {
 		}
 
 		String url = "https://graph.facebook.com/280074732057167/photos?"
-				+ "fields=id,name,source,position&limit=50&access_token=";
+				+ "fields=id,name,source,position&limit=25&access_token=";
+		String urlArchive = "https://graph.facebook.com/291553714242602/photos?"
+				+ "fields=id,name,source,position&limit=25&access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 
 		JSONArray jsonArray = Utils
 				.downloadJson(url + URLEncoder.encode(token)).getJSONArray(
 						"data");
+		JSONArray jsonArrayArchive = Utils.downloadJson(
+				urlArchive + URLEncoder.encode(token)).getJSONArray("data");
 
 		int count = Utils.dbGetTableCount(db, "gallery");
 
@@ -69,6 +73,10 @@ public class GalleryManager extends SQLiteOpenHelper {
 		try {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
+			}
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonArrayArchive.getJSONObject(i).put("archive", true);
+				replaceIntoDb(getFromJson(jsonArrayArchive.getJSONObject(i)));
 			}
 			SyncManager.replaceIntoDb(db, this);
 			db.setTransactionSuccessful();
@@ -80,15 +88,25 @@ public class GalleryManager extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * Get all gallery item from the database
+	 * Get all active gallery items from the database
 	 * 
 	 * @return Database cursor (_id, id)
 	 */
 	public Cursor getFromDb() {
-		return db
-				.rawQuery(
-						"SELECT image as _id, id FROM gallery ORDER BY position LIMIT 50",
-						null);
+		return db.rawQuery(
+				"SELECT image as _id, id FROM gallery WHERE archive='0' "
+						+ "ORDER BY position LIMIT 50", null);
+	}
+
+	/**
+	 * Get all archived gallery items from the database
+	 * 
+	 * @return Database cursor (_id, id)
+	 */
+	public Cursor getFromDbArchive() {
+		return db.rawQuery(
+				"SELECT image as _id, id FROM gallery WHERE archive='1' "
+						+ "ORDER BY position LIMIT 50", null);
 	}
 
 	/**
@@ -125,33 +143,32 @@ public class GalleryManager extends SQLiteOpenHelper {
 
 		String id = json.getString("id");
 
-		String picture = json.getString("source");
-
 		String target = Utils.getCacheDir("gallery/cache") + id + ".jpg";
-		Utils.downloadFileThread(picture, target);
+
+		Utils.downloadFileThread(json.getString("source"), target);
 
 		return new Gallery(id, json.getString("name"), target,
-				json.getString("position"));
+				json.getString("position"), json.has("archive"));
 	}
 
 	/**
 	 * Replace or Insert a gallery item in the database
 	 * 
 	 * <pre>
-	 * @param e Gallery object
+	 * @param g Gallery object
 	 * @throws Exception
 	 * </pre>
 	 */
-	public void replaceIntoDb(Gallery e) throws Exception {
-		if (e.id.length() == 0) {
+	public void replaceIntoDb(Gallery g) throws Exception {
+		if (g.id.length() == 0) {
 			throw new Exception("Invalid id.");
 		}
-		if (e.name.length() == 0) {
+		if (g.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
-		db.execSQL("REPLACE INTO gallery (id, name, image, position) "
-				+ "VALUES (?, ?, ?, ?)", new String[] { e.id, e.name, e.image,
-				e.position });
+		db.execSQL("REPLACE INTO gallery (id, name, image, position, archive) "
+				+ "VALUES (?, ?, ?, ?, ?)", new String[] { g.id, g.name, g.image,
+				g.position, g.archive ? "1" : "0" });
 	}
 
 	/**
@@ -167,7 +184,7 @@ public class GalleryManager extends SQLiteOpenHelper {
 		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS gallery ("
 				+ "id VARCHAR PRIMARY KEY, name VARCHAR, image VARCHAR, "
-				+ "position INTEGER)");
+				+ "position INTEGER, archive VARCHAR(1))");
 	}
 
 	@Override
