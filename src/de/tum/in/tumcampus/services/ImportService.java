@@ -15,6 +15,7 @@ import de.tum.in.tumcampus.Const;
 import de.tum.in.tumcampus.TumCampus;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedManager;
+import de.tum.in.tumcampus.models.GalleryManager;
 import de.tum.in.tumcampus.models.LectureItem;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LectureManager;
@@ -58,6 +59,7 @@ public class ImportService extends IntentService {
 				boolean update = false;
 				File f = new File(getFilesDir() + "/" + version);
 				if (!f.exists()) {
+					updateDatabase();
 					update = true;
 				}
 				importTransportsDefaults();
@@ -104,6 +106,15 @@ public class ImportService extends IntentService {
 			}
 			nm.cancel(1);
 		}
+	}
+
+	/**
+	 * Update database schema
+	 */
+	public void updateDatabase() {
+		GalleryManager gm = new GalleryManager(this, Const.db);
+		gm.update();
+		gm.close();
 	}
 
 	/**
