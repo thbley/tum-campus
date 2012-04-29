@@ -48,7 +48,6 @@ public final class R {
         public static final int gridview=0x7f05001e;
         public static final int gridview2=0x7f05001f;
         public static final int handle=0x7f050004;
-        public static final int hello=0x7f050026;
         public static final int icon=0x7f050019;
         public static final int icon2=0x7f050031;
         public static final int image=0x7f050017;
@@ -77,6 +76,7 @@ public final class R {
         public static final int search=0x7f050036;
         public static final int slide=0x7f050005;
         public static final int slider=0x7f050003;
+        public static final int status=0x7f050026;
         public static final int title=0x7f05001d;
         public static final int transportText=0x7f050034;
         public static final int transportText2=0x7f050035;
