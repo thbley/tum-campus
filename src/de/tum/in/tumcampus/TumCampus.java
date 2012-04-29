@@ -146,25 +146,18 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		String conn = getConnection();
 		Button b = (Button) findViewById(R.id.refresh);
-		TextView tv = (TextView) findViewById(R.id.hello);
 
 		/**
 		 * <pre>
-		 * hide download button if offline
+		 * disable download button if offline
 		 * show cancel button if currently syncing
 		 * else show download button
 		 * </pre>
 		 */
 		if (conn.length() > 0) {
-			b.setVisibility(android.view.View.VISIBLE);
 			if (!syncing) {
 				b.setText("Aktualisieren (" + conn + ")");
-
-				// reset text if offline message is still there
-				if (tv.getTag() != null) {
-					tv.setText("Hello World, TUMCampus!");
-					tv.setTag(null);
-				}
+				b.setEnabled(true);
 			} else {
 				b.setText("Abbrechen");
 
@@ -173,9 +166,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 				b.setVisibility(View.GONE);
 			}
 		} else {
-			b.setVisibility(android.view.View.GONE);
-			tv.setText("Hello World, TUMCampus offline.");
-			tv.setTag("offline");
+			b.setText("offline.");
+			b.setEnabled(false);
 		}
 
 		// initialize import buttons
@@ -515,7 +507,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 					syncing = false;
 				}
 				if (message.length() > 0) {
-					TextView tv = (TextView) findViewById(R.id.hello);
+					TextView tv = (TextView) findViewById(R.id.error);
+					tv.setVisibility(View.VISIBLE);
 					tv.setText(message);
 				}
 				onResume();
