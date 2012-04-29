@@ -153,6 +153,9 @@ public class LinkManager extends SQLiteOpenHelper {
 	public void insertUpdateIntoDb(Link l) throws Exception {
 		Utils.log(l.toString());
 
+		l.name = l.name.trim();
+		l.url = l.url.trim();
+
 		if (l.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}

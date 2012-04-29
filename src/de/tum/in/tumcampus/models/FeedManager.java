@@ -128,10 +128,13 @@ public class FeedManager extends SQLiteOpenHelper {
 	public int insertUpdateIntoDb(Feed f) throws Exception {
 		Utils.log(f.toString());
 
-		if (f.name.trim().length() == 0) {
+		f.name = f.name.trim();
+		f.feedUrl = f.feedUrl.trim();
+
+		if (f.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
-		if (f.feedUrl.trim().length() == 0) {
+		if (f.feedUrl.length() == 0) {
 			throw new Exception("Invalid feedUrl.");
 		}
 
@@ -140,11 +143,11 @@ public class FeedManager extends SQLiteOpenHelper {
 
 		if (c.moveToNext()) {
 			db.execSQL("UPDATE feeds SET name=?, feedUrl=? WHERE id=?",
-					new String[] { f.name.trim(), f.feedUrl.trim(), c.getString(0) });
+					new String[] { f.name, f.feedUrl, c.getString(0) });
 			return c.getInt(0);
 		} else {
 			db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)",
-					new String[] { f.name.trim(), f.feedUrl.trim() });
+					new String[] { f.name, f.feedUrl });
 
 			c = db.rawQuery("SELECT last_insert_rowid()", null);
 			c.moveToNext();
