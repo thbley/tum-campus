@@ -74,7 +74,7 @@ public class GalleryManager extends SQLiteOpenHelper {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				replaceIntoDb(getFromJson(jsonArray.getJSONObject(i)));
 			}
-			for (int i = 0; i < jsonArray.length(); i++) {
+			for (int i = 0; i < jsonArrayArchive.length(); i++) {
 				jsonArrayArchive.getJSONObject(i).put("archive", true);
 				replaceIntoDb(getFromJson(jsonArrayArchive.getJSONObject(i)));
 			}
