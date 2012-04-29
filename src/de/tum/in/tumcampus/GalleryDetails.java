@@ -22,23 +22,23 @@ public class GalleryDetails extends Activity {
 		GalleryManager gm = new GalleryManager(this, Const.db);
 		Cursor c = gm.getDetailsFromDb(getIntent().getStringExtra("id"));
 
-		if (c.moveToNext()) {
-			String name = c.getString(c.getColumnIndex("name"));
-			String image = c.getString(c.getColumnIndex("image"));
+		if (!c.moveToNext())
+			return;
 
-			TextView tv = (TextView) findViewById(R.id.infos);
-			tv.setText(name);
+		String name = c.getString(c.getColumnIndex("name"));
+		String image = c.getString(c.getColumnIndex("image"));
 
-			WebView browser = (WebView) findViewById(R.id.webView);
-			// activate zoom controls
-			browser.getSettings().setBuiltInZoomControls(true);
-			browser.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+		TextView tv = (TextView) findViewById(R.id.infos);
+		tv.setText(name);
 
-			String data = "<body style='margin:0px;'><img src='" + image
-					+ "'/></body>";
-			browser.loadDataWithBaseURL("file:///android_asset/", data,
-					"text/html", "UTF-8", null);
-		}
-		gm.close();
+		WebView browser = (WebView) findViewById(R.id.webView);
+		// activate zoom controls
+		browser.getSettings().setBuiltInZoomControls(true);
+		browser.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+
+		String data = "<body style='margin:0px;'><img src='" + image
+				+ "'/></body>";
+		browser.loadDataWithBaseURL("file:///android_asset/", data,
+				"text/html", "UTF-8", null);
 	}
 }

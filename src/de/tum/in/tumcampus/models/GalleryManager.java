@@ -8,13 +8,11 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import de.tum.in.tumcampus.Const;
 
 /**
  * Gallery Manager, handles database stuff, external imports
  */
-public class GalleryManager extends SQLiteOpenHelper {
+public class GalleryManager {
 
 	/**
 	 * Database connection
@@ -35,16 +33,25 @@ public class GalleryManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public GalleryManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS gallery ("
+				+ "id VARCHAR PRIMARY KEY, name VARCHAR, image VARCHAR, "
+				+ "position INTEGER, archive VARCHAR(1))");
+	}
+
+	/**
+	 * Update database
+	 */
+	public void update() {
+		db.execSQL("DROP TABLE gallery");
 	}
 
 	/**
 	 * Download Gallery from external interface (JSON)
 	 * 
-	 * <pre>
+m	 * <pre>
 	 * @param force True to force download over normal sync period, else false
 	 * @throws Exception
 	 * </pre>
@@ -167,8 +174,8 @@ public class GalleryManager extends SQLiteOpenHelper {
 			throw new Exception("Invalid name.");
 		}
 		db.execSQL("REPLACE INTO gallery (id, name, image, position, archive) "
-				+ "VALUES (?, ?, ?, ?, ?)", new String[] { g.id, g.name, g.image,
-				g.position, g.archive ? "1" : "0" });
+				+ "VALUES (?, ?, ?, ?, ?)", new String[] { g.id, g.name,
+				g.image, g.position, g.archive ? "1" : "0" });
 	}
 
 	/**
@@ -177,25 +184,5 @@ public class GalleryManager extends SQLiteOpenHelper {
 	public void removeCache() {
 		db.execSQL("DELETE FROM gallery");
 		Utils.emptyCacheDir("gallery/cache");
-	}
-
-	/**
-	 * Update database
-	 */
-	public void update() {
-		db.execSQL("DROP TABLE gallery");
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS gallery ("
-				+ "id VARCHAR PRIMARY KEY, name VARCHAR, image VARCHAR, "
-				+ "position INTEGER, archive VARCHAR(1))");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

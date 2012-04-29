@@ -7,17 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.tum.in.tumcampus.Const;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Cafeteria Manager, handles database stuff, external imports
  */
-public class CafeteriaManager extends SQLiteOpenHelper {
+public class CafeteriaManager {
 
 	/**
 	 * Database connection
@@ -33,10 +30,11 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public CafeteriaManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias ("
+				+ "id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
 	}
 
 	/**
@@ -151,17 +149,5 @@ public class CafeteriaManager extends SQLiteOpenHelper {
 	 */
 	public void removeCache() {
 		db.execSQL("DELETE FROM cafeterias");
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias ("
-				+ "id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

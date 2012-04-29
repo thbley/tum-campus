@@ -32,7 +32,6 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		EventManager em = new EventManager(getActivity(), Const.db);
 		em.replaceIntoDb(e);
-		em.close();
 	}
 
 	@Override
@@ -40,7 +39,6 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		// remove test data
 		EventManager em = new EventManager(getActivity(), Const.db);
 		em.removeCache();
-		em.close();
 		super.tearDown();
 	}
 

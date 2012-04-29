@@ -23,39 +23,39 @@ public class EventsDetails extends Activity {
 		EventManager em = new EventManager(this, Const.db);
 		Cursor c = em.getDetailsFromDb(getIntent().getStringExtra("id"));
 
-		if (c.moveToNext()) {
-			String description = c.getString(c.getColumnIndex("description"));
-			String image = c.getString(c.getColumnIndex("image"));
+		if (!c.moveToNext())
+			return;
 
-			String[] weekDays = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
+		String description = c.getString(c.getColumnIndex("description"));
+		String image = c.getString(c.getColumnIndex("image"));
 
-			setTitle(c.getString(c.getColumnIndex("name")));
+		String[] weekDays = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
 
-			/**
-			 * <pre>
-			 * show infos as:
-			 * Week-day, Start DateTime - End Time
-			 * Location
-			 * Link
-			 * </pre>
-			 */
-			String infos = weekDays[c.getInt(c.getColumnIndex("weekday"))];
-			infos += ", " + c.getString(c.getColumnIndex("start_de")) + " - "
-					+ c.getString(c.getColumnIndex("end_de")) + "\n";
-			infos += c.getString(c.getColumnIndex("location")) + "\n";
-			infos += c.getString(c.getColumnIndex("link"));
+		setTitle(c.getString(c.getColumnIndex("name")));
 
-			TextView tv = (TextView) findViewById(R.id.infos);
-			tv.setText(infos.trim());
+		/**
+		 * <pre>
+		 * show infos as:
+		 * Week-day, Start DateTime - End Time
+		 * Location
+		 * Link
+		 * </pre>
+		 */
+		String infos = weekDays[c.getInt(c.getColumnIndex("weekday"))];
+		infos += ", " + c.getString(c.getColumnIndex("start_de")) + " - "
+				+ c.getString(c.getColumnIndex("end_de")) + "\n";
+		infos += c.getString(c.getColumnIndex("location")) + "\n";
+		infos += c.getString(c.getColumnIndex("link"));
 
-			tv = (TextView) findViewById(R.id.description);
-			tv.setText(description);
+		TextView tv = (TextView) findViewById(R.id.infos);
+		tv.setText(infos.trim());
 
-			ImageView iv = (ImageView) findViewById(R.id.image);
-			Bitmap b = BitmapFactory.decodeFile(image);
-			iv.setImageBitmap(Bitmap.createScaledBitmap(b, 360,
-					(b.getHeight() * 360) / b.getWidth(), true));
-		}
-		em.close();
+		tv = (TextView) findViewById(R.id.description);
+		tv.setText(description);
+
+		ImageView iv = (ImageView) findViewById(R.id.image);
+		Bitmap b = BitmapFactory.decodeFile(image);
+		iv.setImageBitmap(Bitmap.createScaledBitmap(b, 360,
+				(b.getHeight() * 360) / b.getWidth(), true));
 	}
 }

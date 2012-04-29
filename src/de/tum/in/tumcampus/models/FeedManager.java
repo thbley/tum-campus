@@ -7,13 +7,11 @@ import java.util.List;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import de.tum.in.tumcampus.Const;
 
 /**
  * Feed Manager, handles database stuff, internal imports
  */
-public class FeedManager extends SQLiteOpenHelper {
+public class FeedManager {
 
 	/**
 	 * Database connection
@@ -39,10 +37,11 @@ public class FeedManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public FeedManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS feeds ("
+				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, feedUrl VARCHAR)");
 	}
 
 	/**
@@ -165,17 +164,5 @@ public class FeedManager extends SQLiteOpenHelper {
 	public void deleteFromDb(int id) {
 		db.execSQL("DELETE FROM feeds WHERE id = ?",
 				new String[] { String.valueOf(id) });
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS feeds ("
-				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, feedUrl VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

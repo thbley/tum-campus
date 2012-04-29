@@ -5,14 +5,12 @@ import java.io.File;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import de.tum.in.tumcampus.Const;
 
 /**
  * Link Manager, handles database stuff, internal imports, external downloads
  * (icons)
  */
-public class LinkManager extends SQLiteOpenHelper {
+public class LinkManager {
 
 	/**
 	 * Database connection
@@ -38,10 +36,12 @@ public class LinkManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public LinkManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS links ("
+				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, "
+				+ "url VARCHAR, icon VARCHAR)");
 	}
 
 	/**
@@ -194,18 +194,5 @@ public class LinkManager extends SQLiteOpenHelper {
 	public void deleteFromDb(int id) {
 		db.execSQL("DELETE FROM links WHERE id = ?",
 				new String[] { String.valueOf(id) });
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS links ("
-				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, "
-				+ "url VARCHAR, icon VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

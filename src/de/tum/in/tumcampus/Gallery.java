@@ -53,7 +53,6 @@ public class Gallery extends Activity implements OnItemClickListener {
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(adapter);
 		gridview.setOnItemClickListener(this);
-		gm.close();
 
 		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
@@ -69,7 +68,6 @@ public class Gallery extends Activity implements OnItemClickListener {
 				GridView gridview2 = (GridView) findViewById(R.id.gridview2);
 				gridview2.setAdapter(adapter);
 				gridview2.setOnItemClickListener(Gallery.this);
-				gm.close();
 			}
 		});
 

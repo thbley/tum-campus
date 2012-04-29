@@ -114,7 +114,6 @@ public class ImportService extends IntentService {
 	public void updateDatabase() {
 		GalleryManager gm = new GalleryManager(this, Const.db);
 		gm.update();
-		gm.close();
 	}
 
 	/**
@@ -127,7 +126,6 @@ public class ImportService extends IntentService {
 		} catch (Exception e) {
 			message(e, nm.lastInfo);
 		}
-		nm.close();
 	}
 
 	/**
@@ -140,24 +138,21 @@ public class ImportService extends IntentService {
 		} catch (Exception e) {
 			message(e, lm.lastInfo);
 		}
-		lm.close();
 	}
 
 	/**
 	 * Import lectures and lecture items from internal directory
 	 */
 	public void importLectureItems() {
-		LectureItemManager lim = new LectureItemManager(this, Const.db);
+		LectureItemManager lim = new LectureItemManager(this);
 		try {
 			lim.importFromInternal();
 		} catch (Exception e) {
 			message(e, lim.lastInfo);
 		}
-		lim.close();
 
 		LectureManager lm = new LectureManager(this, Const.db);
 		lm.updateLectures();
-		lm.close();
 	}
 
 	/**
@@ -176,7 +171,6 @@ public class ImportService extends IntentService {
 				tm.replaceIntoDb(row[0]);
 			}
 		}
-		tm.close();
 	}
 
 	/**
@@ -195,7 +189,6 @@ public class ImportService extends IntentService {
 				nm.insertUpdateIntoDb(new Feed(row[0], row[1]));
 			}
 		}
-		nm.close();
 	}
 
 	/**
@@ -218,7 +211,6 @@ public class ImportService extends IntentService {
 						row[2], row[3], row[4], row[5], row[6], row[7], row[8]));
 			}
 		}
-		lm.close();
 	}
 
 	/**
@@ -230,7 +222,7 @@ public class ImportService extends IntentService {
 	 * </pre>
 	 */
 	public void importLectureItemsDefaults(boolean force) throws Exception {
-		LectureItemManager lim = new LectureItemManager(this, Const.db);
+		LectureItemManager lim = new LectureItemManager(this);
 		if (lim.empty() || force) {
 			List<String[]> rows = Utils.readCsv(
 					getAssets().open("lectures_holidays.csv"), "ISO-8859-1");
@@ -255,11 +247,9 @@ public class ImportService extends IntentService {
 						.getDate(row[1]), Utils.getDate(row[2]), row[3]));
 			}
 		}
-		lim.close();
 
 		LectureManager lm = new LectureManager(this, Const.db);
 		lm.updateLectures();
-		lm.close();
 	}
 
 	/**
@@ -277,7 +267,6 @@ public class ImportService extends IntentService {
 				lm.insertUpdateIntoDb(new Link(row[0], row[1]));
 			}
 		}
-		lm.close();
 	}
 
 	/**

@@ -10,13 +10,11 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import de.tum.in.tumcampus.Const;
 
 /**
  * Cafeteria Menu Manager, handles database stuff, external imports
  */
-public class CafeteriaMenuManager extends SQLiteOpenHelper {
+public class CafeteriaMenuManager {
 
 	/**
 	 * Database connection
@@ -37,10 +35,12 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public CafeteriaMenuManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
+				+ "id INTEGER, mensaId INTEGER KEY, date VARCHAR, typeShort VARCHAR, "
+				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
 	}
 
 	/**
@@ -230,18 +230,5 @@ public class CafeteriaMenuManager extends SQLiteOpenHelper {
 	 */
 	public void cleanupDb() {
 		db.execSQL("DELETE FROM cafeterias_menus WHERE date < date('now','-7 day')");
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias_menus ("
-				+ "id INTEGER, mensaId INTEGER KEY, date VARCHAR, typeShort VARCHAR, "
-				+ "typeLong VARCHAR, typeNr INTEGER, name VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

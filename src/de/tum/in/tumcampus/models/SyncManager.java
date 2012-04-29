@@ -1,15 +1,13 @@
 ﻿package de.tum.in.tumcampus.models;
 
-import de.tum.in.tumcampus.Const;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Sync Manager, tracks last successful syncs
  */
-public class SyncManager extends SQLiteOpenHelper {
+public class SyncManager {
 
 	/**
 	 * Database connection
@@ -25,10 +23,11 @@ public class SyncManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public SyncManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS syncs ("
+				+ "id VARCHAR PRIMARY KEY, lastSync VARCHAR)");
 	}
 
 	/**
@@ -103,17 +102,5 @@ public class SyncManager extends SQLiteOpenHelper {
 	 */
 	public void deleteFromDb() {
 		db.execSQL("DELETE FROM syncs");
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS syncs ("
-				+ "id VARCHAR PRIMARY KEY, lastSync VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

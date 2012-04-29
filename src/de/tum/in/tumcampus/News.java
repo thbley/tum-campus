@@ -57,7 +57,6 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
-		nm.close();
 
 		// reset new items counter
 		NewsManager.lastInserted = 0;

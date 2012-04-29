@@ -33,27 +33,23 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		LectureItem li2 = new LectureItem.Holiday("TH1",
 				Utils.getDate("2011-12-13"), "Some Holiday");
 
-		LectureItemManager lim = new LectureItemManager(getActivity(), Const.db);
+		LectureItemManager lim = new LectureItemManager(getActivity());
 		lim.replaceIntoDb(li);
 		lim.replaceIntoDb(li2);
-		lim.close();
 
 		LectureManager lm = new LectureManager(getActivity(), Const.db);
 		lm.updateLectures();
-		lm.close();
 	}
 
 	@Override
 	public void tearDown() throws Exception {
 		// remove test data
-		LectureItemManager lim = new LectureItemManager(getActivity(), Const.db);
+		LectureItemManager lim = new LectureItemManager(getActivity());
 		lim.deleteLectureFromDb("T1");
 		lim.deleteLectureFromDb("TH1");
-		lim.close();
 
 		LectureManager lm = new LectureManager(getActivity(), Const.db);
 		lm.deleteItemFromDb("T1");
-		lm.close();
 		super.tearDown();
 	}
 

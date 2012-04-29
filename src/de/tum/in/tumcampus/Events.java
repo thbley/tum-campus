@@ -56,7 +56,6 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
-		em.close();
 
 		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);
 		sd.setOnDrawerOpenListener(new OnDrawerOpenListener() {
@@ -74,7 +73,6 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 				ListView lv2 = (ListView) findViewById(R.id.listView2);
 				lv2.setAdapter(adapter);
 				lv2.setOnItemClickListener(Events.this);
-				em.close();
 			}
 		});
 

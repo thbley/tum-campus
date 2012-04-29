@@ -50,7 +50,6 @@ public class Links extends Activity implements OnItemClickListener,
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
-		lm.close();
 
 		Button save = (Button) view.findViewById(R.id.save);
 		save.setOnClickListener(this);
@@ -94,7 +93,6 @@ public class Links extends Activity implements OnItemClickListener,
 				LinkManager lm = new LinkManager(av.getContext(), Const.db);
 				lm.deleteFromDb(_id);
 				adapter.changeCursor(lm.getAllFromDb());
-				lm.close();
 			}
 		};
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -127,7 +125,6 @@ public class Links extends Activity implements OnItemClickListener,
 		}
 		// refresh link list
 		adapter.changeCursor(lm.getAllFromDb());
-		lm.close();
 
 		// clear form
 		editName.setText("");

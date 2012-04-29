@@ -103,7 +103,6 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		} else {
 			b.setVisibility(View.GONE);
 		}
-		fim.close();
 
 		// open import if required
 		String s = getIntent().getAction();
@@ -360,36 +359,28 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
 		cm.removeCache();
-		cm.close();
 
 		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
 		cmm.removeCache();
-		cmm.close();
 
 		FeedItemManager fim = new FeedItemManager(this, Const.db);
 		fim.removeCache();
-		fim.close();
 
 		EventManager em = new EventManager(this, Const.db);
 		em.removeCache();
-		em.close();
 
 		GalleryManager gm = new GalleryManager(this, Const.db);
 		gm.removeCache();
-		gm.close();
 
 		LinkManager lm = new LinkManager(this, Const.db);
 		lm.removeCache();
-		lm.close();
 
 		NewsManager nm = new NewsManager(this, Const.db);
 		nm.removeCache();
-		nm.close();
 
 		// table of all download events
 		SyncManager sm = new SyncManager(this, Const.db);
 		sm.deleteFromDb();
-		sm.close();
 	}
 
 	@Override
