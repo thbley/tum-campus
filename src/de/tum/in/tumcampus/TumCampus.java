@@ -507,7 +507,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 					syncing = false;
 				}
 				if (message.length() > 0) {
-					TextView tv = (TextView) findViewById(R.id.error);
+					TextView tv = (TextView) findViewById(R.id.status);
 					tv.setVisibility(View.VISIBLE);
 					tv.setText(message);
 				}
