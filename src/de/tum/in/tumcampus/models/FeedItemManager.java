@@ -9,14 +9,12 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Html;
-import de.tum.in.tumcampus.Const;
 
 /**
  * Feed item Manager, handles database stuff, external imports
  */
-public class FeedItemManager extends SQLiteOpenHelper {
+public class FeedItemManager {
 
 	/**
 	 * Database connection
@@ -42,10 +40,13 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public FeedItemManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS feeds_items ("
+				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, feedId INTEGER, "
+				+ "title VARCHAR, link VARCHAR, description VARCHAR, "
+				+ "date VARCHAR, image VARCHAR)");
 	}
 
 	/**
@@ -241,19 +242,5 @@ public class FeedItemManager extends SQLiteOpenHelper {
 	 */
 	public void cleanupDb() {
 		db.execSQL("DELETE FROM feeds_items WHERE date < date('now','-7 day')");
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS feeds_items ("
-				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, feedId INTEGER, "
-				+ "title VARCHAR, link VARCHAR, description VARCHAR, "
-				+ "date VARCHAR, image VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

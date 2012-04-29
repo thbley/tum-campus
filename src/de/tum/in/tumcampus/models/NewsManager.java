@@ -10,13 +10,11 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import de.tum.in.tumcampus.Const;
 
 /**
  * News Manager, handles database stuff, external imports
  */
-public class NewsManager extends SQLiteOpenHelper {
+public class NewsManager {
 
 	/**
 	 * Database connection
@@ -37,10 +35,12 @@ public class NewsManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public NewsManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS news ("
+				+ "id VARCHAR PRIMARY KEY, message VARCHAR, link VARCHAR, "
+				+ "image VARCHAR, date VARCHAR)");
 	}
 
 	/**
@@ -205,18 +205,5 @@ public class NewsManager extends SQLiteOpenHelper {
 	 */
 	public void cleanupDb() {
 		db.execSQL("DELETE FROM news WHERE date < date('now','-3 month')");
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS news ("
-				+ "id VARCHAR PRIMARY KEY, message VARCHAR, link VARCHAR, "
-				+ "image VARCHAR, date VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

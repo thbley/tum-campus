@@ -87,7 +87,6 @@ public class Hours extends Activity implements OnItemClickListener, ViewBinder {
 
 		ListView lv2 = (ListView) findViewById(R.id.listView2);
 		lv2.setAdapter(adapter);
-		lm.close();
 	}
 
 	/**

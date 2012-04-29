@@ -6,18 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.tum.in.tumcampus.Const;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Transport Manager, handles database stuff, internet connections
  */
-public class TransportManager extends SQLiteOpenHelper {
+public class TransportManager {
 
 	/**
 	 * Database connection
@@ -33,10 +30,11 @@ public class TransportManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public TransportManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS transports ("
+				+ "name VARCHAR PRIMARY KEY)");
 	}
 
 	/**
@@ -186,17 +184,5 @@ public class TransportManager extends SQLiteOpenHelper {
 	public void deleteFromDb(String name) {
 		db.execSQL("DELETE FROM transports WHERE name = ?",
 				new String[] { name });
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS transports ("
-				+ "name VARCHAR PRIMARY KEY)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

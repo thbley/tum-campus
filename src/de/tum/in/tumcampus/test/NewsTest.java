@@ -28,7 +28,6 @@ public class NewsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		NewsManager nm = new NewsManager(getActivity(), Const.db);
 		nm.replaceIntoDb(n);
-		nm.close();
 	}
 
 	@Override
@@ -36,7 +35,6 @@ public class NewsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		// remove test data
 		NewsManager nm = new NewsManager(getActivity(), Const.db);
 		nm.removeCache();
-		nm.close();
 		super.tearDown();
 	}
 

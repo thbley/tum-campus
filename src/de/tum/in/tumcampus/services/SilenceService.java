@@ -35,7 +35,7 @@ public class SilenceService extends IntentService {
 
 			AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-			LectureItemManager lim = new LectureItemManager(this, Const.db);
+			LectureItemManager lim = new LectureItemManager(this);
 			if (!lim.hasLectures()) {
 				// no lectures available
 				return;
@@ -54,8 +54,6 @@ public class SilenceService extends IntentService {
 				am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 				Utils.setSettingBool(this, Settings.silence_on, false);
 			}
-			c.close();
-			lim.close();
 
 			// wait unteil next check
 			synchronized (this) {

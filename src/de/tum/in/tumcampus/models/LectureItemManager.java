@@ -1,5 +1,7 @@
 package de.tum.in.tumcampus.models;
 
+import static de.tum.in.tumcampus.models.DatabaseManager.getDb;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
@@ -10,13 +12,11 @@ import java.util.Vector;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import de.tum.in.tumcampus.Const;
 
 /**
  * Lecture item Manager, handles database stuff, internal imports
  */
-public class LectureItemManager extends SQLiteOpenHelper {
+public class LectureItemManager {
 
 	/**
 	 * Database connection
@@ -37,15 +37,18 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	 * Constructor, open/create database, create table if necessary
 	 * 
 	 * <pre>
-	 * @param context Context
+	 * @param c Context
 	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public LectureItemManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+	public LectureItemManager(Context c) {
+		db = getDb(c);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS lectures_items ("
+				+ "id VARCHAR PRIMARY KEY, lectureId VARCHAR, start VARCHAR, "
+				+ "end VARCHAR, name VARCHAR, module VARCHAR, location VARCHAR, "
+				+ "note VARCHAR, url VARCHAR, seriesId VARCHAR)");
 	}
 
 	/**
@@ -291,19 +294,5 @@ public class LectureItemManager extends SQLiteOpenHelper {
 	public void deleteLectureFromDb(String id) {
 		db.execSQL("DELETE FROM lectures_items WHERE lectureId = ?",
 				new String[] { id });
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS lectures_items ("
-				+ "id VARCHAR PRIMARY KEY, lectureId VARCHAR, start VARCHAR, "
-				+ "end VARCHAR, name VARCHAR, module VARCHAR, location VARCHAR, "
-				+ "note VARCHAR, url VARCHAR, seriesId VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

@@ -3,13 +3,11 @@ package de.tum.in.tumcampus.models;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import de.tum.in.tumcampus.Const;
 
 /**
  * Location manager, handles database stuff
  */
-public class LocationManager extends SQLiteOpenHelper {
+public class LocationManager {
 
 	/**
 	 * Database connection
@@ -25,10 +23,13 @@ public class LocationManager extends SQLiteOpenHelper {
 	 * </pre>
 	 */
 	public LocationManager(Context context, String database) {
-		super(context, database, null, Const.dbVersion);
+		db = DatabaseManager.getDb(context);
 
-		db = getWritableDatabase();
-		onCreate(db);
+		// create table if needed
+		db.execSQL("CREATE TABLE IF NOT EXISTS locations ("
+				+ "id INTEGER PRIMARY KEY, category VARCHAR, "
+				+ "name VARCHAR, address VARCHAR, room VARCHAR, transport VARCHAR, "
+				+ "hours VARCHAR, remark VARCHAR, url VARCHAR)");
 	}
 
 	/**
@@ -104,19 +105,5 @@ public class LocationManager extends SQLiteOpenHelper {
 				new String[] { String.valueOf(l.id), l.category, l.name,
 						l.address, l.room, l.transport, l.hours, l.remark,
 						l.url });
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS locations ("
-				+ "id INTEGER PRIMARY KEY, category VARCHAR, "
-				+ "name VARCHAR, address VARCHAR, room VARCHAR, transport VARCHAR, "
-				+ "hours VARCHAR, remark VARCHAR, url VARCHAR)");
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		onCreate(db);
 	}
 }

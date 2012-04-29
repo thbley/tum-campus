@@ -75,7 +75,6 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
-		fm.close();
 
 		Button save = (Button) view.findViewById(R.id.save);
 		save.setOnClickListener(this);
@@ -143,7 +142,6 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 		ListView lv2 = (ListView) findViewById(R.id.listView2);
 		lv2.setAdapter(adapter);
 		lv2.setOnItemClickListener(this);
-		fim.close();
 	}
 
 	@Override
@@ -178,7 +176,6 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 				FeedManager fm = new FeedManager(av.getContext(), Const.db);
 				fm.deleteFromDb(_id);
 				adapter.changeCursor(fm.getAllFromDb());
-				fm.close();
 			}
 		};
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -229,7 +226,6 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder,
 
 		// refresh feed list
 		adapter.changeCursor(fm.getAllFromDb());
-		fm.close();
 
 		// clear form
 		editName.setText("");

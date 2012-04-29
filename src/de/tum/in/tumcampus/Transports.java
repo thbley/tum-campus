@@ -73,7 +73,6 @@ public class Transports extends Activity implements OnItemClickListener,
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
-		tm.close();
 
 		// search stations when edit box has 3 characters
 		final EditText et = (EditText) findViewById(R.id.search);
@@ -136,7 +135,6 @@ public class Transports extends Activity implements OnItemClickListener,
 		TransportManager tm = new TransportManager(this, Const.db);
 		tm.replaceIntoDb(location);
 		adapter.changeCursor(tm.getAllFromDb());
-		tm.close();
 
 		// load departures in new thread, show progress dialog during load
 		final ProgressDialog progress = ProgressDialog.show(this, "",
@@ -161,7 +159,6 @@ public class Transports extends Activity implements OnItemClickListener,
 					c2.addRow(new String[] { e.getMessage(), "", "0" });
 					c = c2;
 				}
-				tm.close();
 
 				// show departures in list
 				final Cursor c2 = c;
@@ -200,7 +197,6 @@ public class Transports extends Activity implements OnItemClickListener,
 				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
 						.getAdapter();
 				adapter.changeCursor(tm.getAllFromDb());
-				tm.close();
 			}
 		};
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -235,7 +231,6 @@ public class Transports extends Activity implements OnItemClickListener,
 				} catch (Exception e) {
 					message = e.getMessage();
 				}
-				tm.close();
 
 				final Cursor c2 = c;
 				final String message2 = message;

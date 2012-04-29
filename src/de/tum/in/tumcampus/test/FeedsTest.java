@@ -31,7 +31,6 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		FeedManager fm = new FeedManager(getActivity(), Const.db);
 		feedId = fm.insertUpdateIntoDb(new Feed("Test feed",
 				"http://www.test.de"));
-		fm.close();
 
 		// inject test data
 		FeedItem fi = new FeedItem(feedId, "Test message",
@@ -40,7 +39,6 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		FeedItemManager fim = new FeedItemManager(getActivity(), Const.db);
 		fim.insertIntoDb(fi);
-		fim.close();
 	}
 
 	@Override
@@ -48,11 +46,9 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		// remove test data
 		FeedItemManager fim = new FeedItemManager(getActivity(), Const.db);
 		fim.removeCache();
-		fim.close();
 
 		FeedManager fm = new FeedManager(getActivity(), Const.db);
 		fm.deleteFromDb(feedId);
-		fm.close();
 		super.tearDown();
 	}
 

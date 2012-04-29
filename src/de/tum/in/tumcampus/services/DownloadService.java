@@ -159,7 +159,6 @@ public class DownloadService extends IntentService {
 	public void downloadFeeds(boolean force) {
 		FeedManager nm = new FeedManager(this, Const.db);
 		List<Integer> list = nm.getAllIdsFromDb();
-		nm.close();
 
 		FeedItemManager nim = new FeedItemManager(this, Const.db);
 		for (int id : list) {
@@ -172,7 +171,6 @@ public class DownloadService extends IntentService {
 				message(e, nim.lastInfo);
 			}
 		}
-		nim.close();
 	}
 
 	/**
@@ -189,7 +187,6 @@ public class DownloadService extends IntentService {
 		} catch (Exception e) {
 			message(e, "");
 		}
-		nm.close();
 	}
 
 	/**
@@ -206,7 +203,6 @@ public class DownloadService extends IntentService {
 		} catch (Exception e) {
 			message(e, "");
 		}
-		em.close();
 	}
 
 	/**
@@ -223,7 +219,6 @@ public class DownloadService extends IntentService {
 		} catch (Exception e) {
 			message(e, "");
 		}
-		gm.close();
 	}
 
 	/**
@@ -242,8 +237,6 @@ public class DownloadService extends IntentService {
 		} catch (Exception e) {
 			message(e, "");
 		}
-		cmm.close();
-		cm.close();
 	}
 
 	/**
@@ -256,7 +249,6 @@ public class DownloadService extends IntentService {
 		} catch (Exception e) {
 			message(e, "");
 		}
-		lm.close();
 	}
 
 	/**
@@ -317,8 +309,7 @@ public class DownloadService extends IntentService {
 			Utils.getCacheDir("");
 
 			// init sync table
-			SyncManager sm = new SyncManager(this, Const.db);
-			sm.close();
+			new SyncManager(this, Const.db);
 		} catch (Exception e) {
 			message(e, "");
 

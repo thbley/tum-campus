@@ -1,5 +1,6 @@
 ﻿package de.tum.in.tumcampus;
 
+import de.tum.in.tumcampus.models.DatabaseManager;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -91,9 +92,7 @@ public class Debug extends Activity implements View.OnClickListener {
 	 */
 	public void debugSQL(String query) {
 		debugReset();
-		SQLiteDatabase db = SQLiteDatabase.openDatabase(
-				getDatabasePath(Const.db).toString(), null,
-				SQLiteDatabase.OPEN_READONLY);
+		SQLiteDatabase db = DatabaseManager.getDb(this);
 
 		// output raw data row-by-row
 		Cursor c = db.rawQuery(query, null);
@@ -106,7 +105,6 @@ public class Debug extends Activity implements View.OnClickListener {
 			debugStr(content.toString());
 		}
 		c.close();
-		db.close();
 	}
 
 	@Override

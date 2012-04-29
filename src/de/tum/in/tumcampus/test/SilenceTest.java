@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.test.ServiceTestCase;
-import de.tum.in.tumcampus.Const;
 import de.tum.in.tumcampus.models.LectureItem;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.services.SilenceService;
@@ -53,15 +52,13 @@ public class SilenceTest extends ServiceTestCase<SilenceService> {
 		LectureItem li = new LectureItem("S1", "S1", new Date(),
 				calendar.getTime(), "V1", "", "", "", "", "S1");
 
-		LectureItemManager lim = new LectureItemManager(getContext(), Const.db);
+		LectureItemManager lim = new LectureItemManager(getContext());
 		lim.replaceIntoDb(li);
-		lim.close();
 	}
 
 	private void _removeLecture() {
 		// remove test data
-		LectureItemManager lim = new LectureItemManager(getContext(), Const.db);
+		LectureItemManager lim = new LectureItemManager(getContext());
 		lim.deleteLectureFromDb("S1");
-		lim.close();
 	}
 }

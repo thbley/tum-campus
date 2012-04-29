@@ -112,7 +112,6 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		ListView lv2 = (ListView) findViewById(R.id.listView2);
 		lv2.setAdapter(adapter);
 		lv2.setOnItemClickListener(this);
-		cm.close();
 
 		// get all (distinct) dates having menus available
 		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
@@ -125,7 +124,6 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(this);
-		cmm.close();
 
 		// reset new items counter
 		CafeteriaMenuManager.lastInserted = 0;
@@ -165,7 +163,6 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			LocationManager lm = new LocationManager(this, Const.db);
 			tv = (TextView) footer.findViewById(android.R.id.text2);
 			tv.setText(lm.getHoursById(cafeteriaId));
-			lm.close();
 
 			// menus
 			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
@@ -196,7 +193,6 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 
 			ListView lv3 = (ListView) findViewById(R.id.listView3);
 			lv3.setAdapter(adapter);
-			cmm.close();
 		}
 	}
 
