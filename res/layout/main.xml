@@ -1,66 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="#0065BD" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#0065BD"
+    android:orientation="vertical" >
 
-	<FrameLayout android:layout_width="wrap_content"
-		android:layout_height="wrap_content">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
-		<ImageView android:src="@drawable/tum_logo" android:id="@+id/logo"
-			android:scaleType="fitXY" android:layout_width="wrap_content"
-			android:layout_height="86dip" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="86dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/tum_logo" />
 
-		<Button android:text="Aktualisieren" android:id="@+id/refresh"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_gravity="right|center_vertical" android:width="116dip"
-			android:layout_marginTop="2.5dip" android:layout_marginRight="3dip"
-			android:textColor="#2546A4" />
-	</FrameLayout>
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="3dip"
+            android:layout_marginTop="2.5dip"
+            android:text="Aktualisieren"
+            android:textColor="#2546A4"
+            android:width="116dip" />
+    </FrameLayout>
 
-	<FrameLayout android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
-		<LinearLayout android:orientation="vertical"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:layout_marginBottom="33dip">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="33dip"
+            android:orientation="vertical" >
 
-			<TextView android:layout_width="fill_parent" android:id="@+id/hello"
-				android:layout_height="wrap_content" android:text="Hello World, TUMCampus!"
-				android:textColor="#FFFFFF" android:paddingLeft="4dip"
-				android:paddingRight="4dip" android:scrollbars="vertical" />
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dip"
+                android:paddingRight="4dip"
+                android:scrollbars="vertical"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:visibility="gone" />
 
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="0.5dip" android:background="#FFFFFF" />
+            <Button
+                android:id="@+id/initial"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:text="Start: Daten initial herunterladen!"
+                android:textColor="#2546A4"
+                android:visibility="gone" />
 
-			<Button android:text="Start: Daten initial herunterladen!"
-				android:id="@+id/initial" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:textColor="#2546A4"
-				android:layout_marginTop="5dip" android:visibility="gone" />
+            <ListView
+                android:id="@+id/menu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
 
-			<ListView android:layout_height="wrap_content" android:id="@+id/menu"
-				android:layout_width="fill_parent" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dip"
+                android:background="#000000" />
 
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="0.5dip" android:background="#000000" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#FFFFFF" />
+        </LinearLayout>
 
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:background="#FFFFFF" />
-		</LinearLayout>
+        <SlidingDrawer
+            android:id="@+id/slider"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:content="@+id/slide"
+            android:handle="@+id/handle" >
 
-		<SlidingDrawer android:layout_width="fill_parent"
-			android:id="@+id/slider" android:layout_height="fill_parent"
-			android:handle="@+id/handle" android:content="@+id/slide">
+            <Button
+                android:id="@+id/handle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#0065BD"
+                android:height="33dip"
+                android:text="Daten importieren"
+                android:textColor="#FFFFFF" />
 
-			<Button android:layout_height="wrap_content"
-				android:background="#0065BD" android:textColor="#FFFFFF"
-				android:layout_width="fill_parent" android:text="Daten importieren"
-				android:id="@+id/handle" android:height="33dip" />
+            <ScrollView
+                android:id="@+id/slide"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#F1FFFFFF" >
 
-			<ScrollView android:id="@+id/slide" android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:background="#F1FFFFFF">
-				<include layout="@layout/main_import" />
-			</ScrollView>
+                <include layout="@layout/main_import" />
+            </ScrollView>
+        </SlidingDrawer>
+    </FrameLayout>
 
-		</SlidingDrawer>
-	</FrameLayout>
 </LinearLayout>
