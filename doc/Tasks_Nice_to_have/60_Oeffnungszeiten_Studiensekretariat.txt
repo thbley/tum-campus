@@ -1,1 +1,1 @@
-Wecker jeden Tag automatisch x Minuten vor der ersten Vorlesung stellen.
+Öffnungszeiten für Studiensekretariat recherchieren
