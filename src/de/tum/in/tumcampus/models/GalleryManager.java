@@ -36,8 +36,7 @@ public class GalleryManager {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS gallery ("
-				+ "id VARCHAR PRIMARY KEY, name VARCHAR, image VARCHAR, "
+		db.execSQL("CREATE TABLE IF NOT EXISTS gallery (id VARCHAR PRIMARY KEY, name VARCHAR, image VARCHAR, "
 				+ "position INTEGER, archive VARCHAR(1))");
 	}
 
@@ -51,7 +50,9 @@ public class GalleryManager {
 	/**
 	 * Download Gallery from external interface (JSON)
 	 * 
-m	 * <pre>
+	 * m *
+	 * 
+	 * <pre>
 	 * @param force True to force download over normal sync period, else false
 	 * @throws Exception
 	 * </pre>
@@ -68,11 +69,8 @@ m	 * <pre>
 				+ "fields=id,name,source,position&limit=25&access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 
-		JSONArray jsonArray = Utils
-				.downloadJson(url + URLEncoder.encode(token)).getJSONArray(
-						"data");
-		JSONArray jsonArrayArchive = Utils.downloadJson(
-				urlArchive + URLEncoder.encode(token)).getJSONArray("data");
+		JSONArray jsonArray = Utils.downloadJson(url + URLEncoder.encode(token)).getJSONArray("data");
+		JSONArray jsonArrayArchive = Utils.downloadJson(urlArchive + URLEncoder.encode(token)).getJSONArray("data");
 
 		int count = Utils.dbGetTableCount(db, "gallery");
 
@@ -100,9 +98,7 @@ m	 * <pre>
 	 * @return Database cursor (_id, id)
 	 */
 	public Cursor getFromDb() {
-		return db.rawQuery(
-				"SELECT image as _id, id FROM gallery WHERE archive='0' "
-						+ "ORDER BY position LIMIT 50", null);
+		return db.rawQuery("SELECT image as _id, id FROM gallery WHERE archive='0' ORDER BY position LIMIT 50", null);
 	}
 
 	/**
@@ -111,9 +107,7 @@ m	 * <pre>
 	 * @return Database cursor (_id, id)
 	 */
 	public Cursor getFromDbArchive() {
-		return db.rawQuery(
-				"SELECT image as _id, id FROM gallery WHERE archive='1' "
-						+ "ORDER BY position LIMIT 50", null);
+		return db.rawQuery("SELECT image as _id, id FROM gallery WHERE archive='1' ORDER BY position LIMIT 50", null);
 	}
 
 	/**
@@ -125,8 +119,7 @@ m	 * <pre>
 	 * </pre>
 	 */
 	public Cursor getDetailsFromDb(String id) {
-		return db.rawQuery("SELECT * FROM gallery WHERE id=?",
-				new String[] { id });
+		return db.rawQuery("SELECT * FROM gallery WHERE id=?", new String[] { id });
 	}
 
 	/**
@@ -154,8 +147,7 @@ m	 * <pre>
 
 		Utils.downloadFileThread(json.getString("source"), target);
 
-		return new Gallery(id, json.getString("name"), target,
-				json.getString("position"), json.has("archive"));
+		return new Gallery(id, json.getString("name"), target, json.getString("position"), json.has("archive"));
 	}
 
 	/**
@@ -173,9 +165,8 @@ m	 * <pre>
 		if (g.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
-		db.execSQL("REPLACE INTO gallery (id, name, image, position, archive) "
-				+ "VALUES (?, ?, ?, ?, ?)", new String[] { g.id, g.name,
-				g.image, g.position, g.archive ? "1" : "0" });
+		db.execSQL("REPLACE INTO gallery (id, name, image, position, archive) VALUES (?, ?, ?, ?, ?)", new String[] {
+				g.id, g.name, g.image, g.position, g.archive ? "1" : "0" });
 	}
 
 	/**

@@ -24,7 +24,7 @@ public class Gallery {
 	 * Position in gallery
 	 */
 	String position;
-	
+
 	/**
 	 * Image is archived
 	 */
@@ -52,7 +52,6 @@ public class Gallery {
 
 	@Override
 	public String toString() {
-		return "id=" + id + " name=" + name + " image=" + image + " position="
-				+ position;
+		return "id=" + id + " name=" + name + " image=" + image + " position=" + position;
 	}
 }

@@ -22,14 +22,12 @@ public class Plans extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.plans);
 
-		String[] plans = new String[] { "Campus Garching", "Campus Klinikum",
-				"Campus Olympiapark", "Campus Olymp. Hallenplan",
-				"Campus Stammgelände", "Campus Weihenstephan",
-				"MVV-Schnellbahnnetz", "MVV-Nachtlinien" };
+		String[] plans = new String[] { "Campus Garching", "Campus Klinikum", "Campus Olympiapark",
+				"Campus Olymp. Hallenplan", "Campus Stammgelände", "Campus Weihenstephan", "MVV-Schnellbahnnetz",
+				"MVV-Nachtlinien" };
 
 		ListView lv = (ListView) findViewById(R.id.listView);
-		lv.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, plans));
+		lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, plans));
 		lv.setOnItemClickListener(this);
 
 		if (position == -1) {
@@ -63,6 +61,7 @@ public class Plans extends Activity implements OnItemClickListener {
 		// draw image from assets directory in webview
 		String file = "";
 		int width = getWindowManager().getDefaultDisplay().getWidth();
+
 		if (position == 0) {
 			file = "plans/CampusGarching.jpg";
 			setTitle("Plan: Campus Garching");
@@ -104,10 +103,8 @@ public class Plans extends Activity implements OnItemClickListener {
 			browser.setInitialScale(100 * width / 1480);
 		}
 
-		String data = "<body style='margin:0px;'><img src='" + file + "'/>"
-				+ "</body>";
-		browser.loadDataWithBaseURL("file:///android_asset/", data,
-				"text/html", "UTF-8", null);
+		String data = "<body style='margin:0px;'><img src='" + file + "'/></body>";
+		browser.loadDataWithBaseURL("file:///android_asset/", data, "text/html", "UTF-8", null);
 		browser.forceLayout();
 
 		SlidingDrawer sd = (SlidingDrawer) findViewById(R.id.slider);

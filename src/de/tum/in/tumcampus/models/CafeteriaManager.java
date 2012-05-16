@@ -33,8 +33,7 @@ public class CafeteriaManager {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias ("
-				+ "id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS cafeterias (id INTEGER PRIMARY KEY, name VARCHAR, address VARCHAR)");
 	}
 
 	/**
@@ -54,8 +53,7 @@ public class CafeteriaManager {
 
 		String url = "http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php";
 
-		JSONArray jsonArray = Utils.downloadJson(url).getJSONArray(
-				"mensa_mensen");
+		JSONArray jsonArray = Utils.downloadJson(url).getJSONArray("mensa_mensen");
 		removeCache();
 
 		// write cafeterias into database, transaction = speedup
@@ -96,17 +94,14 @@ public class CafeteriaManager {
 	 * </pre>
 	 */
 	public Cursor getAllFromDb(String filter) {
-		return db.rawQuery("SELECT name, address, id as _id "
-				+ "FROM cafeterias WHERE name LIKE ? OR address LIKE ? "
-				+ "ORDER BY address like '%Garching%' DESC, name",
-				new String[] { filter, filter });
+		return db.rawQuery("SELECT name, address, id as _id FROM cafeterias WHERE name LIKE ? OR address LIKE ? "
+				+ "ORDER BY address like '%Garching%' DESC, name", new String[] { filter, filter });
 	}
 
 	/**
 	 * Get Cafeteria object by JSON object
 	 * 
-	 * Example JSON: e.g.
-	 * {"id":"411","name":"Mensa Leopoldstra\u00dfe","anschrift"
+	 * Example JSON: e.g. {"id":"411","name":"Mensa Leopoldstra\u00dfe","anschrift"
 	 * :"Leopoldstra\u00dfe 13a, M\u00fcnchen"}
 	 * 
 	 * <pre>
@@ -117,8 +112,7 @@ public class CafeteriaManager {
 	 */
 	public static Cafeteria getFromJson(JSONObject json) throws JSONException {
 
-		return new Cafeteria(json.getInt("id"), json.getString("name"),
-				json.getString("anschrift"));
+		return new Cafeteria(json.getInt("id"), json.getString("name"), json.getString("anschrift"));
 	}
 
 	/**
@@ -139,9 +133,8 @@ public class CafeteriaManager {
 			throw new Exception("Invalid name.");
 		}
 
-		db.execSQL(
-				"REPLACE INTO cafeterias (id, name, address) VALUES (?, ?, ?)",
-				new String[] { String.valueOf(c.id), c.name, c.address });
+		db.execSQL("REPLACE INTO cafeterias (id, name, address) VALUES (?, ?, ?)", new String[] { String.valueOf(c.id),
+				c.name, c.address });
 	}
 
 	/**

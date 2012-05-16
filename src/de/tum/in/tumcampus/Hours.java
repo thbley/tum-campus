@@ -22,13 +22,11 @@ import de.tum.in.tumcampus.models.LocationManager;
  */
 public class Hours extends Activity implements OnItemClickListener, ViewBinder {
 
-	private String[] names = new String[] { "Bibliotheken", "Information",
-			"Mensa Garching", "Mensa Großhadern", "Mensa Innenstadt",
-			"Mensa Pasing", "Mensa Weihenstephan" };
+	private String[] names = new String[] { "Bibliotheken", "Information", "Mensa Garching", "Mensa Großhadern",
+			"Mensa Innenstadt", "Mensa Pasing", "Mensa Weihenstephan" };
 
-	private String[] categories = new String[] { "library", "info",
-			"cafeteria_gar", "cafeteria_grh", "cafeteria", "cafeteria_pas",
-			"cafeteria_wst" };
+	private String[] categories = new String[] { "library", "info", "cafeteria_gar", "cafeteria_grh", "cafeteria",
+			"cafeteria_pas", "cafeteria_wst" };
 
 	private static int position = -1;
 
@@ -39,8 +37,7 @@ public class Hours extends Activity implements OnItemClickListener, ViewBinder {
 
 		// show all categories
 		ListView lv = (ListView) findViewById(R.id.listView);
-		lv.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, names));
+		lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names));
 		lv.setOnItemClickListener(this);
 
 		if (position == -1) {
@@ -73,9 +70,8 @@ public class Hours extends Activity implements OnItemClickListener, ViewBinder {
 		LocationManager lm = new LocationManager(this, Const.db);
 		Cursor c = lm.getAllHoursFromDb(categories[position]);
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.two_line_list_item, c, c.getColumnNames(),
-				new int[] { android.R.id.text1, android.R.id.text2 }) {
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, c,
+				c.getColumnNames(), new int[] { android.R.id.text1, android.R.id.text2 }) {
 
 			@Override
 			public boolean isEnabled(int position) {

@@ -55,8 +55,7 @@ public class CafeteriaMenu {
 	 * @param name Menu name
 	 * </pre>
 	 */
-	public CafeteriaMenu(int id, int cafeteriaId, Date date, String typeShort,
-			String typeLong, int typeNr, String name) {
+	public CafeteriaMenu(int id, int cafeteriaId, Date date, String typeShort, String typeLong, int typeNr, String name) {
 
 		this.id = id;
 		this.cafeteriaId = cafeteriaId;
@@ -69,9 +68,8 @@ public class CafeteriaMenu {
 
 	@Override
 	public String toString() {
-		return "id=" + this.id + " cafeteriaId=" + this.cafeteriaId + " date="
-				+ Utils.getDateString(this.date) + " typeShort="
-				+ this.typeShort + " typeLong=" + this.typeLong + " typeNr="
-				+ this.typeNr + " name=" + this.name;
+		return "id=" + this.id + " cafeteriaId=" + this.cafeteriaId + " date=" + Utils.getDateString(this.date)
+				+ " typeShort=" + this.typeShort + " typeLong=" + this.typeLong + " typeNr=" + this.typeNr + " name="
+				+ this.name;
 	}
 }

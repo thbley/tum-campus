@@ -45,8 +45,7 @@ public class FeedItemManager {
 		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS feeds_items ("
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, feedId INTEGER, "
-				+ "title VARCHAR, link VARCHAR, description VARCHAR, "
-				+ "date VARCHAR, image VARCHAR)");
+				+ "title VARCHAR, link VARCHAR, description VARCHAR, date VARCHAR, image VARCHAR)");
 	}
 
 	/**
@@ -59,8 +58,7 @@ public class FeedItemManager {
 	 * @throws Exception
 	 * </pre>
 	 */
-	public void downloadFromExternal(int id, boolean retry, boolean force)
-			throws Exception {
+	public void downloadFromExternal(int id, boolean retry, boolean force) throws Exception {
 		String syncId = "feeditem" + id;
 		if (!force && !SyncManager.needSync(db, syncId, 900)) {
 			return;
@@ -69,27 +67,23 @@ public class FeedItemManager {
 		cleanupDb();
 		int count = Utils.dbGetTableCount(db, "feeds_items");
 
-		Cursor feed = db.rawQuery("SELECT feedUrl FROM feeds WHERE id = ?",
-				new String[] { String.valueOf(id) });
+		Cursor feed = db.rawQuery("SELECT feedUrl FROM feeds WHERE id = ?", new String[] { String.valueOf(id) });
 		feed.moveToNext();
 		String feedUrl = feed.getString(0);
 		feed.close();
 
 		lastInfo = feedUrl;
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
-		String query = URLEncoder
-				.encode("SELECT title, link, description, pubDate, enclosure.url "
-						+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
+		String query = URLEncoder.encode("SELECT title, link, description, pubDate, enclosure.url "
+				+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
 
-		JSONObject jsonObj = Utils.downloadJson(baseUrl + query).getJSONObject(
-				"query");
+		JSONObject jsonObj = Utils.downloadJson(baseUrl + query).getJSONObject("query");
 
 		if (jsonObj.isNull("results") && !retry) {
 			String url = Utils.getRssLinkFromUrl(feedUrl);
 
 			if (!url.equals(feedUrl)) {
-				db.execSQL("UPDATE feeds SET feedUrl=? WHERE id = ?",
-						new String[] { url, String.valueOf(id) });
+				db.execSQL("UPDATE feeds SET feedUrl=? WHERE id = ?", new String[] { url, String.valueOf(id) });
 				downloadFromExternal(id, true, force);
 				return;
 			}
@@ -128,8 +122,7 @@ public class FeedItemManager {
 	 */
 	public Cursor getAllFromDb(String feedId) {
 		return db.rawQuery("SELECT image, title, description, link, id as _id "
-				+ "FROM feeds_items WHERE feedId = ? ORDER BY date DESC",
-				new String[] { feedId });
+				+ "FROM feeds_items WHERE feedId = ? ORDER BY date DESC", new String[] { feedId });
 	}
 
 	/**
@@ -150,11 +143,9 @@ public class FeedItemManager {
 	/**
 	 * Convert JSON to FeedItem and download feed item iamge
 	 * 
-	 * Example JSON: e.g. { "title":
-	 * "US-Truppenabzug aus Afghanistan: \"Verlogen und verkorkst\"",
-	 * "description": "..." , "link":
-	 * "http://www.n-tv.de/politik/pressestimmen/Verlogen-und-verkorkst-article3650731.html"
-	 * , "pubDate": "Thu, 23 Jun 2011 20:06:53 GMT", "enclosure": { "url":
+	 * Example JSON: e.g. { "title": "US-Truppenabzug aus Afghanistan: \"Verlogen und verkorkst\"", "description": "..."
+	 * , "link": "http://www.n-tv.de/politik/pressestimmen/Verlogen-und-verkorkst-article3650731.html" , "pubDate":
+	 * "Thu, 23 Jun 2011 20:06:53 GMT", "enclosure": { "url":
 	 * "http://www.n-tv.de/img/30/304801/Img_4_3_220_Pressestimmen.jpg" }
 	 * 
 	 * <pre>
@@ -164,16 +155,13 @@ public class FeedItemManager {
 	 * @throws Exception
 	 * </pre>
 	 */
-	public static FeedItem getFromJson(int feedId, JSONObject json)
-			throws Exception {
+	public static FeedItem getFromJson(int feedId, JSONObject json) throws Exception {
 
 		String target = "";
 		if (json.has("enclosure")) {
-			final String enclosure = json.getJSONObject("enclosure").getString(
-					"url");
+			final String enclosure = json.getJSONObject("enclosure").getString("url");
 
-			target = Utils.getCacheDir("rss/cache") + Utils.md5(enclosure)
-					+ ".jpg";
+			target = Utils.getCacheDir("rss/cache") + Utils.md5(enclosure) + ".jpg";
 			Utils.downloadFileThread(enclosure, target);
 		}
 		Date pubDate = new Date();
@@ -183,12 +171,9 @@ public class FeedItemManager {
 		String description = "";
 		if (json.has("description") && !json.isNull("description")) {
 			// decode HTML entites, remove links, images, etc.
-			description = Html.fromHtml(
-					json.getString("description").replaceAll("\\<.*?\\>", ""))
-					.toString();
+			description = Html.fromHtml(json.getString("description").replaceAll("\\<.*?\\>", "")).toString();
 		}
-		return new FeedItem(feedId, json.getString("title")
-				.replaceAll("\n", ""), json.getString("link"), description,
+		return new FeedItem(feedId, json.getString("title").replaceAll("\n", ""), json.getString("link"), description,
 				pubDate, target);
 	}
 
@@ -210,11 +195,9 @@ public class FeedItemManager {
 		if (n.title.length() == 0) {
 			throw new Exception("Invalid title.");
 		}
-		db.execSQL(
-				"INSERT INTO feeds_items (feedId, title, link, description, "
-						+ "date, image) VALUES (?, ?, ?, ?, ?, ?)",
-				new String[] { String.valueOf(n.feedId), n.title, n.link,
-						n.description, Utils.getDateTimeString(n.date), n.image });
+		db.execSQL("INSERT INTO feeds_items (feedId, title, link, description, "
+				+ "date, image) VALUES (?, ?, ?, ?, ?, ?)", new String[] { String.valueOf(n.feedId), n.title, n.link,
+				n.description, Utils.getDateTimeString(n.date), n.image });
 	}
 
 	/**
@@ -233,8 +216,7 @@ public class FeedItemManager {
 	 * </pre>
 	 */
 	public void deleteFromDb(int feedId) {
-		db.execSQL("DELETE FROM feeds_items WHERE feedId = ?",
-				new String[] { String.valueOf(feedId) });
+		db.execSQL("DELETE FROM feeds_items WHERE feedId = ?", new String[] { String.valueOf(feedId) });
 	}
 
 	/**

@@ -41,9 +41,8 @@ public class EventsDetails extends Activity {
 		 * Link
 		 * </pre>
 		 */
-		String infos = weekDays[c.getInt(c.getColumnIndex("weekday"))];
-		infos += ", " + c.getString(c.getColumnIndex("start_de")) + " - "
-				+ c.getString(c.getColumnIndex("end_de")) + "\n";
+		String infos = weekDays[c.getInt(c.getColumnIndex("weekday"))] + ", ";
+		infos += c.getString(c.getColumnIndex("start_de")) + " - " + c.getString(c.getColumnIndex("end_de")) + "\n";
 		infos += c.getString(c.getColumnIndex("location")) + "\n";
 		infos += c.getString(c.getColumnIndex("link"));
 
@@ -55,7 +54,6 @@ public class EventsDetails extends Activity {
 
 		ImageView iv = (ImageView) findViewById(R.id.image);
 		Bitmap b = BitmapFactory.decodeFile(image);
-		iv.setImageBitmap(Bitmap.createScaledBitmap(b, 360,
-				(b.getHeight() * 360) / b.getWidth(), true));
+		iv.setImageBitmap(Bitmap.createScaledBitmap(b, 360, (b.getHeight() * 360) / b.getWidth(), true));
 	}
 }

@@ -81,8 +81,7 @@ public class LectureItemManager {
 	/**
 	 * Import lecture items from a CSV file
 	 * 
-	 * Header format: TERMIN_TYP, TITEL, ORT, LV_NUMMER, DATUM, VON, BIS,
-	 * WOCHENTAG, ANMERKUNG, URL
+	 * Header format: TERMIN_TYP, TITEL, ORT, LV_NUMMER, DATUM, VON, BIS, WOCHENTAG, ANMERKUNG, URL
 	 * 
 	 * <pre>
 	 * @param file CSV File
@@ -91,8 +90,7 @@ public class LectureItemManager {
 	 * </pre>
 	 */
 	public void importCsv(File file, String encoding) throws Exception {
-		List<String[]> list = Utils
-				.readCsv(new FileInputStream(file), encoding);
+		List<String[]> list = Utils.readCsv(new FileInputStream(file), encoding);
 
 		if (list.size() == 0) {
 			return;
@@ -104,8 +102,7 @@ public class LectureItemManager {
 
 			// skip canceled events on import
 			int terminTypId = headers.indexOf("TERMIN_TYP");
-			if (terminTypId != -1 && row.length > terminTypId
-					&& row[terminTypId].contains("abgesagt")) {
+			if (terminTypId != -1 && row.length > terminTypId && row[terminTypId].contains("abgesagt")) {
 				continue;
 			}
 
@@ -115,8 +112,7 @@ public class LectureItemManager {
 
 			String module = "";
 			if (name.contains("(") && name.contains(")")) {
-				module = name.substring(name.indexOf("(") + 1,
-						name.indexOf(")"));
+				module = name.substring(name.indexOf("(") + 1, name.indexOf(")"));
 				name = name.substring(0, name.indexOf("(")).trim();
 			}
 
@@ -127,11 +123,9 @@ public class LectureItemManager {
 			Date start = Utils.getDateTimeDe(datum + " " + von);
 			Date end = Utils.getDateTimeDe(datum + " " + bis);
 
-			String id = row[headers.indexOf("LV_NUMMER")] + "_"
-					+ String.valueOf(start.getTime());
+			String id = row[headers.indexOf("LV_NUMMER")] + "_" + String.valueOf(start.getTime());
 
-			String seriesId = row[headers.indexOf("LV_NUMMER")] + "_"
-					+ row[headers.indexOf("WOCHENTAG")] + "_"
+			String seriesId = row[headers.indexOf("LV_NUMMER")] + "_" + row[headers.indexOf("WOCHENTAG")] + "_"
 					+ row[headers.indexOf("VON")];
 
 			String note = "";
@@ -148,8 +142,7 @@ public class LectureItemManager {
 				lectureId = Utils.md5(name);
 			}
 
-			replaceIntoDb(new LectureItem(id, lectureId, start, end, name,
-					module, location, note, url, seriesId));
+			replaceIntoDb(new LectureItem(id, lectureId, start, end, name, module, location, note, url, seriesId));
 		}
 	}
 
@@ -160,30 +153,21 @@ public class LectureItemManager {
 	 */
 	public Cursor getCurrentFromDb() {
 		return db.rawQuery("SELECT name, location, id as _id "
-				+ "FROM lectures_items WHERE datetime('now', 'localtime') "
-				+ "BETWEEN start AND end AND "
+				+ "FROM lectures_items WHERE datetime('now', 'localtime') BETWEEN start AND end AND "
 				+ "lectureId NOT IN ('holiday', 'vacation') LIMIT 1", null);
 	}
 
 	/**
 	 * Get all upcoming and unfinished lecture items from the database
 	 * 
-	 * @return Database cursor (name, note, location, weekday, start_de, end_de,
-	 *         start_dt, end_dt, url, lectureId, _id)
+	 * @return Database cursor (name, note, location, weekday, start_de, end_de, start_dt, end_dt, url, lectureId, _id)
 	 */
 	public Cursor getRecentFromDb() {
-		return db
-				.rawQuery(
-						"SELECT name, note, location, "
-								+ "strftime('%w', start) as weekday, "
-								+ "strftime('%H:%M', start) as start_de, "
-								+ "strftime('%H:%M', end) as end_de, "
-								+ "strftime('%d.%m.%Y', start) as start_dt, "
-								+ "strftime('%d.%m.%Y', end) as end_dt, "
-								+ "url, lectureId, id as _id "
-								+ "FROM lectures_items WHERE end > datetime('now', 'localtime') AND "
-								+ "start < date('now', '+7 day') ORDER BY start",
-						null);
+		return db.rawQuery("SELECT name, note, location, strftime('%w', start) as weekday, "
+				+ "strftime('%H:%M', start) as start_de, strftime('%H:%M', end) as end_de, "
+				+ "strftime('%d.%m.%Y', start) as start_dt, strftime('%d.%m.%Y', end) as end_dt, "
+				+ "url, lectureId, id as _id FROM lectures_items WHERE end > datetime('now', 'localtime') AND "
+				+ "start < date('now', '+7 day') ORDER BY start", null);
 	}
 
 	/**
@@ -196,14 +180,10 @@ public class LectureItemManager {
 	 * </pre>
 	 */
 	public Cursor getAllFromDb(String lectureId) {
-		return db.rawQuery("SELECT name, note, location, "
-				+ "strftime('%w', start) as weekday, "
-				+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
-				+ "strftime('%H:%M', end) as end_de, "
-				+ "strftime('%d.%m.%Y', start) as start_dt, "
-				+ "strftime('%d.%m.%Y', end) as end_dt, "
-				+ "url, lectureId, id as _id "
-				+ "FROM lectures_items WHERE lectureId = ? ORDER BY start",
+		return db.rawQuery("SELECT name, note, location, strftime('%w', start) as weekday, "
+				+ "strftime('%d.%m.%Y %H:%M', start) as start_de, strftime('%H:%M', end) as end_de, "
+				+ "strftime('%d.%m.%Y', start) as start_dt, strftime('%d.%m.%Y', end) as end_dt, "
+				+ "url, lectureId, id as _id FROM lectures_items WHERE lectureId = ? ORDER BY start",
 				new String[] { lectureId });
 	}
 
@@ -262,14 +242,10 @@ public class LectureItemManager {
 			throw new Exception("Invalid id.");
 		}
 
-		db.execSQL(
-				"REPLACE INTO lectures_items (id, lectureId, start, end, "
-						+ "name, module, location, note, url, seriesId) VALUES "
-						+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-				new String[] { l.id, l.lectureId,
-						Utils.getDateTimeString(l.start),
-						Utils.getDateTimeString(l.end), l.name, l.module,
-						l.location, l.note, l.url, l.seriesId });
+		db.execSQL("REPLACE INTO lectures_items (id, lectureId, start, end, "
+				+ "name, module, location, note, url, seriesId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new String[] {
+				l.id, l.lectureId, Utils.getDateTimeString(l.start), Utils.getDateTimeString(l.end), l.name, l.module,
+				l.location, l.note, l.url, l.seriesId });
 	}
 
 	/**
@@ -280,8 +256,7 @@ public class LectureItemManager {
 	 * </pre>
 	 */
 	public void deleteItemFromDb(String id) {
-		db.execSQL("DELETE FROM lectures_items WHERE id = ?",
-				new String[] { id });
+		db.execSQL("DELETE FROM lectures_items WHERE id = ?", new String[] { id });
 	}
 
 	/**
@@ -292,7 +267,6 @@ public class LectureItemManager {
 	 * </pre>
 	 */
 	public void deleteLectureFromDb(String id) {
-		db.execSQL("DELETE FROM lectures_items WHERE lectureId = ?",
-				new String[] { id });
+		db.execSQL("DELETE FROM lectures_items WHERE lectureId = ?", new String[] { id });
 	}
 }

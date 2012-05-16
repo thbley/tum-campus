@@ -25,13 +25,10 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo = new Solo(getInstrumentation(), getActivity());
 
 		// inject test data
-		LectureItem li = new LectureItem("T1", "T1",
-				Utils.getDateTime("2011-05-04T14:00:00"),
-				Utils.getDateTime("2011-05-04T16:00:00"), "CSCW 2", "IN2119",
-				"01.07.023", "", "", "T1");
+		LectureItem li = new LectureItem("T1", "T1", Utils.getDateTime("2011-05-04T14:00:00"),
+				Utils.getDateTime("2011-05-04T16:00:00"), "CSCW 2", "IN2119", "01.07.023", "", "", "T1");
 
-		LectureItem li2 = new LectureItem.Holiday("TH1",
-				Utils.getDate("2011-12-13"), "Some Holiday");
+		LectureItem li2 = new LectureItem.Holiday("TH1", Utils.getDate("2011-12-13"), "Some Holiday");
 
 		LectureItemManager lim = new LectureItemManager(getActivity());
 		lim.replaceIntoDb(li);

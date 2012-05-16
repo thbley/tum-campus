@@ -80,8 +80,7 @@ public class FeedManager {
 	 * @return Database cursor (name, feedUrl, _id)
 	 */
 	public Cursor getAllFromDb() {
-		return db.rawQuery("SELECT name, feedUrl, id as _id "
-				+ "FROM feeds ORDER BY name", null);
+		return db.rawQuery("SELECT name, feedUrl, id as _id FROM feeds ORDER BY name", null);
 	}
 
 	/**
@@ -137,16 +136,14 @@ public class FeedManager {
 			throw new Exception("Invalid feedUrl.");
 		}
 
-		Cursor c = db.rawQuery("SELECT id FROM feeds WHERE name = ?",
-				new String[] { f.name });
+		Cursor c = db.rawQuery("SELECT id FROM feeds WHERE name = ?", new String[] { f.name });
 
 		if (c.moveToNext()) {
 			db.execSQL("UPDATE feeds SET name=?, feedUrl=? WHERE id=?",
 					new String[] { f.name, f.feedUrl, c.getString(0) });
 			return c.getInt(0);
 		} else {
-			db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)",
-					new String[] { f.name, f.feedUrl });
+			db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)", new String[] { f.name, f.feedUrl });
 
 			c = db.rawQuery("SELECT last_insert_rowid()", null);
 			c.moveToNext();
@@ -162,7 +159,6 @@ public class FeedManager {
 	 * </pre>
 	 */
 	public void deleteFromDb(int id) {
-		db.execSQL("DELETE FROM feeds WHERE id = ?",
-				new String[] { String.valueOf(id) });
+		db.execSQL("DELETE FROM feeds WHERE id = ?", new String[] { String.valueOf(id) });
 	}
 }

@@ -31,8 +31,7 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		setContentView(R.layout.news);
 
 		// get toast feedback and resume activity
-		registerReceiver(DownloadService.receiver, new IntentFilter(
-				DownloadService.broadcast));
+		registerReceiver(DownloadService.receiver, new IntentFilter(DownloadService.broadcast));
 	}
 
 	@Override
@@ -49,9 +48,9 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		NewsManager nm = new NewsManager(this, Const.db);
 		Cursor c = nm.getAllFromDb();
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				R.layout.news_listview, c, c.getColumnNames(), new int[] {
-						R.id.image, R.id.message, R.id.date });
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.news_listview, c, c.getColumnNames(),
+				new int[] { R.id.image, R.id.message, R.id.date });
+
 		adapter.setViewBinder(this);
 
 		ListView lv = (ListView) findViewById(R.id.listView);
@@ -63,15 +62,13 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> aview, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> aview, View view, int position, long id) {
 		ListView lv = (ListView) findViewById(R.id.listView);
 		Cursor c = (Cursor) lv.getAdapter().getItem(position);
 		String url = c.getString(c.getColumnIndex("link"));
 
 		if (url.length() == 0) {
-			Toast.makeText(this, "Kein Link vorhanden.", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(this, "Kein Link vorhanden.", Toast.LENGTH_LONG).show();
 			return;
 		}
 

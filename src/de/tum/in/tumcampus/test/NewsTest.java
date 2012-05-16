@@ -23,8 +23,7 @@ public class NewsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo = new Solo(getInstrumentation(), getActivity());
 
 		// inject test data
-		News n = new News("N1", "Test message", "http://www.test.de", "",
-				Utils.getDate("2011-12-13"));
+		News n = new News("N1", "Test message", "http://www.test.de", "", Utils.getDate("2011-12-13"));
 
 		NewsManager nm = new NewsManager(getActivity(), Const.db);
 		nm.replaceIntoDb(n);

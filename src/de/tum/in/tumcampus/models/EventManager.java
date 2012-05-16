@@ -36,10 +36,8 @@ public class EventManager {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS events ("
-				+ "id VARCHAR PRIMARY KEY, name VARCHAR, start VARCHAR, "
-				+ "end VARCHAR, location VARCHAR, description VARCHAR, "
-				+ "link VARCHAR, image VARCHAR)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS events (id VARCHAR PRIMARY KEY, name VARCHAR, start VARCHAR, "
+				+ "end VARCHAR, location VARCHAR, description VARCHAR, link VARCHAR, image VARCHAR)");
 	}
 
 	/**
@@ -57,13 +55,10 @@ public class EventManager {
 		}
 
 		String url = "https://graph.facebook.com/162327853831856/events?"
-				+ "fields=id,name,start_time,end_time,location,description"
-				+ "&limit=50&access_token=";
+				+ "fields=id,name,start_time,end_time,location,description&limit=50&access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 
-		JSONArray jsonArray = Utils
-				.downloadJson(url + URLEncoder.encode(token)).getJSONArray(
-						"data");
+		JSONArray jsonArray = Utils.downloadJson(url + URLEncoder.encode(token)).getJSONArray("data");
 
 		cleanupDb();
 		int count = Utils.dbGetTableCount(db, "events");
@@ -85,33 +80,25 @@ public class EventManager {
 	/**
 	 * Get all upcoming or unfinished events from the database
 	 * 
-	 * @return Database cursor (image, name, weekday, start_de, end_de,
-	 *         location, _id)
+	 * @return Database cursor (image, name, weekday, start_de, end_de, location, _id)
 	 */
 	public Cursor getNextFromDb() {
-		return db.rawQuery(
-				"SELECT image, name, strftime('%w', start) as weekday, "
-						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
-						+ "strftime('%H:%M', end) as end_de, "
-						+ "location, id as _id FROM events "
-						+ "WHERE end > datetime('now', 'localtime') "
-						+ "ORDER BY start ASC LIMIT 25", null);
+		return db.rawQuery("SELECT image, name, strftime('%w', start) as weekday, "
+				+ "strftime('%d.%m.%Y %H:%M', start) as start_de, strftime('%H:%M', end) as end_de, "
+				+ "location, id as _id FROM events WHERE end > datetime('now', 'localtime') "
+				+ "ORDER BY start ASC LIMIT 25", null);
 	}
 
 	/**
 	 * Get all finished events from the database
 	 * 
-	 * @return Database cursor (image, name, weekday, start_de, end_de,
-	 *         location, _id)
+	 * @return Database cursor (image, name, weekday, start_de, end_de, location, _id)
 	 */
 	public Cursor getPastFromDb() {
-		return db.rawQuery(
-				"SELECT image, name, strftime('%w', start) as weekday, "
-						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
-						+ "strftime('%H:%M', end) as end_de, "
-						+ "location, id as _id FROM events "
-						+ "WHERE end <= datetime('now', 'localtime') "
-						+ "ORDER BY start DESC LIMIT 50", null);
+		return db.rawQuery("SELECT image, name, strftime('%w', start) as weekday, "
+				+ "strftime('%d.%m.%Y %H:%M', start) as start_de, strftime('%H:%M', end) as end_de, "
+				+ "location, id as _id FROM events WHERE end <= datetime('now', 'localtime') "
+				+ "ORDER BY start DESC LIMIT 50", null);
 	}
 
 	/**
@@ -123,24 +110,18 @@ public class EventManager {
 	 * </pre>
 	 */
 	public Cursor getDetailsFromDb(String id) {
-		return db.rawQuery(
-				"SELECT image, name, strftime('%w', start) as weekday, "
-						+ "strftime('%d.%m.%Y %H:%M', start) as start_de, "
-						+ "strftime('%H:%M', end) as end_de, "
-						+ "location, description, link, id as _id "
-						+ "FROM events WHERE id = ?", new String[] { id });
+		return db.rawQuery("SELECT image, name, strftime('%w', start) as weekday, "
+				+ "strftime('%d.%m.%Y %H:%M', start) as start_de, strftime('%H:%M', end) as end_de, "
+				+ "location, description, link, id as _id FROM events WHERE id = ?", new String[] { id });
 	}
 
 	/**
 	 * Convert JSON object to Event, download event picture
 	 * 
-	 * Example JSON: e.g. { "id": "166478443419659", "owner": { "name":
-	 * "TUM Campus App for Android", "category": "Software", "id":
-	 * "162327853831856" }, "name":
-	 * "R\u00fcckmeldung f\u00fcr Wintersemester 2011/12", "description": "..."
-	 * , "start_time": "2011-08-15T00:00:00", "end_time": "2011-08-15T03:00:00",
-	 * "location": "TU M\u00fcnchen", "privacy": "OPEN", "updated_time":
-	 * "2011-06-25T06:26:14+0000" }
+	 * Example JSON: e.g. { "id": "166478443419659", "owner": { "name": "TUM Campus App for Android", "category":
+	 * "Software", "id": "162327853831856" }, "name": "R\u00fcckmeldung f\u00fcr Wintersemester 2011/12", "description":
+	 * "..." , "start_time": "2011-08-15T00:00:00", "end_time": "2011-08-15T03:00:00", "location": "TU M\u00fcnchen",
+	 * "privacy": "OPEN", "updated_time": "2011-06-25T06:26:14+0000" }
 	 * 
 	 * <pre>
 	 * @param json see above
@@ -152,8 +133,7 @@ public class EventManager {
 
 		String eventId = json.getString("id");
 
-		String picture = "http://graph.facebook.com/" + eventId
-				+ "/Picture?type=large";
+		String picture = "http://graph.facebook.com/" + eventId + "/Picture?type=large";
 
 		String target = Utils.getCacheDir("events/cache") + eventId + ".jpg";
 		Utils.downloadFileThread(picture, target);
@@ -169,10 +149,8 @@ public class EventManager {
 		// Link only available in event/feed
 		String link = "";
 
-		return new Event(eventId, json.getString("name"),
-				Utils.getDateTime(json.getString("start_time")),
-				Utils.getDateTime(json.getString("end_time")), location,
-				description, link, target);
+		return new Event(eventId, json.getString("name"), Utils.getDateTime(json.getString("start_time")),
+				Utils.getDateTime(json.getString("end_time")), location, description, link, target);
 	}
 
 	/**
@@ -190,12 +168,9 @@ public class EventManager {
 		if (e.name.length() == 0) {
 			throw new Exception("Invalid name.");
 		}
-		db.execSQL("REPLACE INTO events (id, name, start, end, location, "
-				+ "description, link, image) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-				new String[] { e.id, e.name, Utils.getDateTimeString(e.start),
-						Utils.getDateTimeString(e.end), e.location,
-						e.description, e.link, e.image });
+		db.execSQL("REPLACE INTO events (id, name, start, end, location, description, link, image) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", new String[] { e.id, e.name, Utils.getDateTimeString(e.start),
+				Utils.getDateTimeString(e.end), e.location, e.description, e.link, e.image });
 	}
 
 	/**

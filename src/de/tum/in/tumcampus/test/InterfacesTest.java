@@ -78,9 +78,8 @@ public class InterfacesTest extends AndroidTestCase {
 	public final void testYqlRss() throws Exception {
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String feedUrl = "http://www.spiegel.de/schlagzeilen/index.rss";
-		String query = URLEncoder
-				.encode("SELECT title, link, description, pubDate, enclosure.url "
-						+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
+		String query = URLEncoder.encode("SELECT title, link, description, pubDate, enclosure.url "
+				+ "FROM rss WHERE url=\"" + feedUrl + "\" LIMIT 25");
 
 		JSONObject json = Utils.downloadJson(baseUrl + query);
 
@@ -164,9 +163,8 @@ public class InterfacesTest extends AndroidTestCase {
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAuswahl.svc?haltestelle=Gar";
 
-		String query = URLEncoder
-				.encode("select content from html where url=\"" + lookupUrl
-						+ "\" and xpath=\"//a[contains(@href,'haltestelle')]\"");
+		String query = URLEncoder.encode("select content from html where url=\"" + lookupUrl
+				+ "\" and xpath=\"//a[contains(@href,'haltestelle')]\"");
 
 		JSONObject json = Utils.downloadJson(baseUrl + query);
 
@@ -189,9 +187,8 @@ public class InterfacesTest extends AndroidTestCase {
 		String baseUrl = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 		String lookupUrl = "http://www.mvg-live.de/ims/dfiStaticAnzeige.svc?haltestelle=Marienplatz";
 
-		String query = URLEncoder
-				.encode("select content from html where url=\"" + lookupUrl
-						+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
+		String query = URLEncoder.encode("select content from html where url=\"" + lookupUrl
+				+ "\" and xpath=\"//td[contains(@class,'Column')]/p\"");
 
 		JSONObject json = Utils.downloadJson(baseUrl + query);
 

@@ -105,8 +105,7 @@ public class Utils {
 	 * @throws Exception
 	 * </pre>
 	 */
-	private static void downloadFile(String url, String target)
-			throws Exception {
+	private static void downloadFile(String url, String target) throws Exception {
 		File f = new File(target);
 		if (f.exists()) {
 			return;
@@ -139,8 +138,7 @@ public class Utils {
 	 * @param target Target filename in local file system
 	 * </pre>
 	 */
-	public static void downloadIconFileThread(final String url,
-			final String target) {
+	public static void downloadIconFileThread(final String url, final String target) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -163,8 +161,7 @@ public class Utils {
 	 * @throws Exception
 	 * </pre>
 	 */
-	private static void downloadIconFile(String url, String target)
-			throws Exception {
+	private static void downloadIconFile(String url, String target) throws Exception {
 		File f = new File(target);
 		if (f.exists()) {
 			return;
@@ -173,8 +170,7 @@ public class Utils {
 		HttpGet httpget = new HttpGet(url);
 
 		// force mobile version of a web page
-		httpget.addHeader("User-Agent",
-				"Mozilla/5.0 (iPhone; de-de) AppleWebKit/528.18 Safari/528.16");
+		httpget.addHeader("User-Agent", "Mozilla/5.0 (iPhone; de-de) AppleWebKit/528.18 Safari/528.16");
 
 		HttpEntity entity = httpclient.execute(httpget).getEntity();
 		if (entity == null) {
@@ -245,8 +241,7 @@ public class Utils {
 	}
 
 	/**
-	 * Returns the full path of a cache directory and checks if it is readable
-	 * and writable
+	 * Returns the full path of a cache directory and checks if it is readable and writable
 	 * 
 	 * <pre>
 	 * @param directory directory postfix (e.g. feeds/cache)
@@ -255,18 +250,15 @@ public class Utils {
 	 * </pre>
 	 */
 	public static String getCacheDir(String directory) throws Exception {
-		File f = new File(Environment.getExternalStorageDirectory().getPath()
-				+ "/tumcampus/" + directory);
+		File f = new File(Environment.getExternalStorageDirectory().getPath() + "/tumcampus/" + directory);
 		if (!f.exists()) {
 			f.mkdirs();
 		}
 		if (!f.canRead()) {
-			throw new Exception("Von der SD-Karte kann nicht gelesen werden: "
-					+ "<sd>/tumcampus/" + directory);
+			throw new Exception("Von der SD-Karte kann nicht gelesen werden: <sd>/tumcampus/" + directory);
 		}
 		if (!f.canWrite()) {
-			throw new Exception("Auf die SD-Karte kann nicht geschrieben "
-					+ "werden: <sd>/tumcampus/" + directory);
+			throw new Exception("Auf die SD-Karte kann nicht geschrieben werden: <sd>/tumcampus/" + directory);
 		}
 		return f.getPath() + "/";
 	}
@@ -331,8 +323,7 @@ public class Utils {
 		String result = url;
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpEntity entity = httpclient.execute(new HttpGet(url))
-					.getEntity();
+			HttpEntity entity = httpclient.execute(new HttpGet(url)).getEntity();
 			if (entity == null) {
 				return result;
 			}
@@ -346,11 +337,9 @@ public class Utils {
 			while (matcher.find()) {
 				String match = matcher.group(0);
 
-				Matcher href_match = Pattern.compile("href=[\"'](.+?)[\"']")
-						.matcher(match);
+				Matcher href_match = Pattern.compile("href=[\"'](.+?)[\"']").matcher(match);
 				if (href_match.find()
-						&& (match.contains("application/rss+xml") || match
-								.contains("application/atom+xml"))) {
+						&& (match.contains("application/rss+xml") || match.contains("application/atom+xml"))) {
 					result = href_match.group(1);
 				}
 			}
@@ -414,8 +403,7 @@ public class Utils {
 	 */
 	public static Date getDateTime(String str) {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			return dateFormat.parse(str);
 		} catch (Exception e) {
 			log(e, str);
@@ -433,8 +421,7 @@ public class Utils {
 	 */
 	public static Date getDateTimeDe(String str) {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat(
-					"dd.MM.yyyy HH:mm");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 			return dateFormat.parse(str);
 		} catch (Exception e) {
 			log(e, str);
@@ -452,8 +439,7 @@ public class Utils {
 	 */
 	public static Date getDateTimeRfc822(String str) {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat(
-					"EEE, dd MMM yyyy HH:mm:ss", Locale.US);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.US);
 			return dateFormat.parse(str);
 		} catch (Exception e) {
 			log(e, str);
@@ -496,8 +482,7 @@ public class Utils {
 	 * </pre>
 	 */
 	public static String getDateTimeString(Date d) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(d);
 	}
 
@@ -539,8 +524,7 @@ public class Utils {
 	 * </pre>
 	 */
 	public static void setSettingBool(Context c, String name, boolean value) {
-		SharedPreferences.Editor editor = PreferenceManager
-				.getDefaultSharedPreferences(c).edit();
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(c).edit();
 		editor.putBoolean(name, value);
 		editor.commit();
 	}
@@ -604,8 +588,7 @@ public class Utils {
 	public static List<String[]> readCsv(InputStream fin, String charset) {
 		List<String[]> list = new ArrayList<String[]>();
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(fin,
-					charset));
+			BufferedReader in = new BufferedReader(new InputStreamReader(fin, charset));
 			String reader = "";
 			while ((reader = in.readLine()) != null) {
 				list.add(splitCsvLine(reader));

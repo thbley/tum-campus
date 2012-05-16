@@ -28,8 +28,7 @@ public class Gallery extends Activity implements OnItemClickListener {
 		setContentView(R.layout.gallery);
 
 		// get toast feedback and resume activity
-		registerReceiver(DownloadService.receiver, new IntentFilter(
-				DownloadService.broadcast));
+		registerReceiver(DownloadService.receiver, new IntentFilter(DownloadService.broadcast));
 	}
 
 	@Override
@@ -46,8 +45,7 @@ public class Gallery extends Activity implements OnItemClickListener {
 		GalleryManager gm = new GalleryManager(this, Const.db);
 		Cursor c = gm.getFromDb();
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				R.layout.gallery_image, c, c.getColumnNames(),
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.gallery_image, c, c.getColumnNames(),
 				new int[] { R.id.image });
 
 		GridView gridview = (GridView) findViewById(R.id.gridview);
@@ -61,9 +59,9 @@ public class Gallery extends Activity implements OnItemClickListener {
 			public void onDrawerOpened() {
 				GalleryManager gm = new GalleryManager(Gallery.this, Const.db);
 				Cursor c = gm.getFromDbArchive();
-				SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-						Gallery.this, R.layout.gallery_image, c, c
-								.getColumnNames(), new int[] { R.id.image });
+
+				SimpleCursorAdapter adapter = new SimpleCursorAdapter(Gallery.this, R.layout.gallery_image, c, c
+						.getColumnNames(), new int[] { R.id.image });
 
 				GridView gridview2 = (GridView) findViewById(R.id.gridview2);
 				gridview2.setAdapter(adapter);

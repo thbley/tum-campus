@@ -26,8 +26,7 @@ import de.tum.in.tumcampus.models.Utils;
 /**
  * Activity to show lectures and lecture units
  */
-public class Lectures extends Activity implements OnItemClickListener,
-		OnItemLongClickListener, ViewBinder {
+public class Lectures extends Activity implements OnItemClickListener, OnItemLongClickListener, ViewBinder {
 
 	/**
 	 * Current lecture selected
@@ -48,9 +47,9 @@ public class Lectures extends Activity implements OnItemClickListener,
 		LectureItemManager lim = new LectureItemManager(this);
 		Cursor c = lim.getRecentFromDb();
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.two_line_list_item, c, c.getColumnNames(),
-				new int[] { android.R.id.text1, android.R.id.text2 });
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, c,
+				c.getColumnNames(), new int[] { android.R.id.text1, android.R.id.text2 });
+
 		adapter.setViewBinder(this);
 
 		ListView lv = (ListView) findViewById(R.id.listView);
@@ -62,9 +61,9 @@ public class Lectures extends Activity implements OnItemClickListener,
 		LectureManager lm = new LectureManager(this, Const.db);
 		Cursor c2 = lm.getAllFromDb();
 
-		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this,
-				android.R.layout.simple_list_item_1, c2, c2.getColumnNames(),
-				new int[] { android.R.id.text1 });
+		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, c2,
+				c2.getColumnNames(), new int[] { android.R.id.text1 });
+
 		adapter2.setViewBinder(new ViewBinder() {
 
 			@Override
@@ -120,8 +119,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 			String lectureId = c.getString(c.getColumnIndex("lectureId"));
 
 			if (lectureId.equals("vacation")) {
-				info = c.getString(c.getColumnIndex("start_dt")) + " - "
-						+ c.getString(c.getColumnIndex("end_dt"));
+				info = c.getString(c.getColumnIndex("start_dt")) + " - " + c.getString(c.getColumnIndex("end_dt"));
 
 			} else if (lectureId.equals("holiday")) {
 				info = weekDays[c.getInt(c.getColumnIndex("weekday"))] + ", "
@@ -129,8 +127,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 
 			} else {
 				info = weekDays[c.getInt(c.getColumnIndex("weekday"))] + ", "
-						+ c.getString(c.getColumnIndex("start_de")) + " - "
-						+ c.getString(c.getColumnIndex("end_de"));
+						+ c.getString(c.getColumnIndex("start_de")) + " - " + c.getString(c.getColumnIndex("end_de"));
 
 				String location = c.getString(c.getColumnIndex("location"));
 				if (location.indexOf(",") != -1) {
@@ -170,12 +167,10 @@ public class Lectures extends Activity implements OnItemClickListener,
 			tv.setText(Utils.trunc(name + ":", 35));
 
 			// Link to lecture module homepage (e.g. contains ECTS)
-			String moduleUrl = "https://drehscheibe.in.tum.de/myintum/kurs_verwaltung/cm.html.de?id="
-					+ module;
+			String moduleUrl = "https://drehscheibe.in.tum.de/myintum/kurs_verwaltung/cm.html.de?id=" + module;
 
 			TextView tv2 = (TextView) findViewById(R.id.moduleText);
-			tv2.setText(Html.fromHtml("<a href='" + moduleUrl + "'>" + module
-					+ "</a>"));
+			tv2.setText(Html.fromHtml("<a href='" + moduleUrl + "'>" + module + "</a>"));
 			tv2.setMovementMethod(LinkMovementMethod.getInstance());
 			return;
 		}
@@ -193,8 +188,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 		// 1593 = WS2011/12
 		if (url.length() == 0) {
 			url = "https://campus.tum.de/tumonline/wbSuche.LVSucheSimple?"
-					+ "pLVNrFlag=J&pSjNr=1593&pSemester=A&pSuchbegriff="
-					+ c.getString(c.getColumnIndex("lectureId"));
+					+ "pLVNrFlag=J&pSjNr=1593&pSemester=A&pSuchbegriff=" + c.getString(c.getColumnIndex("lectureId"));
 		}
 
 		// Connection to browser
@@ -264,8 +258,7 @@ public class Lectures extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public boolean onItemLongClick(final AdapterView<?> av, View v,
-			final int position, long id) {
+	public boolean onItemLongClick(final AdapterView<?> av, View v, final int position, long id) {
 
 		// confirm deleting lectures or lecture units
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {

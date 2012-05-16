@@ -63,8 +63,7 @@ public class DownloadService extends IntentService {
 				return;
 			}
 			if (intent.getStringExtra("action").length() != 0) {
-				Toast.makeText(context, intent.getStringExtra("message"),
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(context, intent.getStringExtra("message"), Toast.LENGTH_LONG).show();
 
 				// wait until images are loaded
 				synchronized (this) {
@@ -95,15 +94,12 @@ public class DownloadService extends IntentService {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager nm = (NotificationManager) getSystemService(ns);
 
-		Notification notification = new Notification(
-				android.R.drawable.stat_sys_download, "Aktualisiere ...",
+		Notification notification = new Notification(android.R.drawable.stat_sys_download, "Aktualisiere ...",
 				System.currentTimeMillis());
 
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, TumCampus.class), 0);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, TumCampus.class), 0);
 
-		notification.setLatestEventInfo(this, "TUMCampus download ...", "",
-				contentIntent);
+		notification.setLatestEventInfo(this, "TUMCampus download ...", "", contentIntent);
 		nm.notify(1, notification);
 
 		message("Aktualisiere: ", "");
@@ -116,33 +112,27 @@ public class DownloadService extends IntentService {
 			force = true;
 		}
 		// download all or only one action
-		if ((action == null || action.equals("feeds")) && !destroyed
-				&& Utils.getSettingBool(this, "feeds")) {
+		if ((action == null || action.equals("feeds")) && !destroyed && Utils.getSettingBool(this, "feeds")) {
 			message("RSS ", "");
 			downloadFeeds(force);
 		}
-		if ((action == null || action.equals("news")) && !destroyed
-				&& Utils.getSettingBool(this, "news")) {
+		if ((action == null || action.equals("news")) && !destroyed && Utils.getSettingBool(this, "news")) {
 			message("Nachrichten ", "");
 			downloadNews(force);
 		}
-		if ((action == null || action.equals("events")) && !destroyed
-				&& Utils.getSettingBool(this, "events")) {
+		if ((action == null || action.equals("events")) && !destroyed && Utils.getSettingBool(this, "events")) {
 			message("Veranstaltungen ", "");
 			downloadEvents(force);
 		}
-		if ((action == null || action.equals("gallery")) && !destroyed
-				&& Utils.getSettingBool(this, "gallery")) {
+		if ((action == null || action.equals("gallery")) && !destroyed && Utils.getSettingBool(this, "gallery")) {
 			message("Kurz notiert ", "");
 			downloadGallery(force);
 		}
-		if ((action == null || action.equals("cafeterias")) && !destroyed
-				&& Utils.getSettingBool(this, "cafeterias")) {
+		if ((action == null || action.equals("cafeterias")) && !destroyed && Utils.getSettingBool(this, "cafeterias")) {
 			message("Mensen ", "");
 			downloadCafeterias(force);
 		}
-		if ((action == null || action.equals("links")) && !destroyed
-				&& Utils.getSettingBool(this, "links")) {
+		if ((action == null || action.equals("links")) && !destroyed && Utils.getSettingBool(this, "links")) {
 			downloadLinks();
 		}
 		message("Fertig!", "completed");

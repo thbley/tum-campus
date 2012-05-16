@@ -29,12 +29,10 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo = new Solo(getInstrumentation(), getActivity());
 
 		FeedManager fm = new FeedManager(getActivity(), Const.db);
-		feedId = fm.insertUpdateIntoDb(new Feed("Test feed",
-				"http://www.test.de"));
+		feedId = fm.insertUpdateIntoDb(new Feed("Test feed", "http://www.test.de"));
 
 		// inject test data
-		FeedItem fi = new FeedItem(feedId, "Test message",
-				"http://www.test.de", "Test description",
+		FeedItem fi = new FeedItem(feedId, "Test message", "http://www.test.de", "Test description",
 				Utils.getDateTime("2011-05-04T14:00:00"), "");
 
 		FeedItemManager fim = new FeedItemManager(getActivity(), Const.db);

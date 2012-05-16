@@ -78,15 +78,13 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		}
 
 		// initialize listview footer for opening hours
-		footer = getLayoutInflater().inflate(
-				android.R.layout.two_line_list_item, null, false);
+		footer = getLayoutInflater().inflate(android.R.layout.two_line_list_item, null, false);
 
 		ListView lv3 = (ListView) findViewById(R.id.listView3);
 		lv3.addFooterView(footer);
 
 		// get toast feedback and resume activity
-		registerReceiver(DownloadService.receiver, new IntentFilter(
-				DownloadService.broadcast));
+		registerReceiver(DownloadService.receiver, new IntentFilter(DownloadService.broadcast));
 	}
 
 	@Override
@@ -105,9 +103,8 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
 		Cursor c2 = cm.getAllFromDb("%" + filter + "%");
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.two_line_list_item, c2, c2.getColumnNames(),
-				new int[] { android.R.id.text1, android.R.id.text2 });
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, c2,
+				c2.getColumnNames(), new int[] { android.R.id.text1, android.R.id.text2 });
 
 		ListView lv2 = (ListView) findViewById(R.id.listView2);
 		lv2.setAdapter(adapter);
@@ -117,8 +114,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
 		Cursor c = cmm.getDatesFromDb();
 
-		adapter = new SimpleCursorAdapter(this,
-				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
+		adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, c, c.getColumnNames(),
 				new int[] { android.R.id.text1 });
 
 		ListView lv = (ListView) findViewById(R.id.listView);
@@ -176,9 +172,8 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			}
 
 			// no onclick for items, no separator line
-			SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-					android.R.layout.two_line_list_item, c, c.getColumnNames(),
-					new int[] { android.R.id.text1, android.R.id.text2 }) {
+			SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, c,
+					c.getColumnNames(), new int[] { android.R.id.text1, android.R.id.text2 }) {
 
 				@Override
 				public boolean areAllItemsEnabled() {

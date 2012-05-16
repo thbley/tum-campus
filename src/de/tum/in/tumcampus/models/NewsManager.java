@@ -38,8 +38,7 @@ public class NewsManager {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS news ("
-				+ "id VARCHAR PRIMARY KEY, message VARCHAR, link VARCHAR, "
+		db.execSQL("CREATE TABLE IF NOT EXISTS news (id VARCHAR PRIMARY KEY, message VARCHAR, link VARCHAR, "
 				+ "image VARCHAR, date VARCHAR)");
 	}
 
@@ -60,9 +59,7 @@ public class NewsManager {
 		String url = "https://graph.facebook.com/162327853831856/feed/?limit=100&access_token=";
 		String token = "141869875879732|FbjTXY-wtr06A18W9wfhU8GCkwU";
 
-		JSONArray jsonArray = Utils
-				.downloadJson(url + URLEncoder.encode(token)).getJSONArray(
-						"data");
+		JSONArray jsonArray = Utils.downloadJson(url + URLEncoder.encode(token)).getJSONArray("data");
 
 		cleanupDb();
 		int count = Utils.dbGetTableCount(db, "news");
@@ -74,20 +71,16 @@ public class NewsManager {
 				JSONObject obj = jsonArray.getJSONObject(i);
 
 				String[] types = new String[] { "photo", "link", "video" };
-				String[] ids = new String[] {
-						"162327853831856_228060957258545",
-						"162327853831856_228060957258545",
+				String[] ids = new String[] { "162327853831856_228060957258545", "162327853831856_228060957258545",
 						"162327853831856_224344127630228" };
 
 				// filter out events, empty items
-				if ((!Arrays.asList(types).contains(obj.getString("type")) && !Arrays
-						.asList(ids).contains(obj.getString("id")))
-						|| !obj.getJSONObject("from").getString("id")
-								.equals("162327853831856")) {
+				if ((!Arrays.asList(types).contains(obj.getString("type")) && !Arrays.asList(ids).contains(
+						obj.getString("id")))
+						|| !obj.getJSONObject("from").getString("id").equals("162327853831856")) {
 					continue;
 				}
-				if (obj.has("name")
-						&& obj.getString("name").equals("Kurz notiert")) {
+				if (obj.has("name") && obj.getString("name").equals("Kurz notiert")) {
 					continue;
 				}
 				if (countItems > 24) {
@@ -111,23 +104,21 @@ public class NewsManager {
 	 * @return Database cursor (image, message, date_de, link, _id)
 	 */
 	public Cursor getAllFromDb() {
-		return db.rawQuery("SELECT image, message, strftime('%d.%m.%Y', date) "
-				+ "as date_de, link, id as _id "
+		return db.rawQuery("SELECT image, message, strftime('%d.%m.%Y', date) as date_de, link, id as _id "
 				+ "FROM news ORDER BY date DESC", null);
 	}
 
 	/**
 	 * Convert JSON object to News and download news image
 	 * 
-	 * Example JSON: e.g. { "id": "162327853831856_174943842570257", "from": {
-	 * ... }, "message": "Testing ...", "picture":
-	 * "http://photos-d.ak.fbcdn.net/hphotos-ak-ash4/268937_174943835903591_162327853831856_476156_7175901_s.jpg"
-	 * , "link":
-	 * "https://www.facebook.com/photo.php?fbid=174943835903591&set=a.174943832570258.47966.162327853831856&type=1"
-	 * , "name": "Wall Photos", "icon":
-	 * "http://static.ak.fbcdn.net/rsrc.php/v1/yz/r/StEh3RhPvjk.gif", "type":
-	 * "photo", "object_id": "174943835903591", "created_time":
-	 * "2011-07-04T01:58:25+0000", "updated_time": "2011-07-04T01:58:25+0000" },
+	 * Example JSON: e.g. { "id": "162327853831856_174943842570257", "from": { ... }, "message": "Testing ...",
+	 * "picture":
+	 * "http://photos-d.ak.fbcdn.net/hphotos-ak-ash4/268937_174943835903591_162327853831856_476156_7175901_s.jpg" ,
+	 * "link":
+	 * "https://www.facebook.com/photo.php?fbid=174943835903591&set=a.174943832570258.47966.162327853831856&type=1" ,
+	 * "name": "Wall Photos", "icon": "http://static.ak.fbcdn.net/rsrc.php/v1/yz/r/StEh3RhPvjk.gif", "type": "photo",
+	 * "object_id": "174943835903591", "created_time": "2011-07-04T01:58:25+0000", "updated_time":
+	 * "2011-07-04T01:58:25+0000" },
 	 * 
 	 * <pre>
 	 * @param json see above
@@ -140,18 +131,15 @@ public class NewsManager {
 		String target = "";
 		if (json.has("picture")) {
 			String picture = json.getString("picture");
-			target = Utils.getCacheDir("news/cache") + Utils.md5(picture)
-					+ ".jpg";
+			target = Utils.getCacheDir("news/cache") + Utils.md5(picture) + ".jpg";
 			Utils.downloadFileThread(picture, target);
 		}
 		String link = "";
-		if (json.has("link")
-				&& !json.getString("link").contains("www.facebook.com")) {
+		if (json.has("link") && !json.getString("link").contains("www.facebook.com")) {
 			link = json.getString("link");
 		}
 		if (link.length() == 0 && json.has("object_id")) {
-			link = "http://graph.facebook.com/" + json.getString("object_id")
-					+ "/Picture?type=normal";
+			link = "http://graph.facebook.com/" + json.getString("object_id") + "/Picture?type=normal";
 		}
 
 		// message empty => description empty => caption
@@ -187,9 +175,8 @@ public class NewsManager {
 		if (n.message.length() == 0) {
 			throw new Exception("Invalid message.");
 		}
-		db.execSQL("REPLACE INTO news (id, message, link, image, date) "
-				+ "VALUES (?, ?, ?, ?, ?)", new String[] { n.id, n.message,
-				n.link, n.image, Utils.getDateString(n.date) });
+		db.execSQL("REPLACE INTO news (id, message, link, image, date) VALUES (?, ?, ?, ?, ?)", new String[] { n.id,
+				n.message, n.link, n.image, Utils.getDateString(n.date) });
 	}
 
 	/**

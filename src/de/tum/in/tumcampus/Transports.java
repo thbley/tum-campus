@@ -33,8 +33,8 @@ import de.tum.in.tumcampus.models.TransportManager;
 /**
  * Activity to show transport stations and departures
  */
-public class Transports extends Activity implements OnItemClickListener,
-		OnItemLongClickListener, OnEditorActionListener {
+public class Transports extends Activity implements OnItemClickListener, OnItemLongClickListener,
+		OnEditorActionListener {
 
 	/**
 	 * Check if a network connection is available or can be available soon
@@ -65,8 +65,7 @@ public class Transports extends Activity implements OnItemClickListener,
 		TransportManager tm = new TransportManager(this, Const.db);
 		Cursor c = tm.getAllFromDb();
 
-		ListAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.simple_list_item_1, c, c.getColumnNames(),
+		ListAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, c, c.getColumnNames(),
 				new int[] { android.R.id.text1 });
 
 		final ListView lv = (ListView) findViewById(R.id.listView);
@@ -81,16 +80,14 @@ public class Transports extends Activity implements OnItemClickListener,
 		et.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence input, int arg1, int arg2,
-					int arg3) {
+			public void onTextChanged(CharSequence input, int arg1, int arg2, int arg3) {
 				if (input.length() == 3) {
 					et.onEditorAction(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
 				}
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1,
-					int arg2, int arg3) {
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 				// empty
 			}
 
@@ -101,11 +98,9 @@ public class Transports extends Activity implements OnItemClickListener,
 		});
 
 		// initialize empty departure list, disable on click in list
-		MatrixCursor c2 = new MatrixCursor(
-				new String[] { "name", "desc", "_id" });
-		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this,
-				android.R.layout.two_line_list_item, c2, c2.getColumnNames(),
-				new int[] { android.R.id.text1, android.R.id.text2 }) {
+		MatrixCursor c2 = new MatrixCursor(new String[] { "name", "desc", "_id" });
+		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, c2,
+				c2.getColumnNames(), new int[] { android.R.id.text1, android.R.id.text2 }) {
 
 			@Override
 			public boolean isEnabled(int position) {
@@ -117,8 +112,7 @@ public class Transports extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public void onItemClick(final AdapterView<?> av, View v, int position,
-			long id) {
+	public void onItemClick(final AdapterView<?> av, View v, int position, long id) {
 		// click on station in list
 		Cursor c = (Cursor) av.getAdapter().getItem(position);
 		final String location = c.getString(c.getColumnIndex("name"));
@@ -137,25 +131,23 @@ public class Transports extends Activity implements OnItemClickListener,
 		adapter.changeCursor(tm.getAllFromDb());
 
 		// load departures in new thread, show progress dialog during load
-		final ProgressDialog progress = ProgressDialog.show(this, "",
-				"Lade ...", true);
+		final ProgressDialog progress = ProgressDialog.show(this, "", "Lade ...", true);
 
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				// get departures from website
-				TransportManager tm = new TransportManager(av.getContext(),
-						Const.db);
+				TransportManager tm = new TransportManager(av.getContext(), Const.db);
 				Cursor c = null;
 				try {
 					if (!connected()) {
 						throw new Exception("<Keine Internetverbindung>");
 					}
 					c = tm.getDeparturesFromExternal(location);
+
 				} catch (Exception e) {
 					// show errors in departures list
-					MatrixCursor c2 = new MatrixCursor(new String[] { "name",
-							"desc", "_id" });
+					MatrixCursor c2 = new MatrixCursor(new String[] { "name", "desc", "_id" });
 					c2.addRow(new String[] { e.getMessage(), "", "0" });
 					c = c2;
 				}
@@ -168,8 +160,7 @@ public class Transports extends Activity implements OnItemClickListener,
 						progress.hide();
 
 						ListView lv2 = (ListView) findViewById(R.id.listView2);
-						SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv2
-								.getAdapter();
+						SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv2.getAdapter();
 						adapter.changeCursor(c2);
 					}
 				});
@@ -178,8 +169,7 @@ public class Transports extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public boolean onItemLongClick(final AdapterView<?> av, View v,
-			final int position, long id) {
+	public boolean onItemLongClick(final AdapterView<?> av, View v, final int position, long id) {
 
 		// confirm and delete station
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
@@ -190,12 +180,10 @@ public class Transports extends Activity implements OnItemClickListener,
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				String location = c.getString(c.getColumnIndex("name"));
 
-				TransportManager tm = new TransportManager(av.getContext(),
-						Const.db);
+				TransportManager tm = new TransportManager(av.getContext(), Const.db);
 				tm.deleteFromDb(location);
 
-				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av
-						.getAdapter();
+				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av.getAdapter();
 				adapter.changeCursor(tm.getAllFromDb());
 			}
 		};
@@ -211,8 +199,7 @@ public class Transports extends Activity implements OnItemClickListener,
 	public boolean onEditorAction(final TextView input, int code, KeyEvent key) {
 
 		// search station in new thread, show progress dialog during search
-		final ProgressDialog progress = ProgressDialog.show(this, "",
-				"Lade ...", true);
+		final ProgressDialog progress = ProgressDialog.show(this, "", "Lade ...", true);
 
 		new Thread(new Runnable() {
 			@Override
@@ -220,8 +207,7 @@ public class Transports extends Activity implements OnItemClickListener,
 
 				// search station on website
 				String message = "";
-				TransportManager tm = new TransportManager(input.getContext(),
-						Const.db);
+				TransportManager tm = new TransportManager(input.getContext(), Const.db);
 				Cursor c = null;
 				try {
 					if (!connected()) {
@@ -247,13 +233,11 @@ public class Transports extends Activity implements OnItemClickListener,
 							tv.setText("Suchergebnis:");
 
 							ListView lv = (ListView) findViewById(R.id.listView);
-							SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv
-									.getAdapter();
+							SimpleCursorAdapter adapter = (SimpleCursorAdapter) lv.getAdapter();
 							adapter.changeCursor(c2);
 						}
 						if (message2.length() > 0) {
-							Toast.makeText(input.getContext(), message2,
-									Toast.LENGTH_LONG).show();
+							Toast.makeText(input.getContext(), message2, Toast.LENGTH_LONG).show();
 						}
 					}
 				});

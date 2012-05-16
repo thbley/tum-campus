@@ -49,8 +49,7 @@ import de.tum.in.tumcampus.services.SilenceService;
 /**
  * Main activity to show main menu, logo and refresh button
  */
-public class TumCampus extends Activity implements OnItemClickListener,
-		View.OnClickListener {
+public class TumCampus extends Activity implements OnItemClickListener, View.OnClickListener {
 
 	static boolean syncing = false;
 
@@ -86,8 +85,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		// adjust logo width to screen width
 		ImageView iv = (ImageView) findViewById(R.id.logo);
-		iv.getLayoutParams().width = getWindowManager().getDefaultDisplay()
-				.getWidth();
+		iv.getLayoutParams().width = getWindowManager().getDefaultDisplay().getWidth();
 
 		// bind download buttons
 		Button b = (Button) findViewById(R.id.refresh);
@@ -134,10 +132,8 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		super.onResume();
 
 		// build main menu
-		SimpleAdapter adapter = new SimpleAdapter(this, buildMenu(),
-				R.layout.main_listview,
-				new String[] { "icon", "name", "icon2" }, new int[] {
-						R.id.icon, R.id.name, R.id.icon2 });
+		SimpleAdapter adapter = new SimpleAdapter(this, buildMenu(), R.layout.main_listview, new String[] { "icon",
+				"name", "icon2" }, new int[] { R.id.icon, R.id.name, R.id.icon2 });
 
 		ListView lv = (ListView) findViewById(R.id.menu);
 		lv.setAdapter(adapter);
@@ -187,58 +183,46 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		// build list, intent = start activity on click
 		if (Utils.getSettingBool(this, "lectures")) {
-			addItem(list, R.drawable.vorlesung, "Vorlesungen",
-					LectureItemManager.lastInserted > 0, new Intent(this,
-							Lectures.class));
+			addItem(list, R.drawable.vorlesung, "Vorlesungen", LectureItemManager.lastInserted > 0, new Intent(this,
+					Lectures.class));
 		}
 		if (Utils.getSettingBool(this, "cafeterias")) {
-			addItem(list, R.drawable.essen, "Speisepläne",
-					CafeteriaMenuManager.lastInserted > 0, new Intent(this,
-							Cafeterias.class));
+			addItem(list, R.drawable.essen, "Speisepläne", CafeteriaMenuManager.lastInserted > 0, new Intent(this,
+					Cafeterias.class));
 		}
 		if (Utils.getSettingBool(this, "transports")) {
-			addItem(list, R.drawable.zug, "MVV", false, new Intent(this,
-					Transports.class));
+			addItem(list, R.drawable.zug, "MVV", false, new Intent(this, Transports.class));
 		}
 		if (Utils.getSettingBool(this, "feeds")) {
 			int count = FeedItemManager.lastInserted + FeedManager.lastInserted;
-			addItem(list, R.drawable.rss, "RSS-Feeds", count > 0, new Intent(
-					this, Feeds.class));
+			addItem(list, R.drawable.rss, "RSS-Feeds", count > 0, new Intent(this, Feeds.class));
 		}
 		if (Utils.getSettingBool(this, "events")) {
-			addItem(list, R.drawable.party, "Veranstaltungen",
-					EventManager.lastInserted > 0, new Intent(this,
-							Events.class));
+			addItem(list, R.drawable.party, "Veranstaltungen", EventManager.lastInserted > 0, new Intent(this,
+					Events.class));
 		}
 		if (Utils.getSettingBool(this, "gallery")) {
-			addItem(list, R.drawable.gallery, "Kurz notiert", false,
-					new Intent(this, Gallery.class));
+			addItem(list, R.drawable.gallery, "Kurz notiert", false, new Intent(this, Gallery.class));
 		}
 		if (Utils.getSettingBool(this, "news")) {
-			addItem(list, R.drawable.globus, "Nachrichten",
-					NewsManager.lastInserted > 0, new Intent(this, News.class));
+			addItem(list, R.drawable.globus, "Nachrichten", NewsManager.lastInserted > 0, new Intent(this, News.class));
 		}
 		if (Utils.getSettingBool(this, "plans")) {
-			addItem(list, R.drawable.kompass, "Umgebungspläne", false,
-					new Intent(this, Plans.class));
+			addItem(list, R.drawable.kompass, "Umgebungspläne", false, new Intent(this, Plans.class));
 		}
 		if (Utils.getSettingBool(this, "hours")) {
-			addItem(list, R.drawable.hours, "Öffnungszeiten", false,
-					new Intent(this, Hours.class));
+			addItem(list, R.drawable.hours, "Öffnungszeiten", false, new Intent(this, Hours.class));
 		}
 		if (Utils.getSettingBool(this, "links")) {
-			addItem(list, R.drawable.www, "Links",
-					LinkManager.lastInserted > 0, new Intent(this, Links.class));
+			addItem(list, R.drawable.www, "Links", LinkManager.lastInserted > 0, new Intent(this, Links.class));
 		}
 		if (Utils.getSettingBool(this, "facebook")) {
 			String url = "https://m.facebook.com/TUMCampus";
-			addItem(list, R.drawable.fb, "Facebook", false, new Intent(
-					Intent.ACTION_VIEW, Uri.parse(url)));
+			addItem(list, R.drawable.fb, "Facebook", false, new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
 
 		if (Utils.getSettingBool(this, Const.Settings.debug)) {
-			addItem(list, R.drawable.icon, "Debug", false, new Intent(this,
-					Debug.class));
+			addItem(list, R.drawable.icon, "Debug", false, new Intent(this, Debug.class));
 		}
 		return list;
 	}
@@ -254,8 +238,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 	 * @param intent Activity to start on click
 	 * </pre>
 	 */
-	public void addItem(List<Map<String, Object>> list, int icon, String name,
-			boolean changed, Intent intent) {
+	public void addItem(List<Map<String, Object>> list, int icon, String name, boolean changed, Intent intent) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("icon", icon);
 		map.put("name", name);
@@ -273,8 +256,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 
 		// start activity on main menu item click
 		@SuppressWarnings("unchecked")
-		Map<String, Object> map = (Map<String, Object>) av.getAdapter()
-				.getItem(position);
+		Map<String, Object> map = (Map<String, Object>) av.getAdapter().getItem(position);
 
 		Intent intent = (Intent) map.get("intent");
 		startActivity(intent);
@@ -314,8 +296,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		case Menu.FIRST + 2:
 			try {
 				// copy pdf manual from assets to sd-card
-				String target = Utils.getCacheDir("cache")
-						+ "TUM Campus Handbuch.pdf";
+				String target = Utils.getCacheDir("cache") + "TUM Campus Handbuch.pdf";
 
 				InputStream in = getAssets().open("manual.pdf");
 				OutputStream out = new FileOutputStream(target);
@@ -473,8 +454,7 @@ public class TumCampus extends Activity implements OnItemClickListener,
 		}
 
 		n = findViewById(R.id.noteModules);
-		if (!Utils.getSettingBool(this, "lectures")
-				&& !Utils.getSettingBool(this, "feeds")
+		if (!Utils.getSettingBool(this, "lectures") && !Utils.getSettingBool(this, "feeds")
 				&& !Utils.getSettingBool(this, "links")) {
 			n.setVisibility(View.VISIBLE);
 		} else {

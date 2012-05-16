@@ -28,8 +28,8 @@ abstract public class DatabaseManager {
 		if (db == null) {
 			File f = c.getDatabasePath(Const.db);
 			f.getParentFile().mkdirs();
-			db = SQLiteDatabase.openDatabase(c.getDatabasePath(Const.db)
-					.toString(), null, SQLiteDatabase.CREATE_IF_NECESSARY);
+			db = SQLiteDatabase.openDatabase(c.getDatabasePath(Const.db).toString(), null,
+					SQLiteDatabase.CREATE_IF_NECESSARY);
 		}
 		return db;
 	}

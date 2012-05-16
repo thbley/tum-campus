@@ -28,16 +28,14 @@ public class Settings extends PreferenceActivity {
 			if (android.os.Build.VERSION.SDK_INT >= 9) {
 				// 2.3 and newer
 				Uri uri = Uri.parse("package:" + getPackageName());
-				Intent intent = new Intent(
-						"android.settings.APPLICATION_DETAILS_SETTINGS", uri);
+				Intent intent = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS", uri);
 				startActivity(intent);
+
 			} else {
 				// older Androids
 				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setClassName("com.android.settings",
-						"com.android.settings.InstalledAppDetails");
-				intent.putExtra("com.android.settings.ApplicationPkgName",
-						getPackageName());
+				intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+				intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
 				startActivity(intent);
 			}
 		}

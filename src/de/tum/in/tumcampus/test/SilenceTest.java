@@ -23,8 +23,7 @@ public class SilenceTest extends ServiceTestCase<SilenceService> {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		am = (AudioManager) getContext()
-				.getSystemService(Context.AUDIO_SERVICE);
+		am = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
 		am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 	}
 
@@ -49,8 +48,7 @@ public class SilenceTest extends ServiceTestCase<SilenceService> {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.HOUR, 1);
 
-		LectureItem li = new LectureItem("S1", "S1", new Date(),
-				calendar.getTime(), "V1", "", "", "", "", "S1");
+		LectureItem li = new LectureItem("S1", "S1", new Date(), calendar.getTime(), "V1", "", "", "", "", "S1");
 
 		LectureItemManager lim = new LectureItemManager(getContext());
 		lim.replaceIntoDb(li);

@@ -28,11 +28,9 @@ public class ImportTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		Utils.getCacheDir("rss");
 		Utils.getCacheDir("lectures");
 
-		String path = Environment.getExternalStorageDirectory().getPath()
-				+ "/tumcampus/";
+		String path = Environment.getExternalStorageDirectory().getPath() + "/tumcampus/";
 
-		BufferedWriter out = new BufferedWriter(new FileWriter(path
-				+ "links/test1.url"));
+		BufferedWriter out = new BufferedWriter(new FileWriter(path + "links/test1.url"));
 		out.write("[InternetShortcut]\nURL=http://www.in.tum.de/");
 		out.close();
 
@@ -48,8 +46,7 @@ public class ImportTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 	@Override
 	public void tearDown() throws Exception {
-		String path = Environment.getExternalStorageDirectory().getPath()
-				+ "/tumcampus/";
+		String path = Environment.getExternalStorageDirectory().getPath() + "/tumcampus/";
 
 		new File(path + "links/test1.url").delete();
 		new File(path + "rss/test2.url").delete();
@@ -84,7 +81,7 @@ public class ImportTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo.clickOnButton("Links importieren");
 		solo.sleep(1000);
 		solo.scrollDown();
-		
+
 		assertTrue(solo.searchText("Links"));
 		solo.clickOnText("Links");
 

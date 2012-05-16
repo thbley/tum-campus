@@ -36,9 +36,7 @@ public class GalleryDetails extends Activity {
 		browser.getSettings().setBuiltInZoomControls(true);
 		browser.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
 
-		String data = "<body style='margin:0px;'><img src='" + image
-				+ "'/></body>";
-		browser.loadDataWithBaseURL("file:///android_asset/", data,
-				"text/html", "UTF-8", null);
+		String data = "<body style='margin:0px;'><img src='" + image + "'/></body>";
+		browser.loadDataWithBaseURL("file:///android_asset/", data, "text/html", "UTF-8", null);
 	}
 }

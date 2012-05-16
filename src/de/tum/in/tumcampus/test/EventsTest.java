@@ -24,10 +24,8 @@ public class EventsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		solo = new Solo(getInstrumentation(), getActivity());
 
 		// inject test data
-		Event e = new Event("T1", "Test Event",
-				Utils.getDateTime("2011-12-13T14:00:00"),
-				Utils.getDateTime("2011-12-13T15:00:00"), "Test location",
-				"Test description", "http://www.test.de",
+		Event e = new Event("T1", "Test Event", Utils.getDateTime("2011-12-13T14:00:00"),
+				Utils.getDateTime("2011-12-13T15:00:00"), "Test location", "Test description", "http://www.test.de",
 				String.valueOf(R.drawable.icon));
 
 		EventManager em = new EventManager(getActivity(), Const.db);

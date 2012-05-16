@@ -30,8 +30,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		setContentView(R.layout.events);
 
 		// get toast feedback and resume activity
-		registerReceiver(DownloadService.receiver, new IntentFilter(
-				DownloadService.broadcast));
+		registerReceiver(DownloadService.receiver, new IntentFilter(DownloadService.broadcast));
 	}
 
 	@Override
@@ -48,9 +47,9 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		EventManager em = new EventManager(this, Const.db);
 		Cursor c = em.getNextFromDb();
 
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				R.layout.events_listview, c, c.getColumnNames(), new int[] {
-						R.id.icon, R.id.name, R.id.infos });
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.events_listview, c, c.getColumnNames(),
+				new int[] { R.id.icon, R.id.name, R.id.infos });
+
 		adapter.setViewBinder(this);
 
 		ListView lv = (ListView) findViewById(R.id.listView);
@@ -64,10 +63,9 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 				// get past events from database
 				EventManager em = new EventManager(Events.this, Const.db);
 				Cursor c = em.getPastFromDb();
-				SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-						Events.this, R.layout.events_listview, c, c
-								.getColumnNames(), new int[] { R.id.icon,
-								R.id.name, R.id.infos });
+
+				SimpleCursorAdapter adapter = new SimpleCursorAdapter(Events.this, R.layout.events_listview, c, c
+						.getColumnNames(), new int[] { R.id.icon, R.id.name, R.id.infos });
 				adapter.setViewBinder(Events.this);
 
 				ListView lv2 = (ListView) findViewById(R.id.listView2);
@@ -104,10 +102,9 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 			String[] weekDays = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
 
 			TextView infos = (TextView) view;
-			infos.setText(weekDays[c.getInt(c.getColumnIndex("weekday"))]
-					+ ", " + c.getString(c.getColumnIndex("start_de")) + " - "
-					+ c.getString(c.getColumnIndex("end_de")) + "\n"
-					+ c.getString(c.getColumnIndex("location")));
+			infos.setText(weekDays[c.getInt(c.getColumnIndex("weekday"))] + ", "
+					+ c.getString(c.getColumnIndex("start_de")) + " - " + c.getString(c.getColumnIndex("end_de"))
+					+ "\n" + c.getString(c.getColumnIndex("location")));
 			return true;
 		}
 		return false;

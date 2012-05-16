@@ -26,8 +26,7 @@ public class SyncManager {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS syncs ("
-				+ "id VARCHAR PRIMARY KEY, lastSync VARCHAR)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS syncs (id VARCHAR PRIMARY KEY, lastSync VARCHAR)");
 	}
 
 	/**
@@ -57,8 +56,7 @@ public class SyncManager {
 		if (id.length() == 0) {
 			return;
 		}
-		db.execSQL("REPLACE INTO syncs (id, lastSync) VALUES (?, datetime())",
-				new String[] { id });
+		db.execSQL("REPLACE INTO syncs (id, lastSync) VALUES (?, datetime())", new String[] { id });
 	}
 
 	/**
@@ -87,8 +85,7 @@ public class SyncManager {
 	 */
 	public static boolean needSync(SQLiteDatabase db, String id, int seconds) {
 		boolean result = true;
-		Cursor c = db.rawQuery("SELECT lastSync FROM syncs "
-				+ "WHERE lastSync > datetime('now', '-" + seconds
+		Cursor c = db.rawQuery("SELECT lastSync FROM syncs WHERE lastSync > datetime('now', '-" + seconds
 				+ " second') AND id=?", new String[] { id });
 		if (c.getCount() == 1) {
 			result = false;

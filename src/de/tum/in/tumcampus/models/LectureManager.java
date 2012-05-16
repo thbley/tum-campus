@@ -26,8 +26,7 @@ public class LectureManager {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
-		db.execSQL("CREATE TABLE IF NOT EXISTS lectures ("
-				+ "id VARCHAR PRIMARY KEY, name VARCHAR, module VARCHAR)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS lectures (id VARCHAR PRIMARY KEY, name VARCHAR, module VARCHAR)");
 	}
 
 	/**
@@ -36,8 +35,7 @@ public class LectureManager {
 	 * @return Database cursor (name, module, _id)
 	 */
 	public Cursor getAllFromDb() {
-		return db.rawQuery("SELECT name, module, id as _id "
-				+ "FROM lectures ORDER BY name", null);
+		return db.rawQuery("SELECT name, module, id as _id FROM lectures ORDER BY name", null);
 	}
 
 	/**

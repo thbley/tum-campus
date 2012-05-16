@@ -21,7 +21,7 @@ public class DebugTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 	public void testDebug() {
 		assertFalse(solo.searchText("Debug"));
-		
+
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Einstellungen");
 		solo.clickOnText("Debug-Modus");
@@ -48,12 +48,12 @@ public class DebugTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
 		solo.goBack();
 		assertTrue(solo.searchText("Hello World"));
-		
+
 		solo.sendKey(Solo.MENU);
 		solo.clickOnText("Einstellungen");
 		solo.clickOnText("Debug-Modus");
 		solo.goBack();
-		
+
 		assertFalse(solo.searchText("Debug"));
 	}
 }
