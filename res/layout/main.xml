@@ -99,6 +99,4 @@
                 <include layout="@layout/main_import" />
             </ScrollView>
         </SlidingDrawer>
-    </FrameLayout>
-
-</LinearLayout>
+    </FrameLayout></LinearLayout>

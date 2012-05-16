@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:orientation="horizontal" android:paddingTop="6dip"
-	android:paddingBottom="6dip" android:paddingLeft="4dip">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="6dip"
+    android:paddingLeft="4dip"
+    android:paddingTop="6dip" >
 
-	<ImageView android:id="@+id/icon" android:layout_width="82dip"
-		android:layout_height="fill_parent" android:scaleType="matrix"
-		android:src="@drawable/icon" />
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="82dip"
+        android:layout_height="fill_parent"
+        android:scaleType="matrix"
+        android:src="@drawable/icon" />
 
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-		<TextView android:id="@+id/name" android:textSize="17sp"
-			android:textColor="#0065BD" android:paddingLeft="6dip"
-			android:paddingRight="6dip" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip"
+            android:textColor="#0065BD"
+            android:textSize="17sp" />
 
-		<TextView android:id="@+id/infos" android:textSize="13sp"
-			android:textColor="#0065BD" android:paddingTop="2dip"
-			android:paddingBottom="1dip" android:layout_width="fill_parent"
-			android:paddingLeft="6dip" android:paddingRight="6dip"
-			android:layout_height="wrap_content" />
-	</LinearLayout>
+        <TextView
+            android:id="@+id/infos"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="1dip"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip"
+            android:paddingTop="2dip"
+            android:textColor="#0065BD"
+            android:textSize="13sp" />
+    </LinearLayout>
+
 </LinearLayout>

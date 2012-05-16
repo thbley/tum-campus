@@ -1,43 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:background="#0065BD">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#0065BD"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
 
-	<LinearLayout android:orientation="vertical"
-		android:layout_weight="50" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:layout_marginRight="3dip">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="3dip"
+        android:layout_weight="50"
+        android:orientation="vertical" >
 
-		<TextView android:layout_width="wrap_content" android:id="@+id/transportText2"
-			android:textColor="#FFFFFF" android:layout_height="wrap_content"
-			android:text="Gespeicherte Stationen:" android:layout_gravity="center" />
+        <TextView
+            android:id="@+id/transportText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Gespeicherte Stationen:"
+            android:textColor="#FFFFFF" />
 
-		<FrameLayout android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
 
-			<ListView android:layout_width="fill_parent"
-				android:background="#FFFFFF" android:layout_height="fill_parent"
-				android:id="@+id/listView" android:scrollbars="vertical"
-				android:padding="4dip" android:layout_marginBottom="52dip" />
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="52dip"
+                android:background="#FFFFFF"
+                android:padding="4dip"
+                android:scrollbars="vertical" />
 
-			<EditText android:id="@+id/search" android:layout_height="wrap_content"
-				android:hint="Station suchen" android:singleLine="true"
-				android:layout_gravity="bottom" android:layout_width="fill_parent"
-				android:imeOptions="actionSearch" />
-		</FrameLayout>
-	</LinearLayout>
+            <EditText
+                android:id="@+id/search"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:hint="Station suchen"
+                android:imeOptions="actionSearch"
+                android:singleLine="true" />
+        </FrameLayout>
+    </LinearLayout>
 
-	<LinearLayout android:orientation="vertical"
-		android:layout_weight="50" android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="50"
+        android:orientation="vertical" >
 
-		<TextView android:layout_width="wrap_content" android:id="@+id/transportText"
-			android:textColor="#FFFFFF" android:layout_height="wrap_content"
-			android:text="Bitte wählen Sie eine Station aus."
-			android:layout_gravity="center" />
+        <TextView
+            android:id="@+id/transportText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Bitte wählen Sie eine Station aus."
+            android:textColor="#FFFFFF" />
 
-		<ListView android:layout_height="fill_parent"
-			android:background="#FFFFFF" android:layout_width="fill_parent"
-			android:id="@+id/listView2" android:scrollbars="vertical"
-			android:padding="6.5dip" />
-	</LinearLayout>
+        <ListView
+            android:id="@+id/listView2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#FFFFFF"
+            android:padding="6.5dip"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
 </LinearLayout>

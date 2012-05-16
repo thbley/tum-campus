@@ -1,99 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:padding="6dip">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="6dip" >
 
-	<Button android:text="Vorlesungen importieren" android:id="@+id/importLectures"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:textColor="#FF2546A4" />
+    <Button
+        android:id="@+id/importLectures"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Vorlesungen importieren"
+        android:textColor="#FF2546A4" />
 
-	<Button android:text="Links importieren" android:id="@+id/importLinks"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:textColor="#FF2546A4" />
+    <Button
+        android:id="@+id/importLinks"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Links importieren"
+        android:textColor="#FF2546A4" />
 
-	<Button android:text="RSS-Feeds importieren" android:id="@+id/importFeeds"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:textColor="#FF2546A4" android:layout_marginBottom="3dip" />
+    <Button
+        android:id="@+id/importFeeds"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dip"
+        android:text="RSS-Feeds importieren"
+        android:textColor="#FF2546A4" />
 
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="0.5dip" android:background="#0065BD" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:background="#0065BD" />
 
-	<TextView android:layout_width="fill_parent" android:id="@+id/noteLectures1"
-		android:layout_height="wrap_content" android:textColor="#0065BD"
-		android:text="Vorlesungen importieren (TUM):\n
+    <TextView
+        android:id="@+id/noteLectures1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dip"
+        android:text="Vorlesungen importieren (TUM):\n
 		1. Handy an den Computer per USB anstecken\n
 		2. USB-Speicher am Handy aktivieren\n
 		3. Am Computer bei TumOnline.de einloggen:\n
-		    'Terminkalender' anklicken\n
-		    'Export' anklicken\n
-		    'Download als CSV für Excel' auswählen\n
-		    'Download' anklicken\n
+		    &apos;Terminkalender&apos; anklicken\n
+		    &apos;Export&apos; anklicken\n
+		    &apos;Download als CSV für Excel&apos; auswählen\n
+		    &apos;Download&apos; anklicken\n
 		    Datei unter\n
-		    &lt;SD-Karte&gt;\\tumcampus\\lectures speichern\n
+		    &lt;SD-Karte>\\tumcampus\\lectures speichern\n
 		    Datei evtl. mit Excel nachbearbeiten\n
 		4. USB-Speicher am Handy deaktivieren\n
-		5. Hier auf 'Vorlesungen importieren' drücken"
-		android:layout_margin="3dip" />
+		5. Hier auf &apos;Vorlesungen importieren&apos; drücken"
+        android:textColor="#0065BD" />
 
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="0.5dip" android:background="#0065BD" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:background="#0065BD" />
 
-	<TextView android:layout_width="fill_parent" android:id="@+id/noteLectures2"
-		android:layout_height="wrap_content" android:textColor="#0065BD"
-		android:text="Vorlesungen importieren (andere Hochschule):\n
+    <TextView
+        android:id="@+id/noteLectures2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dip"
+        android:text="Vorlesungen importieren (andere Hochschule):\n
 		1. Handy an den Computer per USB anstecken\n
 		2. USB-Speicher am Handy aktivieren\n
 		3. Template herunterladen unter:\n
 		    http://bit.ly/LectureCsv\n
 		4. Template mit Excel bearbeiten\n
 		5. Datei unter\n
-		    &lt;SD-Karte&gt;\\tumcampus\\lectures speichern\n
+		    &lt;SD-Karte>\\tumcampus\\lectures speichern\n
 		6. USB-Speicher am Handy deaktivieren\n
-		7. Hier auf 'Vorlesungen importieren' drücken"
-		android:layout_margin="3dip" />
+		7. Hier auf &apos;Vorlesungen importieren&apos; drücken"
+        android:textColor="#0065BD" />
 
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="0.5dip" android:background="#0065BD" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:background="#0065BD" />
 
-	<TextView android:layout_width="fill_parent" android:id="@+id/noteLinks"
-		android:layout_height="wrap_content" android:textColor="#0065BD"
-		android:text="Links importieren:\n
+    <TextView
+        android:id="@+id/noteLinks"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dip"
+        android:text="Links importieren:\n
 		1. Handy an den Computer per USB anstecken\n
 		2. USB-Speicher am Handy aktivieren\n
 		3. Am Computer eine URL aus dem Browser in\n
 		    das Verzeichnis\n
-		    &lt;SD-Karte&gt;\\tumcampus\\links\n
+		    &lt;SD-Karte>\\tumcampus\\links\n
 		    im Windows Explorer ziehen\n
 		4. USB-Speicher am Handy deaktivieren\n
-		5. Hier auf 'Links importieren' drücken"
-		android:layout_margin="3dip" />
+		5. Hier auf &apos;Links importieren&apos; drücken"
+        android:textColor="#0065BD" />
 
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="0.5dip" android:background="#0065BD" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:background="#0065BD" />
 
-	<TextView android:layout_width="fill_parent" android:id="@+id/noteFeeds"
-		android:layout_height="wrap_content" android:textColor="#0065BD"
-		android:text="RSS-Feeds importieren:\n
+    <TextView
+        android:id="@+id/noteFeeds"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dip"
+        android:text="RSS-Feeds importieren:\n
 		1. Handy an den Computer per USB anstecken\n
 		2. USB-Speicher am Handy aktivieren\n
 		3. Am Computer eine RSS-URL aus dem\n
 		    Browser in das Verzeichnis\n
-		    &lt;SD-Karte&gt;\\tumcampus\\rss\n
+		    &lt;SD-Karte>\\tumcampus\\rss\n
 		    im Windows Explorer ziehen\n
 		4. USB-Speicher am Handy deaktivieren\n
-		5. Hier auf 'RSS-Feeds importieren' drücken"
-		android:layout_margin="3dip" />
+		5. Hier auf &apos;RSS-Feeds importieren&apos; drücken"
+        android:textColor="#0065BD" />
 
-	<TextView android:layout_width="fill_parent" android:id="@+id/noteModules"
-		android:layout_height="wrap_content" android:textColor="#0065BD"
-		android:text="Module für den Datenimport deaktiviert."
-		android:visibility="gone" android:layout_margin="3dip" />
+    <TextView
+        android:id="@+id/noteModules"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dip"
+        android:text="Module für den Datenimport deaktiviert."
+        android:textColor="#0065BD"
+        android:visibility="gone" />
 
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="0.5dip" android:background="#0065BD" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:background="#0065BD" />
 
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:textColor="#0065BD"
-		android:text="Hinweis: vorhandene Daten werden nicht\ngelöscht, aber ggf. überschrieben!"
-		android:layout_margin="3dip" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dip"
+        android:text="Hinweis: vorhandene Daten werden nicht\ngelöscht, aber ggf. überschrieben!"
+        android:textColor="#0065BD" />
+
 </LinearLayout>

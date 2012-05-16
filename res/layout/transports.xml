@@ -1,28 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:background="#0065BD">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#0065BD"
+    android:orientation="vertical" >
 
-	<TextView android:layout_width="fill_parent" android:id="@+id/transportText"
-		android:textColor="#FFFFFF" android:layout_height="wrap_content"
-		android:paddingLeft="2dip" android:text="Bitte wählen Sie eine Station aus." />
+    <TextView
+        android:id="@+id/transportText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="2dip"
+        android:text="Bitte wählen Sie eine Station aus."
+        android:textColor="#FFFFFF" />
 
-	<ListView android:layout_height="fill_parent"
-		android:background="#FFFFFF" android:layout_width="fill_parent"
-		android:id="@+id/listView2" android:layout_weight="51"
-		android:scrollbars="vertical" android:padding="6.5dip" />
+    <ListView
+        android:id="@+id/listView2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="51"
+        android:background="#FFFFFF"
+        android:padding="6.5dip"
+        android:scrollbars="vertical" />
 
-	<TextView android:layout_width="fill_parent" android:id="@+id/transportText2"
-		android:textColor="#FFFFFF" android:layout_height="wrap_content"
-		android:paddingLeft="2dip" android:text="Gespeicherte Stationen:" />
+    <TextView
+        android:id="@+id/transportText2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="2dip"
+        android:text="Gespeicherte Stationen:"
+        android:textColor="#FFFFFF" />
 
-	<ListView android:layout_width="fill_parent"
-		android:background="#FFFFFF" android:layout_height="fill_parent"
-		android:id="@+id/listView" android:layout_weight="49"
-		android:scrollbars="vertical" android:padding="4dip" />
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="49"
+        android:background="#FFFFFF"
+        android:padding="4dip"
+        android:scrollbars="vertical" />
 
-	<EditText android:id="@+id/search" android:layout_height="wrap_content"
-		android:hint="Station suchen" android:singleLine="true"
-		android:layout_width="fill_parent" android:layout_marginTop="4dip"
-		android:imeOptions="actionSearch" />
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:hint="Station suchen"
+        android:imeOptions="actionSearch"
+        android:singleLine="true" />
 </LinearLayout>

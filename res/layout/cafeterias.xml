@@ -1,49 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-	<FrameLayout android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
-		<LinearLayout android:orientation="vertical"
-			android:background="#0065BD" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:layout_marginBottom="33dip">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="33dip"
+            android:background="#0065BD"
+            android:orientation="vertical" >
 
-			<TextView android:layout_width="fill_parent" android:id="@+id/cafeteriaText"
-				android:textColor="#FFFFFF" android:layout_height="wrap_content"
-				android:paddingLeft="2dip" android:text="Bitte wählen Sie eine Mensa aus." />
+            <TextView
+                android:id="@+id/cafeteriaText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dip"
+                android:text="Bitte wählen Sie eine Mensa aus."
+                android:textColor="#FFFFFF" />
 
-			<ListView android:layout_height="fill_parent"
-				android:background="#FFFFFF" android:layout_width="fill_parent"
-				android:id="@+id/listView3" android:layout_weight="51"
-				android:scrollbars="vertical" android:layout_marginBottom="6.5dip"
-				android:padding="4dip" />
+            <ListView
+                android:id="@+id/listView3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="6.5dip"
+                android:layout_weight="51"
+                android:background="#FFFFFF"
+                android:padding="4dip"
+                android:scrollbars="vertical" />
 
-			<ListView android:layout_width="fill_parent"
-				android:background="#FFFFFF" android:layout_height="fill_parent"
-				android:id="@+id/listView2" android:layout_weight="49"
-				android:scrollbars="vertical" android:padding="4dip" />
+            <ListView
+                android:id="@+id/listView2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="49"
+                android:background="#FFFFFF"
+                android:padding="4dip"
+                android:scrollbars="vertical" />
+        </LinearLayout>
 
-		</LinearLayout>
+        <SlidingDrawer
+            android:id="@+id/slider"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:content="@+id/slide"
+            android:handle="@+id/handle" >
 
-		<SlidingDrawer android:layout_width="fill_parent"
-			android:id="@+id/slider" android:layout_height="fill_parent"
-			android:handle="@+id/handle" android:content="@+id/slide">
+            <Button
+                android:id="@+id/handle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#0065BD"
+                android:height="33dip"
+                android:text="Datum auswählen"
+                android:textColor="#FFFFFF" />
 
-			<Button android:layout_height="wrap_content"
-				android:layout_width="fill_parent" android:text="Datum auswählen"
-				android:background="#0065BD" android:id="@+id/handle"
-				android:height="33dip" android:textColor="#FFFFFF" />
+            <LinearLayout
+                android:id="@+id/slide"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#F1FFFFFF"
+                android:orientation="vertical" >
 
-			<LinearLayout android:id="@+id/slide"
-				android:background="#F1FFFFFF" android:layout_width="fill_parent"
-				android:orientation="vertical" android:layout_height="fill_parent">
+                <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
+        </SlidingDrawer>
+    </FrameLayout>
 
-				<ListView android:layout_height="fill_parent" android:id="@+id/listView"
-					android:layout_width="fill_parent" android:scrollbars="vertical" />
-
-			</LinearLayout>
-		</SlidingDrawer>
-	</FrameLayout>
 </LinearLayout>
