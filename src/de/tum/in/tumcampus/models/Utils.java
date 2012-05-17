@@ -1,6 +1,7 @@
 ﻿package de.tum.in.tumcampus.models;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,11 +19,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.HttpEntityWrapper;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -45,7 +49,43 @@ public class Utils {
 	public static int openDownloads = 0;
 
 	/**
-	 * Download a JSON stream from a URL
+	 * Download a String from a URL
+	 * 
+	 * <pre>
+	 * @param url Valid URL
+	 * @return String
+	 * @throws Exception
+	 * </pre>
+	 */
+	public static String downloadString(String url) throws Exception {
+		Utils.log(url);
+
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpEntity entity = httpclient.execute(new HttpGet(url)).getEntity();
+		if (entity == null) {
+			return "";
+		}
+		String data = EntityUtils.toString(entity);
+		Utils.log(data);
+		return data;
+	}
+
+	/**
+	 * Gzip decompression wrapper for HttpClient entity
+	 */
+	static class GzipDecompressingEntity extends HttpEntityWrapper {
+		public GzipDecompressingEntity(final HttpEntity entity) {
+			super(entity);
+		}
+
+		@Override
+		public InputStream getContent() throws IOException, IllegalStateException {
+			return new GZIPInputStream(wrappedEntity.getContent());
+		}
+	}
+
+	/**
+	 * Download a (compressed) JSON stream from a URL
 	 * 
 	 * <pre>
 	 * @param url Valid URL
@@ -56,19 +96,21 @@ public class Utils {
 	public static JSONObject downloadJson(String url) throws Exception {
 		Utils.log(url);
 
+		HttpGet request = new HttpGet(url);
+		request.addHeader("Accept-Encoding", "gzip");
+
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpEntity entity = httpclient.execute(new HttpGet(url)).getEntity();
-
-		String data = "";
-		if (entity != null) {
-
-			// JSON Response Read
-			InputStream instream = entity.getContent();
-			data = convertStreamToString(instream);
-
-			Utils.log(data);
-			instream.close();
+		HttpEntity entity = httpclient.execute(request).getEntity();
+		if (entity == null) {
+			return new JSONObject("");
 		}
+		if (entity.getContentEncoding().getValue().equals("gzip")) {
+			entity = new GzipDecompressingEntity(entity);
+		}
+		String data = EntityUtils.toString(entity);
+		Utils.log(data);
+
+		// JSON Response Read
 		return new JSONObject(data);
 	}
 
@@ -176,8 +218,7 @@ public class Utils {
 		if (entity == null) {
 			return;
 		}
-		InputStream in = entity.getContent();
-		String data = convertStreamToString(in);
+		String data = EntityUtils.toString(entity);
 
 		String icon = "";
 		Pattern link = Pattern.compile("<link[^>]+>");
@@ -209,35 +250,6 @@ public class Utils {
 		}
 		// download icon
 		downloadFile(icon, target);
-	}
-
-	/**
-	 * Convert an input stream to a string
-	 * 
-	 * <pre>
-	 * @param is input stream from file, download
-	 * @return output string
-	 * </pre>
-	 */
-	private static String convertStreamToString(InputStream is) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		StringBuilder sb = new StringBuilder();
-
-		String line = null;
-		try {
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return sb.toString();
 	}
 
 	/**
@@ -327,8 +339,7 @@ public class Utils {
 			if (entity == null) {
 				return result;
 			}
-			InputStream instream = entity.getContent();
-			String data = convertStreamToString(instream);
+			String data = EntityUtils.toString(entity);
 
 			if (data.startsWith("<?xml")) {
 				return result;
