@@ -2,8 +2,6 @@
 
 import static de.tum.in.tumcampus.models.Utils.getDate;
 
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -52,7 +50,7 @@ public class CafeteriaMenuManager {
 	 * @throws Exception
 	 * </pre>
 	 */
-	public void downloadFromExternal(List<Integer> ids, boolean force) throws Exception {
+	public void downloadFromExternal(boolean force) throws Exception {
 
 		if (!force && !SyncManager.needSync(db, this, 86400)) {
 			return;
@@ -60,35 +58,31 @@ public class CafeteriaMenuManager {
 		cleanupDb();
 		int count = Utils.dbGetTableCount(db, "cafeterias_menus");
 
-		for (int id : ids) {
-			Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus WHERE mensaId = ? AND "
-					+ "date > date('now', '+6 day') LIMIT 1", new String[] { String.valueOf(id) });
-
-			if (c.getCount() > 0) {
-				c.close();
-				continue;
-			}
+		Cursor c = db.rawQuery("SELECT 1 FROM cafeterias_menus WHERE date > date('now', '+6 day') LIMIT 1", null);
+		if (c.getCount() > 0) {
 			c.close();
+			return;
+		}
+		c.close();
 
-			String url = "http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php?mensa_id=";
-			JSONObject json = Utils.downloadJson(url + id);
+		String url = "http://lu32kap.typo3.lrz.de/mensaapp/exportDB.php?mensa_id=all";
+		JSONObject json = Utils.downloadJson(url);
 
-			deleteFromDb(id);
-			db.beginTransaction();
-			try {
-				JSONArray menu = json.getJSONArray("mensa_menu");
-				for (int j = 0; j < menu.length(); j++) {
-					replaceIntoDb(getFromJson(menu.getJSONObject(j)));
-				}
-
-				JSONArray beilagen = json.getJSONArray("mensa_beilagen");
-				for (int j = 0; j < beilagen.length(); j++) {
-					replaceIntoDb(getFromJsonAddendum(beilagen.getJSONObject(j)));
-				}
-				db.setTransactionSuccessful();
-			} finally {
-				db.endTransaction();
+		removeCache();
+		db.beginTransaction();
+		try {
+			JSONArray menu = json.getJSONArray("mensa_menu");
+			for (int j = 0; j < menu.length(); j++) {
+				replaceIntoDb(getFromJson(menu.getJSONObject(j)));
 			}
+
+			JSONArray beilagen = json.getJSONArray("mensa_beilagen");
+			for (int j = 0; j < beilagen.length(); j++) {
+				replaceIntoDb(getFromJsonAddendum(beilagen.getJSONObject(j)));
+			}
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
 		}
 		SyncManager.replaceIntoDb(db, this);
 
@@ -194,17 +188,6 @@ public class CafeteriaMenuManager {
 	 */
 	public void removeCache() {
 		db.execSQL("DELETE FROM cafeterias_menus");
-	}
-
-	/**
-	 * Deletes menu items from the database
-	 * 
-	 * <pre>
-	 * @param mensaId Mensa ID
-	 * </pre>
-	 */
-	public void deleteFromDb(int mensaId) {
-		db.execSQL("DELETE FROM cafeterias_menus WHERE mensaId = ?", new String[] { String.valueOf(mensaId) });
 	}
 
 	/**
