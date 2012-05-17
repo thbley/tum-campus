@@ -223,7 +223,7 @@ public class DownloadService extends IntentService {
 		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
 		try {
 			cm.downloadFromExternal(force);
-			cmm.downloadFromExternal(cm.getAllIdsFromDb(), force);
+			cmm.downloadFromExternal(force);
 		} catch (Exception e) {
 			message(e, "");
 		}
