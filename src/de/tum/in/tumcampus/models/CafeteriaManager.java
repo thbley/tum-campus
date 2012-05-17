@@ -1,8 +1,5 @@
 ﻿package de.tum.in.tumcampus.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,22 +64,6 @@ public class CafeteriaManager {
 		} finally {
 			db.endTransaction();
 		}
-	}
-
-	/**
-	 * Returns all cafeteria IDs
-	 * 
-	 * @return List of all cafeteria IDs
-	 */
-	public List<Integer> getAllIdsFromDb() {
-		List<Integer> list = new ArrayList<Integer>();
-
-		Cursor c = db.rawQuery("SELECT id FROM cafeterias ORDER BY id", null);
-		while (c.moveToNext()) {
-			list.add(c.getInt(0));
-		}
-		c.close();
-		return list;
 	}
 
 	/**
