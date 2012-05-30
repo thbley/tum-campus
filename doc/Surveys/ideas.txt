@@ -1,0 +1,20 @@
+- geplante Umfrage -
+
+Termin: Mitte Juni, Mitte/Ende Juli
+Zielgruppe: 3000 Studenten
+
+Inhalt: Fragen zur Weiterentwicklung der TUM Campus App
+
+Aktuelle Überlegungen:
+
+- Link auf Umfrage (vermutlich via vmbaumgarten1 oder andere interne Option)
+- m/w?
+- Studiengang?
+- Welche Funktion findest du besonders nützlich? (vgl. Ranking -> spätere auto. Sortierung)
+- Häufigkeit und Dauer der Nutzung?
+- Freitext: Festgestellte Bugs
+- Freitext: Ideen für weitere Funktionen
+(N.Kannengießer)
+
+- Frage bzgl. verwendeter mobiler Endgeräte: Android Handy, Android Tablet, iPhone, iPad, Blackberry, Windows Phone, sonstige
+(T.Bley)
