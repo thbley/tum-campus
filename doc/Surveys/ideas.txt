@@ -5,16 +5,33 @@ Zielgruppe: 3000 Studenten
 
 Inhalt: Fragen zur Weiterentwicklung der TUM Campus App
 
-Aktuelle Überlegungen:
+Aktuelle ï¿½berlegungen:
 
 - Link auf Umfrage (vermutlich via vmbaumgarten1 oder andere interne Option)
 - m/w?
 - Studiengang?
-- Welche Funktion findest du besonders nützlich? (vgl. Ranking -> spätere auto. Sortierung)
-- Häufigkeit und Dauer der Nutzung?
+- Welche Funktion findest du besonders nï¿½tzlich? (vgl. Ranking -> spï¿½tere auto. Sortierung)
+- Hï¿½ufigkeit und Dauer der Nutzung?
 - Freitext: Festgestellte Bugs
-- Freitext: Ideen für weitere Funktionen
-(N.Kannengießer)
+- Freitext: Ideen fï¿½r weitere Funktionen
+(N.Kannengieï¿½er)
 
-- Frage bzgl. verwendeter mobiler Endgeräte: Android Handy, Android Tablet, iPhone, iPad, Blackberry, Windows Phone, sonstige
+- Frage bzgl. verwendeter mobiler Endgerï¿½te: Android Handy, Android Tablet, iPhone, iPad, Blackberry, Windows Phone, sonstige
 (T.Bley)
+
+Wie wichtig sind dir die folgenden Funktionen der TUM Campus App (Skala von 1-unnÃ¶tig bis 7-unverzichtbar(oder sehr wichtig))
+- Vorlesungen
+- SpeiseplÃ¤ne
+- MVV
+- RSS-Feeds
+- Veranstaltungen
+- Kurz notiert
+- Nachrichten
+- UmgebungsplÃ¤ne
+- Ã–ffnungszeiten
+- Links
+
+Wie gern hÃ¤ttest du folgende Funktionen in der TUM Campus App (Skala von 1-unnÃ¶tig(oder bloÃŸ nicht) bis 7-sehr gern)
+- Auswahl von geplanten Funktionen (nur realisierbares oder bald geplantes, um Nutzern keine falschen Hoffnungen zu machen)
+
+(C. Richter)
