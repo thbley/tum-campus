@@ -10,13 +10,13 @@ Aktuelle Überlegungen:
 - Link auf Umfrage (vermutlich via vmbaumgarten1 oder andere interne Option)
 - m/w?
 - Studiengang?
-- Welche Funktion findest du besonders n�tzlich? (vgl. Ranking -> sp�tere auto. Sortierung)
-- H�ufigkeit und Dauer der Nutzung?
+- Welche Funktion findest du besonders nützlich? (vgl. Ranking -> spätere auto. Sortierung)
+- Häufigkeit und Dauer der Nutzung?
 - Freitext: Festgestellte Bugs
-- Freitext: Ideen f�r weitere Funktionen
-(N.Kannengie�er)
+- Freitext: Ideen für weitere Funktionen
+(N.Kannengießer)
 
-- Frage bzgl. verwendeter mobiler Endger�te: Android Handy, Android Tablet, iPhone, iPad, Blackberry, Windows Phone, sonstige
+- Frage bzgl. verwendeter mobiler Endgeräte: Android Handy, Android Tablet, iPhone, iPad, Blackberry, Windows Phone, sonstige
 (T.Bley)
 
 Wie wichtig sind dir die folgenden Funktionen der TUM Campus App (Skala von 1-unnötig bis 7-unverzichtbar(oder sehr wichtig))
