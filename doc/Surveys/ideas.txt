@@ -5,7 +5,7 @@ Zielgruppe: 3000 Studenten
 
 Inhalt: Fragen zur Weiterentwicklung der TUM Campus App
 
-Aktuelle �berlegungen:
+Aktuelle Überlegungen:
 
 - Link auf Umfrage (vermutlich via vmbaumgarten1 oder andere interne Option)
 - m/w?
