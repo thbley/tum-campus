@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
-import de.tum.in.tumcampus.Const;
-import de.tum.in.tumcampus.Const.Settings;
+import de.tum.in.tumcampus.common.Const;
+import de.tum.in.tumcampus.common.Utils;
+import de.tum.in.tumcampus.common.Const.Settings;
 import de.tum.in.tumcampus.models.LectureItemManager;
-import de.tum.in.tumcampus.models.Utils;
 
 /**
  * Service used to silence the mobile during lectures
@@ -16,7 +16,7 @@ import de.tum.in.tumcampus.models.Utils;
 public class SilenceService extends IntentService {
 
 	/**
-	 * interval in milli seconds to check for current lectures
+	 * Interval in milliseconds to check for current lectures
 	 */
 	public static int interval = 60000;
 

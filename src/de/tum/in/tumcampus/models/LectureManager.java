@@ -19,10 +19,9 @@ public class LectureManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public LectureManager(Context context, String database) {
+	public LectureManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed

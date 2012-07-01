@@ -42,7 +42,7 @@ public class Gallery extends Activity implements OnItemClickListener {
 		super.onResume();
 
 		// get images from database
-		GalleryManager gm = new GalleryManager(this, Const.db);
+		GalleryManager gm = new GalleryManager(this);
 		Cursor c = gm.getFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.gallery_image, c, c.getColumnNames(),
@@ -57,7 +57,7 @@ public class Gallery extends Activity implements OnItemClickListener {
 
 			@Override
 			public void onDrawerOpened() {
-				GalleryManager gm = new GalleryManager(Gallery.this, Const.db);
+				GalleryManager gm = new GalleryManager(Gallery.this);
 				Cursor c = gm.getFromDbArchive();
 
 				SimpleCursorAdapter adapter = new SimpleCursorAdapter(Gallery.this, R.layout.gallery_image, c, c

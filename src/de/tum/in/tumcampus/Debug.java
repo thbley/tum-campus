@@ -99,8 +99,7 @@ public class Debug extends Activity implements View.OnClickListener {
 		while (c.moveToNext()) {
 			StringBuilder content = new StringBuilder();
 			for (int i = 0; i < c.getColumnCount(); i++) {
-				content.append(c.getColumnName(i) + ": " + c.getString(i)
-						+ "\n");
+				content.append(c.getColumnName(i) + ": " + c.getString(i) + "\n");
 			}
 			debugStr(content.toString());
 		}

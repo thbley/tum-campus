@@ -6,13 +6,12 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
 
-import de.tum.in.tumcampus.Const;
 import de.tum.in.tumcampus.TumCampus;
+import de.tum.in.tumcampus.common.Utils;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedItem;
 import de.tum.in.tumcampus.models.FeedItemManager;
 import de.tum.in.tumcampus.models.FeedManager;
-import de.tum.in.tumcampus.models.Utils;
 
 public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
@@ -28,24 +27,24 @@ public class FeedsTest extends ActivityInstrumentationTestCase2<TumCampus> {
 	public void setUp() throws Exception {
 		solo = new Solo(getInstrumentation(), getActivity());
 
-		FeedManager fm = new FeedManager(getActivity(), Const.db);
+		FeedManager fm = new FeedManager(getActivity());
 		feedId = fm.insertUpdateIntoDb(new Feed("Test feed", "http://www.test.de"));
 
 		// inject test data
 		FeedItem fi = new FeedItem(feedId, "Test message", "http://www.test.de", "Test description",
 				Utils.getDateTime("2011-05-04T14:00:00"), "");
 
-		FeedItemManager fim = new FeedItemManager(getActivity(), Const.db);
+		FeedItemManager fim = new FeedItemManager(getActivity());
 		fim.insertIntoDb(fi);
 	}
 
 	@Override
 	public void tearDown() throws Exception {
 		// remove test data
-		FeedItemManager fim = new FeedItemManager(getActivity(), Const.db);
+		FeedItemManager fim = new FeedItemManager(getActivity());
 		fim.removeCache();
 
-		FeedManager fm = new FeedManager(getActivity(), Const.db);
+		FeedManager fm = new FeedManager(getActivity());
 		fm.deleteFromDb(feedId);
 		super.tearDown();
 	}

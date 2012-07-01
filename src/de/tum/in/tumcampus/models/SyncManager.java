@@ -1,5 +1,6 @@
 ﻿package de.tum.in.tumcampus.models;
 
+import de.tum.in.tumcampus.common.Utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,10 +20,9 @@ public class SyncManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public SyncManager(Context context, String database) {
+	public SyncManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed

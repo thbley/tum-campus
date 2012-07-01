@@ -1,13 +1,13 @@
 package de.tum.in.tumcampus.models;
 
-import static de.tum.in.tumcampus.models.DatabaseManager.getDb;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+
+import de.tum.in.tumcampus.common.Utils;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -37,12 +37,12 @@ public class LectureItemManager {
 	 * Constructor, open/create database, create table if necessary
 	 * 
 	 * <pre>
-	 * @param c Context
+	 * @param context Context
 	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public LectureItemManager(Context c) {
-		db = getDb(c);
+	public LectureItemManager(Context context) {
+		db = DatabaseManager.getDb(context);
 
 		// create table if needed
 		db.execSQL("CREATE TABLE IF NOT EXISTS lectures_items ("

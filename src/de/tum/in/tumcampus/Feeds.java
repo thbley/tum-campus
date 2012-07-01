@@ -59,7 +59,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder, 
 		}
 
 		// get all feeds
-		FeedManager fm = new FeedManager(this, Const.db);
+		FeedManager fm = new FeedManager(this);
 		Cursor c = fm.getAllFromDb();
 
 		adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, c, c.getColumnNames(),
@@ -129,7 +129,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder, 
 		setTitle("Nachrichten: " + feedName);
 
 		// get all feed items for a feed
-		FeedItemManager fim = new FeedItemManager(this, Const.db);
+		FeedItemManager fim = new FeedItemManager(this);
 		Cursor c2 = fim.getAllFromDb(feedId);
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.feeds_listview, c2, c2.getColumnNames(),
@@ -170,7 +170,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder, 
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				int _id = c.getInt(c.getColumnIndex("_id"));
 
-				FeedManager fm = new FeedManager(av.getContext(), Const.db);
+				FeedManager fm = new FeedManager(av.getContext());
 				fm.deleteFromDb(_id);
 				adapter.changeCursor(fm.getAllFromDb());
 			}
@@ -213,7 +213,7 @@ public class Feeds extends Activity implements OnItemClickListener, ViewBinder, 
 		if (url.length() > 0 && !url.contains(":")) {
 			url = "http://" + url;
 		}
-		FeedManager fm = new FeedManager(this, Const.db);
+		FeedManager fm = new FeedManager(this);
 		try {
 			Feed feed = new Feed(name, url);
 			fm.insertUpdateIntoDb(feed);

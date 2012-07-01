@@ -1,9 +1,11 @@
 ﻿package de.tum.in.tumcampus.models;
 
-import static de.tum.in.tumcampus.models.Utils.getDate;
+import static de.tum.in.tumcampus.common.Utils.getDate;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import de.tum.in.tumcampus.common.Utils;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -29,10 +31,9 @@ public class CafeteriaMenuManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public CafeteriaMenuManager(Context context, String database) {
+	public CafeteriaMenuManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
@@ -118,8 +119,7 @@ public class CafeteriaMenuManager {
 	/**
 	 * Convert JSON object to CafeteriaMenu
 	 * 
-	 * Example JSON: e.g. {"id":"25544","mensa_id":"411","date":"2011-06-20","type_short"
-	 * :"tg","type_long":"Tagesgericht 3","type_nr":"3","name":
+	 * Example JSON: e.g. {"id":"25544","mensa_id":"411","date":"2011-06-20","type_short" :"tg","type_long":"Tagesgericht 3","type_nr":"3","name":
 	 * "Cordon bleu vom Schwein (mit Formfleischhinterschinken) (S) (1,2,3,8)"}
 	 * 
 	 * <pre>
@@ -138,8 +138,7 @@ public class CafeteriaMenuManager {
 	/**
 	 * Convert JSON object to CafeteriaMenu (addendum)
 	 * 
-	 * Example JSON: e.g. {"mensa_id":"411","date":"2011-07-29","name":"Pflaumenkompott"
-	 * ,"type_short":"bei","type_long":"Beilagen"}
+	 * Example JSON: e.g. {"mensa_id":"411","date":"2011-07-29","name":"Pflaumenkompott" ,"type_short":"bei","type_long":"Beilagen"}
 	 * 
 	 * <pre>
 	 * @param json see above

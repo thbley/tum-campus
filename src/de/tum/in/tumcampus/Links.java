@@ -23,8 +23,8 @@ import de.tum.in.tumcampus.models.LinkManager;
 /**
  * Activity to show Links
  */
-public class Links extends Activity implements OnItemClickListener,
-		OnItemLongClickListener, View.OnClickListener, ViewBinder {
+public class Links extends Activity implements OnItemClickListener, OnItemLongClickListener, View.OnClickListener,
+		ViewBinder {
 
 	SimpleCursorAdapter adapter;
 
@@ -34,16 +34,15 @@ public class Links extends Activity implements OnItemClickListener,
 		setContentView(R.layout.links);
 
 		// get all links from database
-		LinkManager lm = new LinkManager(this, Const.db);
+		LinkManager lm = new LinkManager(this);
 		Cursor c = lm.getAllFromDb();
 
-		adapter = new SimpleCursorAdapter(this, R.layout.links_listview, c,
-				c.getColumnNames(), new int[] { R.id.icon, R.id.name });
+		adapter = new SimpleCursorAdapter(this, R.layout.links_listview, c, c.getColumnNames(), new int[] { R.id.icon,
+				R.id.name });
 		adapter.setViewBinder(this);
 
 		// add footer view to add new links
-		View view = getLayoutInflater().inflate(R.layout.links_footer, null,
-				false);
+		View view = getLayoutInflater().inflate(R.layout.links_footer, null, false);
 
 		ListView lv = (ListView) findViewById(R.id.listView);
 		lv.addFooterView(view);
@@ -59,8 +58,7 @@ public class Links extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> aview, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> aview, View view, int position, long id) {
 		ListView lv = (ListView) findViewById(R.id.listView);
 		Cursor c = (Cursor) lv.getAdapter().getItem(position);
 		String url = c.getString(c.getColumnIndex("url"));
@@ -75,8 +73,7 @@ public class Links extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public boolean onItemLongClick(final AdapterView<?> av, View v,
-			final int position, long id) {
+	public boolean onItemLongClick(final AdapterView<?> av, View v, final int position, long id) {
 		if (id == -1) {
 			return false;
 		}
@@ -90,7 +87,7 @@ public class Links extends Activity implements OnItemClickListener,
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				int _id = c.getInt(c.getColumnIndex("_id"));
 
-				LinkManager lm = new LinkManager(av.getContext(), Const.db);
+				LinkManager lm = new LinkManager(av.getContext());
 				lm.deleteFromDb(_id);
 				adapter.changeCursor(lm.getAllFromDb());
 			}
@@ -116,7 +113,7 @@ public class Links extends Activity implements OnItemClickListener,
 		}
 		String name = editName.getText().toString();
 
-		LinkManager lm = new LinkManager(this, Const.db);
+		LinkManager lm = new LinkManager(this);
 		try {
 			Link link = new Link(name, url);
 			lm.insertUpdateIntoDb(link);
@@ -139,9 +136,8 @@ public class Links extends Activity implements OnItemClickListener,
 
 			// no binding needed
 			return true;
-		} else {
-			view.setVisibility(View.VISIBLE);
 		}
+		view.setVisibility(View.VISIBLE);
 		return false;
 	}
 }

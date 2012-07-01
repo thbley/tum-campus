@@ -5,12 +5,11 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
 
-import de.tum.in.tumcampus.Const;
 import de.tum.in.tumcampus.TumCampus;
+import de.tum.in.tumcampus.common.Utils;
 import de.tum.in.tumcampus.models.LectureItem;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LectureManager;
-import de.tum.in.tumcampus.models.Utils;
 
 public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 
@@ -34,7 +33,7 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		lim.replaceIntoDb(li);
 		lim.replaceIntoDb(li2);
 
-		LectureManager lm = new LectureManager(getActivity(), Const.db);
+		LectureManager lm = new LectureManager(getActivity());
 		lm.updateLectures();
 	}
 
@@ -45,7 +44,7 @@ public class LecturesTest extends ActivityInstrumentationTestCase2<TumCampus> {
 		lim.deleteLectureFromDb("T1");
 		lim.deleteLectureFromDb("TH1");
 
-		LectureManager lm = new LectureManager(getActivity(), Const.db);
+		LectureManager lm = new LectureManager(getActivity());
 		lm.deleteItemFromDb("T1");
 		super.tearDown();
 	}

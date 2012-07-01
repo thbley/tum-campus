@@ -2,6 +2,8 @@
 
 import java.util.Date;
 
+import de.tum.in.tumcampus.common.Utils;
+
 /**
  * Event object
  */

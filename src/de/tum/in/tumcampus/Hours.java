@@ -67,7 +67,7 @@ public class Hours extends Activity implements OnItemClickListener, ViewBinder {
 		setTitle("Öffnungszeiten: " + names[position]);
 
 		// click on category in list
-		LocationManager lm = new LocationManager(this, Const.db);
+		LocationManager lm = new LocationManager(this);
 		Cursor c = lm.getAllHoursFromDb(categories[position]);
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, c,

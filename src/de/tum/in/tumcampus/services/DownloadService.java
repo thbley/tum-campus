@@ -12,8 +12,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
-import de.tum.in.tumcampus.Const;
 import de.tum.in.tumcampus.TumCampus;
+import de.tum.in.tumcampus.common.Const;
+import de.tum.in.tumcampus.common.Utils;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
@@ -23,7 +24,6 @@ import de.tum.in.tumcampus.models.GalleryManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.models.SyncManager;
-import de.tum.in.tumcampus.models.Utils;
 
 /**
  * Service used to download files from external pages
@@ -48,7 +48,7 @@ public class DownloadService extends IntentService {
 	}
 
 	/**
-	 * Notificaiton message
+	 * Notification message
 	 */
 	private String message = "";
 
@@ -147,10 +147,10 @@ public class DownloadService extends IntentService {
 	 * </pre>
 	 */
 	public void downloadFeeds(boolean force) {
-		FeedManager nm = new FeedManager(this, Const.db);
+		FeedManager nm = new FeedManager(this);
 		List<Integer> list = nm.getAllIdsFromDb();
 
-		FeedItemManager nim = new FeedItemManager(this, Const.db);
+		FeedItemManager nim = new FeedItemManager(this);
 		for (int id : list) {
 			if (destroyed) {
 				break;
@@ -171,7 +171,7 @@ public class DownloadService extends IntentService {
 	 * </pre>
 	 */
 	public void downloadNews(boolean force) {
-		NewsManager nm = new NewsManager(this, Const.db);
+		NewsManager nm = new NewsManager(this);
 		try {
 			nm.downloadFromExternal(force);
 		} catch (Exception e) {
@@ -187,7 +187,7 @@ public class DownloadService extends IntentService {
 	 * </pre>
 	 */
 	public void downloadEvents(boolean force) {
-		EventManager em = new EventManager(this, Const.db);
+		EventManager em = new EventManager(this);
 		try {
 			em.downloadFromExternal(force);
 		} catch (Exception e) {
@@ -203,7 +203,7 @@ public class DownloadService extends IntentService {
 	 * </pre>
 	 */
 	public void downloadGallery(boolean force) {
-		GalleryManager gm = new GalleryManager(this, Const.db);
+		GalleryManager gm = new GalleryManager(this);
 		try {
 			gm.downloadFromExternal(force);
 		} catch (Exception e) {
@@ -219,8 +219,8 @@ public class DownloadService extends IntentService {
 	 * </pre>
 	 */
 	public void downloadCafeterias(boolean force) {
-		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
-		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
+		CafeteriaManager cm = new CafeteriaManager(this);
+		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this);
 		try {
 			cm.downloadFromExternal(force);
 			cmm.downloadFromExternal(force);
@@ -233,7 +233,7 @@ public class DownloadService extends IntentService {
 	 * Download missing icons for links
 	 */
 	public void downloadLinks() {
-		LinkManager lm = new LinkManager(this, Const.db);
+		LinkManager lm = new LinkManager(this);
 		try {
 			lm.downloadMissingIcons();
 		} catch (Exception e) {
@@ -299,7 +299,7 @@ public class DownloadService extends IntentService {
 			Utils.getCacheDir("");
 
 			// init sync table
-			new SyncManager(this, Const.db);
+			new SyncManager(this);
 		} catch (Exception e) {
 			message(e, "");
 

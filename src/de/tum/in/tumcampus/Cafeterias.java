@@ -17,10 +17,11 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
+import de.tum.in.tumcampus.common.Const;
+import de.tum.in.tumcampus.common.Utils;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.LocationManager;
-import de.tum.in.tumcampus.models.Utils;
 import de.tum.in.tumcampus.services.DownloadService;
 
 /**
@@ -47,6 +48,21 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 	 * Current Cafeteria name selected
 	 */
 	private String cafeteriaName;
+
+	/**
+	 * Cafeteria prices url
+	 */
+	private static String url_prices = "http://www.studentenwerk-muenchen.de/mensa/unsere-preise/";
+
+	/**
+	 * Cafeteria list Garching url
+	 */
+	private static String url_cafeterias_gar = "http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/garching/";
+
+	/**
+	 * Cafeteria list Muenchen url
+	 */
+	private static String url_cafeterias_muc = "http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/muenchen/";
 
 	/**
 	 * Footer with opening hours
@@ -100,7 +116,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		// get cafeteria list, filtered by user-defined substring
 		String filter = Utils.getSetting(this, Const.Settings.cafeteriaFilter);
 
-		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
+		CafeteriaManager cm = new CafeteriaManager(this);
 		Cursor c2 = cm.getAllFromDb("%" + filter + "%");
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, c2,
@@ -111,7 +127,7 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 		lv2.setOnItemClickListener(this);
 
 		// get all (distinct) dates having menus available
-		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
+		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this);
 		Cursor c = cmm.getDatesFromDb();
 
 		adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, c, c.getColumnNames(),
@@ -156,12 +172,12 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			tv.setText(cafeteriaName + ": " + dateStr);
 
 			// opening hours
-			LocationManager lm = new LocationManager(this, Const.db);
+			LocationManager lm = new LocationManager(this);
 			tv = (TextView) footer.findViewById(android.R.id.text2);
 			tv.setText(lm.getHoursById(cafeteriaId));
 
 			// menus
-			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
+			CafeteriaMenuManager cmm = new CafeteriaMenuManager(this);
 			Cursor c = cmm.getTypeNameFromDb(cafeteriaId, date);
 
 			TextView tv3 = (TextView) footer.findViewById(android.R.id.text1);
@@ -222,18 +238,15 @@ public class Cafeterias extends Activity implements OnItemClickListener {
 			return true;
 
 		case Menu.FIRST + 2:
-			String url3 = "http://www.studentenwerk-muenchen.de/mensa/unsere-preise/";
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url3)));
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url_prices)));
 			return true;
 
 		case Menu.FIRST + 3:
-			String url = "http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/garching/";
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url_cafeterias_gar)));
 			return true;
 
 		case Menu.FIRST + 4:
-			String url2 = "http://www.studentenwerk-muenchen.de/mensa/unsere-mensen-und-cafeterien/muenchen/";
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url2)));
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url_cafeterias_muc)));
 			return true;
 		}
 		return false;

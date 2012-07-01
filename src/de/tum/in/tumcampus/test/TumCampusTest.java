@@ -44,8 +44,7 @@ public class TumCampusTest extends ActivityInstrumentationTestCase2<TumCampus> {
 			solo.sleep(1000);
 			duration++;
 		}
-		assertTrue(solo.searchText("Aktualisiere: RSS Nachrichten "
-				+ "Veranstaltungen Mensen Fertig!"));
+		assertTrue(solo.searchText("Aktualisiere: RSS Nachrichten Veranstaltungen Mensen Fertig!"));
 	}
 
 	public void testClearCache() {

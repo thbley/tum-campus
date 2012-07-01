@@ -44,7 +44,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 		super.onResume();
 
 		// get current and upcoming events from database
-		EventManager em = new EventManager(this, Const.db);
+		EventManager em = new EventManager(this);
 		Cursor c = em.getNextFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.events_listview, c, c.getColumnNames(),
@@ -61,7 +61,7 @@ public class Events extends Activity implements OnItemClickListener, ViewBinder 
 			@Override
 			public void onDrawerOpened() {
 				// get past events from database
-				EventManager em = new EventManager(Events.this, Const.db);
+				EventManager em = new EventManager(Events.this);
 				Cursor c = em.getPastFromDb();
 
 				SimpleCursorAdapter adapter = new SimpleCursorAdapter(Events.this, R.layout.events_listview, c, c

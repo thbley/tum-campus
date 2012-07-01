@@ -11,8 +11,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import de.tum.in.tumcampus.Const;
 import de.tum.in.tumcampus.TumCampus;
+import de.tum.in.tumcampus.common.Const;
+import de.tum.in.tumcampus.common.Utils;
 import de.tum.in.tumcampus.models.Feed;
 import de.tum.in.tumcampus.models.FeedManager;
 import de.tum.in.tumcampus.models.GalleryManager;
@@ -24,7 +25,6 @@ import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.Location;
 import de.tum.in.tumcampus.models.LocationManager;
 import de.tum.in.tumcampus.models.TransportManager;
-import de.tum.in.tumcampus.models.Utils;
 
 /**
  * Service used to import files from internal sd-card
@@ -108,7 +108,7 @@ public class ImportService extends IntentService {
 	 * Update database schema
 	 */
 	public void updateDatabase() {
-		GalleryManager gm = new GalleryManager(this, Const.db);
+		GalleryManager gm = new GalleryManager(this);
 		gm.update();
 	}
 
@@ -116,7 +116,7 @@ public class ImportService extends IntentService {
 	 * Import feeds from internal directory
 	 */
 	public void importFeeds() {
-		FeedManager nm = new FeedManager(this, Const.db);
+		FeedManager nm = new FeedManager(this);
 		try {
 			nm.importFromInternal();
 		} catch (Exception e) {
@@ -128,7 +128,7 @@ public class ImportService extends IntentService {
 	 * Import links from internal directory
 	 */
 	public void importLinks() {
-		LinkManager lm = new LinkManager(this, Const.db);
+		LinkManager lm = new LinkManager(this);
 		try {
 			lm.importFromInternal();
 		} catch (Exception e) {
@@ -147,7 +147,7 @@ public class ImportService extends IntentService {
 			message(e, lim.lastInfo);
 		}
 
-		LectureManager lm = new LectureManager(this, Const.db);
+		LectureManager lm = new LectureManager(this);
 		lm.updateLectures();
 	}
 
@@ -158,7 +158,7 @@ public class ImportService extends IntentService {
 	 */
 	public void importTransportsDefaults() throws Exception {
 
-		TransportManager tm = new TransportManager(this, Const.db);
+		TransportManager tm = new TransportManager(this);
 		if (tm.empty()) {
 			List<String[]> rows = Utils.readCsv(getAssets().open("transports.csv"), "ISO-8859-1");
 
@@ -175,7 +175,7 @@ public class ImportService extends IntentService {
 	 */
 	public void importFeedsDefaults() throws Exception {
 
-		FeedManager nm = new FeedManager(this, Const.db);
+		FeedManager nm = new FeedManager(this);
 		if (nm.empty()) {
 			List<String[]> rows = Utils.readCsv(getAssets().open("feeds.csv"), "ISO-8859-1");
 
@@ -195,7 +195,7 @@ public class ImportService extends IntentService {
 	 */
 	public void importLocationsDefaults(boolean force) throws Exception {
 
-		LocationManager lm = new LocationManager(this, Const.db);
+		LocationManager lm = new LocationManager(this);
 		if (lm.empty() || force) {
 			List<String[]> rows = Utils.readCsv(getAssets().open("locations.csv"), "ISO-8859-1");
 
@@ -236,7 +236,7 @@ public class ImportService extends IntentService {
 			}
 		}
 
-		LectureManager lm = new LectureManager(this, Const.db);
+		LectureManager lm = new LectureManager(this);
 		lm.updateLectures();
 	}
 
@@ -246,7 +246,7 @@ public class ImportService extends IntentService {
 	 * @throws Exception
 	 */
 	public void importLinksDefaults() throws Exception {
-		LinkManager lm = new LinkManager(this, Const.db);
+		LinkManager lm = new LinkManager(this);
 		if (lm.empty()) {
 			List<String[]> rows = Utils.readCsv(getAssets().open("links.csv"), "ISO-8859-1");
 

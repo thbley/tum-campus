@@ -5,6 +5,8 @@ import java.net.URLEncoder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import de.tum.in.tumcampus.common.Utils;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,10 +31,9 @@ public class EventManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public EventManager(Context context, String database) {
+	public EventManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
@@ -118,10 +119,9 @@ public class EventManager {
 	/**
 	 * Convert JSON object to Event, download event picture
 	 * 
-	 * Example JSON: e.g. { "id": "166478443419659", "owner": { "name": "TUM Campus App for Android", "category":
-	 * "Software", "id": "162327853831856" }, "name": "R\u00fcckmeldung f\u00fcr Wintersemester 2011/12", "description":
-	 * "..." , "start_time": "2011-08-15T00:00:00", "end_time": "2011-08-15T03:00:00", "location": "TU M\u00fcnchen",
-	 * "privacy": "OPEN", "updated_time": "2011-06-25T06:26:14+0000" }
+	 * Example JSON: e.g. { "id": "166478443419659", "owner": { "name": "TUM Campus App for Android", "category": "Software", "id": "162327853831856" }, "name":
+	 * "R\u00fcckmeldung f\u00fcr Wintersemester 2011/12", "description": "..." , "start_time": "2011-08-15T00:00:00", "end_time": "2011-08-15T03:00:00",
+	 * "location": "TU M\u00fcnchen", "privacy": "OPEN", "updated_time": "2011-06-25T06:26:14+0000" }
 	 * 
 	 * <pre>
 	 * @param json see above

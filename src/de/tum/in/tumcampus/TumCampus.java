@@ -31,6 +31,8 @@ import android.widget.SimpleAdapter;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.tum.in.tumcampus.common.Const;
+import de.tum.in.tumcampus.common.Utils;
 import de.tum.in.tumcampus.models.CafeteriaManager;
 import de.tum.in.tumcampus.models.CafeteriaMenuManager;
 import de.tum.in.tumcampus.models.EventManager;
@@ -41,7 +43,6 @@ import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LinkManager;
 import de.tum.in.tumcampus.models.NewsManager;
 import de.tum.in.tumcampus.models.SyncManager;
-import de.tum.in.tumcampus.models.Utils;
 import de.tum.in.tumcampus.services.DownloadService;
 import de.tum.in.tumcampus.services.ImportService;
 import de.tum.in.tumcampus.services.SilenceService;
@@ -95,7 +96,7 @@ public class TumCampus extends Activity implements OnItemClickListener, View.OnC
 		b.setOnClickListener(this);
 
 		// show initial download button if feed items are empty
-		FeedItemManager fim = new FeedItemManager(this, Const.db);
+		FeedItemManager fim = new FeedItemManager(this);
 		if (fim.empty()) {
 			b.setVisibility(View.VISIBLE);
 		} else {
@@ -338,29 +339,29 @@ public class TumCampus extends Activity implements OnItemClickListener, View.OnC
 			return;
 		}
 
-		CafeteriaManager cm = new CafeteriaManager(this, Const.db);
+		CafeteriaManager cm = new CafeteriaManager(this);
 		cm.removeCache();
 
-		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this, Const.db);
+		CafeteriaMenuManager cmm = new CafeteriaMenuManager(this);
 		cmm.removeCache();
 
-		FeedItemManager fim = new FeedItemManager(this, Const.db);
+		FeedItemManager fim = new FeedItemManager(this);
 		fim.removeCache();
 
-		EventManager em = new EventManager(this, Const.db);
+		EventManager em = new EventManager(this);
 		em.removeCache();
 
-		GalleryManager gm = new GalleryManager(this, Const.db);
+		GalleryManager gm = new GalleryManager(this);
 		gm.removeCache();
 
-		LinkManager lm = new LinkManager(this, Const.db);
+		LinkManager lm = new LinkManager(this);
 		lm.removeCache();
 
-		NewsManager nm = new NewsManager(this, Const.db);
+		NewsManager nm = new NewsManager(this);
 		nm.removeCache();
 
 		// table of all download events
-		SyncManager sm = new SyncManager(this, Const.db);
+		SyncManager sm = new SyncManager(this);
 		sm.deleteFromDb();
 	}
 

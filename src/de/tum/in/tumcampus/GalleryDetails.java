@@ -19,7 +19,7 @@ public class GalleryDetails extends Activity {
 		setContentView(R.layout.gallery_details);
 
 		// get gallery item details from db
-		GalleryManager gm = new GalleryManager(this, Const.db);
+		GalleryManager gm = new GalleryManager(this);
 		Cursor c = gm.getDetailsFromDb(getIntent().getStringExtra("id"));
 
 		if (!c.moveToNext())

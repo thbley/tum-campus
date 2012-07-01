@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.tum.in.tumcampus.common.Utils;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,10 +25,9 @@ public class CafeteriaManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public CafeteriaManager(Context context, String database) {
+	public CafeteriaManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
@@ -82,8 +83,7 @@ public class CafeteriaManager {
 	/**
 	 * Get Cafeteria object by JSON object
 	 * 
-	 * Example JSON: e.g. {"id":"411","name":"Mensa Leopoldstra\u00dfe","anschrift"
-	 * :"Leopoldstra\u00dfe 13a, M\u00fcnchen"}
+	 * Example JSON: e.g. {"id":"411","name":"Mensa Leopoldstra\u00dfe","anschrift" :"Leopoldstra\u00dfe 13a, M\u00fcnchen"}
 	 * 
 	 * <pre>
 	 * @param json See example

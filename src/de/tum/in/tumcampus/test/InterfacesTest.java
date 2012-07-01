@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.test.AndroidTestCase;
-import de.tum.in.tumcampus.models.Utils;
+import de.tum.in.tumcampus.common.Utils;
 
 public class InterfacesTest extends AndroidTestCase {
 

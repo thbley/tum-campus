@@ -4,7 +4,7 @@ import java.io.File;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import de.tum.in.tumcampus.Const;
+import de.tum.in.tumcampus.common.Const;
 
 /**
  * Database singleton

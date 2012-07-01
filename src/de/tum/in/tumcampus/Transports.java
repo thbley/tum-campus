@@ -62,7 +62,7 @@ public class Transports extends Activity implements OnItemClickListener, OnItemL
 		}
 
 		// get all stations from db
-		TransportManager tm = new TransportManager(this, Const.db);
+		TransportManager tm = new TransportManager(this);
 		Cursor c = tm.getAllFromDb();
 
 		ListAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, c, c.getColumnNames(),
@@ -126,7 +126,7 @@ public class Transports extends Activity implements OnItemClickListener, OnItemL
 		// save clicked station into db and refresh station list
 		// (could be clicked on search result list)
 		SimpleCursorAdapter adapter = (SimpleCursorAdapter) av.getAdapter();
-		TransportManager tm = new TransportManager(this, Const.db);
+		TransportManager tm = new TransportManager(this);
 		tm.replaceIntoDb(location);
 		adapter.changeCursor(tm.getAllFromDb());
 
@@ -137,7 +137,7 @@ public class Transports extends Activity implements OnItemClickListener, OnItemL
 			@Override
 			public void run() {
 				// get departures from website
-				TransportManager tm = new TransportManager(av.getContext(), Const.db);
+				TransportManager tm = new TransportManager(av.getContext());
 				Cursor c = null;
 				try {
 					if (!connected()) {
@@ -180,7 +180,7 @@ public class Transports extends Activity implements OnItemClickListener, OnItemL
 				Cursor c = (Cursor) av.getAdapter().getItem(position);
 				String location = c.getString(c.getColumnIndex("name"));
 
-				TransportManager tm = new TransportManager(av.getContext(), Const.db);
+				TransportManager tm = new TransportManager(av.getContext());
 				tm.deleteFromDb(location);
 
 				SimpleCursorAdapter adapter = (SimpleCursorAdapter) av.getAdapter();
@@ -207,7 +207,7 @@ public class Transports extends Activity implements OnItemClickListener, OnItemL
 
 				// search station on website
 				String message = "";
-				TransportManager tm = new TransportManager(input.getContext(), Const.db);
+				TransportManager tm = new TransportManager(input.getContext());
 				Cursor c = null;
 				try {
 					if (!connected()) {

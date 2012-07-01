@@ -10,7 +10,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.jayway.android.robotium.solo.Solo;
 
 import de.tum.in.tumcampus.TumCampus;
-import de.tum.in.tumcampus.models.Utils;
+import de.tum.in.tumcampus.common.Utils;
 
 public class ImportTest extends ActivityInstrumentationTestCase2<TumCampus> {
 

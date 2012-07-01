@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tum.in.tumcampus.common.Utils;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,10 +35,9 @@ public class FeedManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public FeedManager(Context context, String database) {
+	public FeedManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
@@ -142,13 +143,12 @@ public class FeedManager {
 			db.execSQL("UPDATE feeds SET name=?, feedUrl=? WHERE id=?",
 					new String[] { f.name, f.feedUrl, c.getString(0) });
 			return c.getInt(0);
-		} else {
-			db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)", new String[] { f.name, f.feedUrl });
-
-			c = db.rawQuery("SELECT last_insert_rowid()", null);
-			c.moveToNext();
-			return c.getInt(0);
 		}
+		db.execSQL("INSERT INTO feeds (name, feedUrl) VALUES (?, ?)", new String[] { f.name, f.feedUrl });
+
+		c = db.rawQuery("SELECT last_insert_rowid()", null);
+		c.moveToNext();
+		return c.getInt(0);
 	}
 
 	/**

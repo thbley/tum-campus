@@ -19,9 +19,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
+import de.tum.in.tumcampus.common.Utils;
 import de.tum.in.tumcampus.models.LectureItemManager;
 import de.tum.in.tumcampus.models.LectureManager;
-import de.tum.in.tumcampus.models.Utils;
 
 /**
  * Activity to show lectures and lecture units
@@ -58,7 +58,7 @@ public class Lectures extends Activity implements OnItemClickListener, OnItemLon
 		lv.setOnItemLongClickListener(this);
 
 		// get all lectures
-		LectureManager lm = new LectureManager(this, Const.db);
+		LectureManager lm = new LectureManager(this);
 		Cursor c2 = lm.getAllFromDb();
 
 		SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, c2,
@@ -85,10 +85,10 @@ public class Lectures extends Activity implements OnItemClickListener, OnItemLon
 		LectureItemManager.lastInserted = 0;
 	}
 
-	@Override
 	/**
 	 * change presentation of lecture units in the list
 	 */
+	@Override
 	public boolean setViewValue(View view, Cursor c, int index) {
 		String[] weekDays = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
 
@@ -226,7 +226,7 @@ public class Lectures extends Activity implements OnItemClickListener, OnItemLon
 	 */
 	public void deleteLecture(String itemId) {
 		// delete lecture
-		LectureManager lm = new LectureManager(this, Const.db);
+		LectureManager lm = new LectureManager(this);
 		lm.deleteItemFromDb(itemId);
 
 		// refresh lecture list

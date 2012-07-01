@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.tum.in.tumcampus.common.Utils;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -26,10 +28,9 @@ public class TransportManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public TransportManager(Context context, String database) {
+	public TransportManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed

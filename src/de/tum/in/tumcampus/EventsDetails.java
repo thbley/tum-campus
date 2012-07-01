@@ -20,7 +20,7 @@ public class EventsDetails extends Activity {
 		setContentView(R.layout.events_details);
 
 		// get event details from db
-		EventManager em = new EventManager(this, Const.db);
+		EventManager em = new EventManager(this);
 		Cursor c = em.getDetailsFromDb(getIntent().getStringExtra("id"));
 
 		if (!c.moveToNext())

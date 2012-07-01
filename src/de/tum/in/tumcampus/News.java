@@ -45,7 +45,7 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 		super.onResume();
 
 		// get all news from database
-		NewsManager nm = new NewsManager(this, Const.db);
+		NewsManager nm = new NewsManager(this);
 		Cursor c = nm.getAllFromDb();
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.news_listview, c, c.getColumnNames(),
@@ -97,9 +97,8 @@ public class News extends Activity implements OnItemClickListener, ViewBinder {
 
 			// no binding needed
 			return true;
-		} else {
-			view.setVisibility(View.VISIBLE);
 		}
+		view.setVisibility(View.VISIBLE);
 		return false;
 	}
 

@@ -7,6 +7,8 @@ import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import de.tum.in.tumcampus.common.Utils;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,10 +33,9 @@ public class NewsManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public NewsManager(Context context, String database) {
+	public NewsManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
@@ -111,14 +112,11 @@ public class NewsManager {
 	/**
 	 * Convert JSON object to News and download news image
 	 * 
-	 * Example JSON: e.g. { "id": "162327853831856_174943842570257", "from": { ... }, "message": "Testing ...",
-	 * "picture":
-	 * "http://photos-d.ak.fbcdn.net/hphotos-ak-ash4/268937_174943835903591_162327853831856_476156_7175901_s.jpg" ,
-	 * "link":
-	 * "https://www.facebook.com/photo.php?fbid=174943835903591&set=a.174943832570258.47966.162327853831856&type=1" ,
-	 * "name": "Wall Photos", "icon": "http://static.ak.fbcdn.net/rsrc.php/v1/yz/r/StEh3RhPvjk.gif", "type": "photo",
-	 * "object_id": "174943835903591", "created_time": "2011-07-04T01:58:25+0000", "updated_time":
-	 * "2011-07-04T01:58:25+0000" },
+	 * Example JSON: e.g. { "id": "162327853831856_174943842570257", "from": { ... }, "message": "Testing ...", "picture":
+	 * "http://photos-d.ak.fbcdn.net/hphotos-ak-ash4/268937_174943835903591_162327853831856_476156_7175901_s.jpg" , "link":
+	 * "https://www.facebook.com/photo.php?fbid=174943835903591&set=a.174943832570258.47966.162327853831856&type=1" , "name": "Wall Photos", "icon":
+	 * "http://static.ak.fbcdn.net/rsrc.php/v1/yz/r/StEh3RhPvjk.gif", "type": "photo", "object_id": "174943835903591", "created_time":
+	 * "2011-07-04T01:58:25+0000", "updated_time": "2011-07-04T01:58:25+0000" },
 	 * 
 	 * <pre>
 	 * @param json see above

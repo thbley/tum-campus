@@ -6,6 +6,8 @@ import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import de.tum.in.tumcampus.common.Utils;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,10 +38,9 @@ public class FeedItemManager {
 	 * 
 	 * <pre>
 	 * @param context Context
-	 * @param database Filename, e.g. database.db
 	 * </pre>
 	 */
-	public FeedItemManager(Context context, String database) {
+	public FeedItemManager(Context context) {
 		db = DatabaseManager.getDb(context);
 
 		// create table if needed
@@ -143,9 +144,8 @@ public class FeedItemManager {
 	/**
 	 * Convert JSON to FeedItem and download feed item iamge
 	 * 
-	 * Example JSON: e.g. { "title": "US-Truppenabzug aus Afghanistan: \"Verlogen und verkorkst\"", "description": "..."
-	 * , "link": "http://www.n-tv.de/politik/pressestimmen/Verlogen-und-verkorkst-article3650731.html" , "pubDate":
-	 * "Thu, 23 Jun 2011 20:06:53 GMT", "enclosure": { "url":
+	 * Example JSON: e.g. { "title": "US-Truppenabzug aus Afghanistan: \"Verlogen und verkorkst\"", "description": "...", "link":
+	 * "http://www.n-tv.de/politik/pressestimmen/Verlogen-und-verkorkst-article3650731.html" , "pubDate": "Thu, 23 Jun 2011 20:06:53 GMT", "enclosure": { "url":
 	 * "http://www.n-tv.de/img/30/304801/Img_4_3_220_Pressestimmen.jpg" }
 	 * 
 	 * <pre>
