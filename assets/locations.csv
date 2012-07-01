@@ -32,8 +32,8 @@
 1019;cafeteria;Espresso-Bar Mensa Leopoldstr;Leopoldstr. 13a;;;Mo-Fr 9-15.30;;
 1020;cafeteria;Espresso-Bar Leopoldstr;Leopoldstr. 13 Haus 2;;;Mo-Fr 11.30-14;;
 1021;cafeteria;Espresso-Bar Ludwigstr;Ludwigstr. 28 RG;;;Mo-Fr 9-20;;
-523;cafeteria;Cafeteria Olympiapark;Conollystr. 32;;;Mo-Fr 11-14;;
-413;cafeteria;Mensaria Schillerstraße;Schillerstr. 47;;;Mo-Do 11-14.15, Fr 11-14;geschlossen 18.5.;
+523;cafeteria;Cafeteria Olympiapark;Connollystr. 32;;;Mo-Fr 11-14;;
+413;cafeteria;Mensaria Schillerstraße;Schillerstr. 47;;;Mo-Do 11-14.15, Fr 11-14;;
 418;cafeteria;Mensaria Goethestraße;Goethestr. 70;;;Mo-Do 11-14, Fr 11-13.30;;
 432;cafeteria_pas;Mensa Pasing;Am Stadtpark 20;;;Mo-Do 11-13.45, Fr 11-13.30;;
 1022;cafeteria_pas;Cafeteria Pasing;Am Stadtpark 20;;;Mo-Do 7.45-15, Fr 7.45-14.00;;
@@ -49,7 +49,7 @@
 1036;info;Studenten Service Zentrum, Auskünfte, Broschüren, Beratungstermine;Arcisstr. 21;Raum 0140;U2 Königsplatz;Mo-Fr 9-12, Mo-Do 13-16;Telefon: 089-28922245\nEmail: studium@tum.de;
 1027;info;Studenten Service Zentrum, Studienberatung;Arcisstr. 21;Raum 0140;U2 Königsplatz;Mo,Mi 14-16, Fr 9-12;Termin per Telefon: 089-28922737\nEmail: studienberatung@tum.de\nTelefonsprechstunde: Di 10-12;
 1028;info;Studenten Service Zentrum, Immatrikulation;Arcisstr. 21;Raum 0140;U2 Königsplatz;Mo-Fr 9-12, Mo-Do 13-16;Telefon: 089-28922245;
-1029;info;Zentraler Hochschulsport (ZHS) Ausweise/Marken;Connollystraße 32;;U3 Olympiazentrum;Mo-Mi 9-11, Do 17-19;Kein Sport 5.4.-10.4., 26.5.-29.5.;
+1029;info;Zentraler Hochschulsport (ZHS) Ausweise/Marken;Connollystraße 32;;U3 Olympiazentrum;Mo-Mi 9-11, Do 17-19;;
 1030;info;Studienberatung Informatik (A. Reiser);Boltzmannstr. 3, Garching;MI 02.11.053;;Mo 13-14, Mi 13-15, Ausland Mi 10-11;Telefon: 089-28917284\nEmail: reiser@in.tum.de;
 1031;info;Studienberatung Informatik (V. Simic);Boltzmannstr. 3, Garching;MI 02.11.033;;Di 13-15, Do 10-11, Fr 9-11;Telefon: 089-28917296\nEmail: vivija.simic@in.tum.de;
 1032;info;Rechnerhalle Informatik;Boltzmannstr. 3, Garching;MI 00.05.011;;Mo-Fr 8-18;bei Bedarf bis 22 Uhr\nService Desk RBG\nTelefon: 089-28918018\nEmail: rbg@in.tum.de;
