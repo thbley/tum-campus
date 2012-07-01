@@ -65,9 +65,5 @@
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
 		</receiver>
-
-		<!-- <receiver android:name=".receivers.Update"> <intent-filter> <action 
-			android:name="android.intent.action.PACKAGE_REPLACED" /> <data android:scheme="package" 
-			android:path="de.tum.in.tumcampus" /> </intent-filter> </receiver> -->
 	</application>
 </manifest>
