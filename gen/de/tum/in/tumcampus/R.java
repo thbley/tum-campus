@@ -108,9 +108,11 @@ public final class R {
         public static final int main_listview=0x7f030015;
         public static final int news=0x7f030016;
         public static final int news_listview=0x7f030017;
-        public static final int plans=0x7f030018;
-        public static final int transports=0x7f030019;
-        public static final int transports_horizontal=0x7f03001a;
+        public static final int persons=0x7f030018;
+        public static final int persons_horizontal=0x7f030019;
+        public static final int plans=0x7f03001a;
+        public static final int transports=0x7f03001b;
+        public static final int transports_horizontal=0x7f03001c;
     }
     public static final class xml {
         public static final int settings=0x7f040000;
