@@ -45,7 +45,6 @@
                 android:paddingLeft="4dip"
                 android:paddingRight="4dip"
                 android:scrollbars="vertical"
-                android:text=""
                 android:textColor="#FFFFFF"
                 android:visibility="gone" />
 
@@ -99,4 +98,6 @@
                 <include layout="@layout/main_import" />
             </ScrollView>
         </SlidingDrawer>
-    </FrameLayout></LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
