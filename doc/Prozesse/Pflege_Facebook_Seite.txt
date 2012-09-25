@@ -23,3 +23,19 @@ https://developers.facebook.com/docs/reference/api/
 https://developers.facebook.com/docs/reference/api/album/
 https://developers.facebook.com/docs/reference/api/event/
 https://developers.facebook.com/docs/reference/api/post/
+
+Weitere Quellen:
+http://www.ikom.tum.de/
+http://www.tu-film.de/
+http://www.fs04.de/kino
+http://www.lrz.de/services/termine/
+https://www.facebook.com/TUM.AStA
+https://www.facebook.com/mediziniparty
+http://portal.mytum.de/studium/semestertermine
+http://portal.mytum.de/pressestelle/pressemitteilungen
+http://www.in.tum.de/metanavigation/personen-services/veranstaltungen-termine.html
+http://www.fs.mse.tum.de/aktuelles/veranstaltungen
+https://www.facebook.com/pages/Fachschaft-MathePhysikInformatik/176843885666973
+https://www.facebook.com/StudentenpartysMuenchen
+http://www.lrz.de/services/schulung/kurse-allgemein/
+http://www.lrz.de/services/schulung/kursanmeldung/
