@@ -1,0 +1,25 @@
+Neben dem Code für die App gibt es noch die Facebook-Seite zur App:
+
+URL: https://www.facebook.com/TUMCampus
+
+https://www.facebook.com/TUMCampus/events?key=past (Events)
+Bisher habe ich hier die wichtigsten Veranstaltungen und Termine für Studenten eingetragen (TU Film, Vorträge, Partys, Semesterstart, Rückmeldung, usw.). Die Veranstaltungen landen alle im Modul de.tum.in.tumcampus.models.EventManager.
+
+https://www.facebook.com/media/set/?set=a.280074732057167.70357.162327853831856 (Album)
+Hier habe ich Aushänge und Flyer aus Informatik und Maschinenbau hochgeladen, vor allem für kleinere Veranstaltungen für die es sich nicht lohnt extra eine komplette Veranstaltung anzulegen. Sobald die Veranstaltung vorbei ist, habe ich das Bild manuell in das Album "Kurz notiert Archiv" verschoben (https://www.facebook.com/media/set/?set=a.291553714242602.72359.162327853831856).
+Die Bilder landen alle im Modul de.tum.in.tumcampus.models.EventManager.GalleryManager (Bildgröße zum Upload sollte 800x?? nicht übersteigen).
+
+https://www.facebook.com/TUMCampus (Feed)
+Im News-Feed habe ich wichtige Meldungen aus dem Informatik-Newsticker (http://www.in.tum.de/metanavigation/personen-services/veranstaltungen-termine.html), dem Fachschaftsticker (http://mpi.fs.tum.de/) und der ZHS (http://zhs-muenchen.de/) gepostet. Die News landen alle im Modul de.tum.in.tumcampus.models.NewsManager.
+
+Folgende Rollen werden aktuell von Facebook unterstützt:
+- Manager (Admin): Kann Administrationsaufgaben verwalten, Nachrichten verschicken, Beiträge im Namen der Seite posten, Werbeanzeigen erstellen und Statistiken aufrufen.
+- Inhaltsersteller: Kann die Seite bearbeiten, Nachrichten versenden, Beiträge im Namen der Seite posten, Werbeanzeigen erstellen und Statistiken aufrufen.
+- Moderator: Kann auf der Seite Kommentare beantworten und löschen, Nachrichten versenden, Werbeanzeigen erstellen und Statistiken aufrufen.
+- Statistikanalyst: Kann Statistiken aufrufen.
+
+Die technische Spezifikation zur Open Graph API findet sich unter folgenden URLs, ist aber für Admins nicht nötig (alle Features in der GUI vorhanden):
+https://developers.facebook.com/docs/reference/api/
+https://developers.facebook.com/docs/reference/api/album/
+https://developers.facebook.com/docs/reference/api/event/
+https://developers.facebook.com/docs/reference/api/post/
