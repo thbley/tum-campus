@@ -25,6 +25,11 @@ public class GalleryManager {
 	 * Last insert counter
 	 */
 	public static int lastInserted = 0;
+	
+	/**
+	 * Position
+	 */
+	public static int position = 0;
 
 	/**
 	 * Constructor, open/create database, create table if necessary
@@ -148,7 +153,7 @@ public class GalleryManager {
 
 		Utils.downloadFileThread(json.getString("source"), target);
 
-		return new Gallery(id, json.getString("name"), target, json.getString("position"), json.has("archive"));
+		return new Gallery(id, json.getString("name"), target, String.valueOf(position++), json.has("archive"));
 	}
 
 	/**
